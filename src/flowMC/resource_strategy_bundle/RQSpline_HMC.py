@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Optional
 
 import jax
 import jax.numpy as jnp
@@ -46,6 +46,7 @@ class RQSpline_HMC_Bundle(ResourceStrategyBundle):
         hmc_step_size: float = 0.1,
         hmc_n_leapfrog: int = 10,
         condition_matrix: Float | Float[Array, " n_dim"] = 1,
+        periodic: Optional[dict[int, tuple[float, float]]] = None,
         chain_batch_size: int = 0,
         rq_spline_hidden_units: list[int] = [32, 32],
         rq_spline_n_bins: int = 8,
@@ -110,10 +111,20 @@ class RQSpline_HMC_Bundle(ResourceStrategyBundle):
         # Convert scalar condition matrix to 1D array if needed
         if isinstance(condition_matrix, (int, float)):
             condition_matrix = jnp.full(n_dims, condition_matrix)
+        # Create periodic mask and bounds arrays for HMC
+        if periodic is None:
+            periodic = {}
+        periodic_mask = jnp.zeros(n_dims, dtype=bool)
+        periodic_bounds = jnp.zeros((n_dims, 2))
+        for dim_idx, (lower, upper) in periodic.items():
+            periodic_mask = periodic_mask.at[dim_idx].set(True)
+            periodic_bounds = periodic_bounds.at[dim_idx].set(jnp.array([lower, upper]))
         local_sampler = HMC(
             step_size=hmc_step_size,
             n_leapfrog=hmc_n_leapfrog,
             condition_matrix=condition_matrix,
+            periodic_mask=periodic_mask,
+            periodic_bounds=periodic_bounds,
         )
         rng_key, subkey = jax.random.split(rng_key)
         model = MaskedCouplingRQSpline(

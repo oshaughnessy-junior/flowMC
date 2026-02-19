@@ -2,7 +2,7 @@ import jax
 import jax.numpy as jnp
 from jax.scipy.stats import multivariate_normal
 from jaxtyping import Array, Bool, Float, Int, PRNGKeyArray, PyTree
-from typing import Callable
+from typing import Callable, Optional
 import logging
 from equinox import tree_at
 
@@ -16,6 +16,8 @@ class MALA(ProposalBase):
     """Metropolis-adjusted Langevin algorithm sampler class."""
 
     step_size: Float[Array, " n_dim"]
+    periodic_mask: Bool[Array, " n_dim"]
+    periodic_bounds: Float[Array, "n_dim 2"]
     ADAPTATION_RATE: float = 0.5
 
     def __repr__(self):
@@ -24,15 +26,31 @@ class MALA(ProposalBase):
     def __init__(
         self,
         step_size: Float[Array, " n_dim"],
+        periodic_mask: Optional[Bool[Array, " n_dim"]] = None,
+        periodic_bounds: Optional[Float[Array, "n_dim 2"]] = None,
     ):
         """Initialize MALA sampler.
 
         Args:
             step_size: Step size for the MALA sampler as a 1D array representing
                       diagonal elements of the step size matrix.
+            periodic_mask: Boolean mask indicating which dimensions are periodic.
+                If None, no periodic boundaries are applied.
+            periodic_bounds: Array of shape (n_dim, 2) with [lower, upper] bounds
+                for each periodic dimension. Only used where periodic_mask is True.
+                If None, no periodic boundaries are applied.
         """
         super().__init__()
         self.step_size = step_size
+        n_dim = (
+            jnp.asarray(step_size).shape[0] if jnp.asarray(step_size).ndim > 0 else 1
+        )
+        if periodic_mask is None:
+            periodic_mask = jnp.zeros(n_dim, dtype=bool)
+        if periodic_bounds is None:
+            periodic_bounds = jnp.zeros((n_dim, 2))
+        self.periodic_mask = periodic_mask
+        self.periodic_bounds = periodic_bounds
 
     def kernel(
         self,
@@ -57,6 +75,17 @@ class MALA(ProposalBase):
             - acceptance_flag: Whether the new position is accepted.
         """
 
+        periodic_mask = self.periodic_mask
+        periodic_bounds = self.periodic_bounds
+        lower = periodic_bounds[:, 0]
+        upper = periodic_bounds[:, 1]
+        period = upper - lower
+
+        def wrap_periodic(x: Float[Array, " n_dim"]) -> Float[Array, " n_dim"]:
+            """Wrap periodic dimensions into [lower, upper)."""
+            wrapped = lower + jnp.mod(x - lower, period)
+            return jnp.where(periodic_mask, wrapped, x)
+
         def body(
             carry: tuple[Float[Array, " n_dim"], Float[Array, " n_dim"], dict],
             this_key: PRNGKeyArray,
@@ -71,6 +100,7 @@ class MALA(ProposalBase):
             # MALA proposal: x' = x + (dt²/2) * ∇log p(x) + dt * ε, where ε ~ N(0, I)
             proposal = this_position + dt2 * this_d_log / 2
             proposal += dt * jax.random.normal(this_key, shape=this_position.shape)
+            proposal = wrap_periodic(proposal)
             return (proposal, dt, data), (proposal, this_log_prob, this_d_log)
 
         key1, key2 = jax.random.split(rng_key)
@@ -87,13 +117,31 @@ class MALA(ProposalBase):
             body, (position, dt, data), jnp.array([key1, key1])
         )
 
+        def periodic_diff(
+            a: Float[Array, " n_dim"], b: Float[Array, " n_dim"]
+        ) -> Float[Array, " n_dim"]:
+            """Compute minimum-image difference (a - b) for periodic dimensions."""
+            raw_diff = a - b
+            # For periodic dims, use nearest image convention
+            periodic_diff_val = raw_diff - period * jnp.round(raw_diff / period)
+            return jnp.where(periodic_mask, periodic_diff_val, raw_diff)
+
         # Metropolis-Hastings ratio: log[p(proposal)/p(position)] + log[q(position|proposal)/q(proposal|position)]
+        # For periodic dimensions, use minimum-image distances in the proposal density
         ratio = logprob[1] - logprob[0]
+
+        # Forward proposal: q(proposal | position) — how likely is the proposal given current position
+        fwd_mean = position + dt2 * d_logprob[0] / 2
+        fwd_diff = periodic_diff(proposal[0], fwd_mean)
         ratio -= multivariate_normal.logpdf(
-            proposal[0], position + dt2 * d_logprob[0] / 2, jnp.diag(dt2)
+            fwd_diff, jnp.zeros_like(fwd_diff), jnp.diag(dt2)
         )
+
+        # Backward proposal: q(position | proposal) — how likely is the current position given the proposal
+        bwd_mean = proposal[0] + dt2 * d_logprob[1] / 2
+        bwd_diff = periodic_diff(position, bwd_mean)
         ratio += multivariate_normal.logpdf(
-            position, proposal[0] + dt2 * d_logprob[1] / 2, jnp.diag(dt2)
+            bwd_diff, jnp.zeros_like(bwd_diff), jnp.diag(dt2)
         )
 
         log_uniform = jnp.log(jax.random.uniform(key2))

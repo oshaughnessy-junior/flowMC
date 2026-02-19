@@ -1,9 +1,9 @@
-from typing import Callable
+from typing import Callable, Optional
 import logging
 
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Float, Int, PRNGKeyArray, PyTree
+from jaxtyping import Array, Bool, Float, Int, PRNGKeyArray, PyTree
 from equinox import tree_at
 
 from flowMC.resource.kernel.base import ProposalBase
@@ -25,6 +25,8 @@ class HMC(ProposalBase):
     condition_matrix: Float[Array, " n_dim"]
     step_size: Float
     leapfrog_coefs: Float[Array, " n_leapfrog n_dim"]
+    periodic_mask: Bool[Array, " n_dim"]
+    periodic_bounds: Float[Array, "n_dim 2"]
     ADAPTATION_RATE: float = 0.5
 
     @property
@@ -45,6 +47,8 @@ class HMC(ProposalBase):
         condition_matrix: Float[Array, " n_dim"],
         step_size: Float = 0.1,
         n_leapfrog: Int = 10,
+        periodic_mask: Optional[Bool[Array, " n_dim"]] = None,
+        periodic_bounds: Optional[Float[Array, "n_dim 2"]] = None,
     ):
         """Initialize HMC sampler.
 
@@ -52,6 +56,11 @@ class HMC(ProposalBase):
             condition_matrix: Diagonal elements of the mass matrix as a 1D array.
             step_size: Step size for leapfrog integration.
             n_leapfrog: Number of leapfrog steps.
+            periodic_mask: Boolean mask indicating which dimensions are periodic.
+                If None, no periodic boundaries are applied.
+            periodic_bounds: Array of shape (n_dim, 2) with [lower, upper] bounds
+                for each periodic dimension. Only used where periodic_mask is True.
+                If None, no periodic boundaries are applied.
         """
         self.condition_matrix = condition_matrix
         self.step_size = step_size
@@ -60,6 +69,18 @@ class HMC(ProposalBase):
         coefs = coefs.at[0].set(jnp.array([0, 0.5]))
         coefs = coefs.at[-1].set(jnp.array([1, 0.5]))
         self.leapfrog_coefs = coefs
+
+        n_dim = (
+            jnp.asarray(condition_matrix).shape[0]
+            if jnp.asarray(condition_matrix).ndim > 0
+            else 1
+        )
+        if periodic_mask is None:
+            periodic_mask = jnp.zeros(n_dim, dtype=bool)
+        if periodic_bounds is None:
+            periodic_bounds = jnp.zeros((n_dim, 2))
+        self.periodic_mask = periodic_mask
+        self.periodic_bounds = periodic_bounds
 
     def get_initial_hamiltonian(
         self,
@@ -85,6 +106,12 @@ class HMC(ProposalBase):
         position = position + self.step_size * self.leapfrog_coefs[index][0] * jax.grad(
             kinetic
         )(momentum, metric)
+        # Wrap periodic dimensions after position update
+        lower = self.periodic_bounds[:, 0]
+        upper = self.periodic_bounds[:, 1]
+        period = upper - lower
+        wrapped = lower + jnp.mod(position - lower, period)
+        position = jnp.where(self.periodic_mask, wrapped, position)
         momentum = momentum - self.step_size * self.leapfrog_coefs[index][1] * jax.grad(
             potential
         )(position, data)
