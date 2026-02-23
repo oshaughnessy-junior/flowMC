@@ -21,7 +21,7 @@ class TestRQSplineMALABundle:
 
     def test_initialization(self):
         bundle = RQSpline_MALA_Bundle(
-            rng_key=jax.random.PRNGKey(0),
+            rng_key=jax.random.key(0),
             n_chains=2,
             n_dims=3,
             logpdf=logpdf,
@@ -61,7 +61,7 @@ class TestRQSplineMALABundle:
     def test_local_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
             RQSpline_MALA_Bundle(
-                rng_key=jax.random.PRNGKey(0),
+                rng_key=jax.random.key(0),
                 n_chains=2,
                 n_dims=3,
                 logpdf=logpdf,
@@ -76,7 +76,7 @@ class TestRQSplineMALABundle:
     def test_global_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="global_thinning.*must not exceed n_global_steps"):
             RQSpline_MALA_Bundle(
-                rng_key=jax.random.PRNGKey(0),
+                rng_key=jax.random.key(0),
                 n_chains=2,
                 n_dims=3,
                 logpdf=logpdf,
@@ -94,7 +94,7 @@ class TestRQSplineMALAPTBundle:
 
     def test_initialization(self):
         bundle = RQSpline_MALA_PT_Bundle(
-            rng_key=jax.random.PRNGKey(0),
+            rng_key=jax.random.key(0),
             n_chains=2,
             n_dims=3,
             logpdf=logpdf,
@@ -127,7 +127,7 @@ class TestRQSplineMALAPTBundle:
     def test_local_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
             RQSpline_MALA_PT_Bundle(
-                rng_key=jax.random.PRNGKey(0),
+                rng_key=jax.random.key(0),
                 n_chains=2,
                 n_dims=3,
                 logpdf=logpdf,
@@ -142,7 +142,7 @@ class TestRQSplineMALAPTBundle:
     def test_global_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="global_thinning.*must not exceed n_global_steps"):
             RQSpline_MALA_PT_Bundle(
-                rng_key=jax.random.PRNGKey(0),
+                rng_key=jax.random.key(0),
                 n_chains=2,
                 n_dims=3,
                 logpdf=logpdf,
@@ -160,7 +160,7 @@ class TestRQSplineHMCBundle:
 
     def test_initialization(self):
         bundle = RQSpline_HMC_Bundle(
-            rng_key=jax.random.PRNGKey(0),
+            rng_key=jax.random.key(0),
             n_chains=2,
             n_dims=3,
             logpdf=logpdf,
@@ -198,7 +198,7 @@ class TestRQSplineHMCBundle:
     def test_local_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
             RQSpline_HMC_Bundle(
-                rng_key=jax.random.PRNGKey(0),
+                rng_key=jax.random.key(0),
                 n_chains=2,
                 n_dims=3,
                 logpdf=logpdf,
@@ -213,7 +213,7 @@ class TestRQSplineHMCBundle:
     def test_global_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="global_thinning.*must not exceed n_global_steps"):
             RQSpline_HMC_Bundle(
-                rng_key=jax.random.PRNGKey(0),
+                rng_key=jax.random.key(0),
                 n_chains=2,
                 n_dims=3,
                 logpdf=logpdf,
@@ -231,7 +231,7 @@ class TestRQSplineHMCPTBundle:
 
     def test_initialization(self):
         bundle = RQSpline_HMC_PT_Bundle(
-            rng_key=jax.random.PRNGKey(0),
+            rng_key=jax.random.key(0),
             n_chains=2,
             n_dims=3,
             logpdf=logpdf,
@@ -264,7 +264,7 @@ class TestRQSplineHMCPTBundle:
     def test_local_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
             RQSpline_HMC_PT_Bundle(
-                rng_key=jax.random.PRNGKey(0),
+                rng_key=jax.random.key(0),
                 n_chains=2,
                 n_dims=3,
                 logpdf=logpdf,
@@ -279,7 +279,7 @@ class TestRQSplineHMCPTBundle:
     def test_global_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="global_thinning.*must not exceed n_global_steps"):
             RQSpline_HMC_PT_Bundle(
-                rng_key=jax.random.PRNGKey(0),
+                rng_key=jax.random.key(0),
                 n_chains=2,
                 n_dims=3,
                 logpdf=logpdf,
@@ -297,7 +297,7 @@ class TestRQSplineGRWBundle:
 
     def test_initialization(self):
         bundle = RQSpline_GRW_Bundle(
-            rng_key=jax.random.PRNGKey(0),
+            rng_key=jax.random.key(0),
             n_chains=2,
             n_dims=3,
             logpdf=logpdf,
@@ -335,7 +335,7 @@ class TestRQSplineGRWBundle:
     def test_local_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
             RQSpline_GRW_Bundle(
-                rng_key=jax.random.PRNGKey(0),
+                rng_key=jax.random.key(0),
                 n_chains=2,
                 n_dims=3,
                 logpdf=logpdf,
@@ -350,7 +350,7 @@ class TestRQSplineGRWBundle:
     def test_global_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="global_thinning.*must not exceed n_global_steps"):
             RQSpline_GRW_Bundle(
-                rng_key=jax.random.PRNGKey(0),
+                rng_key=jax.random.key(0),
                 n_chains=2,
                 n_dims=3,
                 logpdf=logpdf,
@@ -368,7 +368,7 @@ class TestRQSplineGRWPTBundle:
 
     def test_initialization(self):
         bundle = RQSpline_GRW_PT_Bundle(
-            rng_key=jax.random.PRNGKey(0),
+            rng_key=jax.random.key(0),
             n_chains=2,
             n_dims=3,
             logpdf=logpdf,
@@ -401,7 +401,7 @@ class TestRQSplineGRWPTBundle:
     def test_local_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
             RQSpline_GRW_PT_Bundle(
-                rng_key=jax.random.PRNGKey(0),
+                rng_key=jax.random.key(0),
                 n_chains=2,
                 n_dims=3,
                 logpdf=logpdf,
@@ -416,7 +416,7 @@ class TestRQSplineGRWPTBundle:
     def test_global_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="global_thinning.*must not exceed n_global_steps"):
             RQSpline_GRW_PT_Bundle(
-                rng_key=jax.random.PRNGKey(0),
+                rng_key=jax.random.key(0),
                 n_chains=2,
                 n_dims=3,
                 logpdf=logpdf,

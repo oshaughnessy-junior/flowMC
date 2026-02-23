@@ -3,7 +3,7 @@ from typing import Callable
 import jax
 import jax.numpy as jnp
 import optax
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 
 from flowMC.strategy.base import Strategy
 from flowMC.resource.base import Resource
@@ -67,12 +67,12 @@ class AdamOptimization(Strategy):
 
     def __call__(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         resources: dict[str, Resource],
         initial_position: Float[Array, " n_chain n_dim"],
         data: dict,
     ) -> tuple[
-        PRNGKeyArray,
+        Key,
         dict[str, Resource],
         Float[Array, " n_chain n_dim"],
     ]:
@@ -87,7 +87,7 @@ class AdamOptimization(Strategy):
 
     def optimize(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         objective: Callable,
         initial_position: Float[Array, " n_chain n_dim"],
         data: dict,
@@ -103,7 +103,7 @@ class AdamOptimization(Strategy):
         """Optimization kernel. This can be used independently of the __call__ method.
 
         Args:
-            rng_key: PRNGKeyArray
+            rng_key: Key
                 Random key for the optimization.
             objective: Callable
                 Objective function to optimize.
@@ -113,7 +113,7 @@ class AdamOptimization(Strategy):
                 Data to pass to the objective function.
 
         Returns:
-            rng_key: PRNGKeyArray
+            rng_key: Key
                 Updated random key.
             optimized_positions: Float[Array, " n_chain n_dim"]
                 Optimized positions.
@@ -137,7 +137,7 @@ class AdamOptimization(Strategy):
             return (key, params, opt_state), None
 
         def _single_optimize(
-            key: PRNGKeyArray,
+            key: Key,
             initial_position: Float[Array, " n_dim"],
         ) -> Float[Array, " n_dim"]:
             opt_state = self.solver.init(initial_position)

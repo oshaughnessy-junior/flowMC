@@ -5,7 +5,7 @@ from flowMC.resource.states import State
 from flowMC.resource.logPDF import LogPDF
 from flowMC.strategy.base import Strategy
 from flowMC.utils.logging import enable_verbose_logging
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 import logging
 import jax
 import jax.numpy as jnp
@@ -51,7 +51,7 @@ class TakeSteps(Strategy):
     def sample(
         self,
         kernel: ProposalBase,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         initial_position: Float[Array, " n_dim"],
         logpdf: LogPDF,
         data: dict,
@@ -63,12 +63,12 @@ class TakeSteps(Strategy):
 
     def __call__(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         resources: dict[str, Resource],
         initial_position: Float[Array, "n_chains n_dim"],
         data: dict,
     ) -> tuple[
-        PRNGKeyArray,
+        Key,
         dict[str, Resource],
         Float[Array, "n_chains n_dim"],
     ]:
@@ -181,7 +181,7 @@ class TakeSerialSteps(TakeSteps):
     def sample(
         self,
         kernel: ProposalBase,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         initial_position: Float[Array, " n_dim"],
         logpdf: LogPDF,
         data: dict,
@@ -208,7 +208,7 @@ class TakeGroupSteps(TakeSteps):
     def sample(
         self,
         kernel: ProposalBase,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         initial_position: Float[Array, " n_dim"],
         logpdf: LogPDF,
         data: dict,

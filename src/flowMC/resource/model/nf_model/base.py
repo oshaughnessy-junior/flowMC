@@ -6,7 +6,7 @@ import equinox as eqx
 import jax
 import jax.numpy as jnp
 import optax
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 from tqdm import tqdm, trange
 from typing_extensions import Self
 from flowMC.resource.base import Resource
@@ -59,12 +59,12 @@ class NFModel(eqx.Module, Resource):
         raise NotImplementedError
 
     @abstractmethod
-    def sample(self, rng_key: PRNGKeyArray, n_samples: int) -> Array:
+    def sample(self, rng_key: Key, n_samples: int) -> Array:
         raise NotImplementedError
 
     @abstractmethod
     def forward(
-        self, x: Float[Array, " n_dim"], key: Optional[PRNGKeyArray] = None
+        self, x: Float[Array, " n_dim"], key: Optional[Key] = None
     ) -> tuple[Float[Array, " n_dim"], Float]:
         """Forward pass of the model.
 
@@ -129,7 +129,7 @@ class NFModel(eqx.Module, Resource):
 
     def train_epoch(
         self: Self,
-        rng: PRNGKeyArray,
+        rng: Key,
         optim: optax.GradientTransformation,
         state: optax.OptState,
         data: Float[Array, "n_example n_dim"],
@@ -155,18 +155,18 @@ class NFModel(eqx.Module, Resource):
 
     def train(
         self: Self,
-        rng: PRNGKeyArray,
+        rng: Key,
         data: Array,
         optim: optax.GradientTransformation,
         state: optax.OptState,
         num_epochs: int,
         batch_size: int,
         verbose: bool = True,
-    ) -> tuple[PRNGKeyArray, Self, optax.OptState, Array]:
+    ) -> tuple[Key, Self, optax.OptState, Array]:
         """Train a normalizing flow model.
 
         Args:
-            rng (PRNGKeyArray): JAX PRNGKey.
+            rng (Key): JAX PRNGKey.
             model (eqx.Module): NF model to train.
             data (Array): Training data.
             num_epochs (int): Number of epochs to train for.
@@ -174,7 +174,7 @@ class NFModel(eqx.Module, Resource):
             verbose (bool): Whether to print progress.
 
         Returns:
-            rng (PRNGKeyArray): Updated JAX PRNGKey.
+            rng (Key): Updated JAX PRNGKey.
             model (eqx.Model): Updated NF model.
             loss_values (Array): Loss values.
         """

@@ -47,7 +47,7 @@ class TestHMC:
             n_leapfrog=5,
         )
 
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         rng_key, subkey = jax.random.split(rng_key)
 
         initial_position = jax.random.normal(subkey, shape=(n_chains, n_dims)) * 1
@@ -74,7 +74,7 @@ class TestHMC:
             n_leapfrog=5,
         )
 
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         rng_key, subkey = jax.random.split(rng_key)
         initial_position = jax.random.normal(subkey, shape=(n_chains, n_dims)) * 1
         initial_PE = jax.vmap(lambda x, data: -log_posterior(x, data))(
@@ -123,7 +123,7 @@ class TestHMC:
         )
 
         n_chains = 100
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         rng_key, subkey = jax.random.split(rng_key)
 
         initial_position = jax.random.normal(subkey, shape=(n_chains, n_dims)) * 1
@@ -175,7 +175,7 @@ class TestHMC:
             n_steps=n_local_steps,
         )
 
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         rng_key, subkey = jax.random.split(rng_key)
 
         initial_position = jax.random.normal(subkey, shape=(n_chains, n_dims)) * 1
@@ -289,7 +289,7 @@ class TestMALA:
         n_chains = 1
         MALA_obj = MALA(step_size=jnp.ones(n_dims))
 
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         rng_key, subkey = jax.random.split(rng_key)
 
         initial_position = jax.random.normal(subkey, shape=(n_chains, n_dims)) * 1
@@ -313,7 +313,7 @@ class TestMALA:
         MALA_obj = MALA(step_size=jnp.full(n_dims, 0.00001))
 
         n_chains = 100
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         rng_key, subkey = jax.random.split(rng_key)
 
         initial_position = jax.random.normal(subkey, shape=(n_chains, n_dims)) * 1
@@ -363,7 +363,7 @@ class TestMALA:
             n_steps=n_local_steps,
         )
 
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         rng_key, subkey = jax.random.split(rng_key)
 
         initial_position = jax.random.normal(subkey, shape=(n_chains, n_dims)) * 1
@@ -491,7 +491,7 @@ class TestGRW:
     def test_Gaussian_random_walk_deterministic(self):
         n_chains = 1
         GRW_obj = GaussianRandomWalk(step_size=jnp.ones(n_dims))
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         rng_key, subkey = jax.random.split(rng_key)
 
         initial_position = jax.random.normal(subkey, shape=(n_chains, n_dims)) * 1
@@ -516,7 +516,7 @@ class TestGRW:
         GRW_obj = GaussianRandomWalk(step_size=jnp.full(n_dim, 0.00001))
 
         n_chains = 100
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         rng_key, subkey = jax.random.split(rng_key)
 
         initial_position = jax.random.normal(subkey, shape=(n_chains, n_dim)) * 1
@@ -566,7 +566,7 @@ class TestGRW:
             n_steps=n_local_steps,
         )
 
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         rng_key, subkey = jax.random.split(rng_key)
 
         initial_position = jax.random.normal(subkey, shape=(n_chains, n_dims)) * 1

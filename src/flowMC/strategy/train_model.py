@@ -5,7 +5,7 @@ from flowMC.resource.buffers import Buffer
 from flowMC.resource.model.nf_model.base import NFModel
 from flowMC.resource.optimizer import Optimizer
 from flowMC.utils.logging import enable_verbose_logging
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 import jax
 import jax.numpy as jnp
 
@@ -52,12 +52,12 @@ class TrainModel(Strategy):
 
     def __call__(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         resources: dict[str, Resource],
         initial_position: Float[Array, "n_chains n_dim"],
         data: dict,
     ) -> tuple[
-        PRNGKeyArray,
+        Key,
         dict[str, Resource],
         Float[Array, "n_chains n_dim"],
     ]:

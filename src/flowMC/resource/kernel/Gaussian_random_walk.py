@@ -1,6 +1,6 @@
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Bool, Float, Int, PRNGKeyArray, PyTree
+from jaxtyping import Array, Bool, Float, Int, Key, PyTree
 from typing import Callable, Optional
 import logging
 from equinox import tree_at
@@ -53,7 +53,7 @@ class GaussianRandomWalk(ProposalBase):
 
     def kernel(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         position: Float[Array, " n_dim"],
         log_prob: Float[Array, "1"],
         logpdf: LogPDF | Callable[[Float[Array, " n_dim"], PyTree], Float[Array, "1"]],
@@ -63,7 +63,7 @@ class GaussianRandomWalk(ProposalBase):
         chain.
 
         Args:
-            rng_key (PRNGKeyArray): Jax PRNGKey
+            rng_key (Key): Jax PRNGKey
             position (Float[Array, "n_dim"]): current position of the chain
             log_prob (Float[Array, "1"]): current log-probability of the chain
             data (PyTree): data to be passed to the logpdf function

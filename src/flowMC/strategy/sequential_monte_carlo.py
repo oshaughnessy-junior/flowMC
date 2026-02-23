@@ -1,5 +1,5 @@
 from flowMC.resource.base import Resource
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 
 
 class SequentialMonteCarlo(Resource):
@@ -8,12 +8,12 @@ class SequentialMonteCarlo(Resource):
 
     def __call__(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         resources: dict[str, Resource],
         initial_position: Float[Array, "n_chains n_dim"],
         data: dict,
     ) -> tuple[
-        PRNGKeyArray,
+        Key,
         dict[str, Resource],
         Float[Array, "n_chains n_dim"],
     ]:

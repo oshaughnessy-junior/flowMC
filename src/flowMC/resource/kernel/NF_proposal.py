@@ -1,7 +1,7 @@
 import jax
 import jax.numpy as jnp
 from jax import random
-from jaxtyping import Array, Float, Int, PRNGKeyArray, PyTree
+from jaxtyping import Array, Float, Int, Key, PyTree
 from typing import Callable
 import equinox as eqx
 
@@ -27,7 +27,7 @@ class NFProposal(ProposalBase):
 
     def kernel(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         position: Float[Array, " n_dim"],
         log_prob: Float[Array, "1"],
         logpdf: LogPDF | Callable[[Float[Array, " n_dim"], PyTree], Float[Array, "1"]],
@@ -97,7 +97,7 @@ class NFProposal(ProposalBase):
 
     def sample_flow(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         n_steps: int,
     ):
         proposal_position = self.model.sample(rng_key, n_steps)

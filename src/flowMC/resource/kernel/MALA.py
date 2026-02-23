@@ -1,7 +1,7 @@
 import jax
 import jax.numpy as jnp
 from jax.scipy.stats import multivariate_normal
-from jaxtyping import Array, Bool, Float, Int, PRNGKeyArray, PyTree
+from jaxtyping import Array, Bool, Float, Int, Key, PyTree
 from typing import Callable, Optional
 import logging
 from equinox import tree_at
@@ -54,7 +54,7 @@ class MALA(ProposalBase):
 
     def kernel(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         position: Float[Array, " n_dim"],
         log_prob: Float[Array, "1"],
         logpdf: LogPDF | Callable[[Float[Array, " n_dim"], PyTree], Float[Array, "1"]],
@@ -63,7 +63,7 @@ class MALA(ProposalBase):
         """Metropolis-adjusted Langevin algorithm kernel for a single chain.
 
         Args:
-            rng_key (PRNGKeyArray): JAX PRNGKey for stochastic operations.
+            rng_key (Key): JAX PRNGKey for stochastic operations.
             position (Float[Array, " n_dim"]): Current position of the chain.
             log_prob (Float[Array, "1"]): Current log-probability of the chain.
             logpdf: Log probability density function to evaluate.
@@ -88,7 +88,7 @@ class MALA(ProposalBase):
 
         def body(
             carry: tuple[Float[Array, " n_dim"], Float[Array, " n_dim"], dict],
-            this_key: PRNGKeyArray,
+            this_key: Key,
         ) -> tuple[
             tuple[Float[Array, " n_dim"], Float[Array, " n_dim"], dict],
             tuple[Float[Array, " n_dim"], Float[Array, "1"], Float[Array, " n_dim"]],

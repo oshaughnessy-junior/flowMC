@@ -1,5 +1,5 @@
 import jax.numpy as jnp
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 from typing import Optional
 import logging
 
@@ -16,7 +16,7 @@ class Sampler:
     Args:
         n_dim (int): Dimension of the parameter space.
         n_chains (int): Number of chains to sample.
-        rng_key (PRNGKeyArray): Jax PRNGKey.
+        rng_key (Key): Jax PRNGKey.
         logpdf (Callable[[Float[Array, "n_dim"], dict], Float):
             Log probability function.
         resources (dict[str, Resource]): Resources to be used by the sampler.
@@ -28,7 +28,7 @@ class Sampler:
     # Essential parameters
     n_dim: int
     n_chains: int
-    rng_key: PRNGKeyArray
+    rng_key: Key
     resources: dict[str, Resource]
     strategies: dict[str, Strategy]
     strategy_order: Optional[list[str]]
@@ -41,7 +41,7 @@ class Sampler:
         self,
         n_dim: int,
         n_chains: int,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         resources: Optional[dict[str, Resource]] = None,
         strategies: Optional[dict[str, Strategy]] = None,
         strategy_order: Optional[list[str]] = None,

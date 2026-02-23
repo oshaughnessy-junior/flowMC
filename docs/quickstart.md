@@ -69,7 +69,7 @@ rq_spline_n_layers = 3
 data = {"data": jnp.arange(n_dims).astype(jnp.float32)}
 
 # Initializing the strategy bundle
-rng_key = jax.random.PRNGKey(42)
+rng_key = jax.random.key(42)
 rng_key, subkey = jax.random.split(rng_key)
 bundle = RQSpline_MALA_Bundle(
     subkey,

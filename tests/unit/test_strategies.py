@@ -38,7 +38,7 @@ class TestOptimizationStrategies:
     )
 
     def test_Adam_optimization(self):
-        key = jax.random.PRNGKey(42)
+        key = jax.random.key(42)
 
         key, subkey = jax.random.split(key)
         initial_position = (
@@ -55,7 +55,7 @@ class TestOptimizationStrategies:
         )
 
     def test_standalone_optimize(self):
-        key = jax.random.PRNGKey(42)
+        key = jax.random.key(42)
 
         key, subkey = jax.random.split(key)
         initial_position = (
@@ -122,7 +122,7 @@ class TestLocalStep:
             ["test_position", "test_log_prob", "test_acceptance"],
             self.n_batch,
         )
-        key = jax.random.PRNGKey(42)
+        key = jax.random.key(42)
         positions = self.test_position.data[:, 0]
         for _ in range(self.n_batch):
             key, subkey1, subkey2 = jax.random.split(key, 3)
@@ -168,7 +168,7 @@ class TestLocalStep:
             self.n_batch,
             chain_batch_size=chain_batch_size,
         )
-        key = jax.random.PRNGKey(42)
+        key = jax.random.key(42)
         positions = self.test_position.data[:, 0]
         # Run the strategy, which should use batching internally
         _, _, final_positions = strategy(
@@ -196,13 +196,13 @@ class TestNFStrategies:
     n_bins = 8
 
     def initialize(self):
-        rng_key, rng_subkey = jax.random.split(jax.random.PRNGKey(0), 2)
+        rng_key, rng_subkey = jax.random.split(jax.random.key(0), 2)
         model = MaskedCouplingRQSpline(
             self.n_features,
             self.n_layers,
             self.hidden_layes,
             self.n_bins,
-            jax.random.PRNGKey(10),
+            jax.random.key(10),
         )
 
         test_data = Buffer("test_data", (self.n_chains, self.n_steps, self.n_dims), 1)
@@ -236,7 +236,7 @@ class TestNFStrategies:
             verbose=True,
         )
 
-        key = jax.random.PRNGKey(42)
+        key = jax.random.key(42)
 
         print(resources["model"].data_mean, resources["model"].data_cov)
         key, resources, positions = strategy(
@@ -260,7 +260,7 @@ class TestNFStrategies:
             self.n_layers,
             self.hidden_layes,
             self.n_bins,
-            jax.random.PRNGKey(10),
+            jax.random.key(10),
         )
 
         proposal = NFProposal(model, n_NFproposal_batch_size=5)
@@ -293,7 +293,7 @@ class TestNFStrategies:
             ["test_position", "test_log_prob", "test_acceptance"],
             n_steps=11,
         )
-        key = jax.random.PRNGKey(42)
+        key = jax.random.key(42)
         positions = test_position.data[:, 0]
         print(test_position.data[:, :, 0])
         strategy(
@@ -328,7 +328,7 @@ class TestNFStrategies:
             self.n_layers,
             self.hidden_layes,
             self.n_bins,
-            jax.random.PRNGKey(10),
+            jax.random.key(10),
         )
 
         NFProposal(model)
@@ -349,7 +349,7 @@ class TestTemperingStrategies:
             n_temps=self.n_temps,
         )
 
-        key = jax.random.PRNGKey(42)
+        key = jax.random.key(42)
         key, subkey = jax.random.split(key)
 
         initial_position = jax.random.normal(subkey, shape=(self.n_chains, self.n_dims))
@@ -566,7 +566,7 @@ class TestThinning:
             thinning=thinning,
         )
 
-        key = jax.random.PRNGKey(42)
+        key = jax.random.key(42)
         initial_position = jax.random.normal(key, shape=(self.n_chains, self.n_dims))
 
         _, resources, _ = strategy(
@@ -630,7 +630,7 @@ class TestThinning:
             thinning=thinning,
         )
 
-        key = jax.random.PRNGKey(42)
+        key = jax.random.key(42)
         initial_position = jax.random.normal(key, shape=(self.n_chains, self.n_dims))
 
         _, resources, _ = strategy(
@@ -686,7 +686,7 @@ class TestThinning:
             thinning=thinning,
         )
 
-        key = jax.random.PRNGKey(42)
+        key = jax.random.key(42)
         initial_position = jax.random.normal(key, shape=(self.n_chains, self.n_dims))
 
         _, resources, _ = strategy(
@@ -814,7 +814,7 @@ class TestAdaptStepSize:
         }
         
         initial_step_size = self.mala_kernel.step_size
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         initial_position = jnp.zeros((self.n_chains, self.n_dims))
         
         # Apply adaptation
@@ -847,7 +847,7 @@ class TestAdaptStepSize:
         }
         
         initial_step_size = self.mala_kernel.step_size
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         initial_position = jnp.zeros((self.n_chains, self.n_dims))
         
         # First 3 calls should skip adaptation
@@ -894,7 +894,7 @@ class TestAdaptStepSize:
                 "local_accs_training": self.local_accs_training,
             }
             
-            rng_key = jax.random.PRNGKey(42)
+            rng_key = jax.random.key(42)
             initial_position = jnp.zeros((self.n_chains, self.n_dims))
             
             # Should not raise any errors
@@ -928,7 +928,7 @@ class TestAdaptStepSize:
             "local_accs_training": self.local_accs_training,
         }
         
-        rng_key = jax.random.PRNGKey(42)
+        rng_key = jax.random.key(42)
         initial_position = jnp.zeros((self.n_chains, self.n_dims))
         
         # Should not raise errors and should produce finite step sizes

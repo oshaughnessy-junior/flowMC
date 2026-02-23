@@ -33,7 +33,7 @@ n_leapfrog = 10
 data = {"data": jnp.arange(5)}
 
 # Initialize positions
-rng_key = jax.random.PRNGKey(42)
+rng_key = jax.random.key(42)
 rng_key, subkey = jax.random.split(rng_key)
 initial_position = jax.random.normal(subkey, shape=(n_chains, n_dims)) * 1
 
