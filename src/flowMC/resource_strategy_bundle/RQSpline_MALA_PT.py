@@ -63,6 +63,7 @@ class RQSpline_MALA_PT_Bundle(ResourceStrategyBundle):
         local_thinning: int = 1,
         global_thinning: int = 1,
         n_NFproposal_batch_size: int = 10000,
+        adapt_step_size: bool = True,
         history_window: int = 100,
         n_temperatures: int = 5,
         max_temperature: float = 5.0,
@@ -371,7 +372,7 @@ class RQSpline_MALA_PT_Bundle(ResourceStrategyBundle):
         training_phase = [
             "parallel_tempering",
             "local_stepper",
-            "adapt_local_sampler",
+            *(("adapt_local_sampler",) if adapt_step_size else []),
             "update_global_step",
             "model_trainer",
             "update_model",

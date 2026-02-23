@@ -57,6 +57,7 @@ class RQSpline_HMC_Bundle(ResourceStrategyBundle):
         local_thinning: int = 1,
         global_thinning: int = 1,
         n_NFproposal_batch_size: int = 10000,
+        adapt_step_size: bool = True,
         history_window: int = 100,
         verbose: bool = False,
     ):
@@ -301,7 +302,7 @@ class RQSpline_HMC_Bundle(ResourceStrategyBundle):
 
         training_phase = [
             "local_stepper",
-            "adapt_local_sampler",
+            *(("adapt_local_sampler",) if adapt_step_size else []),
             "update_global_step",
             "model_trainer",
             "update_model",
