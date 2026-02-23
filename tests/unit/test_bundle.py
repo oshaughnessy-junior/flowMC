@@ -106,6 +106,11 @@ class TestRQSplineMALAPTBundle:
         )
         assert repr(bundle) == "RQSpline MALA PT Bundle"
 
+        # Without periodic, mask should be all-False
+        kernel = bundle.resources["local_sampler"]
+        assert isinstance(kernel, MALA)
+        assert not jnp.any(kernel.periodic_mask)
+
         # With periodic, mask should be set correctly
         periodic = {1: (0.0, 3.14)}
         bundle_p = RQSpline_MALA_PT_Bundle(
@@ -243,6 +248,11 @@ class TestRQSplineHMCPTBundle:
         )
         assert repr(bundle) == "RQSpline HMC PT Bundle"
 
+        # Without periodic, mask should be all-False
+        kernel = bundle.resources["local_sampler"]
+        assert isinstance(kernel, HMC)
+        assert not jnp.any(kernel.periodic_mask)
+
         # With periodic, mask should be set correctly
         periodic = {1: (0.0, 3.14)}
         bundle_p = RQSpline_HMC_PT_Bundle(
@@ -379,6 +389,11 @@ class TestRQSplineGRWPTBundle:
             n_epochs=3,
         )
         assert repr(bundle) == "RQSpline GRW PT Bundle"
+
+        # Without periodic, mask should be all-False
+        kernel = bundle.resources["local_sampler"]
+        assert isinstance(kernel, GaussianRandomWalk)
+        assert not jnp.any(kernel.periodic_mask)
 
         # With periodic, mask should be set correctly
         periodic = {1: (0.0, 3.14)}
