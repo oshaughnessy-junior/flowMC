@@ -224,7 +224,7 @@ class TestHMC:
         def run_chain(rng_key, init_pos, init_lp):
             def step(carry, key):
                 pos, lp = carry
-                new_pos, new_lp, acc = HMC_obj.kernel(key, pos, lp, logpdf, None)
+                new_pos, new_lp, _acc = HMC_obj.kernel(key, pos, lp, logpdf, None)
                 return (new_pos, new_lp), new_pos
 
             keys = jax.random.split(rng_key, n_steps)
