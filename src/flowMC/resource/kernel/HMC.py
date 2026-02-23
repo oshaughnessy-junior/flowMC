@@ -3,7 +3,7 @@ import logging
 
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Float, Int, PRNGKeyArray, PyTree
+from jaxtyping import Array, Float, Int, Key, PyTree
 from equinox import tree_at
 
 from flowMC.resource.kernel.base import ProposalBase
@@ -67,7 +67,7 @@ class HMC(ProposalBase):
         kinetic: Callable[
             [Float[Array, " n_dim"], Float[Array, " n_dim"]], Float[Array, "1"]
         ],
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         position: Float[Array, " n_dim"],
         data: PyTree,
     ):
@@ -109,7 +109,7 @@ class HMC(ProposalBase):
 
     def kernel(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         position: Float[Array, " n_dim"],
         log_prob: Float[Array, "1"],
         logpdf: LogPDF | Callable[[Float[Array, " n_dim"], PyTree], Float[Array, "1"]],

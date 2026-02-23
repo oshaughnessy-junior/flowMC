@@ -1,7 +1,7 @@
 import logging
 
 import jax.numpy as jnp
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 
 from flowMC.resource.base import Resource
 from flowMC.resource.buffers import Buffer
@@ -68,12 +68,12 @@ class AdaptStepSize(Strategy):
 
     def __call__(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         resources: dict[str, Resource],
         initial_position: Float[Array, "n_chains n_dim"],
         data: dict,
     ) -> tuple[
-        PRNGKeyArray,
+        Key,
         dict[str, Resource],
         Float[Array, "n_chains n_dim"],
     ]:

@@ -33,7 +33,7 @@ step_size = 0.1
 data = {"data": jnp.arange(5)}
 
 # Initialize random key and position
-rng_key = jax.random.PRNGKey(43)
+rng_key = jax.random.key(43)
 rng_key, subkey = jax.random.split(rng_key)
 initial_position = jax.random.normal(subkey, shape=(n_chains, n_dims)) * 1
 

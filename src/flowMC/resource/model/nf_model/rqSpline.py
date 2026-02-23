@@ -5,7 +5,7 @@ import logging
 import equinox as eqx
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 
 from flowMC.resource.model.nf_model.base import NFModel
 from flowMC.resource.model.common import (
@@ -372,7 +372,7 @@ class MaskedCouplingRQSpline(NFModel):
         num_layers (int): Number of layers in the conditioner.
         hidden_size (Sequence[int]): Hidden size of the conditioner.
         num_bins (int): Number of bins in the spline.
-        key (PRNGKeyArray): Random key for initialization.
+        key (Key): Random key for initialization.
         spline_range (Sequence[float]): Range of the spline. Defaults to (-10.0, 10.0).
 
     Properties:
@@ -398,7 +398,7 @@ class MaskedCouplingRQSpline(NFModel):
         n_layers: int,
         hidden_size: list[int],
         num_bins: int,
-        key: PRNGKeyArray,
+        key: Key,
         spline_range: tuple[float, float] = (-10.0, 10.0),
         **kwargs,
     ):
@@ -427,7 +427,7 @@ class MaskedCouplingRQSpline(NFModel):
 
         self._n_features = n_features
 
-        def make_layer(i: int, key: PRNGKeyArray):
+        def make_layer(i: int, key: Key):
             mlp = MLP(
                 [n_features] + hidden_size + [n_features * (num_bins * 3 + 1)],
                 key,
@@ -453,7 +453,7 @@ class MaskedCouplingRQSpline(NFModel):
     def forward(
         self,
         x: Float[Array, " n_dim"],
-        key: Optional[PRNGKeyArray] = None,
+        key: Optional[Key] = None,
         condition: Optional[Float[Array, " n_condition"]] = None,
     ) -> tuple[Float[Array, " n_dim"], Float]:
         log_det = 0.0
@@ -490,9 +490,7 @@ class MaskedCouplingRQSpline(NFModel):
         (x, log_det), _ = jax.lax.scan(f, (x, log_det), dynamics, reverse=True)
         return x, log_det
 
-    def sample(
-        self, rng_key: PRNGKeyArray, n_samples: int
-    ) -> Float[Array, "n_samples n_dim"]:
+    def sample(self, rng_key: Key, n_samples: int) -> Float[Array, "n_samples n_dim"]:
         samples = self.base_dist.sample(rng_key, n_samples)
         samples = jax.vmap(self.inverse)(samples)[0]
         samples = samples * jnp.sqrt(jnp.diag(self.data_cov)) + self.data_mean

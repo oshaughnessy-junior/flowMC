@@ -28,7 +28,7 @@ class TestLogPDF:
         logpdf = LogPDF(
             self.posterior, [Variable("x_" + str(i), True) for i in range(self.n_dims)]
         )
-        rng_key = jax.random.PRNGKey(0)
+        rng_key = jax.random.key(0)
         n_chains = 1
         n_steps = 1
         initial_position = jnp.zeros((n_chains, self.n_dims))

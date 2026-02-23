@@ -1,5 +1,5 @@
 import equinox as eqx
-from jaxtyping import PRNGKeyArray, Float, Array, PyTree
+from jaxtyping import Key, Float, Array, PyTree
 import optax
 from flowMC.resource.base import Resource
 import logging
@@ -24,7 +24,7 @@ class Solver(eqx.Module):
         self.method = method
 
     def sample(
-        self, rng_key: PRNGKeyArray, n_samples: int, dt: Float = 1e-1
+        self, rng_key: Key, n_samples: int, dt: Float = 1e-1
     ) -> Float[Array, "n_samples n_dims"]:
         """Sample points from the solver.
         This sovles the ODE forward, i.e. from the prior to the posterior.
@@ -168,7 +168,7 @@ class FlowMatchingModel(eqx.Module, Resource):
             self._data_cov = jnp.eye(n_features)
 
     def sample(
-        self, rng_key: PRNGKeyArray, num_samples: int, dt: Float = 1e-1
+        self, rng_key: Key, num_samples: int, dt: Float = 1e-1
     ) -> Float[Array, " n_dim"]:
         rng_key, subkey = jax.random.split(rng_key)
         samples = self.solver.sample(subkey, num_samples, dt=dt)
@@ -217,7 +217,7 @@ class FlowMatchingModel(eqx.Module, Resource):
 
     def train_epoch(
         self: Self,
-        rng: PRNGKeyArray,
+        rng: Key,
         optim: optax.GradientTransformation,
         state: optax.OptState,
         data: tuple[
@@ -257,7 +257,7 @@ class FlowMatchingModel(eqx.Module, Resource):
 
     def train(
         self: Self,
-        rng: PRNGKeyArray,
+        rng: Key,
         data: tuple[
             Float[Array, "n_example n_dim"],
             Float[Array, "n_example n_dim"],
@@ -268,11 +268,11 @@ class FlowMatchingModel(eqx.Module, Resource):
         num_epochs: int,
         batch_size: int,
         verbose: bool = True,
-    ) -> tuple[PRNGKeyArray, Self, optax.OptState, Array]:
+    ) -> tuple[Key, Self, optax.OptState, Array]:
         """Train a normalizing flow model.
 
         Args:
-            rng (PRNGKeyArray): JAX PRNGKey.
+            rng (Key): JAX PRNGKey.
             model (eqx.Module): NF model to train.
             data (Array): Training data.
             num_epochs (int): Number of epochs to train for.
@@ -280,7 +280,7 @@ class FlowMatchingModel(eqx.Module, Resource):
             verbose (bool): Whether to print progress.
 
         Returns:
-            rng (PRNGKeyArray): Updated JAX PRNGKey.
+            rng (Key): Updated JAX PRNGKey.
             model (eqx.Model): Updated NF model.
             loss_values (Array): Loss values.
         """

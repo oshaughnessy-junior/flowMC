@@ -2,7 +2,7 @@ from typing import Callable
 
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 import equinox as eqx
 
 from flowMC.resource.base import Resource
@@ -34,7 +34,7 @@ class RQSpline_MALA_Bundle(ResourceStrategyBundle):
 
     def __init__(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         n_chains: int,
         n_dims: int,
         logpdf: Callable[[Float[Array, " n_dim"], dict], Float],
@@ -199,12 +199,12 @@ class RQSpline_MALA_Bundle(ResourceStrategyBundle):
         )
 
         def reset_steppers(
-            rng_key: PRNGKeyArray,
+            rng_key: Key,
             resources: dict[str, Resource],
             initial_position: Float[Array, "n_chains n_dim"],
             data: dict,
         ) -> tuple[
-            PRNGKeyArray,
+            Key,
             dict[str, Resource],
             Float[Array, "n_chains n_dim"],
         ]:
@@ -233,12 +233,12 @@ class RQSpline_MALA_Bundle(ResourceStrategyBundle):
         )
 
         def update_model(
-            rng_key: PRNGKeyArray,
+            rng_key: Key,
             resources: dict[str, Resource],
             initial_position: Float[Array, "n_chains n_dim"],
             data: dict,
         ) -> tuple[
-            PRNGKeyArray,
+            Key,
             dict[str, Resource],
             Float[Array, "n_chains n_dim"],
         ]:
