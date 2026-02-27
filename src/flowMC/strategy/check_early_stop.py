@@ -70,8 +70,7 @@ class CheckEarlyStop(Strategy):
                 stopping can trigger. Must be >= 1 so that at least one
                 comparison can be made.
             patience: Number of consecutive loops where the acceptance rate
-                must be stable before triggering early stop. Defaults to 1
-                (trigger immediately on first stable check).
+                must be stable before triggering early stop. Defaults to 3.
             verbose: Whether to log detailed information.
         """
         self.state_name = state_name
