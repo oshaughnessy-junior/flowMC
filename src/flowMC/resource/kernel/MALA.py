@@ -46,7 +46,7 @@ class MALA(ProposalBase):
 
         Args:
             rng_key (Key): JAX PRNGKey for stochastic operations.
-            position (Float[Array, " n_dim"]): Current position of the chain.
+            position (Float[Array, "n_dim"]): Current position of the chain.
             log_prob (Float[Array, "1"]): Current log-probability of the chain.
             logpdf: Log probability density function to evaluate.
             data (PyTree): Additional data to pass to the logpdf function.

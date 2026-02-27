@@ -61,7 +61,7 @@ class Distribution(eqx.Module):
     @abstractmethod
     def sample(
         self, rng_key: Key, n_samples: int
-    ) -> Float[Array, " n_samples n_features"]:
+    ) -> Float[Array, "n_samples n_features"]:
         raise NotImplementedError
 
 
@@ -287,7 +287,7 @@ class Gaussian(Distribution):
 
     def sample(
         self, rng_key: Key, n_samples: int
-    ) -> Float[Array, " n_samples n_features"]:
+    ) -> Float[Array, "n_samples n_features"]:
         return jax.random.multivariate_normal(
             rng_key, self.mean, self.cov, (n_samples,)
         )
@@ -309,7 +309,7 @@ class Composable(Distribution):
 
     def sample(
         self, rng_key: Key, n_samples: int
-    ) -> Float[Array, " n_samples n_features"]:
+    ) -> Float[Array, "n_samples n_features"]:
         samples = {}
         for dist, (key, _) in zip(self.distributions, self.partitions.items()):
             rng_key, sub_key = jax.random.split(rng_key)

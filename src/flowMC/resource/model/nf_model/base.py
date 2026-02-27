@@ -22,7 +22,7 @@ class NFModel(eqx.Module, Resource):
 
     _n_features: int
     _data_mean: Float[Array, " n_dim"]
-    _data_cov: Float[Array, " n_dim n_dim"]
+    _data_cov: Float[Array, "n_dim n_dim"]
 
     @property
     def n_features(self):
@@ -108,7 +108,7 @@ class NFModel(eqx.Module, Resource):
         x: Float[Array, "n_batch n_dim"],
         optim: optax.GradientTransformation,
         state: optax.OptState,
-    ) -> tuple[Float[Array, " 1"], Self, optax.OptState]:
+    ) -> tuple[Float[Array, "1"], Self, optax.OptState]:
         """Train for a single step.
 
         Args:
