@@ -19,6 +19,7 @@ from flowMC.strategy.train_model import TrainModel
 from flowMC.strategy.update_state import UpdateState
 from flowMC.strategy.parallel_tempering import ParallelTempering
 from flowMC.strategy.adapt_step_size import AdaptStepSize
+from flowMC.strategy.check_early_stop import CheckEarlyStop
 
 from flowMC.resource_strategy_bundle.base import ResourceStrategyBundle
 import logging
@@ -64,6 +65,10 @@ class RQSpline_MALA_PT_Bundle(ResourceStrategyBundle):
         global_thinning: int = 1,
         n_NFproposal_batch_size: int = 10000,
         adapt_step_size: bool = True,
+        early_stopping: bool = False,
+        early_stopping_tolerance: float = 0.05,
+        early_stopping_patience: int = 3,
+        early_stopping_min_acceptance: float = 0.1,
         history_window: int = 100,
         n_temperatures: int = 5,
         max_temperature: float = 5.0,
@@ -168,6 +173,7 @@ class RQSpline_MALA_PT_Bundle(ResourceStrategyBundle):
                 "target_local_accs": "local_accs_training",
                 "target_global_accs": "global_accs_training",
                 "training": True,
+                "early_stopped": False,
             },
             name="sampler_state",
         )
@@ -348,7 +354,18 @@ class RQSpline_MALA_PT_Bundle(ResourceStrategyBundle):
             acceptance_buffer_key="target_local_accs",
             target_acceptance_rate=0.574,
             acceptance_window=n_local_steps,
-            n_loops_skip=int(0.15 * n_training_loops),
+            n_loops_skip=3,
+            verbose=verbose,
+        )
+
+        check_early_stop = CheckEarlyStop(
+            state_name="sampler_state",
+            acceptance_buffer_key="target_global_accs",
+            relative_tolerance=early_stopping_tolerance,
+            acceptance_window=n_global_steps * 3 // global_thinning,
+            n_loops_skip=3,
+            patience=early_stopping_patience,
+            min_acceptance_rate=early_stopping_min_acceptance,
             verbose=verbose,
         )
 
@@ -364,6 +381,7 @@ class RQSpline_MALA_PT_Bundle(ResourceStrategyBundle):
             "parallel_tempering": parallel_tempering_strat,
             "initialize_tempered_positions": initialize_tempered_positions_lambda,
             "adapt_local_sampler": adapt_local_sampler,
+            "check_early_stop": check_early_stop,
         }
 
         training_phase = [
@@ -375,6 +393,7 @@ class RQSpline_MALA_PT_Bundle(ResourceStrategyBundle):
             "update_model",
             "global_stepper",
             "update_local_step",
+            *(("check_early_stop",) if early_stopping else []),
         ]
         production_phase = [
             "parallel_tempering",

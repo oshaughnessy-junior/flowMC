@@ -13,7 +13,7 @@ TBuffer = TypeVar("TBuffer", bound="Buffer")
 
 class Buffer(Resource):
     name: str
-    data: Float[Array, " ..."]
+    data: Float[Array, "..."]
     cursor: int = 0
     cursor_dim: int = 0
 
@@ -61,7 +61,7 @@ class Buffer(Resource):
 
     def load_resource(self: TBuffer, path: str) -> TBuffer:
         data = np.load(path)
-        buffer: Float[Array, " ..."] = data["data"]
+        buffer: Float[Array, "..."] = data["data"]
         result = Buffer(data["name"], buffer.shape)
         result.data = buffer
         return result  # type: ignore

@@ -22,7 +22,7 @@ class NFModel(eqx.Module, Resource):
 
     _n_features: int
     _data_mean: Float[Array, " n_dim"]
-    _data_cov: Float[Array, " n_dim n_dim"]
+    _data_cov: Float[Array, "n_dim n_dim"]
 
     @property
     def n_features(self):
@@ -108,7 +108,7 @@ class NFModel(eqx.Module, Resource):
         x: Float[Array, "n_batch n_dim"],
         optim: optax.GradientTransformation,
         state: optax.OptState,
-    ) -> tuple[Float[Array, " 1"], Self, optax.OptState]:
+    ) -> tuple[Float[Array, "1"], Self, optax.OptState]:
         """Train for a single step.
 
         Args:
@@ -167,16 +167,18 @@ class NFModel(eqx.Module, Resource):
 
         Args:
             rng (Key): JAX PRNGKey.
-            model (eqx.Module): NF model to train.
             data (Array): Training data.
+            optim (optax.GradientTransformation): Optimizer.
+            state (optax.OptState): Optimizer state.
             num_epochs (int): Number of epochs to train for.
             batch_size (int): Batch size.
             verbose (bool): Whether to print progress.
 
         Returns:
             rng (Key): Updated JAX PRNGKey.
-            model (eqx.Model): Updated NF model.
-            loss_values (Array): Loss values.
+            model (Self): Best model found during training.
+            state (optax.OptState): Optimizer state corresponding to the best model.
+            loss_values (Array): Loss values for each epoch.
         """
         loss_values = jnp.zeros(num_epochs)
         if verbose:

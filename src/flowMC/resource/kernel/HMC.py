@@ -24,7 +24,7 @@ class HMC(ProposalBase):
 
     condition_matrix: Float[Array, " n_dim"]
     step_size: Float
-    leapfrog_coefs: Float[Array, " n_leapfrog n_dim"]
+    leapfrog_coefs: Float[Array, "n_leapfrog n_dim"]
     periodic_mask: Bool[Array, " n_dim"]
     periodic_bounds: Float[Array, "n_dim 2"]
     ADAPTATION_RATE: float = 0.5

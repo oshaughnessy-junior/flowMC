@@ -64,7 +64,7 @@ class Solver(eqx.Module):
 
         def model_wrapper(
             t: Float, x: Float[Array, " n_dims"], args: PyTree
-        ) -> list[Float[Array, " ..."]]:
+        ) -> list[Float[Array, "..."]]:
             """Wrapper for the model to be used in the ODE solver.
 
             The output shape should be [n_dims, 1].
@@ -133,7 +133,7 @@ class FlowMatchingModel(eqx.Module, Resource):
     solver: Solver
     path: Path
     _data_mean: Float[Array, " n_dim"]
-    _data_cov: Float[Array, " n_dim n_dim"]
+    _data_cov: Float[Array, "n_dim n_dim"]
 
     @property
     def n_features(self):
@@ -152,7 +152,7 @@ class FlowMatchingModel(eqx.Module, Resource):
         solver: Solver,
         path: Path,
         data_mean: Optional[Float[Array, " n_dim"]] = None,
-        data_cov: Optional[Float[Array, " n_dim n_dim"]] = None,
+        data_cov: Optional[Float[Array, "n_dim n_dim"]] = None,
     ):
         self.solver = solver
         self.path = path
@@ -208,7 +208,7 @@ class FlowMatchingModel(eqx.Module, Resource):
         dx_t: Float[Array, "n_batch n_dim"],
         optim: optax.GradientTransformation,
         state: optax.OptState,
-    ) -> tuple[Float[Array, " 1"], Self, optax.OptState]:
+    ) -> tuple[Float[Array, "1"], Self, optax.OptState]:
         logger.debug("Compiling training step")
         loss, grads = model.loss_fn(x_t, t, dx_t)
         updates, state = optim.update(grads, state, model)  # type: ignore
@@ -269,20 +269,22 @@ class FlowMatchingModel(eqx.Module, Resource):
         batch_size: int,
         verbose: bool = True,
     ) -> tuple[Key, Self, optax.OptState, Array]:
-        """Train a normalizing flow model.
+        """Train a flow matching model.
 
         Args:
             rng (Key): JAX PRNGKey.
-            model (eqx.Module): NF model to train.
-            data (Array): Training data.
+            data (tuple): Training data as (x0, x1, t) batches.
+            optim (optax.GradientTransformation): Optimizer.
+            state (optax.OptState): Optimizer state.
             num_epochs (int): Number of epochs to train for.
             batch_size (int): Batch size.
             verbose (bool): Whether to print progress.
 
         Returns:
             rng (Key): Updated JAX PRNGKey.
-            model (eqx.Model): Updated NF model.
-            loss_values (Array): Loss values.
+            model (Self): Best model found during training.
+            state (optax.OptState): Optimizer state corresponding to the best model.
+            loss_values (Array): Loss values for each epoch.
         """
         loss_values = jnp.zeros(num_epochs)
         if verbose:

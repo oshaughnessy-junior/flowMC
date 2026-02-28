@@ -17,12 +17,12 @@ class ProposalBase(eqx.Module, Resource):
     def kernel(
         self,
         rng_key: Key,
-        position: Float[Array, "nstep  n_dim"],
+        position: Float[Array, "nstep n_dim"],
         log_prob: Float[Array, "nstep 1"],
         logpdf: LogPDF | Callable[[Float[Array, " n_dim"], PyTree], Float[Array, "1"]],
         data: PyTree,
     ) -> tuple[
-        Float[Array, "nstep  n_dim"], Float[Array, "nstep 1"], Int[Array, "n_step 1"]
+        Float[Array, "nstep n_dim"], Float[Array, "nstep 1"], Int[Array, "n_step 1"]
     ]:
         """Kernel for one step in the proposal cycle."""
 
