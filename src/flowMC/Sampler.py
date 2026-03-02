@@ -1,10 +1,11 @@
 import jax.numpy as jnp
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 from typing import Optional
 import logging
 
 from flowMC.strategy.base import Strategy
 from flowMC.resource.base import Resource
+from flowMC.resource.states import State
 from flowMC.resource_strategy_bundle.base import ResourceStrategyBundle
 
 logger = logging.getLogger(__name__)
@@ -16,7 +17,7 @@ class Sampler:
     Args:
         n_dim (int): Dimension of the parameter space.
         n_chains (int): Number of chains to sample.
-        rng_key (PRNGKeyArray): Jax PRNGKey.
+        rng_key (Key): Jax PRNGKey.
         logpdf (Callable[[Float[Array, "n_dim"], dict], Float):
             Log probability function.
         resources (dict[str, Resource]): Resources to be used by the sampler.
@@ -28,7 +29,7 @@ class Sampler:
     # Essential parameters
     n_dim: int
     n_chains: int
-    rng_key: PRNGKeyArray
+    rng_key: Key
     resources: dict[str, Resource]
     strategies: dict[str, Strategy]
     strategy_order: Optional[list[str]]
@@ -41,7 +42,7 @@ class Sampler:
         self,
         n_dim: int,
         n_chains: int,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         resources: Optional[dict[str, Resource]] = None,
         strategies: Optional[dict[str, Strategy]] = None,
         strategy_order: Optional[list[str]] = None,
@@ -94,7 +95,31 @@ class Sampler:
         rng_key = self.rng_key
         last_step = initial_position
         assert isinstance(self.strategy_order, list)
+
+        skip_to_production = False
+
         for strategy in self.strategy_order:
+            # Early-stop skip: jump over remaining training strategies
+            # until we reach "reset_steppers" (the training→production boundary)
+            if skip_to_production:
+                if strategy == "reset_steppers":
+                    skip_to_production = False
+                    # Clear the early_stopped flag on all State resources so the
+                    # post-strategy scan does not re-enable skip_to_production for
+                    # update_state and every subsequent production strategy.
+                    for resource in self.resources.values():
+                        if (
+                            isinstance(resource, State)
+                            and "early_stopped" in resource.data
+                        ):
+                            resource.data["early_stopped"] = False
+                    logger.info(
+                        "[Early stop] Remaining training loops skipped. "
+                        "Starting production phase."
+                    )
+                else:
+                    continue
+
             if strategy not in self.strategies:
                 raise ValueError(
                     f"Invalid strategy name '{strategy}' provided. "
@@ -105,6 +130,19 @@ class Sampler:
                 self.resources,
                 last_step,
             ) = self.strategies[strategy](rng_key, self.resources, last_step, data)
+
+            # Check if any State resource has early_stopped flag set
+            if not skip_to_production:
+                for resource in self.resources.values():
+                    if isinstance(resource, State) and resource.data.get(
+                        "early_stopped", False
+                    ):
+                        skip_to_production = True
+                        logger.info(
+                            "[Early stop] Early stop triggered — "
+                            "skipping remaining training loops."
+                        )
+                        break
 
     # TODO: Implement quick access and summary functions that operates on buffer
 

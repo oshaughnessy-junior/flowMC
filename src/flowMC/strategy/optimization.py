@@ -3,7 +3,7 @@ from typing import Callable
 import jax
 import jax.numpy as jnp
 import optax
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 
 from flowMC.strategy.base import Strategy
 from flowMC.resource.base import Resource
@@ -23,7 +23,7 @@ class AdamOptimization(Strategy):
             Learning rate for the optimization.
         noise_level: float = 10
             Variance of the noise added to the gradients.
-        bounds: Float[Array, " n_dim 2"] = jnp.array([[-jnp.inf, jnp.inf]])
+        bounds: Float[Array, "n_dim 2"] = jnp.array([[-jnp.inf, jnp.inf]])
             Bounds for the optimization. The optimization will be projected to these bounds.
             If bounds has shape (1, 2), it will be broadcast to all dimensions. For n_dim > 1,
             passing a (1, 2) array applies the same bound to every dimension. To specify different
@@ -34,7 +34,7 @@ class AdamOptimization(Strategy):
     n_steps: int = 100
     learning_rate: float = 1e-2
     noise_level: float = 10
-    bounds: Float[Array, " n_dim 2"] = jnp.array([[-jnp.inf, jnp.inf]])
+    bounds: Float[Array, "n_dim 2"] = jnp.array([[-jnp.inf, jnp.inf]])
 
     def __repr__(self):
         return "AdamOptimization"
@@ -45,7 +45,7 @@ class AdamOptimization(Strategy):
         n_steps: int = 100,
         learning_rate: float = 1e-2,
         noise_level: float = 10,
-        bounds: Float[Array, " n_dim 2"] = jnp.array([[-jnp.inf, jnp.inf]]),
+        bounds: Float[Array, "n_dim 2"] = jnp.array([[-jnp.inf, jnp.inf]]),
     ):
         self.logpdf = logpdf
         self.n_steps = n_steps
@@ -67,14 +67,14 @@ class AdamOptimization(Strategy):
 
     def __call__(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         resources: dict[str, Resource],
-        initial_position: Float[Array, " n_chain n_dim"],
+        initial_position: Float[Array, "n_chain n_dim"],
         data: dict,
     ) -> tuple[
-        PRNGKeyArray,
+        Key,
         dict[str, Resource],
-        Float[Array, " n_chain n_dim"],
+        Float[Array, "n_chain n_dim"],
     ]:
         def loss_fn(params: Float[Array, " n_dim"], data: dict) -> Float:
             return -self.logpdf(params, data)
@@ -87,9 +87,9 @@ class AdamOptimization(Strategy):
 
     def optimize(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         objective: Callable,
-        initial_position: Float[Array, " n_chain n_dim"],
+        initial_position: Float[Array, "n_chain n_dim"],
         data: dict,
     ):
         # Validate bounds shape against n_dim
@@ -103,21 +103,21 @@ class AdamOptimization(Strategy):
         """Optimization kernel. This can be used independently of the __call__ method.
 
         Args:
-            rng_key: PRNGKeyArray
+            rng_key: Key
                 Random key for the optimization.
             objective: Callable
                 Objective function to optimize.
-            initial_position: Float[Array, " n_chain n_dim"]
+            initial_position: Float[Array, "n_chain n_dim"]
                 Initial positions for the optimization.
             data: dict
                 Data to pass to the objective function.
 
         Returns:
-            rng_key: PRNGKeyArray
+            rng_key: Key
                 Updated random key.
-            optimized_positions: Float[Array, " n_chain n_dim"]
+            optimized_positions: Float[Array, "n_chain n_dim"]
                 Optimized positions.
-            final_log_prob: Float[Array, " n_chain"]
+            final_log_prob: Float[Array, "n_chain"]
                 Final log-probabilities of the optimized positions.
         """
         grad_fn = jax.jit(jax.grad(objective))
@@ -137,9 +137,9 @@ class AdamOptimization(Strategy):
             return (key, params, opt_state), None
 
         def _single_optimize(
-            key: PRNGKeyArray,
-            initial_position: Float[Array, " n_dim"],
-        ) -> Float[Array, " n_dim"]:
+            key: Key,
+            initial_position: Float[Array, "n_dim"],
+        ) -> Float[Array, "n_dim"]:
             opt_state = self.solver.init(initial_position)
 
             (key, params, opt_state), _ = jax.lax.scan(

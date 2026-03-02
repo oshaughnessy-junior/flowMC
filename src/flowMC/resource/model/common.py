@@ -3,7 +3,7 @@ from typing import Callable, List, Tuple, Optional
 import equinox as eqx
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 from abc import abstractmethod
 
 
@@ -51,7 +51,7 @@ class Distribution(eqx.Module):
     def __init__(self):
         raise NotImplementedError
 
-    def __call__(self, x: Array, key: Optional[PRNGKeyArray] = None) -> Array:
+    def __call__(self, x: Array, key: Optional[Key] = None) -> Array:
         return self.log_prob(x)
 
     @abstractmethod
@@ -60,8 +60,8 @@ class Distribution(eqx.Module):
 
     @abstractmethod
     def sample(
-        self, rng_key: PRNGKeyArray, n_samples: int
-    ) -> Float[Array, " n_samples n_features"]:
+        self, rng_key: Key, n_samples: int
+    ) -> Float[Array, "n_samples n_features"]:
         raise NotImplementedError
 
 
@@ -71,7 +71,7 @@ class MLP(eqx.Module):
     Args:
         shape (List[int]): Shape of the MLP. The first element is the input dimension,
           the last element is the output dimension.
-        key (PRNGKeyArray): Random key.
+        key (Key): Random key.
 
     Attributes:
         layers (List): List of layers.
@@ -84,7 +84,7 @@ class MLP(eqx.Module):
     def __init__(
         self,
         shape: List[int],
-        key: PRNGKeyArray,
+        key: Key,
         scale: Float = 1e-4,
         activation: Callable = jax.nn.relu,
         use_bias: bool = True,
@@ -286,8 +286,8 @@ class Gaussian(Distribution):
         return jax.scipy.stats.multivariate_normal.logpdf(x, self.mean, self.cov)
 
     def sample(
-        self, rng_key: PRNGKeyArray, n_samples: int
-    ) -> Float[Array, " n_samples n_features"]:
+        self, rng_key: Key, n_samples: int
+    ) -> Float[Array, "n_samples n_features"]:
         return jax.random.multivariate_normal(
             rng_key, self.mean, self.cov, (n_samples,)
         )
@@ -308,8 +308,8 @@ class Composable(Distribution):
         return log_prob
 
     def sample(
-        self, rng_key: PRNGKeyArray, n_samples: int
-    ) -> Float[Array, " n_samples n_features"]:
+        self, rng_key: Key, n_samples: int
+    ) -> Float[Array, "n_samples n_features"]:
         samples = {}
         for dist, (key, _) in zip(self.distributions, self.partitions.items()):
             rng_key, sub_key = jax.random.split(rng_key)

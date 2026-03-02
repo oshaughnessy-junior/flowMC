@@ -1,5 +1,5 @@
 import equinox as eqx
-from jaxtyping import PRNGKeyArray, Float, Array, PyTree
+from jaxtyping import Key, Float, Array, PyTree
 import optax
 from flowMC.resource.base import Resource
 import logging
@@ -24,7 +24,7 @@ class Solver(eqx.Module):
         self.method = method
 
     def sample(
-        self, rng_key: PRNGKeyArray, n_samples: int, dt: Float = 1e-1
+        self, rng_key: Key, n_samples: int, dt: Float = 1e-1
     ) -> Float[Array, "n_samples n_dims"]:
         """Sample points from the solver.
         This sovles the ODE forward, i.e. from the prior to the posterior.
@@ -64,7 +64,7 @@ class Solver(eqx.Module):
 
         def model_wrapper(
             t: Float, x: Float[Array, " n_dims"], args: PyTree
-        ) -> list[Float[Array, " ..."]]:
+        ) -> list[Float[Array, "..."]]:
             """Wrapper for the model to be used in the ODE solver.
 
             The output shape should be [n_dims, 1].
@@ -133,7 +133,7 @@ class FlowMatchingModel(eqx.Module, Resource):
     solver: Solver
     path: Path
     _data_mean: Float[Array, " n_dim"]
-    _data_cov: Float[Array, " n_dim n_dim"]
+    _data_cov: Float[Array, "n_dim n_dim"]
 
     @property
     def n_features(self):
@@ -152,7 +152,7 @@ class FlowMatchingModel(eqx.Module, Resource):
         solver: Solver,
         path: Path,
         data_mean: Optional[Float[Array, " n_dim"]] = None,
-        data_cov: Optional[Float[Array, " n_dim n_dim"]] = None,
+        data_cov: Optional[Float[Array, "n_dim n_dim"]] = None,
     ):
         self.solver = solver
         self.path = path
@@ -168,8 +168,8 @@ class FlowMatchingModel(eqx.Module, Resource):
             self._data_cov = jnp.eye(n_features)
 
     def sample(
-        self, rng_key: PRNGKeyArray, num_samples: int, dt: Float = 1e-1
-    ) -> Float[Array, " n_dim"]:
+        self, rng_key: Key, num_samples: int, dt: Float = 1e-1
+    ) -> Float[Array, "n_samples n_dim"]:
         rng_key, subkey = jax.random.split(rng_key)
         samples = self.solver.sample(subkey, num_samples, dt=dt)
         std = jnp.sqrt(jnp.diag(self.data_cov))
@@ -208,7 +208,7 @@ class FlowMatchingModel(eqx.Module, Resource):
         dx_t: Float[Array, "n_batch n_dim"],
         optim: optax.GradientTransformation,
         state: optax.OptState,
-    ) -> tuple[Float[Array, " 1"], Self, optax.OptState]:
+    ) -> tuple[Float[Array, "1"], Self, optax.OptState]:
         logger.debug("Compiling training step")
         loss, grads = model.loss_fn(x_t, t, dx_t)
         updates, state = optim.update(grads, state, model)  # type: ignore
@@ -217,7 +217,7 @@ class FlowMatchingModel(eqx.Module, Resource):
 
     def train_epoch(
         self: Self,
-        rng: PRNGKeyArray,
+        rng: Key,
         optim: optax.GradientTransformation,
         state: optax.OptState,
         data: tuple[
@@ -257,7 +257,7 @@ class FlowMatchingModel(eqx.Module, Resource):
 
     def train(
         self: Self,
-        rng: PRNGKeyArray,
+        rng: Key,
         data: tuple[
             Float[Array, "n_example n_dim"],
             Float[Array, "n_example n_dim"],
@@ -268,21 +268,23 @@ class FlowMatchingModel(eqx.Module, Resource):
         num_epochs: int,
         batch_size: int,
         verbose: bool = True,
-    ) -> tuple[PRNGKeyArray, Self, optax.OptState, Array]:
-        """Train a normalizing flow model.
+    ) -> tuple[Key, Self, optax.OptState, Array]:
+        """Train a flow matching model.
 
         Args:
-            rng (PRNGKeyArray): JAX PRNGKey.
-            model (eqx.Module): NF model to train.
-            data (Array): Training data.
+            rng (Key): JAX PRNGKey.
+            data (tuple): Training data as (x0, x1, t) batches.
+            optim (optax.GradientTransformation): Optimizer.
+            state (optax.OptState): Optimizer state.
             num_epochs (int): Number of epochs to train for.
             batch_size (int): Batch size.
             verbose (bool): Whether to print progress.
 
         Returns:
-            rng (PRNGKeyArray): Updated JAX PRNGKey.
-            model (eqx.Model): Updated NF model.
-            loss_values (Array): Loss values.
+            rng (Key): Updated JAX PRNGKey.
+            model (Self): Best model found during training.
+            state (optax.OptState): Optimizer state corresponding to the best model.
+            loss_values (Array): Loss values for each epoch.
         """
         loss_values = jnp.zeros(num_epochs)
         if verbose:

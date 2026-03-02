@@ -32,7 +32,7 @@ def get_simple_mlp(n_input, n_hidden, n_output, key):
 class TestSolver:
     @pytest.fixture
     def solver(self):
-        key = jax.random.PRNGKey(0)
+        key = jax.random.key(0)
         n_dim = 3
         n_hidden = 4
         mlp = get_simple_mlp(
@@ -98,7 +98,7 @@ class TestPathAndScheduler:
 class TestFlowMatchingModel:
     @pytest.fixture
     def model(self):
-        key = jax.random.PRNGKey(42)
+        key = jax.random.key(42)
         n_dim = 2
         n_hidden = 8
         mlp = get_simple_mlp(

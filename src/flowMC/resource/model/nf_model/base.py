@@ -6,7 +6,7 @@ import equinox as eqx
 import jax
 import jax.numpy as jnp
 import optax
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 from tqdm import tqdm, trange
 from typing_extensions import Self
 from flowMC.resource.base import Resource
@@ -22,7 +22,7 @@ class NFModel(eqx.Module, Resource):
 
     _n_features: int
     _data_mean: Float[Array, " n_dim"]
-    _data_cov: Float[Array, " n_dim n_dim"]
+    _data_cov: Float[Array, "n_dim n_dim"]
 
     @property
     def n_features(self):
@@ -59,12 +59,12 @@ class NFModel(eqx.Module, Resource):
         raise NotImplementedError
 
     @abstractmethod
-    def sample(self, rng_key: PRNGKeyArray, n_samples: int) -> Array:
+    def sample(self, rng_key: Key, n_samples: int) -> Array:
         raise NotImplementedError
 
     @abstractmethod
     def forward(
-        self, x: Float[Array, " n_dim"], key: Optional[PRNGKeyArray] = None
+        self, x: Float[Array, " n_dim"], key: Optional[Key] = None
     ) -> tuple[Float[Array, " n_dim"], Float]:
         """Forward pass of the model.
 
@@ -108,7 +108,7 @@ class NFModel(eqx.Module, Resource):
         x: Float[Array, "n_batch n_dim"],
         optim: optax.GradientTransformation,
         state: optax.OptState,
-    ) -> tuple[Float[Array, " 1"], Self, optax.OptState]:
+    ) -> tuple[Float[Array, "1"], Self, optax.OptState]:
         """Train for a single step.
 
         Args:
@@ -129,7 +129,7 @@ class NFModel(eqx.Module, Resource):
 
     def train_epoch(
         self: Self,
-        rng: PRNGKeyArray,
+        rng: Key,
         optim: optax.GradientTransformation,
         state: optax.OptState,
         data: Float[Array, "n_example n_dim"],
@@ -155,28 +155,30 @@ class NFModel(eqx.Module, Resource):
 
     def train(
         self: Self,
-        rng: PRNGKeyArray,
+        rng: Key,
         data: Array,
         optim: optax.GradientTransformation,
         state: optax.OptState,
         num_epochs: int,
         batch_size: int,
         verbose: bool = True,
-    ) -> tuple[PRNGKeyArray, Self, optax.OptState, Array]:
+    ) -> tuple[Key, Self, optax.OptState, Array]:
         """Train a normalizing flow model.
 
         Args:
-            rng (PRNGKeyArray): JAX PRNGKey.
-            model (eqx.Module): NF model to train.
+            rng (Key): JAX PRNGKey.
             data (Array): Training data.
+            optim (optax.GradientTransformation): Optimizer.
+            state (optax.OptState): Optimizer state.
             num_epochs (int): Number of epochs to train for.
             batch_size (int): Batch size.
             verbose (bool): Whether to print progress.
 
         Returns:
-            rng (PRNGKeyArray): Updated JAX PRNGKey.
-            model (eqx.Model): Updated NF model.
-            loss_values (Array): Loss values.
+            rng (Key): Updated JAX PRNGKey.
+            model (Self): Best model found during training.
+            state (optax.OptState): Optimizer state corresponding to the best model.
+            loss_values (Array): Loss values for each epoch.
         """
         loss_values = jnp.zeros(num_epochs)
         if verbose:

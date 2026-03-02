@@ -4,7 +4,7 @@ import logging
 import equinox as eqx
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 
 from flowMC.resource.model.nf_model.base import NFModel
 from flowMC.resource.model.common import (
@@ -41,7 +41,7 @@ class AffineCoupling(eqx.Module):
         n_features: int,
         n_hidden: int,
         mask: Array,
-        key: PRNGKeyArray,
+        key: Key,
         dt: Float = 1,
         scale: Float = 1e-4,
     ):
@@ -122,7 +122,7 @@ class RealNVP(NFModel):
     affine_coupling: List[MaskedCouplingLayer]
     _n_features: int
     _data_mean: Float[Array, " n_dim"]
-    _data_cov: Float[Array, " n_dim n_dim"]
+    _data_cov: Float[Array, "n_dim n_dim"]
 
     @property
     def n_features(self) -> int:
@@ -137,7 +137,7 @@ class RealNVP(NFModel):
         return jax.lax.stop_gradient(jnp.atleast_2d(self._data_cov))
 
     def __init__(
-        self, n_features: int, n_layers: int, n_hidden: int, key: PRNGKeyArray, **kwargs
+        self, n_features: int, n_layers: int, n_hidden: int, key: Key, **kwargs
     ):
         if kwargs.get("base_dist") is not None:
             self.base_dist = kwargs.get("base_dist")  # type: ignore
@@ -162,7 +162,7 @@ class RealNVP(NFModel):
 
         self._n_features = n_features
 
-        def make_layer(i: int, key: PRNGKeyArray):
+        def make_layer(i: int, key: Key):
             key, scale_subkey, shift_subkey = jax.random.split(key, 3)
             mask = jnp.ones(n_features)
             mask = mask.at[: int(n_features / 2)].set(0)
@@ -177,7 +177,7 @@ class RealNVP(NFModel):
     def forward(
         self,
         x: Float[Array, " n_dim"],
-        key: Optional[PRNGKeyArray] = None,
+        key: Optional[Key] = None,
         condition: Optional[Float[Array, " n_condition"]] = None,
     ) -> tuple[Float[Array, " n_dim"], Float]:
         log_det = 0.0
@@ -210,7 +210,7 @@ class RealNVP(NFModel):
         (x, log_det), _ = jax.lax.scan(f, (x, log_det), dynamics, reverse=True)
         return x, log_det
 
-    def sample(self, rng_key: PRNGKeyArray, n_samples: int) -> Array:
+    def sample(self, rng_key: Key, n_samples: int) -> Array:
         samples = self.base_dist.sample(rng_key, n_samples)
         samples = jax.vmap(self.inverse)(samples)[0]
         samples = samples * jnp.sqrt(jnp.diag(self.data_cov)) + self.data_mean

@@ -2,7 +2,7 @@ from typing import Callable
 
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Float, PRNGKeyArray
+from jaxtyping import Array, Float, Key
 import equinox as eqx
 
 from flowMC.resource.base import Resource
@@ -19,6 +19,7 @@ from flowMC.strategy.train_model import TrainModel
 from flowMC.strategy.update_state import UpdateState
 from flowMC.strategy.parallel_tempering import ParallelTempering
 from flowMC.strategy.adapt_step_size import AdaptStepSize
+from flowMC.strategy.check_early_stop import CheckEarlyStop
 
 from flowMC.resource_strategy_bundle.base import ResourceStrategyBundle
 import logging
@@ -42,7 +43,8 @@ class RQSpline_GRW_PT_Bundle(ResourceStrategyBundle):
 
     def __init__(
         self,
-        rng_key: PRNGKeyArray,
+        # --- Required ---
+        rng_key: Key,
         n_chains: int,
         n_dims: int,
         logpdf: Callable[[Float[Array, " n_dim"], dict], Float],
@@ -51,22 +53,34 @@ class RQSpline_GRW_PT_Bundle(ResourceStrategyBundle):
         n_training_loops: int,
         n_production_loops: int,
         n_epochs: int,
+        # --- Local sampler ---
         grw_step_size: Float | Float[Array, " n_dim"] = 1e-1,
-        chain_batch_size: int = 0,
+        adapt_step_size: bool = True,
+        # --- Normalizing flow model ---
         rq_spline_hidden_units: list[int] = [32, 32],
         rq_spline_n_bins: int = 8,
         rq_spline_n_layers: int = 4,
+        n_NFproposal_batch_size: int = 10000,
+        # --- Training ---
         learning_rate: float = 1e-3,
         batch_size: int = 10000,
         n_max_examples: int = 10000,
+        history_window: int = 100,
+        # --- Sampling execution ---
+        chain_batch_size: int = 0,
         local_thinning: int = 1,
         global_thinning: int = 1,
-        n_NFproposal_batch_size: int = 10000,
-        history_window: int = 100,
+        # --- Parallel tempering ---
         n_temperatures: int = 5,
         max_temperature: float = 5.0,
         n_tempered_steps: int = -1,
         logprior: Callable[[Float[Array, " n_dim"], dict], Float] = lambda x, _: 0.0,
+        # --- Early stopping ---
+        early_stopping: bool = False,
+        early_stopping_tolerance: float = 0.05,
+        early_stopping_patience: int = 3,
+        early_stopping_min_acceptance: float = 0.1,
+        # --- Misc ---
         verbose: bool = False,
     ):
         if local_thinning > n_local_steps:
@@ -154,6 +168,7 @@ class RQSpline_GRW_PT_Bundle(ResourceStrategyBundle):
                 "target_local_accs": "local_accs_training",
                 "target_global_accs": "global_accs_training",
                 "training": True,
+                "early_stopped": False,
             },
             name="sampler_state",
         )
@@ -232,12 +247,12 @@ class RQSpline_GRW_PT_Bundle(ResourceStrategyBundle):
         )
 
         def reset_steppers(
-            rng_key: PRNGKeyArray,
+            rng_key: Key,
             resources: dict[str, Resource],
             initial_position: Float[Array, "n_chains n_dim"],
             data: dict,
         ) -> tuple[
-            PRNGKeyArray,
+            Key,
             dict[str, Resource],
             Float[Array, "n_chains n_dim"],
         ]:
@@ -253,25 +268,23 @@ class RQSpline_GRW_PT_Bundle(ResourceStrategyBundle):
         )
 
         update_global_step = Lambda(
-            lambda rng_key,
-            resources,
-            initial_position,
-            data: global_stepper.set_current_position(local_stepper.current_position)
+            lambda rng_key, resources, initial_position, data: (
+                global_stepper.set_current_position(local_stepper.current_position)
+            )
         )
         update_local_step = Lambda(
-            lambda rng_key,
-            resources,
-            initial_position,
-            data: local_stepper.set_current_position(global_stepper.current_position)
+            lambda rng_key, resources, initial_position, data: (
+                local_stepper.set_current_position(global_stepper.current_position)
+            )
         )
 
         def update_model(
-            rng_key: PRNGKeyArray,
+            rng_key: Key,
             resources: dict[str, Resource],
             initial_position: Float[Array, "n_chains n_dim"],
             data: dict,
         ) -> tuple[
-            PRNGKeyArray,
+            Key,
             dict[str, Resource],
             Float[Array, "n_chains n_dim"],
         ]:
@@ -306,12 +319,12 @@ class RQSpline_GRW_PT_Bundle(ResourceStrategyBundle):
         )
 
         def initialize_tempered_positions(
-            rng_key: PRNGKeyArray,
+            rng_key: Key,
             resources: dict[str, Resource],
             initial_position: Float[Array, "n_chains n_dim"],
             data: dict,
         ) -> tuple[
-            PRNGKeyArray,
+            Key,
             dict[str, Resource],
             Float[Array, "n_chains n_dim"],
         ]:
@@ -322,11 +335,10 @@ class RQSpline_GRW_PT_Bundle(ResourceStrategyBundle):
             return rng_key, resources, initial_position
 
         initialize_tempered_positions_lambda = Lambda(
-            lambda rng_key,
-            resources,
-            initial_position,
-            data: initialize_tempered_positions(
-                rng_key, resources, initial_position, data
+            lambda rng_key, resources, initial_position, data: (
+                initialize_tempered_positions(
+                    rng_key, resources, initial_position, data
+                )
             )
         )
 
@@ -338,7 +350,18 @@ class RQSpline_GRW_PT_Bundle(ResourceStrategyBundle):
             acceptance_buffer_key="target_local_accs",
             target_acceptance_rate=0.234,
             acceptance_window=n_local_steps,
-            n_loops_skip=int(0.15 * n_training_loops),
+            n_loops_skip=3,
+            verbose=verbose,
+        )
+
+        check_early_stop = CheckEarlyStop(
+            state_name="sampler_state",
+            acceptance_buffer_key="target_global_accs",
+            relative_tolerance=early_stopping_tolerance,
+            acceptance_window=n_global_steps * 3 // global_thinning,
+            n_loops_skip=3,
+            patience=early_stopping_patience,
+            min_acceptance_rate=early_stopping_min_acceptance,
             verbose=verbose,
         )
 
@@ -354,17 +377,19 @@ class RQSpline_GRW_PT_Bundle(ResourceStrategyBundle):
             "parallel_tempering": parallel_tempering_strat,
             "initialize_tempered_positions": initialize_tempered_positions_lambda,
             "adapt_local_sampler": adapt_local_sampler,
+            "check_early_stop": check_early_stop,
         }
 
         training_phase = [
             "parallel_tempering",
             "local_stepper",
-            "adapt_local_sampler",
+            *(("adapt_local_sampler",) if adapt_step_size else []),
             "update_global_step",
             "model_trainer",
             "update_model",
             "global_stepper",
             "update_local_step",
+            *(("check_early_stop",) if early_stopping else []),
         ]
         production_phase = [
             "parallel_tempering",

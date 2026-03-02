@@ -5,7 +5,7 @@ from flowMC.resource.states import State
 from flowMC.resource.logPDF import TemperedPDF
 from flowMC.strategy.base import Strategy
 from flowMC.utils.logging import enable_verbose_logging
-from jaxtyping import Array, Float, PRNGKeyArray, Int, Bool
+from jaxtyping import Array, Float, Key, Int, Bool
 import logging
 import jax
 import jax.numpy as jnp
@@ -50,12 +50,12 @@ class ParallelTempering(Strategy):
 
     def __call__(
         self,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         resources: dict[str, Resource],
         initial_position: Float[Array, "n_chains n_dims"],
         data: dict,
     ) -> tuple[
-        PRNGKeyArray,
+        Key,
         dict[str, Resource],
         Float[Array, "n_chains n_dim"],
     ]:
@@ -136,7 +136,7 @@ class ParallelTempering(Strategy):
         self,
         kernel: ProposalBase,
         carry: tuple[
-            PRNGKeyArray,
+            Key,
             Float[Array, " n_dims"],
             Float[Array, "1"],
             TemperedPDF,
@@ -146,7 +146,7 @@ class ParallelTempering(Strategy):
         aux,
     ) -> tuple[
         tuple[
-            PRNGKeyArray,
+            Key,
             Float[Array, " n_dims"],
             Float[Array, "1"],
             TemperedPDF,
@@ -166,24 +166,24 @@ class ParallelTempering(Strategy):
         Args:
             kernel (ProposalBase): The kernel to use.
             carry (tuple): The current state of the chain.
-                - key (PRNGKeyArray): jax random key.
-                - position (Float[Array, " n_dims"]): Current position of the chain.
+                - key (Key): jax random key.
+                - position (Float[Array, "n_dims"]): Current position of the chain.
                 - log_prob (Float[Array, "1"]): Current log probability of the chain.
                 - logpdf (TemperedPDF): The tempered LogPDF class.
-                - temperatures (Float[Array, " n_temps"]): Array of temperatures.
+                - temperatures (Float[Array, "n_temps"]): Array of temperatures.
                 - data (dict): Additional data to pass to the logpdf.
             aux (None): Not used.
         Returns:
             tuple: Updated carry and the result of the kernel step.
                 - carry (tuple): Updated state of the chain.
-                    - key (PRNGKeyArray): jax random key.
-                    - position (Float[Array, " n_dims"]): New position of the chain.
+                    - key (Key): jax random key.
+                    - position (Float[Array, "n_dims"]): New position of the chain.
                     - log_prob (Float[Array, "1"]): New log probability of the chain.
                     - logpdf (TemperedPDF): The tempered LogPDF class.
-                    - temperatures (Float[Array, " n_temps"]): Array of temperatures.
+                    - temperatures (Float[Array, "n_temps"]): Array of temperatures.
                     - data (dict): Additional data to pass to the logpdf.
                 - result (tuple): Result of the kernel step.
-                    - position (Float[Array, " n_dims"]): New position of the chain.
+                    - position (Float[Array, "n_dims"]): New position of the chain.
                     - log_prob (Float[Array, "1"]): New log probability of the chain.
                     - do_accept (Int[Array, "1"]): Whether the new position is accepted.
         """
@@ -205,7 +205,7 @@ class ParallelTempering(Strategy):
     def _individal_step(
         self,
         kernel: ProposalBase,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         positions: Float[Array, " n_dims"],
         logpdf: TemperedPDF,
         temperatures: Float[Array, " n_temps"],
@@ -220,15 +220,15 @@ class ParallelTempering(Strategy):
 
         Args:
             kernel (ProposalBase): The kernel to use for proposing new positions.
-            rng_key (PRNGKeyArray): jax random key for reproducibility.
-            positions (Float[Array, " n_dims"]): Current positions of the chain.
+            rng_key (Key): jax random key for reproducibility.
+            positions (Float[Array, "n_dims"]): Current positions of the chain.
             logpdf (TemperedPDF): The tempered log probability density function.
-            temperatures (Float[Array, " n_temps"]): Array of temperatures.
+            temperatures (Float[Array, "n_temps"]): Array of temperatures.
             data (dict): Additional data to pass to the logpdf.
 
         Returns:
             tuple:
-                - positions (Float[Array, " n_dims"]): Updated positions of the chain.
+                - positions (Float[Array, "n_dims"]): Updated positions of the chain.
                 - log_probs (Float[Array, "1"]): Log probabilities of the chain.
                 - do_accept (Int[Array, "1"]): Acceptance flag for the new position.
         """
@@ -253,7 +253,7 @@ class ParallelTempering(Strategy):
     def _ensemble_step(
         self,
         kernel: ProposalBase,
-        rng_key: PRNGKeyArray,
+        rng_key: Key,
         positions: Float[Array, "n_temps n_dims"],
         logpdf: TemperedPDF,
         temperatures: Float[Array, " n_temps"],
@@ -268,17 +268,17 @@ class ParallelTempering(Strategy):
 
         Args:
             kernel (ProposalBase): The kernel to use for proposing new positions.
-            rng_key (PRNGKeyArray): Random key for reproducibility.
+            rng_key (Key): Random key for reproducibility.
             positions (Float[Array, "n_temps n_dims"]): Current positions for all temperatures.
             logpdf (TemperedPDF): The tempered log probability density function.
-            temperatures (Float[Array, " n_temps"]): Array of temperatures.
+            temperatures (Float[Array, "n_temps"]): Array of temperatures.
             data (dict): Additional data to pass to the logpdf.
 
         Returns:
             tuple:
                 - positions (Float[Array, "n_temps n_dims"]): Updated positions for all temperatures.
-                - log_probs (Float[Array, " n_temps"]): Log probabilities for all temperatures.
-                - do_accept (Int[Array, " n_temps"]): Acceptance flags for each temperature.
+                - log_probs (Float[Array, "n_temps"]): Log probabilities for all temperatures.
+                - do_accept (Int[Array, "n_temps"]): Acceptance flags for each temperature.
         """
 
         logger.debug("Taking individual steps in parallel tempering")
@@ -293,7 +293,7 @@ class ParallelTempering(Strategy):
     def _exchange_step_body(
         self,
         carry: tuple[
-            PRNGKeyArray,
+            Key,
             Float[Array, "n_temps n_dims"],
             Float[Array, " n_temps"],
             int,
@@ -304,7 +304,7 @@ class ParallelTempering(Strategy):
         aux: None,
     ) -> tuple[
         tuple[
-            PRNGKeyArray,
+            Key,
             Float[Array, "n_temps n_dims"],
             Float[Array, " n_temps"],
             int,
@@ -321,7 +321,7 @@ class ParallelTempering(Strategy):
             log_probs[idx] - log_probs[idx + 1]
         )
         log_uniform = jnp.log(jax.random.uniform(subkey))
-        do_accept: Bool[Array, " 1"] = log_uniform < ratio
+        do_accept: Bool[Array, "1"] = log_uniform < ratio
         swapped = jnp.flip(
             jax.lax.dynamic_slice_in_dim(positions, idx, 2, axis=0), axis=0
         )
@@ -358,7 +358,7 @@ class ParallelTempering(Strategy):
 
     def _exchange(
         self,
-        key: PRNGKeyArray,
+        key: Key,
         positions: Float[Array, "n_temps n_dims"],
         logpdf: TemperedPDF,
         temperatures: Float[Array, " n_temps"],
@@ -372,17 +372,17 @@ class ParallelTempering(Strategy):
         Perform exchange steps between adjacent temperatures.
 
         Args:
-            key (PRNGKeyArray): jax random key for reproducibility.
+            key (Key): jax random key for reproducibility.
             positions (Float[Array, "n_temps n_dims"]): Current positions for all temperatures.
             logpdf (TemperedPDF): The tempered log probability density function.
-            temperatures (Float[Array, " n_temps"]): Array of temperatures.
+            temperatures (Float[Array, "n_temps"]): Array of temperatures.
             data (dict): Additional data to pass to the logpdf.
 
         Returns:
             tuple:
                 - positions (Float[Array, "n_temps n_dims"]): Updated positions for all temperatures.
-                - log_probs (Float[Array, " n_temps"]): Log probabilities for all temperatures.
-                - do_accept (Int[Array, " n_temps - 1"]): Acceptance flags for each temperature.
+                - log_probs (Float[Array, "n_temps"]): Log probabilities for all temperatures.
+                - do_accept (Int[Array, "n_temps - 1"]): Acceptance flags for each temperature.
         """
 
         logger.debug("Exchanging walkers between temperatures")
@@ -400,17 +400,17 @@ class ParallelTempering(Strategy):
     def _adapt_temperature(
         self,
         temperatures: Float[Array, " n_temps"],
-        do_accept: Int[Array, " n_chains n_temps 1"],
+        do_accept: Int[Array, "n_chains n_temps 1"],
     ) -> Float[Array, " n_temps"]:
         """
         Adapt the temperatures based on the acceptance rates.
 
         Args:
-            temperatures (Float[Array, " n_temps"]): Current temperatures.
-            do_accept (Int[Array, " n_chains n_temps 1"]): Acceptance flags for each chain and temperature.
+            temperatures (Float[Array, "n_temps"]): Current temperatures.
+            do_accept (Int[Array, "n_chains n_temps 1"]): Acceptance flags for each chain and temperature.
 
         Returns:
-            Float[Array, " n_temps"]: Updated temperatures.
+            Float[Array, "n_temps"]: Updated temperatures.
 
         TODO: The adaptation now let's the temperature to go above the maximum temperature.
         Need to add a check to prevent this.
