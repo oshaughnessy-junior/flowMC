@@ -169,7 +169,7 @@ class FlowMatchingModel(eqx.Module, Resource):
 
     def sample(
         self, rng_key: Key, num_samples: int, dt: Float = 1e-1
-    ) -> Float[Array, " n_dim"]:
+    ) -> Float[Array, "n_samples n_dim"]:
         rng_key, subkey = jax.random.split(rng_key)
         samples = self.solver.sample(subkey, num_samples, dt=dt)
         std = jnp.sqrt(jnp.diag(self.data_cov))
