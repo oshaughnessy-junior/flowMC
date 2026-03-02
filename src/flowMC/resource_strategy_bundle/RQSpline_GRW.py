@@ -36,6 +36,7 @@ class RQSpline_GRW_Bundle(ResourceStrategyBundle):
 
     def __init__(
         self,
+        # --- Required ---
         rng_key: Key,
         n_chains: int,
         n_dims: int,
@@ -45,22 +46,29 @@ class RQSpline_GRW_Bundle(ResourceStrategyBundle):
         n_training_loops: int,
         n_production_loops: int,
         n_epochs: int,
+        # --- Local sampler ---
         grw_step_size: Float | Float[Array, " n_dim"] = 1e-1,
-        chain_batch_size: int = 0,
+        adapt_step_size: bool = True,
+        # --- Normalizing flow model ---
         rq_spline_hidden_units: list[int] = [32, 32],
         rq_spline_n_bins: int = 8,
         rq_spline_n_layers: int = 4,
+        n_NFproposal_batch_size: int = 10000,
+        # --- Training ---
         learning_rate: float = 1e-3,
         batch_size: int = 10000,
         n_max_examples: int = 10000,
+        history_window: int = 100,
+        # --- Sampling execution ---
+        chain_batch_size: int = 0,
         local_thinning: int = 1,
         global_thinning: int = 1,
-        n_NFproposal_batch_size: int = 10000,
-        adapt_step_size: bool = True,
+        # --- Early stopping ---
         early_stopping: bool = False,
         early_stopping_tolerance: float = 0.05,
         early_stopping_patience: int = 3,
         early_stopping_min_acceptance: float = 0.1,
+        # --- Misc ---
         verbose: bool = False,
     ):
         if local_thinning > n_local_steps:
@@ -185,6 +193,7 @@ class RQSpline_GRW_Bundle(ResourceStrategyBundle):
             n_epochs=n_epochs,
             batch_size=batch_size,
             n_max_examples=n_max_examples,
+            history_window=history_window,
             verbose=verbose,
         )
 
