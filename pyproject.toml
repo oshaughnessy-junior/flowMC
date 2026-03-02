@@ -36,11 +36,26 @@ dependencies = [
     "tqdm>=4.67.1",
 ]
 
-[project.urls]
-Documentation = "https://github.com/GW-JAX-Team/flowMC"
-
 [project.optional-dependencies]
-docs = [
+cuda = [
+    "jax[cuda]>=0.8.2",
+]
+visualize = [
+    "arviz>=0.21.0",
+    "corner>=2.2.3",
+    "matplotlib>=3.10.7",
+]
+
+[dependency-groups]
+test = [
+    "coveralls>=4.0.1",
+    "pre-commit>=4.0.1",
+    "pyright>=1.1.402",
+    "pytest>=8.3.3",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.12.2",
+]
+doc = [
     "mkdocs-gen-files==0.6.0",
     "mkdocs-jupyter==0.25.1",
     "mkdocs-literate-nav==0.6.2",
@@ -49,26 +64,13 @@ docs = [
     "mkdocstrings[python]==1.0.3",
     "pymdown-extensions==10.20.1",
 ]
-visualize = [
-    "arviz>=0.21.0",
-    "corner>=2.2.3",
-    "matplotlib>=3.10.7",
-]
-cuda = [
-    "jax[cuda]>=0.8.2",
-]
 
-[dependency-groups]
-dev = [
-    "ipykernel>=6.29.5",
-    "coveralls>=4.0.1",
-    "pre-commit>=4.0.1",
-    "pyright>=1.1.402",
-    "pytest>=8.3.3",
-    "pytest-cov>=6.0.0",
-    "ruff>=0.12.2",
-    "ipython>=8.30.0",
-]
+[project.urls]
+Homepage = "https://github.com/GW-JAX-Team/flowMC"
+Documentation = "https://flowmc.readthedocs.io"
+Repository = "https://github.com/GW-JAX-Team/flowMC"
+"Bug Tracker" = "https://github.com/GW-JAX-Team/flowMC/issues"
+Changelog = "https://github.com/GW-JAX-Team/flowMC/releases"
 
 [tool.uv.sources]
 flowMC = { workspace = true }

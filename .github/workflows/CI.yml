@@ -22,7 +22,7 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         run: uv python install ${{ matrix.python-version }}
       - name: Install dependencies
-        run: uv sync --all-extras --dev
+        run: uv sync --group test
       - name: Run tests
         run: uv run pytest --cov=flowMC --cov-report=term-missing tests/
       - name: Upload coverage to Coveralls
@@ -40,7 +40,7 @@ jobs:
         with:
           enable-cache: true
       - name: Install dependencies
-        run: uv sync --python 3.12 --all-extras --dev
+        run: uv sync --python 3.12 --group test
       - name: Run pre-commit
         run: uv run pre-commit run --all-files
 
