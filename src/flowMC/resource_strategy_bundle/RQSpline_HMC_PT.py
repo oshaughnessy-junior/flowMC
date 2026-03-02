@@ -43,6 +43,7 @@ class RQSpline_HMC_PT_Bundle(ResourceStrategyBundle):
 
     def __init__(
         self,
+        # --- Required ---
         rng_key: Key,
         n_chains: int,
         n_dims: int,
@@ -52,30 +53,37 @@ class RQSpline_HMC_PT_Bundle(ResourceStrategyBundle):
         n_training_loops: int,
         n_production_loops: int,
         n_epochs: int,
+        # --- Local sampler ---
         hmc_step_size: float = 0.1,
         hmc_n_leapfrog: int = 10,
         condition_matrix: Float | Float[Array, " n_dim"] = 1,
+        adapt_step_size: bool = True,
         periodic: Optional[dict[int, tuple[float, float]]] = None,
-        chain_batch_size: int = 0,
+        # --- Normalizing flow model ---
         rq_spline_hidden_units: list[int] = [32, 32],
         rq_spline_n_bins: int = 8,
         rq_spline_n_layers: int = 4,
+        n_NFproposal_batch_size: int = 10000,
+        # --- Training ---
         learning_rate: float = 1e-3,
         batch_size: int = 10000,
         n_max_examples: int = 10000,
+        history_window: int = 100,
+        # --- Sampling execution ---
+        chain_batch_size: int = 0,
         local_thinning: int = 1,
         global_thinning: int = 1,
-        n_NFproposal_batch_size: int = 10000,
-        adapt_step_size: bool = True,
-        early_stopping: bool = False,
-        early_stopping_tolerance: float = 0.05,
-        early_stopping_patience: int = 3,
-        early_stopping_min_acceptance: float = 0.1,
-        history_window: int = 100,
+        # --- Parallel tempering ---
         n_temperatures: int = 5,
         max_temperature: float = 5.0,
         n_tempered_steps: int = -1,
         logprior: Callable[[Float[Array, " n_dim"], dict], Float] = lambda x, _: 0.0,
+        # --- Early stopping ---
+        early_stopping: bool = False,
+        early_stopping_tolerance: float = 0.05,
+        early_stopping_patience: int = 3,
+        early_stopping_min_acceptance: float = 0.1,
+        # --- Misc ---
         verbose: bool = False,
     ):
         if local_thinning > n_local_steps:
