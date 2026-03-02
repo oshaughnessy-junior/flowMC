@@ -141,6 +141,15 @@ class RQSpline_GRW_PT_Bundle(ResourceStrategyBundle):
         periodic_mask = jnp.zeros(n_dims, dtype=bool)
         periodic_bounds = jnp.zeros((n_dims, 2))
         for dim_idx, (lower, upper) in periodic.items():
+            if not (0 <= dim_idx < n_dims):
+                raise ValueError(
+                    f"periodic dim_idx={dim_idx} is out of range [0, {n_dims})"
+                )
+            if lower >= upper:
+                raise ValueError(
+                    f"periodic bounds for dim {dim_idx} must satisfy lower < upper,"
+                    f" got ({lower}, {upper})"
+                )
             periodic_mask = periodic_mask.at[dim_idx].set(True)
             periodic_bounds = periodic_bounds.at[dim_idx].set(jnp.array([lower, upper]))
         local_sampler = GaussianRandomWalk(
