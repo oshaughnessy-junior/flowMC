@@ -1,7 +1,7 @@
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Float, Int, Key, PyTree
-from typing import Callable
+from jaxtyping import Array, Bool, Float, Int, Key, PyTree
+from typing import Callable, Optional
 import logging
 from equinox import tree_at
 
@@ -15,6 +15,8 @@ class GaussianRandomWalk(ProposalBase):
     """Gaussian random walk sampler class."""
 
     step_size: Float[Array, " n_dim"]
+    periodic_mask: Bool[Array, " n_dim"]
+    periodic_bounds: Float[Array, "n_dim 2"]
     ADAPTATION_RATE: float = 0.5
 
     def __repr__(self):
@@ -23,15 +25,31 @@ class GaussianRandomWalk(ProposalBase):
     def __init__(
         self,
         step_size: Float[Array, " n_dim"],
+        periodic_mask: Optional[Bool[Array, " n_dim"]] = None,
+        periodic_bounds: Optional[Float[Array, "n_dim 2"]] = None,
     ):
         """Initialize Gaussian Random Walk sampler.
 
         Args:
             step_size: Step size for the random walk as a 1D array representing
                       diagonal elements of the proposal covariance matrix.
+            periodic_mask: Boolean mask indicating which dimensions are periodic.
+                If None, no periodic boundaries are applied.
+            periodic_bounds: Array of shape (n_dim, 2) with [lower, upper] bounds
+                for each periodic dimension. Only used where periodic_mask is True.
+                If None, no periodic boundaries are applied.
         """
         super().__init__()
         self.step_size = step_size
+        n_dim = (
+            jnp.asarray(step_size).shape[0] if jnp.asarray(step_size).ndim > 0 else 1
+        )
+        if periodic_mask is None:
+            periodic_mask = jnp.zeros(n_dim, dtype=bool)
+        if periodic_bounds is None:
+            periodic_bounds = jnp.zeros((n_dim, 2))
+        self.periodic_mask = periodic_mask
+        self.periodic_bounds = periodic_bounds
 
     def kernel(
         self,
@@ -62,6 +80,14 @@ class GaussianRandomWalk(ProposalBase):
         )
 
         proposal = position + move_proposal
+
+        # Wrap periodic dimensions
+        lower = self.periodic_bounds[:, 0]
+        upper = self.periodic_bounds[:, 1]
+        period = upper - lower
+        wrapped = lower + jnp.mod(proposal - lower, period)
+        proposal = jnp.where(self.periodic_mask, wrapped, proposal)
+
         proposal_log_prob: Float[Array, " n_dim"] = logpdf(proposal, data)
 
         log_uniform = jnp.log(jax.random.uniform(key2))

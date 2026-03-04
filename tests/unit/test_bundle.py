@@ -1,4 +1,5 @@
 import jax
+import jax.numpy as jnp
 import pytest
 from flowMC.resource_strategy_bundle.RQSpline_MALA import RQSpline_MALA_Bundle
 from flowMC.resource_strategy_bundle.RQSpline_MALA_PT import RQSpline_MALA_PT_Bundle
@@ -6,6 +7,9 @@ from flowMC.resource_strategy_bundle.RQSpline_HMC import RQSpline_HMC_Bundle
 from flowMC.resource_strategy_bundle.RQSpline_HMC_PT import RQSpline_HMC_PT_Bundle
 from flowMC.resource_strategy_bundle.RQSpline_GRW import RQSpline_GRW_Bundle
 from flowMC.resource_strategy_bundle.RQSpline_GRW_PT import RQSpline_GRW_PT_Bundle
+from flowMC.resource.kernel.MALA import MALA
+from flowMC.resource.kernel.Gaussian_random_walk import GaussianRandomWalk
+from flowMC.resource.kernel.HMC import HMC
 
 
 def logpdf(x, _):
@@ -28,6 +32,31 @@ class TestRQSplineMALABundle:
             n_epochs=3,
         )
         assert repr(bundle) == "RQSpline MALA Bundle"
+
+        # Without periodic, mask should be all-False
+        kernel = bundle.resources["local_sampler"]
+        assert isinstance(kernel, MALA)
+        assert not jnp.any(kernel.periodic_mask)
+
+        # With periodic, mask and bounds should be set correctly
+        periodic = {0: (0.0, 6.28), 2: (-3.14, 3.14)}
+        bundle_p = RQSpline_MALA_Bundle(
+            rng_key=jax.random.PRNGKey(0),
+            n_chains=2,
+            n_dims=3,
+            logpdf=logpdf,
+            n_local_steps=10,
+            n_global_steps=5,
+            n_training_loops=2,
+            n_production_loops=1,
+            n_epochs=3,
+            periodic=periodic,
+        )
+        kernel_p = bundle_p.resources["local_sampler"]
+        assert isinstance(kernel_p, MALA)
+        assert jnp.array_equal(kernel_p.periodic_mask, jnp.array([True, False, True]))
+        assert jnp.isclose(kernel_p.periodic_bounds[0, 1], 6.28)
+        assert jnp.isclose(kernel_p.periodic_bounds[2, 0], -3.14)
 
     def test_local_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
@@ -77,6 +106,29 @@ class TestRQSplineMALAPTBundle:
         )
         assert repr(bundle) == "RQSpline MALA PT Bundle"
 
+        # Without periodic, mask should be all-False
+        kernel = bundle.resources["local_sampler"]
+        assert isinstance(kernel, MALA)
+        assert not jnp.any(kernel.periodic_mask)
+
+        # With periodic, mask should be set correctly
+        periodic = {1: (0.0, 3.14)}
+        bundle_p = RQSpline_MALA_PT_Bundle(
+            rng_key=jax.random.PRNGKey(0),
+            n_chains=2,
+            n_dims=3,
+            logpdf=logpdf,
+            n_local_steps=10,
+            n_global_steps=5,
+            n_training_loops=2,
+            n_production_loops=1,
+            n_epochs=3,
+            periodic=periodic,
+        )
+        kernel_p = bundle_p.resources["local_sampler"]
+        assert isinstance(kernel_p, MALA)
+        assert jnp.array_equal(kernel_p.periodic_mask, jnp.array([False, True, False]))
+
     def test_local_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
             RQSpline_MALA_PT_Bundle(
@@ -124,6 +176,29 @@ class TestRQSplineHMCBundle:
             n_epochs=3,
         )
         assert repr(bundle) == "RQSpline HMC Bundle"
+
+        # Without periodic, mask should be all-False
+        kernel = bundle.resources["local_sampler"]
+        assert isinstance(kernel, HMC)
+        assert not jnp.any(kernel.periodic_mask)
+
+        # With periodic, mask should be set correctly
+        periodic = {0: (0.0, 6.28), 2: (-3.14, 3.14)}
+        bundle_p = RQSpline_HMC_Bundle(
+            rng_key=jax.random.PRNGKey(0),
+            n_chains=2,
+            n_dims=3,
+            logpdf=logpdf,
+            n_local_steps=10,
+            n_global_steps=5,
+            n_training_loops=2,
+            n_production_loops=1,
+            n_epochs=3,
+            periodic=periodic,
+        )
+        kernel_p = bundle_p.resources["local_sampler"]
+        assert isinstance(kernel_p, HMC)
+        assert jnp.array_equal(kernel_p.periodic_mask, jnp.array([True, False, True]))
 
     def test_local_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
@@ -173,6 +248,29 @@ class TestRQSplineHMCPTBundle:
         )
         assert repr(bundle) == "RQSpline HMC PT Bundle"
 
+        # Without periodic, mask should be all-False
+        kernel = bundle.resources["local_sampler"]
+        assert isinstance(kernel, HMC)
+        assert not jnp.any(kernel.periodic_mask)
+
+        # With periodic, mask should be set correctly
+        periodic = {1: (0.0, 3.14)}
+        bundle_p = RQSpline_HMC_PT_Bundle(
+            rng_key=jax.random.PRNGKey(0),
+            n_chains=2,
+            n_dims=3,
+            logpdf=logpdf,
+            n_local_steps=10,
+            n_global_steps=5,
+            n_training_loops=2,
+            n_production_loops=1,
+            n_epochs=3,
+            periodic=periodic,
+        )
+        kernel_p = bundle_p.resources["local_sampler"]
+        assert isinstance(kernel_p, HMC)
+        assert jnp.array_equal(kernel_p.periodic_mask, jnp.array([False, True, False]))
+
     def test_local_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
             RQSpline_HMC_PT_Bundle(
@@ -221,6 +319,29 @@ class TestRQSplineGRWBundle:
         )
         assert repr(bundle) == "RQSpline GRW Bundle"
 
+        # Without periodic, mask should be all-False
+        kernel = bundle.resources["local_sampler"]
+        assert isinstance(kernel, GaussianRandomWalk)
+        assert not jnp.any(kernel.periodic_mask)
+
+        # With periodic, mask should be set correctly
+        periodic = {0: (0.0, 6.28), 2: (-3.14, 3.14)}
+        bundle_p = RQSpline_GRW_Bundle(
+            rng_key=jax.random.PRNGKey(0),
+            n_chains=2,
+            n_dims=3,
+            logpdf=logpdf,
+            n_local_steps=10,
+            n_global_steps=5,
+            n_training_loops=2,
+            n_production_loops=1,
+            n_epochs=3,
+            periodic=periodic,
+        )
+        kernel_p = bundle_p.resources["local_sampler"]
+        assert isinstance(kernel_p, GaussianRandomWalk)
+        assert jnp.array_equal(kernel_p.periodic_mask, jnp.array([True, False, True]))
+
     def test_local_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
             RQSpline_GRW_Bundle(
@@ -268,6 +389,29 @@ class TestRQSplineGRWPTBundle:
             n_epochs=3,
         )
         assert repr(bundle) == "RQSpline GRW PT Bundle"
+
+        # Without periodic, mask should be all-False
+        kernel = bundle.resources["local_sampler"]
+        assert isinstance(kernel, GaussianRandomWalk)
+        assert not jnp.any(kernel.periodic_mask)
+
+        # With periodic, mask should be set correctly
+        periodic = {1: (0.0, 3.14)}
+        bundle_p = RQSpline_GRW_PT_Bundle(
+            rng_key=jax.random.PRNGKey(0),
+            n_chains=2,
+            n_dims=3,
+            logpdf=logpdf,
+            n_local_steps=10,
+            n_global_steps=5,
+            n_training_loops=2,
+            n_production_loops=1,
+            n_epochs=3,
+            periodic=periodic,
+        )
+        kernel_p = bundle_p.resources["local_sampler"]
+        assert isinstance(kernel_p, GaussianRandomWalk)
+        assert jnp.array_equal(kernel_p.periodic_mask, jnp.array([False, True, False]))
 
     def test_local_thinning_exceeds_steps(self):
         with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):

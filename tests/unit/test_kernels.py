@@ -25,6 +25,11 @@ class TestHMC:
         HMC_obj = HMC(condition_matrix=jnp.ones(n_dims), step_size=1, n_leapfrog=5)
         assert repr(HMC_obj) == "HMC with step size 1 and 5 leapfrog steps"
 
+        # Periodic mask/bounds default to zeros when not provided
+        assert HMC_obj.periodic_mask.shape == (n_dims,)
+        assert not jnp.any(HMC_obj.periodic_mask)
+        assert HMC_obj.periodic_bounds.shape == (n_dims, 2)
+
     def test_print_params(self, caplog):
         import logging
         caplog.set_level(logging.DEBUG)
@@ -198,13 +203,79 @@ class TestHMC:
         # Acceptance at target should keep step size approximately same
         adapted_target = HMC_obj.adapt_step_size(acceptance_rate=0.65, target_rate=0.65)
         assert jnp.isclose(adapted_target.step_size, HMC_obj.step_size, atol=1e-6)
-        
+
+    def test_HMC_periodic_samples_in_bounds(self):
+        """HMC with periodic boundaries keeps samples within bounds."""
+        periodic_mask = jnp.array([True, False])
+        periodic_bounds = jnp.array([[0.0, 2 * jnp.pi], [0.0, 0.0]])
+
+        HMC_obj = HMC(
+            condition_matrix=jnp.ones(n_dims),
+            step_size=0.3,
+            n_leapfrog=5,
+            periodic_mask=periodic_mask,
+            periodic_bounds=periodic_bounds,
+        )
+
+        n_steps = 100
+
+
+        @jax.jit
+        def run_chain(rng_key, init_pos, init_lp):
+            def step(carry, key):
+                pos, lp = carry
+                new_pos, new_lp, _acc = HMC_obj.kernel(key, pos, lp, logpdf, None)
+                return (new_pos, new_lp), new_pos
+
+            keys = jax.random.split(rng_key, n_steps)
+            _, positions = jax.lax.scan(step, (init_pos, init_lp), keys)
+            return positions
+
+        init_pos = jnp.array([3.0, 0.5])
+        init_lp = log_posterior(init_pos)
+        positions = run_chain(jax.random.PRNGKey(0), init_pos, init_lp)
+
+        # Periodic dimension must stay within [0, 2pi)
+        assert jnp.all(positions[:, 0] >= 0.0)
+        assert jnp.all(positions[:, 0] < 2 * jnp.pi + 1e-6)
+
+    def test_HMC_periodic_acceptance_rate(self):
+        """Acceptance rate still goes to 1 with tiny step size and periodic."""
+        periodic_mask = jnp.array([True, True])
+        periodic_bounds = jnp.array([[0.0, 2 * jnp.pi], [0.0, 2 * jnp.pi]])
+
+        HMC_obj = HMC(
+            condition_matrix=jnp.ones(n_dims),
+            step_size=0.0000001,
+            n_leapfrog=5,
+            periodic_mask=periodic_mask,
+            periodic_bounds=periodic_bounds,
+        )
+
+        n_chains = 20
+        rng_key = jax.random.PRNGKey(42)
+        rng_key, subkey = jax.random.split(rng_key)
+        initial_position = jax.random.uniform(subkey, shape=(n_chains, n_dims)) * 2 * jnp.pi
+        initial_logp = jax.vmap(log_posterior)(initial_position, None)
+
+        rng_key, subkey = jax.random.split(rng_key)
+        subkey = jax.random.split(subkey, n_chains)
+        result = jax.vmap(HMC_obj.kernel, in_axes=(0, 0, 0, None, None))(
+            subkey, initial_position, initial_logp, logpdf, None
+        )
+        assert result[2].all()
+
 
 class TestMALA:
 
     def test_repr(self):
         MALA_obj = MALA(step_size=jnp.ones(n_dims))
         assert repr(MALA_obj) == "MALA with step size " + str(jnp.ones(n_dims))
+
+        # Periodic mask/bounds default to zeros when not provided
+        assert MALA_obj.periodic_mask.shape == (n_dims,)
+        assert not jnp.any(MALA_obj.periodic_mask)
+        assert MALA_obj.periodic_bounds.shape == (n_dims, 2)
 
     def test_print_params(self, caplog):
         import logging
@@ -322,12 +393,92 @@ class TestMALA:
         adapted_target = MALA_obj.adapt_step_size(acceptance_rate=0.574, target_rate=0.574)
         assert jnp.allclose(adapted_target.step_size, MALA_obj.step_size, atol=1e-6)
 
+    def test_MALA_periodic_acceptance_rate(self):
+        """Acceptance rate still goes to 1 with tiny step size and periodic."""
+        periodic_mask = jnp.array([True, True])
+        periodic_bounds = jnp.array([[0.0, 2 * jnp.pi], [0.0, 2 * jnp.pi]])
+
+        MALA_obj = MALA(
+            step_size=jnp.full(n_dims, 0.00001),
+            periodic_mask=periodic_mask,
+            periodic_bounds=periodic_bounds,
+        )
+
+        n_chains = 20
+        rng_key = jax.random.PRNGKey(42)
+        rng_key, subkey = jax.random.split(rng_key)
+        initial_position = jax.random.uniform(subkey, shape=(n_chains, n_dims)) * 2 * jnp.pi
+        initial_logp = jax.vmap(log_posterior)(initial_position, None)
+
+        rng_key, subkey = jax.random.split(rng_key)
+        subkey = jax.random.split(subkey, n_chains)
+        result = jax.vmap(MALA_obj.kernel, in_axes=(0, 0, 0, None, None))(
+            subkey, initial_position, initial_logp, logpdf, None
+        )
+        assert result[2].all()
+
+    def test_MALA_periodic_explores_full_domain(self):
+        """MALA with periodic boundary explores both sides of a wrapped peak.
+
+        Uses log(cos(x) + 1) on [0, 2pi] with a peak at x=0 (and 2pi).
+        Starting near x=0.1, the walker should wrap around to explore both
+        sides of the peak.
+        """
+
+        def periodic_logpdf(x, data):
+            return jnp.log(jnp.cos(x[0]) + 1.0 + 1e-8)
+
+        periodic_mala = MALA(
+            step_size=jnp.array([0.5]),
+            periodic_mask=jnp.array([True]),
+            periodic_bounds=jnp.array([[0.0, 2 * jnp.pi]]),
+        )
+
+        n_steps = 2000
+
+        @jax.jit
+        def run_chain(rng_key, init_pos, init_lp):
+            def step(carry, key):
+                pos, lp = carry
+                new_pos, new_lp, acc = periodic_mala.kernel(
+                    key, pos, lp, periodic_logpdf, {}
+                )
+                return (new_pos, new_lp), new_pos
+
+            keys = jax.random.split(rng_key, n_steps)
+            _, positions = jax.lax.scan(step, (init_pos, init_lp), keys)
+            return positions
+
+        init_pos = jnp.array([0.1])
+        init_lp = periodic_logpdf(init_pos, {})
+        positions = run_chain(jax.random.PRNGKey(42), init_pos, init_lp).squeeze()
+
+        # All samples must be within bounds
+        assert jnp.all(positions >= 0.0)
+        assert jnp.all(positions <= 2 * jnp.pi)
+
+        # Walker should visit both halves of the domain
+        in_left = jnp.sum(positions < jnp.pi)
+        in_right = jnp.sum(positions >= jnp.pi)
+        total = len(positions)
+        assert in_right > 0.1 * total, (
+            f"Walker did not explore [pi, 2pi]: only {in_right}/{total} samples."
+        )
+        assert in_left > 0.1 * total, (
+            f"Walker did not explore [0, pi): only {in_left}/{total} samples."
+        )
+
 
 class TestGRW:
 
     def test_repr(self):
         GRW_obj = GaussianRandomWalk(step_size=jnp.ones(n_dims))
         assert repr(GRW_obj) == "Gaussian Random Walk with step size " + str(jnp.ones(n_dims))
+
+        # Periodic mask/bounds default to zeros when not provided
+        assert GRW_obj.periodic_mask.shape == (n_dims,)
+        assert not jnp.any(GRW_obj.periodic_mask)
+        assert GRW_obj.periodic_bounds.shape == (n_dims, 2)
 
     def test_print_params(self, caplog):
         import logging
@@ -443,3 +594,67 @@ class TestGRW:
         # Acceptance at target should keep step size approximately same
         adapted_target = GRW_obj.adapt_step_size(acceptance_rate=0.234, target_rate=0.234)
         assert jnp.allclose(adapted_target.step_size, GRW_obj.step_size, atol=1e-6)
+
+    def test_GRW_periodic_acceptance_rate(self):
+        """Acceptance rate still goes to 1 with tiny step size and periodic."""
+        periodic_mask = jnp.array([True, True])
+        periodic_bounds = jnp.array([[0.0, 2 * jnp.pi], [0.0, 2 * jnp.pi]])
+
+        GRW_obj = GaussianRandomWalk(
+            step_size=jnp.full(n_dims, 0.00001),
+            periodic_mask=periodic_mask,
+            periodic_bounds=periodic_bounds,
+        )
+
+        n_chains = 20
+        rng_key = jax.random.PRNGKey(42)
+        rng_key, subkey = jax.random.split(rng_key)
+        initial_position = jax.random.uniform(subkey, shape=(n_chains, n_dims)) * 2 * jnp.pi
+        initial_logp = jax.vmap(log_posterior)(initial_position)
+
+        rng_key, subkey = jax.random.split(rng_key)
+        subkey = jax.random.split(subkey, n_chains)
+        result = jax.vmap(GRW_obj.kernel, in_axes=(0, 0, 0, None, None))(
+            subkey, initial_position, initial_logp, logpdf, None
+        )
+        assert result[2].all()
+
+    def test_GRW_periodic_explores_full_domain(self):
+        """GRW with periodic boundary explores both sides of a wrapped peak."""
+
+        def periodic_logpdf(x, data):
+            return jnp.log(jnp.cos(x[0]) + 1.0 + 1e-8)
+
+        periodic_grw = GaussianRandomWalk(
+            step_size=jnp.array([1.0]),
+            periodic_mask=jnp.array([True]),
+            periodic_bounds=jnp.array([[0.0, 2 * jnp.pi]]),
+        )
+
+        n_steps = 2000
+
+        @jax.jit
+        def run_chain(rng_key, init_pos, init_lp):
+            def step(carry, key):
+                pos, lp = carry
+                new_pos, new_lp, acc = periodic_grw.kernel(
+                    key, pos, lp, periodic_logpdf, {}
+                )
+                return (new_pos, new_lp), new_pos
+
+            keys = jax.random.split(rng_key, n_steps)
+            _, positions = jax.lax.scan(step, (init_pos, init_lp), keys)
+            return positions
+
+        init_pos = jnp.array([0.1])
+        init_lp = periodic_logpdf(init_pos, {})
+        positions = run_chain(jax.random.PRNGKey(42), init_pos, init_lp).squeeze()
+
+        assert jnp.all(positions >= 0.0)
+        assert jnp.all(positions <= 2 * jnp.pi)
+
+        in_left = jnp.sum(positions < jnp.pi)
+        in_right = jnp.sum(positions >= jnp.pi)
+        total = len(positions)
+        assert in_right > 0.1 * total
+        assert in_left > 0.1 * total
