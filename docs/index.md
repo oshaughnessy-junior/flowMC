@@ -3,27 +3,25 @@ flowMC
 
 **Normalizing-flow enhanced sampling package for probabilistic inference**
 
+[![doc](https://badgen.net/badge/Read/the%20doc/blue)](https://flowMC.readthedocs.io/en/latest/) [![license](https://badgen.net/badge/License/MIT/blue)](https://github.com/GW-JAX-Team/flowMC/blob/main/LICENSE) [![coverage](https://badgen.net/coveralls/c/github/GW-JAX-Team/flowMC/main)](https://coveralls.io/github/GW-JAX-Team/flowMC?branch=main) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/GW-JAX-Team/flowMC/main.svg)](https://results.pre-commit.ci/latest/github/GW-JAX-Team/flowMC/main)
 
 ![](logo_0810.png)
 
-[![](https://badgen.net/badge/Read/the doc/blue)](https://flowMC.readthedocs.io/en/latest/)
-[![](https://badgen.net/badge/License/MIT/blue)](https://github.com/GW-JAX-Team/flowMC/blob/main/LICENSE)
 
 
-
-flowMC is a Jax-based python package for normalizing-flow enhanced Markov chain Monte Carlo (MCMC) sampling.
+flowMC is a JAX-based Python package for normalizing-flow enhanced Markov chain Monte Carlo (MCMC) sampling.
 The code is open source under MIT license, and it is under active development.
 
 - Just-in-time compilation is supported.
 - Native support for GPU acceleration.
-- Suit for problems with multi-modality and complex geometry.
+- Suited for problems with multi-modality and complex geometry.
+- Minimal hyperparameter tuning required.
 
-Four steps to use flowMC's guide
-================================
+## Getting Started
 
-1. You can find installation info, a basic example, and some design and guiding principles of `flowMC` in the [quickstart](quickstart.md).
-2. In tutorials, we have a set of pedagogical notebooks that will give you a better understanding of the package infrastructure and a number of common use cases.
-3. We list some community examples in [community_example](communityExamples.md), so users can see whether there is a similar use case they can adopt their code quickly.
-4. Finally, we have a list of frequently asked questions in [FAQ](FAQ.md).
-
-   
+1. Head to the **[Getting Started](quickstart.md)** page for installation, a basic example, and the design principles of flowMC.
+2. Check the **[Configuration](configuration.md)** page for a detailed guide to all hyperparameters.
+3. Explore the **[Tutorials](tutorials/dualmoon.ipynb)** for pedagogical notebooks covering common use cases.
+4. See **[Community Examples](communityExamples.md)** to find similar use cases you can adapt.
+5. Check the **[FAQ](FAQ.md)** for answers to common questions.
+6. Browse the **[API Reference](api/flowMC/)** for full API documentation.
