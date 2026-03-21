@@ -211,7 +211,9 @@ class FlowMatchingModel(eqx.Module, Resource):
     ) -> tuple[Float[Array, "1"], Self, optax.OptState]:
         logger.debug("Compiling training step")
         loss, grads = model.loss_fn(x_t, t, dx_t)
-        updates, state = optim.update(grads, state, model)  # type: ignore
+        updates, state = optim.update(
+            grads, state, eqx.filter(model, eqx.is_inexact_array)
+        )
         model = eqx.apply_updates(model, updates)
         return loss, model, state
 

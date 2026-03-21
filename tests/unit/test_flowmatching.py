@@ -178,7 +178,7 @@ class TestFlowMatchingModel:
         x1 = jax.random.normal(key, (n_batch, n_dim))
         t = jax.random.uniform(key, (n_batch, 1))
         optim = optax.adam(learning_rate=1e-3)
-        state = optim.init(eqx.filter(model, eqx.is_array))
+        state = optim.init(eqx.filter(model, eqx.is_inexact_array))
         std = jnp.sqrt(jnp.diag(model.data_cov))
         x1_whitened = (x1 - model.data_mean) / std
         x_t, dx_t = model.path.sample(x0, x1_whitened, t)

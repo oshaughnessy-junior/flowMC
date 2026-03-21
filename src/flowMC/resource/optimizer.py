@@ -20,7 +20,7 @@ class Optimizer(Resource):
             optax.clip_by_global_norm(1.0),
             optax.adamw(learning_rate=learning_rate, b1=momentum),
         )
-        self.optim_state = self.optim.init(eqx.filter(model, eqx.is_array))
+        self.optim_state = self.optim.init(eqx.filter(model, eqx.is_inexact_array))
 
     def __call__(self, params, grads):
         raise NotImplementedError
