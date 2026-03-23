@@ -1,22 +1,17 @@
 # flowMC
 
-**Normalizing-flow enhanced sampling package for probabilistic inference**
+**A JAX-based normalizing-flow-enhanced MCMC sampler for probabilistic inference**
 
 [![doc](https://badgen.net/badge/Read/the%20doc/blue)](https://flowmc.readthedocs.io/en/main/) [![license](https://badgen.net/badge/License/MIT/blue)](https://github.com/GW-JAX-Team/flowMC/blob/main/LICENSE) [![coverage](https://badgen.net/coveralls/c/github/GW-JAX-Team/flowMC/main)](https://coveralls.io/github/GW-JAX-Team/flowMC?branch=main) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/GW-JAX-Team/flowMC/main.svg)](https://results.pre-commit.ci/latest/github/GW-JAX-Team/flowMC/main)
 
-> [!WARNING]
-> flowMC has not yet reached v1.0.0, and the API may change. Higher-level APIs are more stable, while intermediate-level APIs (such as the resource strategy interface) may undergo major revisions for performance improvements.
-
 ![flowMC_logo](./docs/logo_0810.png)
 
-flowMC is a JAX-based Python package for normalizing-flow enhanced Markov chain Monte Carlo (MCMC) sampling. The code is open source under the MIT license and is under active development.
+flowMC is a JAX-based package for normalizing-flow-enhanced Markov chain Monte Carlo (MCMC) sampling. By using normalizing flows as a global proposal, flowMC accelerates convergence for multi-modal and high-dimensional posteriors while running natively on GPU with minimal hyperparameter tuning.
 
-flowMC implements methods described in [Gabrié et al. (2021)](https://openreview.net/pdf?id=mvtooHbjOwx) and [Gabrié et al. (2022)](https://www.pnas.org/doi/10.1073/pnas.2109420119). See the accompanying paper, [Wong, Gabrié, Foreman-Mackey (2023)](https://joss.theoj.org/papers/10.21105/joss.05021), for more details.
+For a quick introduction, see the [Quick Start guide](https://flowmc.readthedocs.io/en/stable/quickstart/).
 
-- Just-in-time compilation support
-- Native GPU acceleration
-- Effective for multi-modal problems
-- Minimal hyperparameter tuning required
+> [!WARNING]
+> flowMC has not yet reached v1.0.0 and the API may change. Use at your own risk. Consider pinning to a specific version if you need API stability.
 
 ## Installation
 
@@ -42,11 +37,6 @@ git clone https://github.com/GW-JAX-Team/flowMC.git
 cd flowMC
 pip install -e .
 ```
-
-Additional optional dependencies are available:
-
-- `flowMC[docs]`: Documentation dependencies
-- `flowMC[visualize]`: Visualization dependencies
 
 We recommend using [uv](https://docs.astral.sh/uv/) to manage your Python environment. After cloning the repository, run `uv sync` to create a virtual environment with all dependencies installed.
 
