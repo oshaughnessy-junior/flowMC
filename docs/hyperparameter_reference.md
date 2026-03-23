@@ -1,5 +1,4 @@
-Configuration Guide
-===================
+# Hyperparameter Reference
 
 This page contains information about the most important hyperparameters which affect the behavior of the sampler.
 
