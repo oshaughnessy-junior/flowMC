@@ -1,10 +1,10 @@
-# flowMC
+****# flowMC
 
 **A JAX-based normalizing-flow-enhanced MCMC sampler for probabilistic inference**
 
 [![doc](https://badgen.net/badge/Read/the%20doc/blue)](https://flowmc.readthedocs.io/en/main/) [![license](https://badgen.net/badge/License/MIT/blue)](https://github.com/GW-JAX-Team/flowMC/blob/main/LICENSE) [![coverage](https://badgen.net/coveralls/c/github/GW-JAX-Team/flowMC/main)](https://coveralls.io/github/GW-JAX-Team/flowMC?branch=main) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/GW-JAX-Team/flowMC/main.svg)](https://results.pre-commit.ci/latest/github/GW-JAX-Team/flowMC/main)
 
-![flowMC_logo](./docs/logo_0810.png)
+![flowMC_logo](./docs/logo.png)
 
 flowMC is a JAX-based package for normalizing-flow-enhanced Markov chain Monte Carlo (MCMC) sampling. By using normalizing flows as a global proposal, flowMC accelerates convergence for multi-modal and high-dimensional posteriors while running natively on GPU with minimal hyperparameter tuning.
 
@@ -22,9 +22,9 @@ pip install flowMC
 ```
 
 This will install the latest stable release and its dependencies.
-flowMC is built on [JAX](https://github.com/google/jax) and [Equinox](https://github.com/patrick-kidger/equinox).
-By default, this installs the CPU version of JAX from [PyPI](https://pypi.org).
-If you have a GPU and want to leverage hardware acceleration, install the CUDA-enabled version:
+flowMC is built on [JAX](https://github.com/google/jax).
+By default, this installs the CPU version of JAX.
+If you have an NVIDIA GPU, install the CUDA-enabled version:
 
 ```bash
 pip install flowMC[cuda]

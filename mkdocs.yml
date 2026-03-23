@@ -61,14 +61,17 @@ plugins:
 
 nav:
     - Home: index.md
-    - Getting Started: quickstart.md
-    - Hyperparameter Reference: hyperparameter_reference.md
+    - Installation: installation.md
+    - Quick Start: quickstart.md
     - Tutorials:
+        - Overview: tutorials/index.md
         - Step-by-step guide: tutorials/dualmoon.ipynb
         - Custom Strategy: tutorials/custom_strategy.ipynb
         - Training Normalizing Flow: tutorials/train_normalizing_flow.ipynb
         - Loading Resource: tutorials/loading_resources.ipynb
+    - Hyperparameter Reference: hyperparameter_reference.md
     - FAQ: FAQ.md
     - Contributing: contributing.md
+    - Development Guide: development_guide.md
     - Changelog: changelog.md
     - API: api/flowMC/*

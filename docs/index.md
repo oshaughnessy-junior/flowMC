@@ -1,27 +1,21 @@
-flowMC
-======
+# flowMC
 
-**Normalizing-flow enhanced sampling package for probabilistic inference**
+**A JAX-based normalizing-flow-enhanced MCMC sampler for probabilistic inference**
 
 [![doc](https://badgen.net/badge/Read/the%20doc/blue)](https://flowMC.readthedocs.io/en/latest/) [![license](https://badgen.net/badge/License/MIT/blue)](https://github.com/GW-JAX-Team/flowMC/blob/main/LICENSE) [![coverage](https://badgen.net/coveralls/c/github/GW-JAX-Team/flowMC/main)](https://coveralls.io/github/GW-JAX-Team/flowMC?branch=main) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/GW-JAX-Team/flowMC/main.svg)](https://results.pre-commit.ci/latest/github/GW-JAX-Team/flowMC/main)
 
-![](logo_0810.png)
+![flowMC_logo](logo.png)
 
+flowMC is a JAX-based package for normalizing-flow-enhanced Markov chain Monte Carlo (MCMC) sampling. By using normalizing flows as a global proposal, flowMC accelerates convergence for multi-modal and high-dimensional posteriors while running natively on GPU with minimal hyperparameter tuning.
 
+!!! warning
+    flowMC has not yet reached v1.0.0 and the API may change. Use at your own risk. Consider pinning to a specific version if you need API stability.
 
-flowMC is a JAX-based Python package for normalizing-flow enhanced Markov chain Monte Carlo (MCMC) sampling.
-The code is open source under MIT license, and it is under active development.
+## Documentation
 
-- Just-in-time compilation is supported.
-- Native support for GPU acceleration.
-- Suited for problems with multi-modality and complex geometry.
-- Minimal hyperparameter tuning required.
-
-## Getting Started
-
-1. Head to the **[Getting Started](quickstart.md)** page for installation, a basic example, and the design principles of flowMC.
-2. Check the **[Configuration](configuration.md)** page for a detailed guide to all hyperparameters.
-3. Explore the **[Tutorials](tutorials/dualmoon.ipynb)** for pedagogical notebooks covering common use cases.
-4. See **[Community Examples](communityExamples.md)** to find similar use cases you can adapt.
-5. Check the **[FAQ](FAQ.md)** for answers to common questions.
-6. Browse the **[API Reference](api/flowMC/)** for full API documentation.
+- **[Installation](installation.md)** — How to install flowMC
+- **[Quick Start](quickstart.md)** — A basic example to get started
+- **[Hyperparameter Reference](hyperparameter_reference.md)** — Guide to all sampler settings
+- **[Tutorials](tutorials/index.md)** — Step-by-step guides and worked examples
+- **[FAQ](FAQ.md)** — Answers to common questions
+- **[API Reference](api/flowMC/)** — Full API documentation
