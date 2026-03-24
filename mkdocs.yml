@@ -74,5 +74,4 @@ nav:
     - FAQ: FAQ.md
     - Contributing: contributing.md
     - Development Guide: development_guide.md
-    - Changelog: changelog.md
     - API: api/flowMC/*
