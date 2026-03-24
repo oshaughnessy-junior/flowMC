@@ -18,12 +18,11 @@ class Sampler:
         n_dim (int): Dimension of the parameter space.
         n_chains (int): Number of chains to sample.
         rng_key (Key): Jax PRNGKey.
-        logpdf (Callable[[Float[Array, "n_dim"], dict], Float):
-            Log probability function.
         resources (dict[str, Resource]): Resources to be used by the sampler.
         strategies (dict[str, Strategy]): Strategies to be used by the sampler.
-        logging (bool): Whether to log the progress. Defaults to True.
-        outdir (str): Directory to save the logs. Defaults to "./outdir/".
+        strategy_order (list[str]): Order of strategies to execute.
+        resource_strategy_bundles (ResourceStrategyBundle): Pre-configured bundle
+            containing resources and strategies.
     """
 
     # Essential parameters

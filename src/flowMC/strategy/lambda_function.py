@@ -18,7 +18,8 @@ class Lambda(Strategy):
         """Initialize the lambda strategy.
 
         Args:
-            lambda: A callable that takes a resource and applies the lambda function.
+            lambda_function (Callable): A callable that takes a resource and
+                applies the lambda function.
         """
         self.lambda_function = lambda_function
 

@@ -105,7 +105,7 @@ class GaussianRandomWalk(ProposalBase):
             target_rate: The target acceptance rate (default: 0.234 for RWM).
 
         Returns:
-            A new GaussianRandomWalk instance with updated step_size.
+            GaussianRandomWalk: A new instance with updated step_size.
         """
         diff = acceptance_rate - target_rate
         new_step_size = self.step_size * (1.0 + self.ADAPTATION_RATE * diff)

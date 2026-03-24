@@ -17,9 +17,11 @@ class HMC(ProposalBase):
     target logpdf.
 
     Args:
-        logpdf: target logpdf function
-        jit: whether to jit the sampler
-        params: dictionary of parameters for the sampler
+        condition_matrix (Array): Diagonal elements of the mass matrix.
+        step_size (Float): Step size for leapfrog integration.
+        n_leapfrog (Int): Number of leapfrog steps.
+        periodic_mask (Array): Boolean mask for periodic dimensions.
+        periodic_bounds (Array): Bounds for periodic dimensions.
     """
 
     condition_matrix: Float[Array, " n_dim"]
@@ -146,9 +148,14 @@ class HMC(ProposalBase):
         hamiltonian is going down, but the likelihood value should go up.
 
         Args:
-            rng_key (n_chains, 2): random key
-            position (n_chains,  n_dim): current position
-            PE (n_chains, ): Potential energy of the current position
+            rng_key (Key): Random key.
+            position (Array): Current position.
+            log_prob (Array): Log probability of the current position.
+            logpdf (LogPDF | Callable): Log probability density function.
+            data (PyTree): Additional data for the logpdf.
+
+        Returns:
+            tuple: (position, log_prob, do_accept).
         """
 
         def potential(x: Float[Array, " n_dim"], data: PyTree) -> Float[Array, "1"]:
@@ -195,7 +202,7 @@ class HMC(ProposalBase):
             target_rate: The target acceptance rate (default: 0.65 for HMC).
 
         Returns:
-            A new HMC instance with updated step_size.
+            HMC: A new instance with updated step_size.
         """
         diff = acceptance_rate - target_rate
         new_step_size = self.step_size * (1.0 + self.ADAPTATION_RATE * diff)
