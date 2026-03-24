@@ -2,6 +2,7 @@ import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Bool, Float, Int, Key, PyTree
 from typing import Callable, Optional
+from typing_extensions import Self
 import logging
 from equinox import tree_at
 
@@ -97,7 +98,7 @@ class GaussianRandomWalk(ProposalBase):
         log_prob = jnp.where(do_accept, proposal_log_prob, log_prob)
         return position, log_prob, do_accept
 
-    def adapt_step_size(self, acceptance_rate: float, target_rate: float = 0.234):
+    def adapt_step_size(self, acceptance_rate: float, target_rate: float = 0.234) -> Self:
         """Adapt step size based on acceptance rate.
 
         Args:

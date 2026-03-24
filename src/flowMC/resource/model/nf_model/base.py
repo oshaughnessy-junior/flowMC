@@ -214,7 +214,7 @@ class NFModel(eqx.Module, Resource):
 
         return rng, best_model, best_state, loss_values
 
-    def to_precision(self, precision: str = "float32"):
+    def to_precision(self, precision: str = "float32") -> Self:
         """Convert all parameters to a given precision.
 
         !!! warning

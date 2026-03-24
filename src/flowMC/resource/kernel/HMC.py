@@ -1,4 +1,5 @@
 from typing import Callable, Optional
+from typing_extensions import Self
 import logging
 
 import jax
@@ -194,7 +195,7 @@ class HMC(ProposalBase):
 
         return position, log_prob, do_accept
 
-    def adapt_step_size(self, acceptance_rate: float, target_rate: float = 0.65):
+    def adapt_step_size(self, acceptance_rate: float, target_rate: float = 0.65) -> Self:
         """Adapt step size based on acceptance rate.
 
         Args:

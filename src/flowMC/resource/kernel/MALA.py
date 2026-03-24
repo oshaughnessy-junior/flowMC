@@ -3,6 +3,7 @@ import jax.numpy as jnp
 from jax.scipy.stats import multivariate_normal
 from jaxtyping import Array, Bool, Float, Int, Key, PyTree
 from typing import Callable, Optional
+from typing_extensions import Self
 import logging
 from equinox import tree_at
 
@@ -152,7 +153,7 @@ class MALA(ProposalBase):
 
         return position, log_prob, do_accept
 
-    def adapt_step_size(self, acceptance_rate: float, target_rate: float = 0.574):
+    def adapt_step_size(self, acceptance_rate: float, target_rate: float = 0.574) -> Self:
         """Adapt step size based on acceptance rate.
 
         Args:
