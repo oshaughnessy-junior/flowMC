@@ -65,10 +65,11 @@ nav:
     - Quick Start: quickstart.md
     - Tutorials:
         - Overview: tutorials/index.md
-        - Step-by-step guide: tutorials/dualmoon.ipynb
-        - Custom Strategy: tutorials/custom_strategy.ipynb
-        - Training Normalizing Flow: tutorials/train_normalizing_flow.ipynb
-        - Loading Resource: tutorials/loading_resources.ipynb
+        - Step-by-Step Example: tutorials/dualmoon.ipynb
+        - Parallel Tempering: tutorials/parallel_tempering.ipynb
+        - Custom Strategy Composition: tutorials/custom_strategy.ipynb
+        - Training Normalizing Flows: tutorials/train_normalizing_flow.ipynb
+        - Training Flow Matching Models: tutorials/train_flow_match.ipynb
     - Hyperparameter Reference: hyperparameter_reference.md
     - FAQ: FAQ.md
     - Contributing: contributing.md
