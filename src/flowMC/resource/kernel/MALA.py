@@ -153,7 +153,9 @@ class MALA(ProposalBase):
 
         return position, log_prob, do_accept
 
-    def adapt_step_size(self, acceptance_rate: float, target_rate: float = 0.574) -> Self:
+    def adapt_step_size(
+        self, acceptance_rate: float, target_rate: float = 0.574
+    ) -> Self:
         """Adapt step size based on acceptance rate.
 
         Args:

@@ -98,7 +98,9 @@ class GaussianRandomWalk(ProposalBase):
         log_prob = jnp.where(do_accept, proposal_log_prob, log_prob)
         return position, log_prob, do_accept
 
-    def adapt_step_size(self, acceptance_rate: float, target_rate: float = 0.234) -> Self:
+    def adapt_step_size(
+        self, acceptance_rate: float, target_rate: float = 0.234
+    ) -> Self:
         """Adapt step size based on acceptance rate.
 
         Args:
