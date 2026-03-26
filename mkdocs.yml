@@ -68,11 +68,12 @@ nav:
     - Tutorials:
         - Overview: tutorials/index.md
         - Step-by-Step Example: tutorials/dualmoon.ipynb
+        - Bundles: tutorials/bundles.md
+        - Hyperparameter Reference: tutorials/hyperparameters.md
         - Parallel Tempering: tutorials/parallel_tempering.ipynb
         - Custom Sampling Strategy: tutorials/custom_strategy.ipynb
         - Training Normalizing Flows: tutorials/train_normalizing_flow.ipynb
         - Training Flow Matching Models: tutorials/train_flow_match.ipynb
-    - Hyperparameter Reference: hyperparameter_reference.md
     - FAQ: FAQ.md
     - Contributing: contributing.md
     - Development Guide: development_guide.md
