@@ -379,7 +379,7 @@ class TestMALA:
 
     def test_MALA_adapt_step_size(self):
         # Test that adapt_step_size increases step size when acceptance is high
-        MALA_obj = MALA(step_size=jnp.ones(n_dims) * 0.1)
+        MALA_obj = MALA(step_size=jnp.full(n_dims, 0.1))
         
         # High acceptance rate should increase step size
         adapted_high = MALA_obj.adapt_step_size(acceptance_rate=0.8, target_rate=0.574)
@@ -581,7 +581,7 @@ class TestGRW:
 
     def test_GRW_adapt_step_size(self):
         # Test that adapt_step_size increases step size when acceptance is high
-        GRW_obj = GaussianRandomWalk(step_size=jnp.ones(n_dims) * 0.1)
+        GRW_obj = GaussianRandomWalk(step_size=jnp.full(n_dims, 0.1))
         
         # High acceptance rate should increase step size
         adapted_high = GRW_obj.adapt_step_size(acceptance_rate=0.5, target_rate=0.234)
