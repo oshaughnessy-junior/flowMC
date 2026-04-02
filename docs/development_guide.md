@@ -11,12 +11,12 @@ Seeing this limitation, we redesigned the middle level API of `flowMC` while kee
 The target distribution should be defined as a log-probability density function, which follows the following function signature:
 
 ```python
-def target_log_prob_fn(x: Float[Array, "n_dims"], data: dict[str, Any]) -> Float:
+def target_log_prob_fn(x: Array, data: dict) -> Float:
     ...
     return log_prob
 ```
 
-The `target_log_prob_fn` should take in a `Float[Array, "n_dims"]` array `x` and a dictionary `data` that contains any additional data that the target distribution depends on. The function should return a scalar `Float` that is the log-probability density of the target distribution at `x`.
+The `target_log_prob_fn` should take in a 1-D array `x` of length `n_dim` and a dictionary `data` that contains any additional data that the target distribution depends on. The function should return a scalar that is the log-probability density of the target distribution at `x`.
 
 To ensure the target distribution is well-defined and performant, you should also check whether the function is behaving as expected when `jax.jit` and `jax.grad` are applied to it.
 
