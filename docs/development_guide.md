@@ -39,7 +39,7 @@ nf_sampler = Sampler(
 )
 ```
 
-The main loop of `Sampler` is pretty straightforward after initialisation: given the available resources, it iterates through the list of strategies, each of which takes the resources, performs some actions (such as taking local steps or training a normalising flow), and returns the updated resources. In the current implementation, the `Sampler` simply goes through the list of strategies, but in the future we are planning to make the main loop more flexible (for example, by supporting automatic stopping based on some criteria).
+The main loop of `Sampler` is pretty straightforward after initialisation: given the available resources, it iterates through the list of strategies, each of which takes the resources, performs some actions (such as taking local steps or training a normalising flow), and returns the updated resources. The `Sampler` supports early stopping: if a `State` resource sets an `early_stopped` flag during training, the main loop skips the remaining training strategies and jumps directly to the production phase. Future work may extend this flexibility further, for example by supporting more general loop control criteria.
 
 ### Resource and Strategy
 
