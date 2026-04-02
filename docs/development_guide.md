@@ -84,4 +84,4 @@ Since version 0.4.0, we made the design choice of removing support for likelihoo
 
 ### Parallelise whenever you can
 
-One should centre their choice of resource and strategy around leveraging parallelisation. This is reflected by the fact that `n_chains` is a required parameter for the `Sampler` class. The reason for this is `flowMC` is designed to solve problems with complex geometry using adaptive sampling method such as training a normalising flow alongside with a local proposal, which benefit tremendously from having multiple chains running in parallel.
+One should centre their choice of resource and strategy around leveraging parallelisation. This is reflected by the fact that `n_chains` is a required parameter for the `Sampler` class. The reason for this is `flowMC` is designed to solve problems with complex geometry using adaptive sampling method such as training a normalising flow together with a local proposal, which benefits tremendously from multiple chains running in parallel.
