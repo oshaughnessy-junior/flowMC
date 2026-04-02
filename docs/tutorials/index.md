@@ -6,7 +6,7 @@ These tutorials walk you through flowMC from first principles to advanced custom
 
 ## [A Step-by-Step Example](dualmoon.ipynb)
 
-The canonical flowMC example. Sample a 5-dimensional multi-modal "dual moon" distribution using the high-level `RQSpline_MALA_Bundle`, which pairs a MALA local kernel with a Masked Coupling RQSpline normalizing flow as a learned global proposal. Covers the full workflow: defining a log-probability function, configuring the sampler, running it, and diagnosing convergence with loss curves, acceptance rates, and R-hat.
+The canonical flowMC example. Sample a 5-dimensional multi-modal "dual moon" distribution using the high-level `RQSpline_MALA_Bundle`, which pairs a MALA local kernel with a Masked Coupling RQSpline normalising flow as a learned global proposal. Covers the full workflow: defining a log-probability function, configuring the sampler, running it, and diagnosing convergence with loss curves, acceptance rates, and R-hat.
 
 ---
 
@@ -18,7 +18,7 @@ Reference guide for the built-in resource-strategy bundles (`RQSpline_MALA`, `RQ
 
 ## [Hyperparameter Reference](hyperparameters.md)
 
-Complete reference for every constructor parameter across all bundles, organised into categories (required, local sampler, normalizing flow, training, execution, early stopping, parallel tempering). Each entry includes the default value and guidance on when and how to tune it.
+Complete reference for every constructor parameter across all bundles, organised into categories (required, local sampler, normalising flow, training, execution, early stopping, parallel tempering). Each entry includes the default value and guidance on when and how to tune it.
 
 ---
 
@@ -34,12 +34,12 @@ Shows the flexibility of the resource-strategy interface by composing a custom p
 
 ---
 
-## [Training Normalizing Flows](train_normalizing_flow.ipynb)
+## [Training Normalising Flows](train_normalizing_flow.ipynb)
 
-A standalone introduction to the two normalizing flow architectures available in flowMC — **RealNVP** and **Masked Coupling RQSpline** — trained on a 2D toy dataset. Compares their expressiveness and computational cost, and shows how a trained flow plugs into the resource-strategy system via the `TrainModel` strategy.
+A standalone introduction to the two normalising flow architectures available in flowMC — **RealNVP** and **Masked Coupling RQSpline** — trained on a 2D toy dataset. Compares their expressiveness and computational cost, and shows how a trained flow plugs into the resource-strategy system via the `TrainModel` strategy.
 
 ---
 
 ## [Training Flow Matching Models](train_flow_match.ipynb)
 
-Introduces **flow matching** as an alternative to traditional normalizing flows. Trains a Conditional Optimal Transport model on a 2D distribution using an MLP-parameterized velocity field, then generates samples by integrating the learned ODE and evaluates the inferred density on a grid.
+Introduces **flow matching** as an alternative to traditional normalising flows. Trains a Conditional Optimal Transport model on a 2D distribution using an MLP-parameterised velocity field, then generates samples by integrating the learned ODE and evaluates the inferred density on a grid.

@@ -23,9 +23,9 @@ from flowMC.Sampler import Sampler
 # ---------------------------------------------------------------------------
 # Target distribution
 # ---------------------------------------------------------------------------
-# 2-D: dim 0 is an angle in [0, 2π) with a wrapped Gaussian centred at
+# 2-D: dim 0 is an angle in [0, 2π) with a wrapped Gaussian centered at
 # μ=0.15 rad — very close to the 0/2π boundary so chains *must* cross it.
-# dim 1 is a plain Gaussian centred at 1.5 (non-periodic control).
+# dim 1 is a plain Gaussian centered at 1.5 (non-periodic control).
 
 _LOWER, _UPPER = 0.0, 2 * jnp.pi
 _PERIOD = _UPPER - _LOWER
@@ -208,7 +208,7 @@ def test_bundle_end_to_end_periodic_boundary_crossing():
     key = jax.random.key(7)
     key, k_bundle, k_sampler, k_init = jax.random.split(key, 4)
 
-    # Wide periodic bounds: the standard Gaussian (σ=1) never escapes [-20, 20],
+    # Wide periodic bounds: the standard Gaussian (sigma=1) never escapes [-20, 20],
     # so the NF proposal behaves correctly, while MALA's periodic arithmetic still runs.
     initial_position = jax.random.normal(k_init, (n_chains, n_dims)) * 0.5
 
