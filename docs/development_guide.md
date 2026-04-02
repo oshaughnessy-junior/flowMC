@@ -33,6 +33,7 @@ nf_sampler = Sampler(
     # which is prioritized over the resource-strategy bundles
     resources=resources,
     strategies=strategies,
+    strategy_order=strategy_order,
     # or you can supply the resource-strategy bundles
     resource_strategy_bundles=bundle,
 )

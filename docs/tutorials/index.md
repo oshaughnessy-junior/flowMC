@@ -42,4 +42,4 @@ A standalone introduction to the two normalizing flow architectures available in
 
 ## [Training Flow Matching Models](train_flow_match.ipynb)
 
-Introduces **flow matching** as an alternative to traditional normalizing flows. Trains a Conditional Optimal Transport model on a 2D distribution using a MLP-parameterized velocity field, then generates samples by integrating the learned ODE and evaluates the inferred density on a grid.
+Introduces **flow matching** as an alternative to traditional normalizing flows. Trains a Conditional Optimal Transport model on a 2D distribution using an MLP-parameterized velocity field, then generates samples by integrating the learned ODE and evaluates the inferred density on a grid.

@@ -12,7 +12,7 @@ By default, this installs the CPU version of JAX.
 If you have an NVIDIA GPU, install the CUDA-enabled version:
 
 ```bash
-pip install flowMC[cuda]
+pip install "flowMC[cuda]"
 ```
 
 If you want to install the latest version of flowMC, you can clone this repo and install it locally:
