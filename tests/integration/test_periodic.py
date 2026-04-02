@@ -20,8 +20,6 @@ from flowMC.strategy.take_steps import TakeSerialSteps
 from flowMC.resource_strategy_bundle.RQSpline_MALA import RQSpline_MALA_Bundle
 from flowMC.Sampler import Sampler
 
-jax.config.update("jax_enable_x64", True)
-
 # ---------------------------------------------------------------------------
 # Target distribution
 # ---------------------------------------------------------------------------
@@ -37,7 +35,7 @@ _MU_Y, _SIGMA_Y = 1.5, 0.4
 
 def _logpdf_mixed(x: Float[Array, " n_dims"], data: dict) -> Float[Array, ""]:
     theta, y = x[0], x[1]
-    k = jnp.arange(-5, 6, dtype=jnp.float64)
+    k = jnp.arange(-5, 6)
     log_theta = jax.scipy.special.logsumexp(
         -0.5 * ((theta - _MU_THETA + k * _PERIOD) / _SIGMA_THETA) ** 2
     ) - jnp.log(_SIGMA_THETA) - 0.5 * jnp.log(2 * jnp.pi)
@@ -215,7 +213,7 @@ def test_bundle_end_to_end_periodic_boundary_crossing():
     initial_position = jax.random.normal(k_init, (n_chains, n_dims)) * 0.5
 
     def logpdf_gaussian(x: Float[Array, " n_dims"], data: dict) -> Float[Array, ""]:
-        return -0.5 * jnp.sum(x**2, dtype=jnp.float64)
+        return -0.5 * jnp.sum(x**2)
 
     bundle = RQSpline_MALA_Bundle(
         rng_key=k_bundle,
