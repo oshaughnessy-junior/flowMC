@@ -8,6 +8,10 @@ on:
   release:
     types: [published]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -24,7 +28,12 @@ jobs:
       - name: Install dependencies
         run: uv sync --python ${{ matrix.python-version }} --group test
       - name: Run tests
-        run: uv run pytest --cov=flowMC --cov-report=term-missing tests/
+        run: |
+          if [[ "${{ matrix.python-version }}" == "3.12" ]]; then
+            uv run pytest --cov=flowMC --cov-report=term-missing tests/
+          else
+            uv run pytest tests/
+          fi
       - name: Upload coverage to Coveralls
         if: matrix.python-version == '3.12'
         env:

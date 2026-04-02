@@ -49,16 +49,17 @@ def _rational_quadratic_spline_fwd(
     """Applies a rational-quadratic spline to a scalar.
 
     Args:
-    x: a scalar (0-dimensional array). The scalar `x` can be any real number; it
-        will be transformed by the spline if it's in the closed interval
-        `[x_pos[0], x_pos[-1]]`, and it will be transformed linearly if it's
-        outside that interval.
-    x_pos: array of shape [num_bins + 1], the bin boundaries on the x axis.
-    y_pos: array of shape [num_bins + 1], the bin boundaries on the y axis.
-    knot_slopes: array of shape [num_bins + 1], the slopes at the knot points.
+        x: A scalar (0-dimensional array). The scalar ``x`` can be any real number; it
+            will be transformed by the spline if it's in the closed interval
+            ``[x_pos[0], x_pos[-1]]``, and it will be transformed linearly if it's
+            outside that interval.
+        x_pos: Array of shape [num_bins + 1], the bin boundaries on the x axis.
+        y_pos: Array of shape [num_bins + 1], the bin boundaries on the y axis.
+        knot_slopes: Array of shape [num_bins + 1], the slopes at the knot points.
+
     Returns:
-    A tuple of two scalars: the output of the transformation and the log of the
-    absolute first derivative at `x`.
+        tuple[Array, Array]: A tuple of two scalars: the output of the transformation
+        and the log of the absolute first derivative at ``x``.
     """
     # Search to find the right bin. NOTE: The bins are sorted, so we could use
     # binary search, but this is more GPU/TPU friendly.
@@ -165,16 +166,18 @@ def _rational_quadratic_spline_inv(
     """Applies the inverse of a rational-quadratic spline to a scalar.
 
     Args:
-    y: a scalar (0-dimensional array). The scalar `y` can be any real number; it
-        will be transformed by the spline if it's in the closed interval
-        `[y_pos[0], y_pos[-1]]`, and it will be transformed linearly if it's
-        outside that interval.
-    x_pos: array of shape [num_bins + 1], the bin boundaries on the x axis.
-    y_pos: array of shape [num_bins + 1], the bin boundaries on the y axis.
-    knot_slopes: array of shape [num_bins + 1], the slopes at the knot points.
+        y: A scalar (0-dimensional array). The scalar ``y`` can be any real number; it
+            will be transformed by the spline if it's in the closed interval
+            ``[y_pos[0], y_pos[-1]]``, and it will be transformed linearly if it's
+            outside that interval.
+        x_pos: Array of shape [num_bins + 1], the bin boundaries on the x axis.
+        y_pos: Array of shape [num_bins + 1], the bin boundaries on the y axis.
+        knot_slopes: Array of shape [num_bins + 1], the slopes at the knot points.
+
     Returns:
-    A tuple of two scalars: the output of the inverse transformation and the log
-    of the absolute first derivative of the inverse at `y`.
+        tuple[Array, Array]: A tuple of two scalars: the output of the inverse
+        transformation and the log of the absolute first derivative of the inverse
+        at ``y``.
     """
     # Search to find the right bin. NOTE: The bins are sorted, so we could use
     # binary search, but this is more GPU/TPU friendly.
@@ -368,12 +371,12 @@ class MaskedCouplingRQSpline(NFModel):
     r"""Rational quadratic spline normalizing flow model using distrax.
 
     Args:
-        n_features (int):  Number of features in the data.
-        num_layers (int): Number of layers in the conditioner.
-        hidden_size (Sequence[int]): Hidden size of the conditioner.
+        n_features (int): Number of features in the data.
+        n_layers (int): Number of layers in the conditioner.
+        hidden_size (list[int]): Hidden size of the conditioner.
         num_bins (int): Number of bins in the spline.
         key (Key): Random key for initialization.
-        spline_range (Sequence[float]): Range of the spline. Defaults to (-10.0, 10.0).
+        spline_range (tuple[float, float]): Range of the spline. Defaults to (-10.0, 10.0).
 
     Properties:
         n_features (int) :  Number of features in the data.

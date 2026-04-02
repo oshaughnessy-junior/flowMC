@@ -30,6 +30,7 @@ class CheckEarlyStop(Strategy):
     acceptance_buffer_key: str
     relative_tolerance: float
     min_acceptance_rate: float
+    min_stable_acceptance: float
     acceptance_window: int
     n_loops_skip: int
     patience: int
@@ -44,6 +45,7 @@ class CheckEarlyStop(Strategy):
         acceptance_buffer_key: str = "target_global_accs",
         relative_tolerance: float = 0.1,
         min_acceptance_rate: float = 0.1,
+        min_stable_acceptance: float = 0.01,
         acceptance_window: int = 0,
         n_loops_skip: int = 3,
         patience: int = 3,
@@ -61,6 +63,10 @@ class CheckEarlyStop(Strategy):
                 Early stopping triggers immediately when the current mean
                 acceptance rate reaches or exceeds this value, regardless of
                 stability. Set to 0 to disable this condition.
+            min_stable_acceptance: Minimum acceptance rate required for the
+                stability condition to trigger early stop. If the acceptance
+                is below this value the sampler is considered stuck near zero
+                and the stable condition is suppressed. Defaults to 0.01.
             acceptance_window: Number of most-recent thinned steps to use
                 when computing the mean acceptance rate. If 0 (default), all
                 available finite entries are used. Set this to
@@ -77,6 +83,7 @@ class CheckEarlyStop(Strategy):
         self.acceptance_buffer_key = acceptance_buffer_key
         self.relative_tolerance = relative_tolerance
         self.min_acceptance_rate = min_acceptance_rate
+        self.min_stable_acceptance = min_stable_acceptance
         self.acceptance_window = acceptance_window
         self.n_loops_skip = max(n_loops_skip, 1)
         self.patience = max(patience, 1)
@@ -182,8 +189,17 @@ class CheckEarlyStop(Strategy):
             self.min_acceptance_rate > 0
             and current_acceptance >= self.min_acceptance_rate
         )
+        acceptance_too_low = current_acceptance < self.min_stable_acceptance
+        stable_condition = mean_stable and cov_stable and not acceptance_too_low
 
-        if (mean_stable and cov_stable) or rate_reached:
+        if acceptance_too_low and mean_stable and cov_stable:
+            logger.debug(
+                f"[Early stop] Acceptance mean and CoV are stable but acceptance "
+                f"{current_acceptance:.4f} is below min stable threshold "
+                f"{self.min_stable_acceptance:.4f} — not triggering stable early stop."
+            )
+
+        if stable_condition or rate_reached:
             self._patience_count += 1
             if rate_reached:
                 logger.debug(
@@ -222,10 +238,10 @@ class CheckEarlyStop(Strategy):
                     reason.append(f"mean changed by {mean_change:.4%}")
                 if not cov_stable:
                     reason.append(f"CoV changed by {cov_change:.4%}")
-                if not rate_reached and self.min_acceptance_rate > 0:
+                if acceptance_too_low:
                     reason.append(
                         f"acceptance {current_acceptance:.4f} below "
-                        f"min target {self.min_acceptance_rate:.4f}"
+                        f"min stable threshold {self.min_stable_acceptance:.4f}"
                     )
                 logger.debug(
                     f"[Early stop] Patience counter reset ({', '.join(reason)})."

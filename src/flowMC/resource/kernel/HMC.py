@@ -1,9 +1,10 @@
-from typing import Callable
+from typing import Callable, Optional
+from typing_extensions import Self
 import logging
 
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Float, Int, Key, PyTree
+from jaxtyping import Array, Bool, Float, Int, Key, PyTree
 from equinox import tree_at
 
 from flowMC.resource.kernel.base import ProposalBase
@@ -17,14 +18,18 @@ class HMC(ProposalBase):
     target logpdf.
 
     Args:
-        logpdf: target logpdf function
-        jit: whether to jit the sampler
-        params: dictionary of parameters for the sampler
+        condition_matrix (Array): Diagonal elements of the mass matrix.
+        step_size (Float): Step size for leapfrog integration.
+        n_leapfrog (Int): Number of leapfrog steps.
+        periodic_mask (Array): Boolean mask for periodic dimensions.
+        periodic_bounds (Array): Bounds for periodic dimensions.
     """
 
     condition_matrix: Float[Array, " n_dim"]
     step_size: Float
     leapfrog_coefs: Float[Array, "n_leapfrog n_dim"]
+    periodic_mask: Bool[Array, " n_dim"]
+    periodic_bounds: Float[Array, "n_dim 2"]
     ADAPTATION_RATE: float = 0.5
 
     @property
@@ -45,6 +50,8 @@ class HMC(ProposalBase):
         condition_matrix: Float[Array, " n_dim"],
         step_size: Float = 0.1,
         n_leapfrog: Int = 10,
+        periodic_mask: Optional[Bool[Array, " n_dim"]] = None,
+        periodic_bounds: Optional[Float[Array, "n_dim 2"]] = None,
     ):
         """Initialize HMC sampler.
 
@@ -52,6 +59,11 @@ class HMC(ProposalBase):
             condition_matrix: Diagonal elements of the mass matrix as a 1D array.
             step_size: Step size for leapfrog integration.
             n_leapfrog: Number of leapfrog steps.
+            periodic_mask: Boolean mask indicating which dimensions are periodic.
+                If None, no periodic boundaries are applied.
+            periodic_bounds: Array of shape (n_dim, 2) with [lower, upper] bounds
+                for each periodic dimension. Only used where periodic_mask is True.
+                If None, no periodic boundaries are applied.
         """
         self.condition_matrix = condition_matrix
         self.step_size = step_size
@@ -60,6 +72,18 @@ class HMC(ProposalBase):
         coefs = coefs.at[0].set(jnp.array([0, 0.5]))
         coefs = coefs.at[-1].set(jnp.array([1, 0.5]))
         self.leapfrog_coefs = coefs
+
+        n_dim = (
+            jnp.asarray(condition_matrix).shape[0]
+            if jnp.asarray(condition_matrix).ndim > 0
+            else 1
+        )
+        if periodic_mask is None:
+            periodic_mask = jnp.zeros(n_dim, dtype=bool)
+        if periodic_bounds is None:
+            periodic_bounds = jnp.zeros((n_dim, 2))
+        self.periodic_mask = periodic_mask
+        self.periodic_bounds = periodic_bounds
 
     def get_initial_hamiltonian(
         self,
@@ -85,6 +109,12 @@ class HMC(ProposalBase):
         position = position + self.step_size * self.leapfrog_coefs[index][0] * jax.grad(
             kinetic
         )(momentum, metric)
+        # Wrap periodic dimensions after position update
+        lower = self.periodic_bounds[:, 0]
+        upper = self.periodic_bounds[:, 1]
+        period = upper - lower
+        wrapped = lower + jnp.mod(position - lower, period)
+        position = jnp.where(self.periodic_mask, wrapped, position)
         momentum = momentum - self.step_size * self.leapfrog_coefs[index][1] * jax.grad(
             potential
         )(position, data)
@@ -119,9 +149,14 @@ class HMC(ProposalBase):
         hamiltonian is going down, but the likelihood value should go up.
 
         Args:
-            rng_key (n_chains, 2): random key
-            position (n_chains,  n_dim): current position
-            PE (n_chains, ): Potential energy of the current position
+            rng_key (Key): Random key.
+            position (Array): Current position.
+            log_prob (Array): Log probability of the current position.
+            logpdf (LogPDF | Callable): Log probability density function.
+            data (PyTree): Additional data for the logpdf.
+
+        Returns:
+            tuple: (position, log_prob, do_accept).
         """
 
         def potential(x: Float[Array, " n_dim"], data: PyTree) -> Float[Array, "1"]:
@@ -160,7 +195,9 @@ class HMC(ProposalBase):
 
         return position, log_prob, do_accept
 
-    def adapt_step_size(self, acceptance_rate: float, target_rate: float = 0.65):
+    def adapt_step_size(
+        self, acceptance_rate: float, target_rate: float = 0.65
+    ) -> Self:
         """Adapt step size based on acceptance rate.
 
         Args:
@@ -168,7 +205,7 @@ class HMC(ProposalBase):
             target_rate: The target acceptance rate (default: 0.65 for HMC).
 
         Returns:
-            A new HMC instance with updated step_size.
+            HMC: A new instance with updated step_size.
         """
         diff = acceptance_rate - target_rate
         new_step_size = self.step_size * (1.0 + self.ADAPTATION_RATE * diff)

@@ -18,7 +18,7 @@ def test_realNVP():
 
     model = RealNVP(2, 4, 32, rng)
     optim = optax.adam(learning_rate, momentum)
-    state = optim.init(eqx.filter(model, eqx.is_array))
+    state = optim.init(eqx.filter(model, eqx.is_inexact_array))
 
     rng, best_model, state, loss_values = model.train(
         init_rng, data, optim, state, num_epochs, batch_size, verbose=True
@@ -51,7 +51,7 @@ def test_rqSpline():
         data_cov=jnp.cov(data.T),
     )
     optim = optax.adam(learning_rate, momentum)
-    state = optim.init(eqx.filter(model, eqx.is_array))
+    state = optim.init(eqx.filter(model, eqx.is_inexact_array))
 
     rng, best_model, state, loss_values = model.train(
         init_rng, data, optim, state, num_epochs, batch_size, verbose=True

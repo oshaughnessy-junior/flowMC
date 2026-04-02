@@ -108,10 +108,9 @@ class RealNVP(NFModel):
     MLP is needed to make sure the scaling between layers are more or less the same.
 
     Args:
-        n_layers: (int) The number of affine coupling layers.
-        n_features: (int) The number of features in the input.
-        n_hidden: (int) The number of hidden units in the MLP.
-        dt: (Float) Scaling factor for the affine coupling layer.
+        n_features (int): The number of features in the input.
+        n_layers (int): The number of affine coupling layers.
+        n_hidden (int): The number of hidden units in the MLP.
 
     Properties:
         data_mean: (ndarray) Mean of Gaussian base distribution

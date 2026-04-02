@@ -70,7 +70,7 @@ class MLP(eqx.Module):
 
     Args:
         shape (List[int]): Shape of the MLP. The first element is the input dimension,
-          the last element is the output dimension.
+            the last element is the output dimension.
         key (Key): Random key.
 
     Attributes:
@@ -133,7 +133,7 @@ class MaskedCouplingLayer(Bijection):
     Args:
         bijector (Bijection): inner bijector in the masked coupling layer.
         mask (Array): Mask. 0 for the input variables that are transformed,
-          1 for the input variables that are not transformed.
+            1 for the input variables that are not transformed.
     """
 
     _mask: Float[Array, " n_dim"]

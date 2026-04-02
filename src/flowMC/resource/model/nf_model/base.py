@@ -112,18 +112,18 @@ class NFModel(eqx.Module, Resource):
         """Train for a single step.
 
         Args:
-            model (eqx.Model): NF model to train.
             x (Array): Training data.
-            opt_state (optax.OptState): Optimizer state.
+            optim (optax.GradientTransformation): Optimizer.
+            state (optax.OptState): Optimizer state.
 
         Returns:
-            loss (Array): Loss value.
-            model (eqx.Model): Updated model.
-            opt_state (optax.OptState): Updated optimizer state.
+            tuple: (loss, model, state).
         """
         logger.debug("Compiling training step")
         loss, grads = model.loss_fn(x)
-        updates, state = optim.update(grads, state, model)  # type: ignore
+        updates, state = optim.update(
+            grads, state, eqx.filter(model, eqx.is_inexact_array)
+        )
         model = eqx.apply_updates(model, updates)
         return loss, model, state
 
@@ -214,7 +214,7 @@ class NFModel(eqx.Module, Resource):
 
         return rng, best_model, best_state, loss_values
 
-    def to_precision(self, precision: str = "float32"):
+    def to_precision(self, precision: str = "float32") -> Self:
         """Convert all parameters to a given precision.
 
         !!! warning
@@ -224,7 +224,7 @@ class NFModel(eqx.Module, Resource):
             precision (str): Precision to convert to.
 
         Returns:
-            eqx.Module: Model with parameters converted to the given precision.
+            Self: Model with parameters converted to the given precision.
         """
 
         precisions_dict = {

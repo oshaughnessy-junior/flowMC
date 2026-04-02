@@ -1,29 +1,20 @@
-flowMC
-======
+# flowMC
 
-**Normalizing-flow enhanced sampling package for probabilistic inference**
+## A JAX-based normalizing-flow-enhanced MCMC sampler for probabilistic inference
 
+[![license](https://badgen.net/badge/License/MIT/blue)](https://github.com/GW-JAX-Team/flowMC/blob/main/LICENSE) [![coverage](https://badgen.net/coveralls/c/github/GW-JAX-Team/flowMC/main)](https://coveralls.io/github/GW-JAX-Team/flowMC?branch=main) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/GW-JAX-Team/flowMC/main.svg)](https://results.pre-commit.ci/latest/github/GW-JAX-Team/flowMC/main)
 
-![](logo_0810.png)
+![flowMC_logo](logo.png)
 
-[![](https://badgen.net/badge/Read/the doc/blue)](https://flowMC.readthedocs.io/en/latest/)
-[![](https://badgen.net/badge/License/MIT/blue)](https://github.com/GW-JAX-Team/flowMC/blob/Packaging/LICENSE)
+flowMC is a JAX-based package for normalizing-flow-enhanced Markov chain Monte Carlo (MCMC) sampling. By using normalizing flows as a global proposal, flowMC accelerates convergence for multi-modal and high-dimensional posteriors while running natively on GPU with minimal hyperparameter tuning.
 
+!!! warning
+    flowMC has not yet reached v1.0.0 and the API may change. Use at your own risk. Consider pinning to a specific version if you need API stability.
 
+## Documentation
 
-flowMC is a Jax-based python package for normalizing-flow enhanced Markov chain Monte Carlo (MCMC) sampling.
-The code is open source under MIT license, and it is under active development.
-
-- Just-in-time compilation is supported.
-- Native support for GPU acceleration.
-- Suit for problems with multi-modality and complex geometry.
-
-Four steps to use flowMC's guide
-================================
-
-1. You can find installation info, a basic example, and some design and guiding principles of `flowMC` in the [quickstart](quickstart.md).
-2. In tutorials, we have a set of pedagogical notebooks that will give you a better understanding of the package infrastructure and a number of common use cases.
-3. We list some community examples in [community_example](communityExamples.md), so users can see whether there is a similar use case they can adopt their code quickly.
-4. Finally, we have a list of frequently asked questions in [FAQ](FAQ.md).
-
-   
+- **[Installation](installation.md)** — How to install flowMC
+- **[Quick Start](quickstart.md)** — A basic example to get started
+- **[Tutorials](tutorials/index.md)** — Step-by-step guides and worked examples
+- **[Hyperparameter Reference](hyperparameter_reference.md)** — Guide to all sampler settings
+- **[FAQ](FAQ.md)** — Answers to common questions
