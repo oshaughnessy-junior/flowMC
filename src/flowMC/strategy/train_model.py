@@ -23,21 +23,26 @@ class TrainModel(Strategy):
         model_resource (str): Resource key for the :class:`~flowMC.resource.model.nf_model.base.NFModel`.
         data_resource (str): Resource key for the position :class:`~flowMC.resource.buffers.Buffer`.
         optimizer_resource (str): Resource key for the :class:`~flowMC.resource.optimizer.Optimizer`.
+        loss_buffer_name (str): Resource key for an optional
+            :class:`~flowMC.resource.buffers.Buffer` to record loss values.
+            Empty string disables loss recording.
         n_epochs (int): Number of training epochs per call.
         batch_size (int): Mini-batch size.
         n_max_examples (int): Maximum number of training examples sampled per call.
+        history_window (int): Number of most-recent steps from the buffer used
+            as training data.
         verbose (bool): Whether to print a training progress bar.
-        thinning (int): Unused; reserved for future use.
     """
 
     model_resource: str
     data_resource: str
     optimizer_resource: str
+    loss_buffer_name: str
     n_epochs: int
     batch_size: int
     n_max_examples: int
+    history_window: int
     verbose: bool
-    thinning: int
 
     def __repr__(self):
         return "Train " + self.model_resource
@@ -79,8 +84,8 @@ class TrainModel(Strategy):
         self.n_epochs = n_epochs
         self.batch_size = batch_size
         self.n_max_examples = n_max_examples
-        self.verbose = verbose
         self.history_window = history_window
+        self.verbose = verbose
         if verbose:
             enable_verbose_logging(logger)
 
