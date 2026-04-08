@@ -10,6 +10,9 @@ from abc import abstractmethod
 class Bijection(eqx.Module):
     """Base class for bijective transformations.
 
+    Subclasses must implement :meth:`forward` and :meth:`inverse`.
+    The default :meth:`__call__` delegates to :meth:`forward`.
+
     This is an abstract template that should not be directly used.
     """
 
@@ -22,6 +25,15 @@ class Bijection(eqx.Module):
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
     ) -> tuple[Float[Array, " n_dim"], Float]:
+        """Apply the forward transformation.
+
+        Args:
+            x (Float[Array, "n_dim"]): Input array.
+            condition (Float[Array, "n_condition"]): Conditioning variables.
+
+        Returns:
+            tuple[Float[Array, "n_dim"], Float]: Transformed output and log-det Jacobian.
+        """
         return self.forward(x, condition)
 
     @abstractmethod
@@ -30,6 +42,15 @@ class Bijection(eqx.Module):
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
     ) -> tuple[Float[Array, " n_dim"], Float]:
+        """Transform from input space to output space.
+
+        Args:
+            x (Float[Array, "n_dim"]): Input array.
+            condition (Float[Array, "n_condition"]): Conditioning variables.
+
+        Returns:
+            tuple[Float[Array, "n_dim"], Float]: Transformed output and log-det Jacobian.
+        """
         raise NotImplementedError
 
     @abstractmethod
@@ -38,11 +59,23 @@ class Bijection(eqx.Module):
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
     ) -> tuple[Float[Array, " n_dim"], Float]:
+        """Transform from output space back to input space.
+
+        Args:
+            x (Float[Array, "n_dim"]): Array in the output (transformed) space.
+            condition (Float[Array, "n_condition"]): Conditioning variables.
+
+        Returns:
+            tuple[Float[Array, "n_dim"], Float]: Inverse output and log-det Jacobian.
+        """
         raise NotImplementedError
 
 
 class Distribution(eqx.Module):
     """Base class for probability distributions.
+
+    Subclasses must implement :meth:`log_prob` and :meth:`sample`.
+    The default :meth:`__call__` delegates to :meth:`log_prob`.
 
     This is an abstract template that should not be directly used.
     """
@@ -52,6 +85,15 @@ class Distribution(eqx.Module):
         raise NotImplementedError
 
     def __call__(self, x: Array, key: Optional[Key] = None) -> Array:
+        """Evaluate the log-probability of ``x``.
+
+        Args:
+            x (Array): Input sample.
+            key (Key, optional): Unused; reserved for subclass compatibility.
+
+        Returns:
+            Array: Log-probability of ``x``.
+        """
         return self.log_prob(x)
 
     @abstractmethod

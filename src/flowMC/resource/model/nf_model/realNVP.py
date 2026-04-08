@@ -137,7 +137,21 @@ class RealNVP(NFModel):
 
     def __init__(
         self, n_features: int, n_layers: int, n_hidden: int, key: Key, **kwargs
-    ):
+    ) -> None:
+        """
+        Args:
+            n_features (int): Dimensionality of the data.
+            n_layers (int): Number of affine coupling layers.
+            n_hidden (int): Number of hidden units per coupling-layer MLP.
+            key (Key): JAX PRNGKey for parameter initialisation.
+            **kwargs: Optional overrides:
+                - ``base_dist`` (Distribution): Custom base distribution.
+                  Defaults to a standard Gaussian.
+                - ``data_mean`` (Array): Initial data mean for whitening.
+                  Updated during training.
+                - ``data_cov`` (Array): Initial data covariance for whitening.
+                  Updated during training.
+        """
         if kwargs.get("base_dist") is not None:
             self.base_dist = kwargs.get("base_dist")  # type: ignore
         else:

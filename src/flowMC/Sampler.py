@@ -47,7 +47,31 @@ class Sampler:
         strategy_order: Optional[list[str]] = None,
         resource_strategy_bundles: Optional[ResourceStrategyBundle] = None,
         **kwargs,
-    ):
+    ) -> None:
+        """Initialize the sampler.
+
+        Provide *either* ``resources`` + ``strategies`` + ``strategy_order``
+        *or* a ``resource_strategy_bundles`` pre-configured bundle.
+
+        Args:
+            n_dim (int): Dimension of the parameter space.
+            n_chains (int): Number of parallel chains.
+            rng_key (Key): JAX PRNG key.
+            resources (Optional[dict[str, Resource]]): Dictionary of named resources
+                (kernels, buffers, etc.). Must be paired with ``strategies``.
+            strategies (Optional[dict[str, Strategy]]): Dictionary of named strategies.
+                Must be paired with ``resources``.
+            strategy_order (Optional[list[str]]): Ordered list of strategy names to
+                execute each call to :meth:`sample`.
+            resource_strategy_bundles (Optional[ResourceStrategyBundle]): Pre-configured
+                bundle that provides resources, strategies, and ordering.
+            **kwargs: Additional keyword arguments that override class-level attributes
+                (e.g. ``logging``, ``outdir``).
+
+        Raises:
+            ValueError: If neither ``resources``/``strategies`` nor
+                ``resource_strategy_bundles`` is provided.
+        """
         # Copying input into the model
 
         self.n_dim = n_dim

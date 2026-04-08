@@ -4,6 +4,13 @@ import equinox as eqx
 
 
 class Optimizer(Resource):
+    """Adam-W optimiser with gradient clipping for training normalising flow models.
+
+    Attributes:
+        optim (optax.GradientTransformation): The composed optax update rule.
+        optim_state (optax.OptState): Optimiser state initialised from the model.
+    """
+
     optim: optax.GradientTransformation
     optim_state: optax.OptState
 
@@ -15,7 +22,14 @@ class Optimizer(Resource):
         model: eqx.Module,
         learning_rate: float = 1e-3,
         momentum: float = 0.9,
-    ):
+    ) -> None:
+        """
+        Args:
+            model (eqx.Module): The model whose trainable parameters will be optimised.
+                Used only to initialise the optimiser state.
+            learning_rate (float): Adam learning rate. Defaults to 1e-3.
+            momentum (float): Adam first-moment decay (``b1``). Defaults to 0.9.
+        """
         self.optim = optax.chain(
             optax.clip_by_global_norm(1.0),
             optax.adamw(learning_rate=learning_rate, b1=momentum),

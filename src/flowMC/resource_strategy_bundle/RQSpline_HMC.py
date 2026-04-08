@@ -72,7 +72,61 @@ class RQSpline_HMC_Bundle(ResourceStrategyBundle):
         early_stopping_min_acceptance: float = 0.1,
         # --- Misc ---
         verbose: bool = False,
-    ):
+    ) -> None:
+        """Build all resources and strategies for an RQSpline + HMC sampling run.
+
+        Args:
+            rng_key (Key): JAX PRNGKey used to initialise the normalizing flow.
+            n_chains (int): Number of parallel MCMC chains.
+            n_dims (int): Dimensionality of the target distribution.
+            logpdf (Callable): Log-PDF ``f(x, data) -> Float``.
+            n_local_steps (int): HMC steps per training/production loop iteration.
+            n_global_steps (int): NF-proposal steps per training/production loop iteration.
+            n_training_loops (int): Number of train-then-sample iterations (warmup).
+            n_production_loops (int): Number of production sampling iterations.
+            n_epochs (int): NF training epochs per training loop.
+
+            hmc_step_size (float): Initial leapfrog step size. Defaults to 0.1.
+            hmc_n_leapfrog (int): Number of leapfrog steps per HMC proposal.
+                Defaults to 10.
+            condition_matrix (float | Float[Array, "n_dim"]): Diagonal mass-matrix
+                elements; scalar (broadcast) or per-dimension array. Defaults to 1.
+            adapt_step_size (bool): Adapt the HMC step size during training.
+                Defaults to True.
+            periodic (dict[int, tuple[float, float]] | None): Periodic boundary
+                conditions as ``{dim_index: (lower, upper)}``. Defaults to None.
+
+            rq_spline_hidden_units (list[int]): Hidden units per conditioner MLP layer.
+                Defaults to ``[32, 32]``.
+            rq_spline_n_bins (int): Number of RQ-spline bins. Defaults to 8.
+            rq_spline_n_layers (int): Number of masked coupling layers. Defaults to 4.
+            n_NFproposal_batch_size (int): NF log-prob evaluation batch size.
+                Defaults to 10000.
+
+            learning_rate (float): Adam learning rate for NF training. Defaults to 1e-3.
+            batch_size (int): Mini-batch size for NF training. Defaults to 10000.
+            n_max_examples (int): Maximum training examples per call. Defaults to 10000.
+            history_window (int): Use only the last ``history_window`` stored steps as
+                training data. Defaults to 100.
+
+            chain_batch_size (int): Process chains in sub-batches of this size to
+                reduce peak memory. 0 disables batching. Defaults to 0.
+            local_thinning (int): Store every ``local_thinning``-th local step.
+                Defaults to 1.
+            global_thinning (int): Store every ``global_thinning``-th global step.
+                Defaults to 1.
+
+            early_stopping (bool): Enable early stopping based on global acceptance
+                rate stability. Defaults to False.
+            early_stopping_tolerance (float): Relative change threshold for early
+                stopping. Defaults to 0.05.
+            early_stopping_patience (int): Consecutive stable loops required before
+                stopping. Defaults to 3.
+            early_stopping_min_acceptance (float): Minimum global acceptance rate
+                that also triggers early stopping. Defaults to 0.1.
+
+            verbose (bool): Enable progress bars and debug logging. Defaults to False.
+        """
         if local_thinning > n_local_steps:
             raise ValueError(
                 f"local_thinning ({local_thinning}) must not exceed n_local_steps "

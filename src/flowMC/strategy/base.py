@@ -14,6 +14,7 @@ class Strategy(ABC):
 
     @abstractmethod
     def __init__(self):
+        """Initialize the strategy."""
         raise NotImplementedError
 
     @abstractmethod
@@ -28,4 +29,20 @@ class Strategy(ABC):
         dict[str, Resource],
         Float[Array, "n_chains n_dim"],
     ]:
+        """Execute one step of the strategy.
+
+        Args:
+            rng_key (Key): JAX PRNG key (consumed and split internally).
+            resources (dict[str, Resource]): Mutable resource dictionary shared
+                across all strategies.
+            initial_position (Float[Array, "n_chains n_dim"]): Current chain
+                positions of shape ``(n_chains, n_dim)``.
+            data (dict): Auxiliary data passed to log-pdf calls.
+
+        Returns:
+            tuple: A 3-tuple of:
+                - Key: Updated PRNG key.
+                - dict[str, Resource]: Updated resources.
+                - Float[Array, "n_chains n_dim"]: Updated chain positions.
+        """
         raise NotImplementedError

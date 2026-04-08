@@ -13,21 +13,18 @@ logger = logging.getLogger(__name__)
 
 
 class AdamOptimization(Strategy):
-    """Optimize a set of chains using Adam optimization. Note that if the posterior can
-    go to infinity, this optimization scheme is likely to return NaNs.
+    """Optimize a set of chains using Adam optimization.
 
-    Args:
-        n_steps: int = 100
-            Number of optimization steps.
-        learning_rate: float = 1e-2
-            Learning rate for the optimization.
-        noise_level: float = 10
-            Variance of the noise added to the gradients.
-        bounds: Float[Array, "n_dim 2"] = jnp.array([[-jnp.inf, jnp.inf]])
-            Bounds for the optimization. The optimization will be projected to these bounds.
-            If bounds has shape (1, 2), it will be broadcast to all dimensions. For n_dim > 1,
-            passing a (1, 2) array applies the same bound to every dimension. To specify different
-            bounds per dimension, provide an array of shape (n_dim, 2).
+    .. note::
+        If the posterior is unbounded, the optimization may return NaNs.
+
+    Attributes:
+        logpdf (Callable): Log-probability density function ``f(x, data) -> Float``.
+        n_steps (int): Number of optimization steps.
+        learning_rate (float): Adam learning rate.
+        noise_level (float): Noise scale multiplied onto the gradient at each step.
+        bounds (Float[Array, "n_dim 2"]): Box constraints; shape ``(n_dim, 2)`` or
+            ``(1, 2)`` (broadcast to all dimensions).
     """
 
     logpdf: Callable[[Float[Array, " n_dim"], dict], Float]
@@ -46,7 +43,17 @@ class AdamOptimization(Strategy):
         learning_rate: float = 1e-2,
         noise_level: float = 10,
         bounds: Float[Array, "n_dim 2"] = jnp.array([[-jnp.inf, jnp.inf]]),
-    ):
+    ) -> None:
+        """
+        Args:
+            logpdf (Callable): Log-PDF ``f(x, data) -> Float`` to maximise.
+            n_steps (int): Number of Adam steps. Defaults to 100.
+            learning_rate (float): Adam learning rate. Defaults to 1e-2.
+            noise_level (float): Noise scale added to gradients each step.
+                Defaults to 10.
+            bounds (Float[Array, "n_dim 2"]): Box constraints of shape ``(n_dim, 2)``
+                or ``(1, 2)`` (broadcast). Defaults to ``[[-inf, inf]]`` (unconstrained).
+        """
         self.logpdf = logpdf
         self.n_steps = n_steps
         self.learning_rate = learning_rate
@@ -76,6 +83,18 @@ class AdamOptimization(Strategy):
         dict[str, Resource],
         Float[Array, "n_chain n_dim"],
     ]:
+        """Optimise all chains toward the mode of the log-PDF.
+
+        Args:
+            rng_key (Key): JAX PRNGKey (consumed and split internally).
+            resources (dict[str, Resource]): Resource dictionary (returned unchanged).
+            initial_position (Float[Array, "n_chain n_dim"]): Starting positions.
+            data (dict): Auxiliary data passed to the log-PDF.
+
+        Returns:
+            tuple: ``(rng_key, resources, optimized_positions)``.
+        """
+
         def loss_fn(params: Float[Array, " n_dim"], data: dict) -> Float:
             return -self.logpdf(params, data)
 
@@ -91,7 +110,22 @@ class AdamOptimization(Strategy):
         objective: Callable,
         initial_position: Float[Array, "n_chain n_dim"],
         data: dict,
-    ):
+    ) -> tuple[Key, Float[Array, "n_chain n_dim"], Float[Array, " n_chain"]]:
+        """Optimization kernel that can be used independently of :meth:`__call__`.
+
+        Args:
+            rng_key (Key): JAX PRNGKey for noise generation.
+            objective (Callable): Scalar-valued objective to *minimise*
+                (pass the negated log-PDF to maximise it).
+            initial_position (Float[Array, "n_chain n_dim"]): Starting positions.
+            data (dict): Auxiliary data passed to the objective.
+
+        Returns:
+            tuple:
+                - rng_key (Key): Updated PRNGKey.
+                - optimized_positions (Float[Array, "n_chain n_dim"]): Final positions.
+                - final_log_prob (Float[Array, "n_chain"]): Log-PDF at final positions.
+        """
         # Validate bounds shape against n_dim
         n_dim = initial_position.shape[-1]
         if not (self.bounds.shape[0] == 1 or self.bounds.shape[0] == n_dim):
@@ -100,26 +134,6 @@ class AdamOptimization(Strategy):
                 "Provide bounds of shape (1, 2) for broadcasting or (n_dim, 2) for per-dimension bounds."
             )
 
-        """Optimization kernel. This can be used independently of the __call__ method.
-
-        Args:
-            rng_key: Key
-                Random key for the optimization.
-            objective: Callable
-                Objective function to optimize.
-            initial_position: Float[Array, "n_chain n_dim"]
-                Initial positions for the optimization.
-            data: dict
-                Data to pass to the objective function.
-
-        Returns:
-            rng_key: Key
-                Updated random key.
-            optimized_positions: Float[Array, "n_chain n_dim"]
-                Optimized positions.
-            final_log_prob: Float[Array, "n_chain"]
-                Final log-probabilities of the optimized positions.
-        """
         grad_fn = jax.jit(jax.grad(objective))
 
         def _kernel(carry, _step):

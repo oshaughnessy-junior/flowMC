@@ -14,13 +14,32 @@ logger = logging.getLogger(__name__)
 
 
 class NFProposal(ProposalBase):
+    """Normalizing-flow global proposal kernel.
+
+    Proposes new positions by sampling from a trained normalizing flow and accepts
+    or rejects via a corrected Metropolis-Hastings ratio that accounts for the
+    flow density.  All ``n_steps`` proposals are drawn in one batched call, so
+    this kernel is suited for use with :class:`~flowMC.strategy.take_steps.TakeGroupSteps`.
+
+    Attributes:
+        model (NFModel): Trained normalizing flow model used to propose samples.
+        n_batch_size (int): Maximum number of proposals evaluated in a single
+            ``jax.lax.map`` batch (trades memory for throughput).
+    """
+
     model: NFModel
     n_batch_size: int
 
     def __repr__(self):
         return "NF proposal with " + self.model.__repr__()
 
-    def __init__(self, model: NFModel, n_NFproposal_batch_size: int = 100):
+    def __init__(self, model: NFModel, n_NFproposal_batch_size: int = 100) -> None:
+        """
+        Args:
+            model (NFModel): Normalizing flow model used to generate proposals.
+            n_NFproposal_batch_size (int): Number of log-prob evaluations per
+                ``jax.lax.map`` batch. Defaults to 100.
+        """
         super().__init__()
         self.model = model
         self.n_batch_size = n_NFproposal_batch_size
@@ -35,6 +54,25 @@ class NFProposal(ProposalBase):
     ) -> tuple[
         Float[Array, "n_step n_dim"], Float[Array, "n_step 1"], Int[Array, "n_step 1"]
     ]:
+        """Generate and accept/reject ``n_steps`` flow proposals for a single chain.
+
+        The number of steps is read from ``data["n_steps"]``.  All proposals are
+        sampled from the flow at once and then evaluated serially via
+        ``jax.lax.scan`` for the MH accept/reject step.
+
+        Args:
+            rng_key (Key): JAX PRNGKey.
+            position (Float[Array, "n_dim"]): Current chain position.
+            log_prob (Float[Array, "1"]): Current log-probability.
+            logpdf (LogPDF | Callable): Target log-PDF.
+            data (PyTree): Auxiliary data; must contain ``"n_steps"`` (int).
+
+        Returns:
+            tuple:
+                - positions (Float[Array, "n_step n_dim"]): Chain positions after each step.
+                - log_probs (Float[Array, "n_step 1"]): Log-probs after each step.
+                - do_accepts (Int[Array, "n_step 1"]): Acceptance flags.
+        """
         logger.debug("Compiling NF proposal kernel")
         n_steps = data["n_steps"]
 
@@ -99,7 +137,18 @@ class NFProposal(ProposalBase):
         self,
         rng_key: Key,
         n_steps: int,
-    ):
+    ) -> tuple[Float[Array, "n_steps n_dim"], Float[Array, " n_steps"]]:
+        """Sample positions and their flow log-densities.
+
+        Args:
+            rng_key (Key): JAX PRNGKey.
+            n_steps (int): Number of samples to draw from the flow.
+
+        Returns:
+            tuple:
+                - proposal_position (Float[Array, "n_steps n_dim"]): Proposed positions.
+                - proposed_log_prob (Float[Array, "n_steps"]): Flow log-density at each proposal.
+        """
         proposal_position = self.model.sample(rng_key, n_steps)
 
         if n_steps > self.n_batch_size:

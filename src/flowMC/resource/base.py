@@ -15,24 +15,27 @@ class Resource(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def print_parameters(self):
-        """Function to print the tunable parameters of the resource."""
+    def print_parameters(self) -> None:
+        """Print the tunable parameters of the resource to the debug log."""
         raise NotImplementedError
 
     @abstractmethod
-    def save_resource(self, path: str):
-        """Function to save the resource.
+    def save_resource(self, path: str) -> None:
+        """Save the resource to disk.
 
         Args:
-            path (str): Path to save the resource.
+            path (str): File path (without extension) to save the resource.
         """
         raise NotImplementedError
 
     @abstractmethod
     def load_resource(self, path: str) -> Self:
-        """Function to load the resource.
+        """Load a resource from disk.
 
         Args:
-            path (str): Path to load the resource.
+            path (str): File path to load the resource from.
+
+        Returns:
+            Self: A new instance populated with the loaded data.
         """
         raise NotImplementedError
