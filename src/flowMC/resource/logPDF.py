@@ -86,6 +86,20 @@ class LogPDF(Resource):
 
 @jax.tree_util.register_pytree_node_class
 class TemperedPDF(LogPDF):
+    """A tempered version of :class:`LogPDF` used for parallel tempering.
+
+    The tempered log-pdf at inverse temperature ``β = 1/T`` is:
+
+    .. math::
+
+        \\log p_\\beta(x) = \\beta \\cdot \\log \\mathcal{L}(x) + \\log \\pi(x)
+
+    where :math:`\\mathcal{L}` is the likelihood and :math:`\\pi` is the prior.
+
+    Attributes:
+        log_prior (Callable): The log-prior function.
+    """
+
     log_prior: Callable[[Float[Array, " n_dim"], PyTree], Float[Array, "1"]]
 
     def __init__(
@@ -96,7 +110,17 @@ class TemperedPDF(LogPDF):
         n_dims=None,
         n_temps=5,
         max_temp=100,
-    ):
+    ) -> None:
+        """
+        Args:
+            log_likelihood (Callable): Log-likelihood function
+                ``f(x, data) -> Float``.
+            log_prior (Callable): Log-prior function ``f(x, data) -> Float``.
+            variables (list[Variable], optional): Named variable list. Defaults to None.
+            n_dims (int, optional): Dimension count if ``variables`` is None.
+            n_temps (int): Number of temperature levels (unused, reserved).
+            max_temp (float): Maximum temperature (unused, reserved).
+        """
         super().__init__(log_likelihood, variables, n_dims)
         self.log_prior = log_prior
 

@@ -12,6 +12,15 @@ TBuffer = TypeVar("TBuffer", bound="Buffer")
 
 
 class Buffer(Resource):
+    """A fixed-size ring-style buffer for storing MCMC chain positions, log-probs, or accept rates.
+
+    Attributes:
+        name (str): Name of the buffer.
+        data (Float[Array, "..."]): Underlying data array, initialised to ``-inf``.
+        cursor (int): Current write offset along ``cursor_dim``.
+        cursor_dim (int): Dimension along which :meth:`update_buffer` writes.
+    """
+
     name: str
     data: Float[Array, "..."]
     cursor: int = 0
@@ -21,23 +30,34 @@ class Buffer(Resource):
         return "Buffer " + self.name + " with shape " + str(self.data.shape)
 
     @property
-    def shape(self):
+    def shape(self) -> tuple[int, ...]:
+        """Shape of the underlying data array."""
         return self.data.shape
 
-    def __init__(self, name: str, shape: tuple[int, ...], cursor_dim: int = 0):
+    def __init__(self, name: str, shape: tuple[int, ...], cursor_dim: int = 0) -> None:
+        """
+        Args:
+            name (str): Name of the buffer.
+            shape (tuple[int, ...]): Shape of the underlying array.
+            cursor_dim (int): The dimension along which writes are appended.
+                Defaults to 0.
+        """
         self.cursor_dim = cursor_dim
         self.name = name
         self.data = jnp.zeros(shape) - jnp.inf
 
-    def __call__(self):
+    def __call__(self) -> Float[Array, "..."]:
+        """Return the underlying data array."""
         return self.data
 
-    def update_buffer(self, updates: Array, start: int = 0):
-        """Update the buffer with new data.
+    def update_buffer(self, updates: Array, start: int = 0) -> None:
+        """Write new data into the buffer at the specified offset.
 
-        This will modify the buffer in place.
-        The cursor is expected to propagate the buffer in the cursor_dim
-        with length equal to the length of the updates in its first dimension.
+        Args:
+            updates (Array): Data to write. The size of the first dimension of
+                ``updates`` determines how many entries are written along
+                ``cursor_dim``.
+            start (int): Starting index along ``cursor_dim``. Defaults to 0.
         """
         self.data = jax.lax.dynamic_update_slice_in_dim(
             self.data, updates, start, self.cursor_dim
@@ -49,7 +69,15 @@ class Buffer(Resource):
             f" {self.cursor} at dimension {self.cursor_dim}"
         )
 
-    def get_distribution(self, n_bins: int = 100):
+    def get_distribution(self, n_bins: int = 100) -> tuple:
+        """Compute a histogram of the flattened buffer data.
+
+        Args:
+            n_bins (int): Number of histogram bins. Defaults to 100.
+
+        Returns:
+            tuple: ``(counts, bin_edges)`` as returned by ``numpy.histogram``.
+        """
         return np.histogram(self.data.flatten(), bins=n_bins)
 
     def save_resource(self, path: str):

@@ -13,14 +13,36 @@ logger = logging.getLogger(__name__)
 
 
 class TrainModel(Strategy):
+    """Strategy that trains a normalizing flow model on buffered chain positions.
+
+    Each call draws the most-recent ``history_window`` steps from the position
+    buffer, sub-samples up to ``n_max_examples`` points, and runs ``n_epochs``
+    of gradient descent via the associated :class:`~flowMC.resource.optimizer.Optimizer`.
+
+    Attributes:
+        model_resource (str): Resource key for the :class:`~flowMC.resource.model.nf_model.base.NFModel`.
+        data_resource (str): Resource key for the position :class:`~flowMC.resource.buffers.Buffer`.
+        optimizer_resource (str): Resource key for the :class:`~flowMC.resource.optimizer.Optimizer`.
+        loss_buffer_name (str): Resource key for an optional
+            :class:`~flowMC.resource.buffers.Buffer` to record loss values.
+            Empty string disables loss recording.
+        n_epochs (int): Number of training epochs per call.
+        batch_size (int): Mini-batch size.
+        n_max_examples (int): Maximum number of training examples sampled per call.
+        history_window (int): Number of most-recent steps from the buffer used
+            as training data.
+        verbose (bool): Whether to print a training progress bar.
+    """
+
     model_resource: str
     data_resource: str
     optimizer_resource: str
+    loss_buffer_name: str
     n_epochs: int
     batch_size: int
     n_max_examples: int
+    history_window: int
     verbose: bool
-    thinning: int
 
     def __repr__(self):
         return "Train " + self.model_resource
@@ -36,7 +58,24 @@ class TrainModel(Strategy):
         n_max_examples: int = 10000,
         history_window: int = 100,
         verbose: bool = False,
-    ):
+    ) -> None:
+        """
+        Args:
+            model_resource (str): Resource key for the normalizing flow model.
+            data_resource (str): Resource key for the position buffer used as
+                training data.
+            optimizer_resource (str): Resource key for the optimizer.
+            loss_buffer_name (str): Resource key for an optional
+                :class:`~flowMC.resource.buffers.Buffer` to record loss values.
+                Pass ``""`` to disable. Defaults to ``""``.
+            n_epochs (int): Number of training epochs per call. Defaults to 100.
+            batch_size (int): Mini-batch size. Defaults to 64.
+            n_max_examples (int): Cap on training examples drawn per call.
+                Defaults to 10000.
+            history_window (int): Use only the last ``history_window`` thinned
+                steps from the buffer. Defaults to 100.
+            verbose (bool): Print training progress bar. Defaults to False.
+        """
         self.model_resource = model_resource
         self.data_resource = data_resource
         self.optimizer_resource = optimizer_resource
@@ -45,8 +84,8 @@ class TrainModel(Strategy):
         self.n_epochs = n_epochs
         self.batch_size = batch_size
         self.n_max_examples = n_max_examples
-        self.verbose = verbose
         self.history_window = history_window
+        self.verbose = verbose
         if verbose:
             enable_verbose_logging(logger)
 

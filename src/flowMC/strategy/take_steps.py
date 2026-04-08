@@ -16,6 +16,24 @@ logger = logging.getLogger(__name__)
 
 
 class TakeSteps(Strategy):
+    """Base class for strategies that run a kernel for a fixed number of steps.
+
+    Subclasses implement :meth:`sample` to define how a single chain is advanced,
+    and this base class handles vmapping over chains, thinning, and writing results
+    into the associated :class:`~flowMC.resource.buffers.Buffer` resources.
+
+    Attributes:
+        logpdf_name (str): Resource key for the :class:`~flowMC.resource.logPDF.LogPDF`.
+        kernel_name (str): Resource key for the proposal kernel.
+        state_name (str): Resource key for the sampler :class:`~flowMC.resource.states.State`.
+        buffer_names (list[str]): State keys pointing to the position, log-prob, and
+            acceptance-rate buffer names (in that order).
+        n_steps (int): Number of kernel steps per call.
+        current_position (int): Write cursor along the buffer's ``cursor_dim``.
+        thinning (int): Store every ``thinning``-th step.
+        chain_batch_size (int): Number of chains per vmap batch; 0 means no batching.
+    """
+
     logpdf_name: str
     kernel_name: str
     state_name: str
@@ -35,7 +53,20 @@ class TakeSteps(Strategy):
         thinning: int = 1,
         chain_batch_size: int = 0,
         verbose: bool = False,
-    ):
+    ) -> None:
+        """
+        Args:
+            logpdf_name (str): Resource key for the log-PDF to sample from.
+            kernel_name (str): Resource key for the proposal kernel.
+            state_name (str): Resource key for the sampler state.
+            buffer_names (list[str]): List of three state keys that resolve to the
+                buffer resource names for positions, log-probs, and acceptance rates.
+            n_steps (int): Number of kernel steps to take per call.
+            thinning (int): Keep every ``thinning``-th step. Defaults to 1.
+            chain_batch_size (int): If > 1, process chains in sub-batches of this
+                size to reduce peak memory. 0 disables batching. Defaults to 0.
+            verbose (bool): Enable debug logging. Defaults to False.
+        """
         self.logpdf_name = logpdf_name
         self.kernel_name = kernel_name
         self.state_name = state_name
@@ -55,10 +86,34 @@ class TakeSteps(Strategy):
         initial_position: Float[Array, " n_dim"],
         logpdf: LogPDF,
         data: dict,
-    ):
+    ) -> tuple[
+        Float[Array, "n_steps n_dim"],
+        Float[Array, " n_steps"],
+        Float[Array, " n_steps"],
+    ]:
+        """Advance a single chain for ``n_steps`` using the given kernel.
+
+        This method is vmapped over chains by :meth:`__call__`, so it operates
+        on a single chain at a time.
+
+        Args:
+            kernel (ProposalBase): Proposal kernel.
+            rng_key (Key): JAX PRNGKey for this chain.
+            initial_position (Float[Array, "n_dim"]): Starting position.
+            logpdf (LogPDF): Log-PDF to sample from.
+            data (dict): Auxiliary data passed to the log-PDF.
+
+        Returns:
+            tuple: ``(positions, log_probs, do_accepts)`` each of length ``n_steps``.
+        """
         raise NotImplementedError
 
-    def set_current_position(self, current_position: int):
+    def set_current_position(self, current_position: int) -> None:
+        """Set the write cursor position for the output buffers.
+
+        Args:
+            current_position (int): New cursor value along the buffer's step dimension.
+        """
         self.current_position = current_position
 
     def __call__(
@@ -72,6 +127,18 @@ class TakeSteps(Strategy):
         dict[str, Resource],
         Float[Array, "n_chains n_dim"],
     ]:
+        """Run the kernel for all chains, apply thinning, and update buffers.
+
+        Args:
+            rng_key (Key): JAX PRNGKey (consumed and split internally).
+            resources (dict[str, Resource]): Mutable resource dictionary.
+            initial_position (Float[Array, "n_chains n_dim"]): Current chain positions.
+            data (dict): Auxiliary data passed to log-PDF calls.
+
+        Returns:
+            tuple: ``(rng_key, resources, last_positions)`` where ``last_positions``
+            has shape ``(n_chains, n_dim)``.
+        """
         rng_key, subkey = jax.random.split(rng_key)
         subkey = jax.random.split(subkey, initial_position.shape[0])
 
@@ -170,7 +237,22 @@ class TakeSerialSteps(TakeSteps):
     the previous step.
     """
 
-    def body(self, kernel: ProposalBase, carry, aux):
+    def body(
+        self,
+        kernel: ProposalBase,
+        carry: tuple,
+        aux: None,
+    ) -> tuple[tuple, tuple]:
+        """Single scan body: advance position by one kernel step.
+
+        Args:
+            kernel (ProposalBase): Proposal kernel.
+            carry (tuple): ``(key, position, log_prob, logpdf, data)``.
+            aux (None): Unused scan auxiliary input.
+
+        Returns:
+            tuple: Updated carry and ``(position, log_prob, do_accept)`` outputs.
+        """
         key, position, log_prob, logpdf, data = carry
         key, subkey = jax.random.split(key)
         position, log_prob, do_accept = kernel.kernel(
@@ -185,7 +267,23 @@ class TakeSerialSteps(TakeSteps):
         initial_position: Float[Array, " n_dim"],
         logpdf: LogPDF,
         data: dict,
-    ):
+    ) -> tuple[
+        Float[Array, "n_steps n_dim"],
+        Float[Array, " n_steps"],
+        Float[Array, " n_steps"],
+    ]:
+        """Advance a single chain serially using ``jax.lax.scan``.
+
+        Args:
+            kernel (ProposalBase): Proposal kernel.
+            rng_key (Key): JAX PRNGKey for this chain.
+            initial_position (Float[Array, "n_dim"]): Starting position.
+            logpdf (LogPDF): Log-PDF to sample from.
+            data (dict): Auxiliary data passed to the log-PDF.
+
+        Returns:
+            tuple: ``(positions, log_probs, do_accepts)`` each of length ``n_steps``.
+        """
         (
             (last_key, last_position, last_log_prob, logpdf, data),
             (positions, log_probs, do_accepts),
@@ -212,7 +310,26 @@ class TakeGroupSteps(TakeSteps):
         initial_position: Float[Array, " n_dim"],
         logpdf: LogPDF,
         data: dict,
-    ):
+    ) -> tuple[
+        Float[Array, "n_steps n_dim"],
+        Float[Array, " n_steps"],
+        Float[Array, " n_steps"],
+    ]:
+        """Advance a single chain by running all steps simultaneously via the kernel.
+
+        The kernel is called once with ``n_steps`` injected into ``data``, so all
+        proposals are generated in a single batched call — no sequential dependency.
+
+        Args:
+            kernel (ProposalBase): Proposal kernel (e.g., :class:`~flowMC.resource.kernel.NF_proposal.NFProposal`).
+            rng_key (Key): JAX PRNGKey for this chain.
+            initial_position (Float[Array, "n_dim"]): Starting position.
+            logpdf (LogPDF): Log-PDF to sample from.
+            data (dict): Auxiliary data passed to the log-PDF.
+
+        Returns:
+            tuple: ``(positions, log_probs, do_accepts)`` each of length ``n_steps``.
+        """
         (positions, log_probs, do_accepts) = kernel.kernel(
             rng_key,
             initial_position,

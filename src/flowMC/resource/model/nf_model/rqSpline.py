@@ -404,7 +404,24 @@ class MaskedCouplingRQSpline(NFModel):
         key: Key,
         spline_range: tuple[float, float] = (-10.0, 10.0),
         **kwargs,
-    ):
+    ) -> None:
+        """
+        Args:
+            n_features (int): Dimensionality of the data.
+            n_layers (int): Number of masked coupling layers.
+            hidden_size (list[int]): Hidden layer widths for the conditioner MLP.
+            num_bins (int): Number of rational-quadratic spline bins.
+            key (Key): JAX PRNGKey for parameter initialisation.
+            spline_range (tuple[float, float]): ``(min, max)`` range of the spline.
+                Inputs outside this range are mapped linearly. Defaults to ``(-10.0, 10.0)``.
+            **kwargs: Optional overrides:
+                - ``base_dist`` (Distribution): Custom base distribution.
+                  Defaults to a standard Gaussian.
+                - ``data_mean`` (Array): Initial data mean for whitening.
+                  Updated during training.
+                - ``data_cov`` (Array): Initial data covariance for whitening.
+                  Updated during training.
+        """
         if kwargs.get("base_dist") is not None:
             dist = kwargs.get("base_dist")
             assert isinstance(dist, Distribution)
