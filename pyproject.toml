@@ -1,7 +1,7 @@
 [project]
 name = "flowMC"
 dynamic = ["version"]
-description = "Normalizing flow exhanced sampler in jax"
+description = "A JAX-based normalizing-flow-enhanced MCMC sampler for probabilistic inference"
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [
