@@ -59,7 +59,9 @@ class TestRQSplineMALABundle:
         assert jnp.isclose(kernel_p.periodic_bounds[2, 0], -3.14)
 
     def test_local_thinning_exceeds_steps(self):
-        with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
+        with pytest.raises(
+            ValueError, match="local_thinning.*must not exceed n_local_steps"
+        ):
             RQSpline_MALA_Bundle(
                 rng_key=jax.random.key(0),
                 n_chains=2,
@@ -74,7 +76,9 @@ class TestRQSplineMALABundle:
             )
 
     def test_global_thinning_exceeds_steps(self):
-        with pytest.raises(ValueError, match="global_thinning.*must not exceed n_global_steps"):
+        with pytest.raises(
+            ValueError, match="global_thinning.*must not exceed n_global_steps"
+        ):
             RQSpline_MALA_Bundle(
                 rng_key=jax.random.key(0),
                 n_chains=2,
@@ -130,7 +134,9 @@ class TestRQSplineMALAPTBundle:
         assert jnp.array_equal(kernel_p.periodic_mask, jnp.array([False, True, False]))
 
     def test_local_thinning_exceeds_steps(self):
-        with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
+        with pytest.raises(
+            ValueError, match="local_thinning.*must not exceed n_local_steps"
+        ):
             RQSpline_MALA_PT_Bundle(
                 rng_key=jax.random.key(0),
                 n_chains=2,
@@ -145,7 +151,9 @@ class TestRQSplineMALAPTBundle:
             )
 
     def test_global_thinning_exceeds_steps(self):
-        with pytest.raises(ValueError, match="global_thinning.*must not exceed n_global_steps"):
+        with pytest.raises(
+            ValueError, match="global_thinning.*must not exceed n_global_steps"
+        ):
             RQSpline_MALA_PT_Bundle(
                 rng_key=jax.random.key(0),
                 n_chains=2,
@@ -201,7 +209,9 @@ class TestRQSplineHMCBundle:
         assert jnp.array_equal(kernel_p.periodic_mask, jnp.array([True, False, True]))
 
     def test_local_thinning_exceeds_steps(self):
-        with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
+        with pytest.raises(
+            ValueError, match="local_thinning.*must not exceed n_local_steps"
+        ):
             RQSpline_HMC_Bundle(
                 rng_key=jax.random.key(0),
                 n_chains=2,
@@ -216,7 +226,9 @@ class TestRQSplineHMCBundle:
             )
 
     def test_global_thinning_exceeds_steps(self):
-        with pytest.raises(ValueError, match="global_thinning.*must not exceed n_global_steps"):
+        with pytest.raises(
+            ValueError, match="global_thinning.*must not exceed n_global_steps"
+        ):
             RQSpline_HMC_Bundle(
                 rng_key=jax.random.key(0),
                 n_chains=2,
@@ -272,7 +284,9 @@ class TestRQSplineHMCPTBundle:
         assert jnp.array_equal(kernel_p.periodic_mask, jnp.array([False, True, False]))
 
     def test_local_thinning_exceeds_steps(self):
-        with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
+        with pytest.raises(
+            ValueError, match="local_thinning.*must not exceed n_local_steps"
+        ):
             RQSpline_HMC_PT_Bundle(
                 rng_key=jax.random.key(0),
                 n_chains=2,
@@ -287,7 +301,9 @@ class TestRQSplineHMCPTBundle:
             )
 
     def test_global_thinning_exceeds_steps(self):
-        with pytest.raises(ValueError, match="global_thinning.*must not exceed n_global_steps"):
+        with pytest.raises(
+            ValueError, match="global_thinning.*must not exceed n_global_steps"
+        ):
             RQSpline_HMC_PT_Bundle(
                 rng_key=jax.random.key(0),
                 n_chains=2,
@@ -343,7 +359,9 @@ class TestRQSplineGRWBundle:
         assert jnp.array_equal(kernel_p.periodic_mask, jnp.array([True, False, True]))
 
     def test_local_thinning_exceeds_steps(self):
-        with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
+        with pytest.raises(
+            ValueError, match="local_thinning.*must not exceed n_local_steps"
+        ):
             RQSpline_GRW_Bundle(
                 rng_key=jax.random.key(0),
                 n_chains=2,
@@ -358,7 +376,9 @@ class TestRQSplineGRWBundle:
             )
 
     def test_global_thinning_exceeds_steps(self):
-        with pytest.raises(ValueError, match="global_thinning.*must not exceed n_global_steps"):
+        with pytest.raises(
+            ValueError, match="global_thinning.*must not exceed n_global_steps"
+        ):
             RQSpline_GRW_Bundle(
                 rng_key=jax.random.key(0),
                 n_chains=2,
@@ -414,7 +434,9 @@ class TestRQSplineGRWPTBundle:
         assert jnp.array_equal(kernel_p.periodic_mask, jnp.array([False, True, False]))
 
     def test_local_thinning_exceeds_steps(self):
-        with pytest.raises(ValueError, match="local_thinning.*must not exceed n_local_steps"):
+        with pytest.raises(
+            ValueError, match="local_thinning.*must not exceed n_local_steps"
+        ):
             RQSpline_GRW_PT_Bundle(
                 rng_key=jax.random.key(0),
                 n_chains=2,
@@ -429,7 +451,9 @@ class TestRQSplineGRWPTBundle:
             )
 
     def test_global_thinning_exceeds_steps(self):
-        with pytest.raises(ValueError, match="global_thinning.*must not exceed n_global_steps"):
+        with pytest.raises(
+            ValueError, match="global_thinning.*must not exceed n_global_steps"
+        ):
             RQSpline_GRW_PT_Bundle(
                 rng_key=jax.random.key(0),
                 n_chains=2,

@@ -8,7 +8,6 @@ from flowMC.strategy.take_steps import TakeSerialSteps
 
 
 class TestLogPDF:
-
     n_dims = 5
 
     def posterior(self, x, data):
