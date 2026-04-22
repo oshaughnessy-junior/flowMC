@@ -38,6 +38,11 @@
       
       <link rel="stylesheet" href="../assets/stylesheets/modern/main.53a7feaf.min.css">
       
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
       
 
 
@@ -64,7 +69,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -117,6 +129,32 @@
         </div>
       </div>
     </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
     
     
       <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
@@ -2624,7 +2662,7 @@
 <h1 id="tutorials">Tutorials<a class="headerlink" href="#tutorials" title="Permanent link">¤</a></h1>
 <p>These tutorials walk you through flowMC from first principles to advanced customization. They are ordered from simplest to most involved — if you are new to flowMC, start with the dual moon example.</p>
 <hr />
-<h2 id="a-step-by-step-example"><a href="dualmoon.ipynb">A Step-by-Step Example</a><a class="headerlink" href="#a-step-by-step-example" title="Permanent link">¤</a></h2>
+<h2 id="a-step-by-step-example"><a href="dualmoon">A Step-by-Step Example</a><a class="headerlink" href="#a-step-by-step-example" title="Permanent link">¤</a></h2>
 <p>The canonical flowMC example. Sample a 5-dimensional multi-modal "dual moon" distribution using the high-level <code>RQSpline_MALA_Bundle</code>, which pairs a MALA local kernel with a Masked Coupling RQSpline normalising flow as a learned global proposal. Covers the full workflow: defining a log-probability function, configuring the sampler, running it, and diagnosing convergence with loss curves, acceptance rates, and R-hat.</p>
 <hr />
 <h2 id="bundles"><a href="bundles/">Bundles</a><a class="headerlink" href="#bundles" title="Permanent link">¤</a></h2>
@@ -2633,16 +2671,16 @@
 <h2 id="hyperparameter-reference"><a href="hyperparameters/">Hyperparameter Reference</a><a class="headerlink" href="#hyperparameter-reference" title="Permanent link">¤</a></h2>
 <p>Complete reference for every constructor parameter across all bundles, organised into categories (required, local sampler, normalising flow, training, execution, early stopping, parallel tempering). Each entry includes the default value and guidance on when and how to tune it.</p>
 <hr />
-<h2 id="parallel-tempering"><a href="parallel_tempering.ipynb">Parallel Tempering</a><a class="headerlink" href="#parallel-tempering" title="Permanent link">¤</a></h2>
+<h2 id="parallel-tempering"><a href="parallel_tempering">Parallel Tempering</a><a class="headerlink" href="#parallel-tempering" title="Permanent link">¤</a></h2>
 <p>Demonstrates why standard local kernels struggle with well-separated modes and how parallel tempering (replica exchange MCMC) overcomes this. Builds a parallel tempering sampler from scratch using the low-level resource-strategy API, then contrasts it with the convenience <code>RQSpline_MALA_PT_Bundle</code>.</p>
 <hr />
-<h2 id="custom-strategy-composition"><a href="custom_strategy.ipynb">Custom Strategy Composition</a><a class="headerlink" href="#custom-strategy-composition" title="Permanent link">¤</a></h2>
+<h2 id="custom-strategy-composition"><a href="custom_strategy">Custom Strategy Composition</a><a class="headerlink" href="#custom-strategy-composition" title="Permanent link">¤</a></h2>
 <p>Shows the flexibility of the resource-strategy interface by composing a custom pipeline that prepends an Adam optimization phase to a random-walk MCMC kernel. A useful pattern when chains are initialized far from the high-probability region.</p>
 <hr />
-<h2 id="training-normalising-flows"><a href="train_normalizing_flow.ipynb">Training Normalising Flows</a><a class="headerlink" href="#training-normalising-flows" title="Permanent link">¤</a></h2>
+<h2 id="training-normalising-flows"><a href="train_normalizing_flow">Training Normalising Flows</a><a class="headerlink" href="#training-normalising-flows" title="Permanent link">¤</a></h2>
 <p>A standalone introduction to the two normalising flow architectures available in flowMC — <strong>RealNVP</strong> and <strong>Masked Coupling RQSpline</strong> — trained on a 2D toy dataset. Compares their expressiveness and computational cost, and shows how a trained flow plugs into the resource-strategy system via the <code>TrainModel</code> strategy.</p>
 <hr />
-<h2 id="training-flow-matching-models"><a href="train_flow_match.ipynb">Training Flow Matching Models</a><a class="headerlink" href="#training-flow-matching-models" title="Permanent link">¤</a></h2>
+<h2 id="training-flow-matching-models"><a href="train_flow_match">Training Flow Matching Models</a><a class="headerlink" href="#training-flow-matching-models" title="Permanent link">¤</a></h2>
 <p>Introduces <strong>flow matching</strong> as an alternative to traditional normalising flows. Trains a Conditional Optimal Transport model on a 2D distribution using an MLP-parameterised velocity field, then generates samples by integrating the learned ODE and evaluates the inferred density on a grid.</p>
 
 
