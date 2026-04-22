@@ -2,7 +2,7 @@
 
 ## A JAX-based normalizing-flow-enhanced MCMC sampler for probabilistic inference
 
-[![license](https://badgen.net/badge/License/MIT/blue)](https://github.com/GW-JAX-Team/flowMC/blob/main/LICENSE) [![coverage](https://badgen.net/coveralls/c/github/GW-JAX-Team/flowMC/main)](https://coveralls.io/github/GW-JAX-Team/flowMC?branch=main) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/GW-JAX-Team/flowMC/main.svg)](https://results.pre-commit.ci/latest/github/GW-JAX-Team/flowMC/main)
+[![license](https://img.shields.io/badge/License-MIT-blue)](https://github.com/GW-JAX-Team/flowMC/blob/main/LICENSE) [![coverage](https://img.shields.io/coveralls/github/GW-JAX-Team/flowMC/main)](https://coveralls.io/github/GW-JAX-Team/flowMC?branch=main) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/GW-JAX-Team/flowMC/main.svg)](https://results.pre-commit.ci/latest/github/GW-JAX-Team/flowMC/main)
 
 ![flowMC_logo](logo.png)
 
