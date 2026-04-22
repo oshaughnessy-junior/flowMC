@@ -57,11 +57,6 @@ test = [
 ]
 doc = [
     "jupytext",
-    "mkdocs-gen-files",
-    "mkdocs-jupyter<0.26.0",
-    "mkdocs-literate-nav",
-    "mkdocs-material",
-    "mkdocs<2",
     "mkdocstrings[python]",
     "pymdown-extensions",
     "zensical",
@@ -69,7 +64,7 @@ doc = [
 
 [project.urls]
 Homepage = "https://github.com/GW-JAX-Team/flowMC"
-Documentation = "https://flowmc.readthedocs.io"
+Documentation = "https://gw-jax-team.github.io/flowMC/"
 Repository = "https://github.com/GW-JAX-Team/flowMC"
 "Bug Tracker" = "https://github.com/GW-JAX-Team/flowMC/issues"
 Changelog = "https://github.com/GW-JAX-Team/flowMC/releases"
