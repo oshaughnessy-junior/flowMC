@@ -56,6 +56,7 @@ test = [
     "ruff>=0.12.2",
 ]
 doc = [
+    "jupytext",
     "mkdocs-gen-files",
     "mkdocs-jupyter<0.26.0",
     "mkdocs-literate-nav",
@@ -63,6 +64,7 @@ doc = [
     "mkdocs<2",
     "mkdocstrings[python]",
     "pymdown-extensions",
+    "zensical",
 ]
 
 [project.urls]

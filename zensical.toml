@@ -1,0 +1,120 @@
+[project]
+site_name = "flowMC"
+site_url = "https://gw-jax-team.github.io/flowMC/"
+site_description = "A JAX-based normalizing-flow-enhanced MCMC sampler for probabilistic inference"
+site_author = "GW JAX Team"
+repo_url = "https://github.com/GW-JAX-Team/flowMC"
+repo_name = "GW-JAX-Team/flowMC"
+
+extra_javascript = [
+    "javascripts/mathjax.js",
+    "https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js",
+]
+
+nav = [
+    {"Home" = "index.md"},
+    {"Installation" = "installation.md"},
+    {"Quick Start" = "quickstart.md"},
+    {"Tutorials" = [
+        "tutorials/index.md",
+        {"Step-by-Step Example" = "tutorials/dualmoon.md"},
+        {"Bundles" = "tutorials/bundles.md"},
+        {"Hyperparameter Reference" = "tutorials/hyperparameters.md"},
+        {"Parallel Tempering" = "tutorials/parallel_tempering.md"},
+        {"Custom Sampling Strategy" = "tutorials/custom_strategy.md"},
+        {"Training Normalizing Flows" = "tutorials/train_normalizing_flow.md"},
+        {"Training Flow Matching Models" = "tutorials/train_flow_match.md"},
+    ]},
+    {"FAQ" = "FAQ.md"},
+    {"Contributing" = "contributing.md"},
+    {"Development Guide" = "development_guide.md"},
+    {"API" = [
+        {"Sampler" = "api/flowMC/Sampler.md"},
+        {"Resource" = [
+            {"base" = "api/flowMC/resource/base.md"},
+            {"buffers" = "api/flowMC/resource/buffers.md"},
+            {"logPDF" = "api/flowMC/resource/logPDF.md"},
+            {"optimizer" = "api/flowMC/resource/optimizer.md"},
+            {"states" = "api/flowMC/resource/states.md"},
+            {"Kernel" = [
+                {"Gaussian_random_walk" = "api/flowMC/resource/kernel/Gaussian_random_walk.md"},
+                {"HMC" = "api/flowMC/resource/kernel/HMC.md"},
+                {"MALA" = "api/flowMC/resource/kernel/MALA.md"},
+                {"NF_proposal" = "api/flowMC/resource/kernel/NF_proposal.md"},
+                {"base" = "api/flowMC/resource/kernel/base.md"},
+            ]},
+            {"Model" = [
+                {"common" = "api/flowMC/resource/model/common.md"},
+                {"flowmatching/base" = "api/flowMC/resource/model/flowmatching/base.md"},
+                {"nf_model/base" = "api/flowMC/resource/model/nf_model/base.md"},
+                {"nf_model/realNVP" = "api/flowMC/resource/model/nf_model/realNVP.md"},
+                {"nf_model/rqSpline" = "api/flowMC/resource/model/nf_model/rqSpline.md"},
+            ]},
+        ]},
+        {"Resource Strategy Bundle" = [
+            {"base" = "api/flowMC/resource_strategy_bundle/base.md"},
+            {"RQSpline_GRW" = "api/flowMC/resource_strategy_bundle/RQSpline_GRW.md"},
+            {"RQSpline_GRW_PT" = "api/flowMC/resource_strategy_bundle/RQSpline_GRW_PT.md"},
+            {"RQSpline_HMC" = "api/flowMC/resource_strategy_bundle/RQSpline_HMC.md"},
+            {"RQSpline_HMC_PT" = "api/flowMC/resource_strategy_bundle/RQSpline_HMC_PT.md"},
+            {"RQSpline_MALA" = "api/flowMC/resource_strategy_bundle/RQSpline_MALA.md"},
+            {"RQSpline_MALA_PT" = "api/flowMC/resource_strategy_bundle/RQSpline_MALA_PT.md"},
+        ]},
+        {"Strategy" = [
+            {"base" = "api/flowMC/strategy/base.md"},
+            {"adapt_step_size" = "api/flowMC/strategy/adapt_step_size.md"},
+            {"check_early_stop" = "api/flowMC/strategy/check_early_stop.md"},
+            {"importance_sampling" = "api/flowMC/strategy/importance_sampling.md"},
+            {"lambda_function" = "api/flowMC/strategy/lambda_function.md"},
+            {"optimization" = "api/flowMC/strategy/optimization.md"},
+            {"parallel_tempering" = "api/flowMC/strategy/parallel_tempering.md"},
+            {"sequential_monte_carlo" = "api/flowMC/strategy/sequential_monte_carlo.md"},
+            {"take_steps" = "api/flowMC/strategy/take_steps.md"},
+            {"train_model" = "api/flowMC/strategy/train_model.md"},
+            {"update_state" = "api/flowMC/strategy/update_state.md"},
+        ]},
+        {"Utils" = [
+            {"logging" = "api/flowMC/utils/logging.md"},
+        ]},
+    ]},
+]
+
+[project.theme]
+variant = "modern"
+features = [
+    "navigation.instant",
+    "navigation.tabs",
+    "navigation.top",
+    "toc.follow",
+    "header.autohide",
+]
+
+[project.markdown_extensions.pymdownx.arithmatex]
+generic = true
+
+[project.markdown_extensions.pymdownx.superfences]
+
+[project.markdown_extensions.pymdownx.details]
+
+[project.markdown_extensions.pymdownx.snippets]
+
+[project.markdown_extensions.admonition]
+
+[project.markdown_extensions.toc]
+permalink = "¤"
+toc_depth = 4
+
+[project.plugins.mkdocstrings.handlers.python]
+paths = ["src"]
+
+[project.plugins.mkdocstrings.handlers.python.options]
+docstring_style = "google"
+filters = ["!^logger$"]
+inherited_members = true
+show_root_heading = true
+show_root_full_path = true
+show_if_no_docstring = true
+show_signature_annotations = true
+show_source = false
+members_order = "source"
+heading_level = 3
