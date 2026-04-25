@@ -1,7 +1,7 @@
 [project]
 name = "flowMC"
 dynamic = ["version"]
-description = "Normalizing flow exhanced sampler in jax"
+description = "A JAX-based normalizing-flow-enhanced MCMC sampler for probabilistic inference"
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [
@@ -56,18 +56,15 @@ test = [
     "ruff>=0.12.2",
 ]
 doc = [
-    "mkdocs-gen-files",
-    "mkdocs-jupyter<0.26.0",
-    "mkdocs-literate-nav",
-    "mkdocs-material",
-    "mkdocs",
+    "jupytext",
     "mkdocstrings[python]",
     "pymdown-extensions",
+    "zensical",
 ]
 
 [project.urls]
 Homepage = "https://github.com/GW-JAX-Team/flowMC"
-Documentation = "https://flowmc.readthedocs.io"
+Documentation = "https://gw-jax-team.github.io/flowMC/"
 Repository = "https://github.com/GW-JAX-Team/flowMC"
 "Bug Tracker" = "https://github.com/GW-JAX-Team/flowMC/issues"
 Changelog = "https://github.com/GW-JAX-Team/flowMC/releases"

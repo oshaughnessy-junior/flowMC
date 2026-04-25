@@ -5,8 +5,10 @@ from flowMC.resource_strategy_bundle.RQSpline_MALA import RQSpline_MALA_Bundle
 
 # Defining the log posterior
 
+
 def log_posterior(x, data: dict):
     return -0.5 * jnp.sum((x - data["data"]) ** 2)
+
 
 def test_quickstart():
     # Initializing the strategy bundle

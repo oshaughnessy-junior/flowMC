@@ -36,9 +36,13 @@ _MU_Y, _SIGMA_Y = 1.5, 0.4
 def _logpdf_mixed(x: Float[Array, " n_dims"], data: dict) -> Float[Array, ""]:
     theta, y = x[0], x[1]
     k = jnp.arange(-5, 6)
-    log_theta = jax.scipy.special.logsumexp(
-        -0.5 * ((theta - _MU_THETA + k * _PERIOD) / _SIGMA_THETA) ** 2
-    ) - jnp.log(_SIGMA_THETA) - 0.5 * jnp.log(2 * jnp.pi)
+    log_theta = (
+        jax.scipy.special.logsumexp(
+            -0.5 * ((theta - _MU_THETA + k * _PERIOD) / _SIGMA_THETA) ** 2
+        )
+        - jnp.log(_SIGMA_THETA)
+        - 0.5 * jnp.log(2 * jnp.pi)
+    )
     log_y = (
         -0.5 * ((y - _MU_Y) / _SIGMA_Y) ** 2
         - jnp.log(_SIGMA_Y)
@@ -51,6 +55,7 @@ def _logpdf_mixed(x: Float[Array, " n_dims"], data: dict) -> Float[Array, ""]:
 # Shared helpers
 # ---------------------------------------------------------------------------
 
+
 def _make_periodic_arrays(n_dims: int, periodic: dict):
     mask = jnp.zeros(n_dims, dtype=bool)
     bounds = jnp.zeros((n_dims, 2))
@@ -60,7 +65,9 @@ def _make_periodic_arrays(n_dims: int, periodic: dict):
     return mask, bounds
 
 
-def _build_sampler(rng_key, kernel, kernel_name: str, n_chains: int, n_dims: int, n_steps: int) -> Sampler:
+def _build_sampler(
+    rng_key, kernel, kernel_name: str, n_chains: int, n_dims: int, n_steps: int
+) -> Sampler:
     positions_buf = Buffer("positions", (n_chains, n_steps, n_dims), 1)
     log_prob_buf = Buffer("log_prob", (n_chains, n_steps), 1)
     accs_buf = Buffer("acceptance", (n_chains, n_steps), 1)
@@ -84,7 +91,9 @@ def _build_sampler(rng_key, kernel, kernel_name: str, n_chains: int, n_dims: int
         n_steps=n_steps,
     )
     return Sampler(
-        n_dim=n_dims, n_chains=n_chains, rng_key=rng_key,
+        n_dim=n_dims,
+        n_chains=n_chains,
+        rng_key=rng_key,
         resources=resources,
         strategies={"take_steps": strategy},
         strategy_order=["take_steps"],
@@ -96,7 +105,9 @@ def _get_samples(sampler: Sampler, n_dims: int) -> Float[Array, "n n_dims"]:
     return flat[jnp.isfinite(flat).all(axis=-1)]
 
 
-def _assert_boundary_crossing_and_recovery(samples: Float[Array, "n n_dims"], label: str) -> None:
+def _assert_boundary_crossing_and_recovery(
+    samples: Float[Array, "n n_dims"], label: str
+) -> None:
     """Assert that samples cross the 0/2π boundary and recover the target distribution."""
     theta, y = samples[:, 0], samples[:, 1]
 
@@ -118,10 +129,14 @@ def _assert_boundary_crossing_and_recovery(samples: Float[Array, "n n_dims"], la
     circ_mean = float(
         jnp.arctan2(jnp.mean(jnp.sin(theta)), jnp.mean(jnp.cos(theta))) % (2 * jnp.pi)
     )
-    err = float(jnp.abs(jnp.arctan2(
-        jnp.sin(jnp.array(circ_mean - _MU_THETA)),
-        jnp.cos(jnp.array(circ_mean - _MU_THETA)),
-    )))
+    err = float(
+        jnp.abs(
+            jnp.arctan2(
+                jnp.sin(jnp.array(circ_mean - _MU_THETA)),
+                jnp.cos(jnp.array(circ_mean - _MU_THETA)),
+            )
+        )
+    )
     assert err < 0.15, (
         f"{label}: circular mean {circ_mean:.4f} rad too far from true mean "
         f"{_MU_THETA:.4f} rad (err={err:.4f} ≥ 0.15)."
@@ -138,6 +153,7 @@ def _assert_boundary_crossing_and_recovery(samples: Float[Array, "n n_dims"], la
 # End-to-end tests: full Sampler pipeline with each local kernel
 # ---------------------------------------------------------------------------
 
+
 def test_mala_end_to_end_periodic_boundary_crossing():
     """MALA: full Sampler pipeline crosses 0/2π and recovers the target distribution."""
     n_dims, n_chains, n_steps = 2, 24, 200
@@ -149,7 +165,9 @@ def test_mala_end_to_end_periodic_boundary_crossing():
     theta0 = jax.random.uniform(k_init, (n_chains,)) * 0.1
     initial_position = jnp.stack([theta0, jnp.full((n_chains,), _MU_Y)], axis=1)
 
-    kernel = MALA(step_size=jnp.full(n_dims, 0.2), periodic_mask=mask, periodic_bounds=bounds)
+    kernel = MALA(
+        step_size=jnp.full(n_dims, 0.2), periodic_mask=mask, periodic_bounds=bounds
+    )
     sampler = _build_sampler(k_sampler, kernel, "MALA", n_chains, n_dims, n_steps)
     sampler.sample(initial_position, {})
     _assert_boundary_crossing_and_recovery(_get_samples(sampler, n_dims), "MALA")
@@ -166,8 +184,11 @@ def test_hmc_end_to_end_periodic_boundary_crossing():
     initial_position = jnp.stack([theta0, jnp.full((n_chains,), _MU_Y)], axis=1)
 
     kernel = HMC(
-        condition_matrix=jnp.ones(n_dims), step_size=0.2, n_leapfrog=5,
-        periodic_mask=mask, periodic_bounds=bounds,
+        condition_matrix=jnp.ones(n_dims),
+        step_size=0.2,
+        n_leapfrog=5,
+        periodic_mask=mask,
+        periodic_bounds=bounds,
     )
     sampler = _build_sampler(k_sampler, kernel, "HMC", n_chains, n_dims, n_steps)
     sampler.sample(initial_position, {})
@@ -185,7 +206,9 @@ def test_grw_end_to_end_periodic_boundary_crossing():
     initial_position = jnp.stack([theta0, jnp.full((n_chains,), _MU_Y)], axis=1)
 
     kernel = GaussianRandomWalk(
-        step_size=jnp.full(n_dims, 0.2), periodic_mask=mask, periodic_bounds=bounds,
+        step_size=jnp.full(n_dims, 0.2),
+        periodic_mask=mask,
+        periodic_bounds=bounds,
     )
     sampler = _build_sampler(k_sampler, kernel, "GRW", n_chains, n_dims, n_steps)
     sampler.sample(initial_position, {})
@@ -195,6 +218,7 @@ def test_grw_end_to_end_periodic_boundary_crossing():
 # ---------------------------------------------------------------------------
 # End-to-end test: RQSpline_MALA_Bundle (MALA local + NF global, no PT)
 # ---------------------------------------------------------------------------
+
 
 def test_bundle_end_to_end_periodic_boundary_crossing():
     """RQSpline_MALA_Bundle: full training+production pipeline crosses 0/2π.
@@ -243,4 +267,3 @@ def test_bundle_end_to_end_periodic_boundary_crossing():
         f"Bundle production mean {mean} not near zero — "
         "the periodic mask may be corrupting the sampler."
     )
-

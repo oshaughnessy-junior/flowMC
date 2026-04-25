@@ -20,7 +20,6 @@ logpdf = LogPDF(log_posterior, n_dims=2)
 
 
 class TestHMC:
-
     def test_repr(self):
         HMC_obj = HMC(condition_matrix=jnp.ones(n_dims), step_size=1, n_leapfrog=5)
         assert repr(HMC_obj) == "HMC with step size 1 and 5 leapfrog steps"
@@ -32,6 +31,7 @@ class TestHMC:
 
     def test_print_params(self, caplog):
         import logging
+
         caplog.set_level(logging.DEBUG)
         HMC_obj = HMC(condition_matrix=jnp.ones(n_dims), step_size=1, n_leapfrog=5)
         HMC_obj.print_parameters()
@@ -97,7 +97,7 @@ class TestHMC:
 
         initial_momentum = (
             jax.random.normal(key1, shape=initial_position.shape)
-            * HMC_obj.condition_matrix ** -0.5
+            * HMC_obj.condition_matrix**-0.5
         )
         new_position, new_momentum = HMC_obj.leapfrog_step(
             leapfrog_kernel,
@@ -191,15 +191,15 @@ class TestHMC:
     def test_HMC_adapt_step_size(self):
         # Test that adapt_step_size increases step size when acceptance is high
         HMC_obj = HMC(condition_matrix=jnp.ones(n_dims), step_size=0.1, n_leapfrog=5)
-        
+
         # High acceptance rate should increase step size
         adapted_high = HMC_obj.adapt_step_size(acceptance_rate=0.85, target_rate=0.65)
         assert adapted_high.step_size > HMC_obj.step_size
-        
+
         # Low acceptance rate should decrease step size
         adapted_low = HMC_obj.adapt_step_size(acceptance_rate=0.3, target_rate=0.65)
         assert adapted_low.step_size < HMC_obj.step_size
-        
+
         # Acceptance at target should keep step size approximately same
         adapted_target = HMC_obj.adapt_step_size(acceptance_rate=0.65, target_rate=0.65)
         assert jnp.isclose(adapted_target.step_size, HMC_obj.step_size, atol=1e-6)
@@ -218,7 +218,6 @@ class TestHMC:
         )
 
         n_steps = 100
-
 
         @jax.jit
         def run_chain(rng_key, init_pos, init_lp):
@@ -255,7 +254,9 @@ class TestHMC:
         n_chains = 20
         rng_key = jax.random.PRNGKey(42)
         rng_key, subkey = jax.random.split(rng_key)
-        initial_position = jax.random.uniform(subkey, shape=(n_chains, n_dims)) * 2 * jnp.pi
+        initial_position = (
+            jax.random.uniform(subkey, shape=(n_chains, n_dims)) * 2 * jnp.pi
+        )
         initial_logp = jax.vmap(log_posterior)(initial_position, None)
 
         rng_key, subkey = jax.random.split(rng_key)
@@ -306,7 +307,6 @@ class TestHMC:
 
 
 class TestMALA:
-
     def test_repr(self):
         MALA_obj = MALA(step_size=jnp.ones(n_dims))
         assert repr(MALA_obj) == "MALA with step size " + str(jnp.ones(n_dims))
@@ -318,6 +318,7 @@ class TestMALA:
 
     def test_print_params(self, caplog):
         import logging
+
         caplog.set_level(logging.DEBUG)
         MALA_obj = MALA(step_size=jnp.ones(n_dims))
         MALA_obj.print_parameters()
@@ -415,21 +416,22 @@ class TestMALA:
         assert jnp.isclose(jnp.mean(result.data), 0, atol=3e-2)
         assert jnp.isclose(jnp.var(result.data), 1, atol=3e-2)
 
-
     def test_MALA_adapt_step_size(self):
         # Test that adapt_step_size increases step size when acceptance is high
         MALA_obj = MALA(step_size=jnp.full(n_dims, 0.1))
-        
+
         # High acceptance rate should increase step size
         adapted_high = MALA_obj.adapt_step_size(acceptance_rate=0.8, target_rate=0.574)
         assert jnp.all(adapted_high.step_size > MALA_obj.step_size)
-        
+
         # Low acceptance rate should decrease step size
         adapted_low = MALA_obj.adapt_step_size(acceptance_rate=0.2, target_rate=0.574)
         assert jnp.all(adapted_low.step_size < MALA_obj.step_size)
-        
+
         # Acceptance at target should keep step size approximately same
-        adapted_target = MALA_obj.adapt_step_size(acceptance_rate=0.574, target_rate=0.574)
+        adapted_target = MALA_obj.adapt_step_size(
+            acceptance_rate=0.574, target_rate=0.574
+        )
         assert jnp.allclose(adapted_target.step_size, MALA_obj.step_size, atol=1e-6)
 
     def test_MALA_periodic_acceptance_rate(self):
@@ -446,7 +448,9 @@ class TestMALA:
         n_chains = 20
         rng_key = jax.random.PRNGKey(42)
         rng_key, subkey = jax.random.split(rng_key)
-        initial_position = jax.random.uniform(subkey, shape=(n_chains, n_dims)) * 2 * jnp.pi
+        initial_position = (
+            jax.random.uniform(subkey, shape=(n_chains, n_dims)) * 2 * jnp.pi
+        )
         initial_logp = jax.vmap(log_posterior)(initial_position, None)
 
         rng_key, subkey = jax.random.split(rng_key)
@@ -577,10 +581,11 @@ class TestMALA:
 
 
 class TestGRW:
-
     def test_repr(self):
         GRW_obj = GaussianRandomWalk(step_size=jnp.ones(n_dims))
-        assert repr(GRW_obj) == "Gaussian Random Walk with step size " + str(jnp.ones(n_dims))
+        assert repr(GRW_obj) == "Gaussian Random Walk with step size " + str(
+            jnp.ones(n_dims)
+        )
 
         # Periodic mask/bounds default to zeros when not provided
         assert GRW_obj.periodic_mask.shape == (n_dims,)
@@ -589,6 +594,7 @@ class TestGRW:
 
     def test_print_params(self, caplog):
         import logging
+
         caplog.set_level(logging.DEBUG)
         GRW_obj = GaussianRandomWalk(step_size=jnp.ones(n_dims))
         GRW_obj.print_parameters()
@@ -689,17 +695,19 @@ class TestGRW:
     def test_GRW_adapt_step_size(self):
         # Test that adapt_step_size increases step size when acceptance is high
         GRW_obj = GaussianRandomWalk(step_size=jnp.full(n_dims, 0.1))
-        
+
         # High acceptance rate should increase step size
         adapted_high = GRW_obj.adapt_step_size(acceptance_rate=0.5, target_rate=0.234)
         assert jnp.all(adapted_high.step_size > GRW_obj.step_size)
-        
+
         # Low acceptance rate should decrease step size
         adapted_low = GRW_obj.adapt_step_size(acceptance_rate=0.1, target_rate=0.234)
         assert jnp.all(adapted_low.step_size < GRW_obj.step_size)
-        
+
         # Acceptance at target should keep step size approximately same
-        adapted_target = GRW_obj.adapt_step_size(acceptance_rate=0.234, target_rate=0.234)
+        adapted_target = GRW_obj.adapt_step_size(
+            acceptance_rate=0.234, target_rate=0.234
+        )
         assert jnp.allclose(adapted_target.step_size, GRW_obj.step_size, atol=1e-6)
 
     def test_GRW_periodic_acceptance_rate(self):
@@ -716,7 +724,9 @@ class TestGRW:
         n_chains = 20
         rng_key = jax.random.PRNGKey(42)
         rng_key, subkey = jax.random.split(rng_key)
-        initial_position = jax.random.uniform(subkey, shape=(n_chains, n_dims)) * 2 * jnp.pi
+        initial_position = (
+            jax.random.uniform(subkey, shape=(n_chains, n_dims)) * 2 * jnp.pi
+        )
         initial_logp = jax.vmap(log_posterior)(initial_position)
 
         rng_key, subkey = jax.random.split(rng_key)
