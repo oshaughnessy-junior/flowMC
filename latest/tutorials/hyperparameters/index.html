@@ -1,0 +1,4286 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A JAX-based normalizing-flow-enhanced MCMC sampler for probabilistic inference">
+      
+      
+        <meta name="author" content="GW JAX Team">
+      
+      
+        <link rel="canonical" href="https://gw-jax-team.github.io/flowMC/latest/tutorials/hyperparameters/">
+      
+      
+        <link rel="prev" href="../bundles/">
+      
+      
+        <link rel="next" href="../parallel_tempering/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.36">
+    
+    
+      
+        <title>Hyperparameter Reference - flowMC</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.1e981d71.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hyperparameter-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="flowMC" class="md-header__button md-logo" aria-label="flowMC" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            flowMC
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hyperparameter Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="Search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/GW-JAX-Team/flowMC" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GW-JAX-Team/flowMC
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../installation/" class="md-tabs__link">
+        
+  
+  Installation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quickstart/" class="md-tabs__link">
+        
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../FAQ/" class="md-tabs__link">
+        
+  
+  FAQ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../development_guide/" class="md-tabs__link">
+        
+  
+  Development Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/flowMC/Sampler/" class="md-tabs__link">
+          
+  
+  API
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="flowMC" class="md-nav__button md-logo" aria-label="flowMC" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    flowMC
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/GW-JAX-Team/flowMC" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GW-JAX-Team/flowMC
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dualmoon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Step-by-Step Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bundles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bundles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hyperparameter Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hyperparameter Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Required
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-sampler-mala" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Local sampler — MALA
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-sampler-hmc" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Local sampler — HMC
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-sampler-gaussian-random-walk" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Local sampler — Gaussian random walk
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#normalizing-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Normalizing flow
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#training" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Training
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Execution
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#early-stopping" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Early stopping
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel-tempering-pt-bundles-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Parallel tempering (PT bundles only)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#required-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Required parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Required parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rng_key" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        rng_key
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_chains" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_chains
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_dims" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_dims
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logpdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        logpdf
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_local_steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_local_steps
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_global_steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_global_steps
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_training_loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_training_loops
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_production_loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_production_loops
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_epochs" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_epochs
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-sampler-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Local sampler parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Local sampler parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mala_step_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        mala_step_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hmc_step_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        hmc_step_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hmc_n_leapfrog" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        hmc_n_leapfrog
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#condition_matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        condition_matrix
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grw_step_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        grw_step_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adapt_step_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        adapt_step_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodic" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        periodic
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#normalizing-flow-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Normalizing flow parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Normalizing flow parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rq_spline_n_layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        rq_spline_n_layers
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rq_spline_hidden_units" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        rq_spline_hidden_units
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rq_spline_n_bins" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        rq_spline_n_bins
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_nfproposal_batch_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_NFproposal_batch_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#training-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Training parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Training parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learning_rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        learning_rate
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batch_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        batch_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_max_examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_max_examples
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#history_window" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        history_window
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Execution parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Execution parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chain_batch_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        chain_batch_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local_thinning" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        local_thinning
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global_thinning" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        global_thinning
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        verbose
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#early-stopping-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Early stopping parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Early stopping parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#early_stopping" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        early_stopping
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#early_stopping_tolerance" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        early_stopping_tolerance
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#early_stopping_patience" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        early_stopping_patience
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#early_stopping_min_acceptance" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        early_stopping_min_acceptance
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel-tempering-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Parallel tempering parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parallel tempering parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logprior" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        logprior
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_temperatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_temperatures
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#max_temperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        max_temperature
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_tempered_steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_tempered_steps
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parallel_tempering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parallel Tempering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom_strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Sampling Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../train_normalizing_flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training Normalizing Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../train_flow_match/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training Flow Matching Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../FAQ/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1" id="__nav_8_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    flowMC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    flowMC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/Sampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sampler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_2" id="__nav_8_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    resource
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    resource
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    base
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/buffers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    buffers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_2_3" id="__nav_8_1_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    kernel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    kernel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/kernel/Gaussian_random_walk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian_random_walk
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/kernel/HMC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HMC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/kernel/MALA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MALA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/kernel/NF_proposal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NF_proposal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/kernel/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    base
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/logPDF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    logPDF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_2_5" id="__nav_8_1_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    model
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    model
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/model/common/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    common
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_2_5_2" id="__nav_8_1_2_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    flowmatching
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_2_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_2_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    flowmatching
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/model/flowmatching/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    base
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_2_5_3" id="__nav_8_1_2_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    nf_model
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_2_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_2_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    nf_model
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/model/nf_model/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    base
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/model/nf_model/realNVP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    realNVP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/model/nf_model/rqSpline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rqSpline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/optimizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    optimizer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/states/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    states
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    resource_strategy_bundle
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    resource_strategy_bundle
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource_strategy_bundle/RQSpline_GRW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RQSpline_GRW
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource_strategy_bundle/RQSpline_GRW_PT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RQSpline_GRW_PT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource_strategy_bundle/RQSpline_HMC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RQSpline_HMC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource_strategy_bundle/RQSpline_HMC_PT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RQSpline_HMC_PT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource_strategy_bundle/RQSpline_MALA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RQSpline_MALA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource_strategy_bundle/RQSpline_MALA_PT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RQSpline_MALA_PT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource_strategy_bundle/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    base
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_4" id="__nav_8_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    strategy
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    strategy
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/strategy/adapt_step_size/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    adapt_step_size
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/strategy/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    base
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/strategy/check_early_stop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    check_early_stop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/strategy/importance_sampling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    importance_sampling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/strategy/lambda_function/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lambda_function
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/strategy/optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/strategy/parallel_tempering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    parallel_tempering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/strategy/sequential_monte_carlo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    sequential_monte_carlo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/strategy/take_steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    take_steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/strategy/train_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    train_model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/strategy/update_state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    update_state
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_5" id="__nav_8_1_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    utils
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    utils
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/utils/logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Required
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-sampler-mala" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Local sampler — MALA
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-sampler-hmc" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Local sampler — HMC
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-sampler-gaussian-random-walk" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Local sampler — Gaussian random walk
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#normalizing-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Normalizing flow
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#training" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Training
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Execution
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#early-stopping" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Early stopping
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel-tempering-pt-bundles-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Parallel tempering (PT bundles only)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#required-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Required parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Required parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rng_key" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        rng_key
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_chains" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_chains
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_dims" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_dims
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logpdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        logpdf
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_local_steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_local_steps
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_global_steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_global_steps
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_training_loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_training_loops
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_production_loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_production_loops
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_epochs" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_epochs
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-sampler-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Local sampler parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Local sampler parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mala_step_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        mala_step_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hmc_step_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        hmc_step_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hmc_n_leapfrog" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        hmc_n_leapfrog
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#condition_matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        condition_matrix
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grw_step_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        grw_step_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adapt_step_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        adapt_step_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodic" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        periodic
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#normalizing-flow-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Normalizing flow parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Normalizing flow parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rq_spline_n_layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        rq_spline_n_layers
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rq_spline_hidden_units" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        rq_spline_hidden_units
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rq_spline_n_bins" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        rq_spline_n_bins
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_nfproposal_batch_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_NFproposal_batch_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#training-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Training parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Training parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learning_rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        learning_rate
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batch_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        batch_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_max_examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_max_examples
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#history_window" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        history_window
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Execution parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Execution parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chain_batch_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        chain_batch_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local_thinning" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        local_thinning
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global_thinning" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        global_thinning
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        verbose
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#early-stopping-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Early stopping parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Early stopping parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#early_stopping" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        early_stopping
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#early_stopping_tolerance" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        early_stopping_tolerance
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#early_stopping_patience" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        early_stopping_patience
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#early_stopping_min_acceptance" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        early_stopping_min_acceptance
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel-tempering-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Parallel tempering parameters
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parallel tempering parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logprior" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        logprior
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_temperatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_temperatures
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#max_temperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        max_temperature
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n_tempered_steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        n_tempered_steps
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+  
+
+
+<h1 id="hyperparameter-reference">Hyperparameter Reference<a class="headerlink" href="#hyperparameter-reference" title="Permanent link">¤</a></h1>
+<p>Quick-reference index by category. Click any parameter name to jump to its description.</p>
+<h2 id="required">Required<a class="headerlink" href="#required" title="Permanent link">¤</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#rng_key"><code>rng_key</code></a></td>
+<td>JAX PRNG key</td>
+</tr>
+<tr>
+<td><a href="#n_chains"><code>n_chains</code></a></td>
+<td>Number of parallel chains</td>
+</tr>
+<tr>
+<td><a href="#n_dims"><code>n_dims</code></a></td>
+<td>Dimensionality of the parameter space</td>
+</tr>
+<tr>
+<td><a href="#logpdf"><code>logpdf</code></a></td>
+<td>Log-density function</td>
+</tr>
+<tr>
+<td><a href="#n_local_steps"><code>n_local_steps</code></a></td>
+<td>Local MCMC steps per loop</td>
+</tr>
+<tr>
+<td><a href="#n_global_steps"><code>n_global_steps</code></a></td>
+<td>NF proposal steps per loop</td>
+</tr>
+<tr>
+<td><a href="#n_training_loops"><code>n_training_loops</code></a></td>
+<td>Number of training phase loops</td>
+</tr>
+<tr>
+<td><a href="#n_production_loops"><code>n_production_loops</code></a></td>
+<td>Number of production phase loops</td>
+</tr>
+<tr>
+<td><a href="#n_epochs"><code>n_epochs</code></a></td>
+<td>Training epochs per loop</td>
+</tr>
+</tbody>
+</table>
+<h2 id="local-sampler-mala">Local sampler — MALA<a class="headerlink" href="#local-sampler-mala" title="Permanent link">¤</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#mala_step_size"><code>mala_step_size</code></a></td>
+<td><code>1e-1</code></td>
+<td>Initial MALA step size</td>
+</tr>
+<tr>
+<td><a href="#adapt_step_size"><code>adapt_step_size</code></a></td>
+<td><code>True</code></td>
+<td>Auto-adapt step size</td>
+</tr>
+<tr>
+<td><a href="#periodic"><code>periodic</code></a></td>
+<td><code>None</code></td>
+<td>Periodic dimensions</td>
+</tr>
+</tbody>
+</table>
+<h2 id="local-sampler-hmc">Local sampler — HMC<a class="headerlink" href="#local-sampler-hmc" title="Permanent link">¤</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#hmc_step_size"><code>hmc_step_size</code></a></td>
+<td><code>0.1</code></td>
+<td>Initial leapfrog step size</td>
+</tr>
+<tr>
+<td><a href="#hmc_n_leapfrog"><code>hmc_n_leapfrog</code></a></td>
+<td><code>10</code></td>
+<td>Leapfrog steps per proposal</td>
+</tr>
+<tr>
+<td><a href="#condition_matrix"><code>condition_matrix</code></a></td>
+<td><code>1</code></td>
+<td>Diagonal inverse mass matrix</td>
+</tr>
+<tr>
+<td><a href="#adapt_step_size"><code>adapt_step_size</code></a></td>
+<td><code>True</code></td>
+<td>Auto-adapt step size</td>
+</tr>
+<tr>
+<td><a href="#periodic"><code>periodic</code></a></td>
+<td><code>None</code></td>
+<td>Periodic dimensions</td>
+</tr>
+</tbody>
+</table>
+<h2 id="local-sampler-gaussian-random-walk">Local sampler — Gaussian random walk<a class="headerlink" href="#local-sampler-gaussian-random-walk" title="Permanent link">¤</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#grw_step_size"><code>grw_step_size</code></a></td>
+<td><code>1e-1</code></td>
+<td>Initial random walk step size</td>
+</tr>
+<tr>
+<td><a href="#adapt_step_size"><code>adapt_step_size</code></a></td>
+<td><code>True</code></td>
+<td>Auto-adapt step size</td>
+</tr>
+<tr>
+<td><a href="#periodic"><code>periodic</code></a></td>
+<td><code>None</code></td>
+<td>Periodic dimensions</td>
+</tr>
+</tbody>
+</table>
+<h2 id="normalizing-flow">Normalizing flow<a class="headerlink" href="#normalizing-flow" title="Permanent link">¤</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#rq_spline_n_layers"><code>rq_spline_n_layers</code></a></td>
+<td><code>4</code></td>
+<td>Number of coupling layers</td>
+</tr>
+<tr>
+<td><a href="#rq_spline_hidden_units"><code>rq_spline_hidden_units</code></a></td>
+<td><code>[32, 32]</code></td>
+<td>Hidden layer widths</td>
+</tr>
+<tr>
+<td><a href="#rq_spline_n_bins"><code>rq_spline_n_bins</code></a></td>
+<td><code>8</code></td>
+<td>Spline bins per layer</td>
+</tr>
+<tr>
+<td><a href="#n_nfproposal_batch_size"><code>n_NFproposal_batch_size</code></a></td>
+<td><code>10000</code></td>
+<td>NF sampling batch size</td>
+</tr>
+</tbody>
+</table>
+<h2 id="training">Training<a class="headerlink" href="#training" title="Permanent link">¤</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#learning_rate"><code>learning_rate</code></a></td>
+<td><code>1e-3</code></td>
+<td>AdamW learning rate</td>
+</tr>
+<tr>
+<td><a href="#batch_size"><code>batch_size</code></a></td>
+<td><code>10000</code></td>
+<td>Training mini-batch size</td>
+</tr>
+<tr>
+<td><a href="#n_max_examples"><code>n_max_examples</code></a></td>
+<td><code>10000</code></td>
+<td>Max samples in training buffer</td>
+</tr>
+<tr>
+<td><a href="#history_window"><code>history_window</code></a></td>
+<td><code>100</code></td>
+<td>Most-recent steps per chain used as NF training data</td>
+</tr>
+</tbody>
+</table>
+<h2 id="execution">Execution<a class="headerlink" href="#execution" title="Permanent link">¤</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#chain_batch_size"><code>chain_batch_size</code></a></td>
+<td><code>0</code></td>
+<td>Split vmap over chains</td>
+</tr>
+<tr>
+<td><a href="#local_thinning"><code>local_thinning</code></a></td>
+<td><code>1</code></td>
+<td>Thinning for local samples</td>
+</tr>
+<tr>
+<td><a href="#global_thinning"><code>global_thinning</code></a></td>
+<td><code>1</code></td>
+<td>Thinning for global samples</td>
+</tr>
+<tr>
+<td><a href="#verbose"><code>verbose</code></a></td>
+<td><code>False</code></td>
+<td>Print progress</td>
+</tr>
+</tbody>
+</table>
+<h2 id="early-stopping">Early stopping<a class="headerlink" href="#early-stopping" title="Permanent link">¤</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#early_stopping"><code>early_stopping</code></a></td>
+<td><code>False</code></td>
+<td>Enable early stopping</td>
+</tr>
+<tr>
+<td><a href="#early_stopping_tolerance"><code>early_stopping_tolerance</code></a></td>
+<td><code>0.05</code></td>
+<td>Relative acceptance-rate change threshold</td>
+</tr>
+<tr>
+<td><a href="#early_stopping_patience"><code>early_stopping_patience</code></a></td>
+<td><code>3</code></td>
+<td>Consecutive loops to confirm stability</td>
+</tr>
+<tr>
+<td><a href="#early_stopping_min_acceptance"><code>early_stopping_min_acceptance</code></a></td>
+<td><code>0.1</code></td>
+<td>Acceptance rate that triggers early stopping</td>
+</tr>
+</tbody>
+</table>
+<h2 id="parallel-tempering-pt-bundles-only">Parallel tempering (PT bundles only)<a class="headerlink" href="#parallel-tempering-pt-bundles-only" title="Permanent link">¤</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#logprior"><code>logprior</code></a></td>
+<td>flat</td>
+<td>Log-prior function</td>
+</tr>
+<tr>
+<td><a href="#n_temperatures"><code>n_temperatures</code></a></td>
+<td><code>5</code></td>
+<td>Number of temperature levels</td>
+</tr>
+<tr>
+<td><a href="#max_temperature"><code>max_temperature</code></a></td>
+<td><code>5.0</code></td>
+<td>Highest temperature</td>
+</tr>
+<tr>
+<td><a href="#n_tempered_steps"><code>n_tempered_steps</code></a></td>
+<td><code>-1</code></td>
+<td>Swap attempts per loop</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="required-parameters">Required parameters<a class="headerlink" href="#required-parameters" title="Permanent link">¤</a></h2>
+<h3 id="rng_key">rng_key<a class="headerlink" href="#rng_key" title="Permanent link">¤</a></h3>
+<p>A JAX PRNG key used to initialise all random state inside the bundle (chain positions,
+model weights, optimizer state).</p>
+<h3 id="n_chains">n_chains<a class="headerlink" href="#n_chains" title="Permanent link">¤</a></h3>
+<p>Number of parallel chains.
+The algorithm parallelises all chains simultaneously via <code>vmap</code>, so the performance
+benefit saturates once the chains fill the available hardware threads.
+More chains give a better picture of the global landscape, which helps train the
+normalizing flow faster and reduces the chance of mode collapse.</p>
+<h3 id="n_dims">n_dims<a class="headerlink" href="#n_dims" title="Permanent link">¤</a></h3>
+<p>Dimensionality of the parameter space. Must match the input dimension of <code>logpdf</code>.</p>
+<h3 id="logpdf">logpdf<a class="headerlink" href="#logpdf" title="Permanent link">¤</a></h3>
+<p>A callable with signature <code>logpdf(x, data) -&gt; float</code> where <code>x</code> is a 1-D array of
+length <code>n_dims</code> and <code>data</code> is the auxiliary data passed to <code>Sampler.sample</code>.
+The function must be JAX-differentiable if you use MALA or HMC.</p>
+<h3 id="n_local_steps">n_local_steps<a class="headerlink" href="#n_local_steps" title="Permanent link">¤</a></h3>
+<p>Number of local MCMC steps executed per chain in each training and production loop.
+Together with <code>n_chains</code> this controls how many samples are added to the training
+buffer per loop.</p>
+<h3 id="n_global_steps">n_global_steps<a class="headerlink" href="#n_global_steps" title="Permanent link">¤</a></h3>
+<p>Number of normalizing-flow proposal steps executed per chain in each loop.
+These are independent-MH moves drawn from the current flow, so they are most
+effective once the flow has been trained for a few loops.</p>
+<h3 id="n_training_loops">n_training_loops<a class="headerlink" href="#n_training_loops" title="Permanent link">¤</a></h3>
+<p>Number of local–global–train cycles to run in the training phase.
+During each cycle the local sampler runs, the flow is trained on the accumulated
+samples, and the global proposer runs. Increasing this gives the flow more
+opportunities to improve, at the cost of a longer warmup.</p>
+<h3 id="n_production_loops">n_production_loops<a class="headerlink" href="#n_production_loops" title="Permanent link">¤</a></h3>
+<p>Number of local–global cycles to run in the production phase.
+The flow is not updated during production, so detailed balance is restored and
+standard MCMC convergence diagnostics apply. All production samples are stored.</p>
+<h3 id="n_epochs">n_epochs<a class="headerlink" href="#n_epochs" title="Permanent link">¤</a></h3>
+<p>Number of gradient-descent epochs per training step.
+Higher values improve the flow fit but increase training time per loop.</p>
+<hr />
+<h2 id="local-sampler-parameters">Local sampler parameters<a class="headerlink" href="#local-sampler-parameters" title="Permanent link">¤</a></h2>
+<h3 id="mala_step_size">mala_step_size<a class="headerlink" href="#mala_step_size" title="Permanent link">¤</a></h3>
+<p><em>MALA bundles only.</em> Initial step size for MALA. Default <code>1e-1</code>.
+Accepts either a scalar (broadcast to all dimensions) or a 1-D array of length
+<code>n_dims</code> to set a different initial step size per dimension.
+The optimal MALA acceptance rate is ~57%, and <code>adapt_step_size</code> will drive the
+step size toward that target automatically.</p>
+<h3 id="hmc_step_size">hmc_step_size<a class="headerlink" href="#hmc_step_size" title="Permanent link">¤</a></h3>
+<p><em>HMC bundles only.</em> Initial leapfrog step size. Default <code>0.1</code>.
+The optimal HMC acceptance rate is ~65%.</p>
+<h3 id="hmc_n_leapfrog">hmc_n_leapfrog<a class="headerlink" href="#hmc_n_leapfrog" title="Permanent link">¤</a></h3>
+<p><em>HMC bundles only.</em> Number of leapfrog steps per HMC proposal. Default <code>10</code>.
+More steps produce proposals further along the trajectory but increase cost per step.</p>
+<h3 id="condition_matrix">condition_matrix<a class="headerlink" href="#condition_matrix" title="Permanent link">¤</a></h3>
+<p><em>HMC bundles only.</em> Diagonal of the inverse mass matrix (preconditioning matrix).
+Default <code>1</code> (scalar, broadcast to all dimensions). Pass a 1-D array of length
+<code>n_dims</code> to set per-dimension scales. Useful when parameters have very different
+characteristic scales.</p>
+<h3 id="grw_step_size">grw_step_size<a class="headerlink" href="#grw_step_size" title="Permanent link">¤</a></h3>
+<p><em>GRW bundles only.</em> Initial step size for the Gaussian random walk proposal.
+Default <code>1e-1</code>. Accepts either a scalar (broadcast to all dimensions) or a 1-D
+array of length <code>n_dims</code> to set a different initial step size per dimension.
+The optimal random-walk acceptance rate is ~23%.</p>
+<h3 id="adapt_step_size">adapt_step_size<a class="headerlink" href="#adapt_step_size" title="Permanent link">¤</a></h3>
+<p>Whether to automatically adapt the local step size during the training phase.
+Default <code>True</code>. The step size is updated after each training loop using a simple
+multiplicative rule targeting the algorithm-specific optimal acceptance rate.
+Adaptation is disabled during the production phase.</p>
+<h3 id="periodic">periodic<a class="headerlink" href="#periodic" title="Permanent link">¤</a></h3>
+<p>A <code>dict[int, tuple[float, float]]</code> mapping dimension indices to <code>(lower, upper)</code> bounds
+for periodic dimensions. Default <code>None</code> (no periodic dimensions). Proposals in periodic
+dimensions are automatically wrapped into <code>[lower, upper]</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># e.g. dim 0 is periodic on [0, 2π] and dim 2 on [-1, 1]</span>
+<span class="n">periodic</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">6.283</span><span class="p">),</span> <span class="mi">2</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)}</span>
+</code></pre></div>
+<hr />
+<h2 id="normalizing-flow-parameters">Normalizing flow parameters<a class="headerlink" href="#normalizing-flow-parameters" title="Permanent link">¤</a></h2>
+<h3 id="rq_spline_n_layers">rq_spline_n_layers<a class="headerlink" href="#rq_spline_n_layers" title="Permanent link">¤</a></h3>
+<p>Number of masked coupling layers in the RQ-spline normalizing flow. Default <code>4</code>.
+More layers increase expressive power at the cost of memory and training time.</p>
+<h3 id="rq_spline_hidden_units">rq_spline_hidden_units<a class="headerlink" href="#rq_spline_hidden_units" title="Permanent link">¤</a></h3>
+<p>List of hidden layer widths for the conditioner MLPs inside each coupling layer.
+Default <code>[32, 32]</code>. Increasing the width or depth improves the flow's capacity to
+represent complex distributions.</p>
+<h3 id="rq_spline_n_bins">rq_spline_n_bins<a class="headerlink" href="#rq_spline_n_bins" title="Permanent link">¤</a></h3>
+<p>Number of bins for the rational-quadratic spline bijection. Default <code>8</code>.
+More bins give a finer piecewise approximation.</p>
+<h3 id="n_nfproposal_batch_size">n_NFproposal_batch_size<a class="headerlink" href="#n_nfproposal_batch_size" title="Permanent link">¤</a></h3>
+<p>Batch size used when running the NF proposal over many steps. Default <code>10000</code>.
+When <code>n_global_steps</code> exceeds this value, the flow samples are computed in chunks
+of this size using <code>jax.lax.map</code> rather than a single <code>vmap</code>, reducing peak memory.</p>
+<hr />
+<h2 id="training-parameters">Training parameters<a class="headerlink" href="#training-parameters" title="Permanent link">¤</a></h2>
+<h3 id="learning_rate">learning_rate<a class="headerlink" href="#learning_rate" title="Permanent link">¤</a></h3>
+<p>Learning rate for the AdamW optimizer used to train the normalizing flow. Default <code>1e-3</code>.</p>
+<h3 id="batch_size">batch_size<a class="headerlink" href="#batch_size" title="Permanent link">¤</a></h3>
+<p>Mini-batch size for each gradient step during flow training. Default <code>10000</code>.
+The training loss is computed on random mini-batches of the accumulated samples.
+Within the memory budget, larger batches tend to be better because the training
+dataset is continuously evolving and overfitting is not a concern.</p>
+<h3 id="n_max_examples">n_max_examples<a class="headerlink" href="#n_max_examples" title="Permanent link">¤</a></h3>
+<p>Maximum number of samples retained in the training buffer. Default <code>10000</code>.
+When the buffer exceeds this size, only the most recent <code>n_max_examples</code> samples are
+kept for training. Choose this based on your device's memory capacity.
+Setting it too low risks mode collapse, as the flow may forget regions of the
+posterior not recently visited by the chains.</p>
+<h3 id="history_window">history_window<a class="headerlink" href="#history_window" title="Permanent link">¤</a></h3>
+<p>Number of most-recent position steps per chain used when selecting training data
+for the normalizing flow. Default <code>100</code>. At each training step, only the last
+<code>history_window</code> positions from each chain's buffer are considered; <code>n_max_examples</code>
+samples are then drawn from that pool. Reducing this value focuses the flow on the
+current mode but risks forgetting regions not recently visited.</p>
+<hr />
+<h2 id="execution-parameters">Execution parameters<a class="headerlink" href="#execution-parameters" title="Permanent link">¤</a></h2>
+<h3 id="chain_batch_size">chain_batch_size<a class="headerlink" href="#chain_batch_size" title="Permanent link">¤</a></h3>
+<p>If non-zero, splits the <code>vmap</code> over chains into sequential batches of this size.
+Default <code>0</code> (no splitting; all chains are vmapped at once). Use this when vmapping
+over all chains simultaneously exceeds device memory.</p>
+<h3 id="local_thinning">local_thinning<a class="headerlink" href="#local_thinning" title="Permanent link">¤</a></h3>
+<p>Store every <code>local_thinning</code>-th position from the local sampler. Default <code>1</code> (store
+all). All <code>n_local_steps</code> are always executed — thinning only controls which steps are
+written to the buffer. Increasing it reduces memory and the number of training samples
+available to the normalizing flow, but also reduces autocorrelation in the stored
+samples. The acceptance rate stored per slot is the mean over the corresponding
+thinning window. Note that <code>local_thinning</code> must not exceed <code>n_local_steps</code>.</p>
+<h3 id="global_thinning">global_thinning<a class="headerlink" href="#global_thinning" title="Permanent link">¤</a></h3>
+<p>Store every <code>global_thinning</code>-th position from the NF global proposal. Default <code>1</code>.
+Same semantics as <code>local_thinning</code>: all <code>n_global_steps</code> are always executed, but only
+every <code>global_thinning</code>-th result is written to the buffer. This affects memory, the
+acceptance-rate values seen by early stopping, and the number of samples available in
+the training buffer. <code>global_thinning</code> must not exceed <code>n_global_steps</code>.</p>
+<p>A key practical motivation for increasing <code>global_thinning</code> is that the normalizing
+flow can never perfectly represent the posterior, so the global acceptance rate is
+typically low. When many consecutive proposals are rejected, the chain stays at the
+same position, and storing every step fills the buffer with duplicate points that
+contribute nothing to the posterior estimate or NF training. Thinning skips over these
+repeated positions while still executing all <code>n_global_steps</code>, preserving the full
+opportunity to make large jumps whenever a proposal is accepted.</p>
+<h3 id="verbose">verbose<a class="headerlink" href="#verbose" title="Permanent link">¤</a></h3>
+<p>Print training loss and acceptance rates during sampling. Default <code>False</code>.</p>
+<hr />
+<h2 id="early-stopping-parameters">Early stopping parameters<a class="headerlink" href="#early-stopping-parameters" title="Permanent link">¤</a></h2>
+<h3 id="early_stopping">early_stopping<a class="headerlink" href="#early_stopping" title="Permanent link">¤</a></h3>
+<p>Whether to enable early stopping of the training phase. Default <code>False</code>.
+When enabled, the training phase ends early and the sampler transitions to the
+production phase once either of the two stopping conditions is met (see
+<code>early_stopping_tolerance</code> and <code>early_stopping_min_acceptance</code> below).
+The first 3 training loops are always completed regardless.</p>
+<h3 id="early_stopping_tolerance">early_stopping_tolerance<a class="headerlink" href="#early_stopping_tolerance" title="Permanent link">¤</a></h3>
+<p>Relative change threshold for the global acceptance rate stability check.
+Early stopping triggers when both the mean global acceptance rate <strong>and</strong> its
+coefficient of variation across chains change by less than this fraction for
+<code>early_stopping_patience</code> consecutive loops:
+<code>|current - prev| / prev &lt; tolerance</code>.
+Default <code>0.05</code>.</p>
+<h3 id="early_stopping_patience">early_stopping_patience<a class="headerlink" href="#early_stopping_patience" title="Permanent link">¤</a></h3>
+<p>Number of consecutive loops either stopping criterion must be satisfied before
+the training phase ends. Default <code>3</code>.</p>
+<h3 id="early_stopping_min_acceptance">early_stopping_min_acceptance<a class="headerlink" href="#early_stopping_min_acceptance" title="Permanent link">¤</a></h3>
+<p>Global acceptance rate threshold that, once reached, triggers early stopping
+regardless of stability (after <code>early_stopping_patience</code> consecutive loops).
+Default <code>0.1</code>. Set to <code>0</code> to disable this trigger and rely solely on the
+stability check.</p>
+<hr />
+<h2 id="parallel-tempering-parameters">Parallel tempering parameters<a class="headerlink" href="#parallel-tempering-parameters" title="Permanent link">¤</a></h2>
+<p><em>These parameters are only available in the PT bundles:
+<code>RQSpline_MALA_PT_Bundle</code>, <code>RQSpline_HMC_PT_Bundle</code>, <code>RQSpline_GRW_PT_Bundle</code>.</em></p>
+<h3 id="logprior">logprior<a class="headerlink" href="#logprior" title="Permanent link">¤</a></h3>
+<p>Log-prior function with signature <code>logprior(x, data) -&gt; float</code>. Default is a
+flat prior that always returns <code>0</code>. The tempered log-density is</p>
+<div class="arithmatex">\[\log \tilde{p}_T(x) = \frac{1}{T} \log \mathcal{L}(x) + \log \pi(x)\]</div>
+<p>so the prior is preserved at all temperatures.</p>
+<h3 id="n_temperatures">n_temperatures<a class="headerlink" href="#n_temperatures" title="Permanent link">¤</a></h3>
+<p>Number of temperature levels, including the target (temperature = 1). Default <code>5</code>.
+Chains at higher temperatures explore the prior more freely and occasionally swap
+positions with the target chains, helping escape local modes.</p>
+<h3 id="max_temperature">max_temperature<a class="headerlink" href="#max_temperature" title="Permanent link">¤</a></h3>
+<p>Highest temperature in the ladder. Default <code>5.0</code>. The temperatures are spaced
+linearly between 1 and <code>max_temperature</code>. A larger value allows more prior-like
+exploration but reduces the swap acceptance rate between adjacent levels.</p>
+<h3 id="n_tempered_steps">n_tempered_steps<a class="headerlink" href="#n_tempered_steps" title="Permanent link">¤</a></h3>
+<p>Number of parallel-tempering swap attempts per loop. Default <code>-1</code>, which is
+interpreted as equal to <code>n_local_steps</code>. Reduce this to save computation if
+swap acceptance is low.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.instant","navigation.tabs","navigation.top","toc.follow","header.autohide"],"search":"../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"default":"stable","provider":"mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.dbc0afdc.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
