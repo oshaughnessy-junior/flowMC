@@ -8,7 +8,7 @@
 
 flowMC is a JAX-based package for normalizing-flow-enhanced Markov chain Monte Carlo (MCMC) sampling. By using normalizing flows as a global proposal, flowMC accelerates convergence for multi-modal and high-dimensional posteriors while running natively on GPU with minimal hyperparameter tuning.
 
-For a quick introduction, see the [Quick Start guide](https://flowmc.readthedocs.io/en/stable/quickstart/).
+For a quick introduction, see the [Quick Start guide](https://gw-jax-team.github.io/flowMC/stable/quickstart/).
 
 > [!WARNING]
 > flowMC has not yet reached v1.0.0 and the API may change. Use at your own risk. Consider pinning to a specific version if you need API stability.
