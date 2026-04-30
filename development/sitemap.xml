@@ -16,12 +16,6 @@
         <loc>https://gw-jax-team.github.io/flowMC/development/tutorials/dualmoon/</loc>
       </url>
       <url>
-        <loc>https://gw-jax-team.github.io/flowMC/development/tutorials/bundles/</loc>
-      </url>
-      <url>
-        <loc>https://gw-jax-team.github.io/flowMC/development/tutorials/hyperparameters/</loc>
-      </url>
-      <url>
         <loc>https://gw-jax-team.github.io/flowMC/development/tutorials/parallel_tempering/</loc>
       </url>
       <url>
@@ -34,13 +28,22 @@
         <loc>https://gw-jax-team.github.io/flowMC/development/tutorials/train_flow_match/</loc>
       </url>
       <url>
+        <loc>https://gw-jax-team.github.io/flowMC/development/guides/</loc>
+      </url>
+      <url>
+        <loc>https://gw-jax-team.github.io/flowMC/development/guides/architecture/</loc>
+      </url>
+      <url>
+        <loc>https://gw-jax-team.github.io/flowMC/development/guides/bundles/</loc>
+      </url>
+      <url>
+        <loc>https://gw-jax-team.github.io/flowMC/development/guides/hyperparameters/</loc>
+      </url>
+      <url>
         <loc>https://gw-jax-team.github.io/flowMC/development/FAQ/</loc>
       </url>
       <url>
         <loc>https://gw-jax-team.github.io/flowMC/development/contributing/</loc>
-      </url>
-      <url>
-        <loc>https://gw-jax-team.github.io/flowMC/development/development_guide/</loc>
       </url>
       <url>
         <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/Sampler/</loc>
