@@ -2466,7 +2466,7 @@
 
 <h1 id="faq">FAQ<a class="headerlink" href="#faq" title="Permanent link">¤</a></h1>
 <p><strong>My local sampler is not accepting</strong></p>
-<p>This usually means you are setting the step size of the local samplerto be too big.
+<p>This usually means you are setting the step size of the local sampler to be too big.
 Try reducing the step size in your local sampler.</p>
 <p>Alternative, this could also mean your sampler is proposing in region where the likelihood is ill-defined (i.e. NaN either in likelihood or its derivative if you are using a gradient-based local sampler).
 It is worth making sure your likelihood is well-defined within your range of prior.</p>
@@ -2481,12 +2481,12 @@ Try reducing the learning rate by a factor of ten.</p>
 <p>Another reason for a flat loss is your local sampler is not accepting at all.
 This is a bit rarer since this means your data used to train the normalizing flow is just your prior, which the normalizing flow should still be able to learn.</p>
 <p><strong>The sampler is stuck a bit until it starts sampling</strong></p>
-<p>If you use the option <code>Jit</code> in constructing the local sampler, the code will compile your code to speed up the execution.
+<p>If you use the option <code>jit</code> in constructing the local sampler, the code will compile your code to speed up the execution.
 The sampler is not really stuck, but it is compiling the code. Depending on how you code up your likelihood function, the compilation can take a while.
 If you don't want to wait, you can set <code>Jit=False</code>, which would increase the sampling time.</p>
 <p><strong>The compilation is slow</strong></p>
-<p>If you have a likelihood with many lines, Jax will take a long time to compile the code.
-Jax is known to be slow in compilation, especially if your computational graph uses some sort of loop that call a function many times.
+<p>If you have a likelihood with many lines, JAX will take a long time to compile the code.
+JAX is known to be slow in compilation, especially if your computational graph uses some sort of loop that call a function many times.
 While we cannot fundamentally get rid of the problem, <a href="https://docs.kidger.site/equinox/tricks/#low-overhead-training-loops">using a jax.lax.scan</a> is usually how we deal with it.</p>
 
 

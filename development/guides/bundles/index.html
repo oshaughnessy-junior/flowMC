@@ -2696,9 +2696,8 @@
 
 
 <h1 id="resource-strategy-bundles">Resource-Strategy Bundles<a class="headerlink" href="#resource-strategy-bundles" title="Permanent link">¤</a></h1>
-<p>A <strong>resource-strategy bundle</strong> packages a local MCMC sampler, a normalizing flow
-global proposal, and a training schedule into a single object. You pass it to
-<code>Sampler</code> and it configures everything for you.</p>
+<p>A <strong>resource-strategy bundle</strong> packages a local MCMC sampler, a normalizing flow global proposal, and a training schedule into a single object.
+You pass it to <code>Sampler</code> and it configures everything for you.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.Sampler</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sampler</span>
 
 <span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span>
@@ -2756,9 +2755,7 @@ global proposal, and a training schedule into a single object. You pass it to
 <hr />
 <h2 id="rqspline_mala_bundle">RQSpline_MALA_Bundle<a class="headerlink" href="#rqspline_mala_bundle" title="Permanent link">¤</a></h2>
 <p>Uses the <strong>Metropolis-Adjusted Langevin Algorithm (MALA)</strong> as the local sampler.
-MALA uses the gradient of the log-density to bias proposals toward regions of higher
-probability, giving better performance than a simple random walk at the cost of
-requiring a differentiable <code>logpdf</code>.</p>
+MALA uses the gradient of the log-density to bias proposals toward regions of higher probability, giving better performance than a simple random walk at the cost of requiring a differentiable <code>logpdf</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.resource_strategy_bundle.RQSpline_MALA</span><span class="w"> </span><span class="kn">import</span> <span class="n">RQSpline_MALA_Bundle</span>
 
 <span class="n">bundle</span> <span class="o">=</span> <span class="n">RQSpline_MALA_Bundle</span><span class="p">(</span>
@@ -2773,14 +2770,11 @@ requiring a differentiable <code>logpdf</code>.</p>
     <span class="n">n_epochs</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
-<p>The local step size targets an acceptance rate of ~57% and is adapted automatically
-during the training phase when <code>adapt_step_size=True</code> (the default).</p>
+<p>The local step size targets an acceptance rate of ~57% and is adapted automatically during the training phase when <code>adapt_step_size=True</code> (the default).</p>
 <hr />
 <h2 id="rqspline_mala_pt_bundle">RQSpline_MALA_PT_Bundle<a class="headerlink" href="#rqspline_mala_pt_bundle" title="Permanent link">¤</a></h2>
-<p>Extends <code>RQSpline_MALA_Bundle</code> with <strong>parallel tempering</strong>. Additional replicas of
-the chains are run at elevated temperatures, exploring the prior more freely.
-Periodic swap proposals between adjacent temperature levels allow the target chains
-to escape local modes.</p>
+<p>Extends <code>RQSpline_MALA_Bundle</code> with <strong>parallel tempering</strong>. Additional replicas of the chains are run at elevated temperatures, exploring the prior more freely.
+Periodic swap proposals between adjacent temperature levels allow the target chains to escape local modes.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.resource_strategy_bundle.RQSpline_MALA_PT</span><span class="w"> </span><span class="kn">import</span> <span class="n">RQSpline_MALA_PT_Bundle</span>
 
 <span class="n">bundle</span> <span class="o">=</span> <span class="n">RQSpline_MALA_PT_Bundle</span><span class="p">(</span>
@@ -2804,10 +2798,9 @@ to escape local modes.</p>
 <p>so the prior is preserved at all temperatures.</p>
 <hr />
 <h2 id="rqspline_hmc_bundle">RQSpline_HMC_Bundle<a class="headerlink" href="#rqspline_hmc_bundle" title="Permanent link">¤</a></h2>
-<p>Uses <strong>Hamiltonian Monte Carlo (HMC)</strong> as the local sampler. HMC integrates the
-Hamiltonian equations of motion using a leapfrog integrator, producing proposals
-that travel far in parameter space with high acceptance. It requires a differentiable
-<code>logpdf</code> and benefits from a good <code>condition_matrix</code> (diagonal inverse mass matrix).</p>
+<p>Uses <strong>Hamiltonian Monte Carlo (HMC)</strong> as the local sampler.
+HMC integrates the Hamiltonian equations of motion using a leapfrog integrator, producing proposals that travel far in parameter space with high acceptance.
+It requires a differentiable <code>logpdf</code> and benefits from a good <code>condition_matrix</code> (diagonal inverse mass matrix).</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.resource_strategy_bundle.RQSpline_HMC</span><span class="w"> </span><span class="kn">import</span> <span class="n">RQSpline_HMC_Bundle</span>
 
 <span class="n">bundle</span> <span class="o">=</span> <span class="n">RQSpline_HMC_Bundle</span><span class="p">(</span>
@@ -2828,16 +2821,15 @@ that travel far in parameter space with high acceptance. It requires a different
 <p>The local step size targets an acceptance rate of ~65%.</p>
 <hr />
 <h2 id="rqspline_hmc_pt_bundle">RQSpline_HMC_PT_Bundle<a class="headerlink" href="#rqspline_hmc_pt_bundle" title="Permanent link">¤</a></h2>
-<p>Extends <code>RQSpline_HMC_Bundle</code> with parallel tempering. The constructor accepts all
-<code>RQSpline_HMC_Bundle</code> parameters plus the parallel tempering parameters
-(<code>logprior</code>, <code>n_temperatures</code>, <code>max_temperature</code>, <code>n_tempered_steps</code>).</p>
+<p>Extends <code>RQSpline_HMC_Bundle</code> with parallel tempering.
+The constructor accepts all <code>RQSpline_HMC_Bundle</code> parameters plus the parallel tempering parameters (<code>logprior</code>, <code>n_temperatures</code>, <code>max_temperature</code>, <code>n_tempered_steps</code>).</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.resource_strategy_bundle.RQSpline_HMC_PT</span><span class="w"> </span><span class="kn">import</span> <span class="n">RQSpline_HMC_PT_Bundle</span>
 </code></pre></div>
 <hr />
 <h2 id="rqspline_grw_bundle">RQSpline_GRW_Bundle<a class="headerlink" href="#rqspline_grw_bundle" title="Permanent link">¤</a></h2>
 <p>Uses a <strong>Gaussian random walk</strong> (Metropolis–Hastings) as the local sampler.
-No gradient is required, making this the right choice when <code>logpdf</code> is not
-differentiable. The optimal acceptance rate for a Gaussian random walk is ~23%.</p>
+No gradient is required, making this the right choice when <code>logpdf</code> is not differentiable.
+The optimal acceptance rate for a Gaussian random walk is ~23%.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.resource_strategy_bundle.RQSpline_GRW</span><span class="w"> </span><span class="kn">import</span> <span class="n">RQSpline_GRW_Bundle</span>
 
 <span class="n">bundle</span> <span class="o">=</span> <span class="n">RQSpline_GRW_Bundle</span><span class="p">(</span>
@@ -2860,8 +2852,7 @@ differentiable. The optimal acceptance rate for a Gaussian random walk is ~23%.<
 </code></pre></div>
 <hr />
 <h2 id="sampling-loop-structure">Sampling loop structure<a class="headerlink" href="#sampling-loop-structure" title="Permanent link">¤</a></h2>
-<p>Every bundle organises sampling into a <strong>training phase</strong> followed by a
-<strong>production phase</strong>.</p>
+<p>Every bundle organises sampling into a <strong>training phase</strong> followed by a <strong>production phase</strong>.</p>
 <p><strong>Training phase</strong> (<code>n_training_loops</code> iterations):</p>
 <ol>
 <li>Run <code>n_local_steps</code> local MCMC steps per chain</li>
@@ -2876,10 +2867,8 @@ differentiable. The optimal acceptance rate for a Gaussian random walk is ~23%.<
 <li>Run <code>n_global_steps</code> NF proposal steps per chain</li>
 <li>(PT bundles) Attempt parallel-tempering swaps at the start of each loop</li>
 </ol>
-<p>The flow is not updated during the production phase, so detailed balance is restored
-and standard MCMC convergence diagnostics can be applied safely.</p>
-<p>Early stopping can terminate the training phase early once the global acceptance
-rate has stabilised; see <a href="../hyperparameters/#early_stopping"><code>early_stopping</code></a>.</p>
+<p>The flow is not updated during the production phase, so detailed balance is restored and standard MCMC convergence diagnostics can be applied safely.</p>
+<p>Early stopping can terminate the training phase early once the global acceptance rate has stabilised; see <a href="../hyperparameters/#early_stopping"><code>early_stopping</code></a>.</p>
 
 
 

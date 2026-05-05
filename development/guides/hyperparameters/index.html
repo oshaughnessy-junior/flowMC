@@ -4050,185 +4050,169 @@
 <hr />
 <h2 id="required-parameters">Required parameters<a class="headerlink" href="#required-parameters" title="Permanent link">¤</a></h2>
 <h3 id="rng_key">rng_key<a class="headerlink" href="#rng_key" title="Permanent link">¤</a></h3>
-<p>A JAX PRNG key used to initialise all random state inside the bundle (chain positions,
-model weights, optimizer state).</p>
+<p>A JAX PRNG key used to initialise all random state inside the bundle (chain positions, model weights, optimizer state).</p>
 <h3 id="n_chains">n_chains<a class="headerlink" href="#n_chains" title="Permanent link">¤</a></h3>
 <p>Number of parallel chains.
-The algorithm parallelises all chains simultaneously via <code>vmap</code>, so the performance
-benefit saturates once the chains fill the available hardware threads.
-More chains give a better picture of the global landscape, which helps train the
-normalizing flow faster and reduces the chance of mode collapse.</p>
+The algorithm parallelises all chains simultaneously via <code>vmap</code>, so the performance benefit saturates once the chains fill the available hardware threads.
+More chains give a better picture of the global landscape, which helps train the normalizing flow faster and reduces the chance of mode collapse.</p>
 <h3 id="n_dims">n_dims<a class="headerlink" href="#n_dims" title="Permanent link">¤</a></h3>
 <p>Dimensionality of the parameter space. Must match the input dimension of <code>logpdf</code>.</p>
 <h3 id="logpdf">logpdf<a class="headerlink" href="#logpdf" title="Permanent link">¤</a></h3>
-<p>A callable with signature <code>logpdf(x, data) -&gt; float</code> where <code>x</code> is a 1-D array of
-length <code>n_dims</code> and <code>data</code> is the auxiliary data passed to <code>Sampler.sample</code>.
+<p>A callable with signature <code>logpdf(x, data) -&gt; float</code> where <code>x</code> is a 1-D array of length <code>n_dims</code> and <code>data</code> is the auxiliary data passed to <code>Sampler.sample</code>.
 The function must be JAX-differentiable if you use MALA or HMC.</p>
 <h3 id="n_local_steps">n_local_steps<a class="headerlink" href="#n_local_steps" title="Permanent link">¤</a></h3>
 <p>Number of local MCMC steps executed per chain in each training and production loop.
-Together with <code>n_chains</code> this controls how many samples are added to the training
-buffer per loop.</p>
+Together with <code>n_chains</code> this controls how many samples are added to the training buffer per loop.</p>
 <h3 id="n_global_steps">n_global_steps<a class="headerlink" href="#n_global_steps" title="Permanent link">¤</a></h3>
 <p>Number of normalizing-flow proposal steps executed per chain in each loop.
-These are independent-MH moves drawn from the current flow, so they are most
-effective once the flow has been trained for a few loops.</p>
+These are independent-MH moves drawn from the current flow, so they are most effective once the flow has been trained for a few loops.</p>
 <h3 id="n_training_loops">n_training_loops<a class="headerlink" href="#n_training_loops" title="Permanent link">¤</a></h3>
 <p>Number of local–global–train cycles to run in the training phase.
-During each cycle the local sampler runs, the flow is trained on the accumulated
-samples, and the global proposer runs. Increasing this gives the flow more
-opportunities to improve, at the cost of a longer warmup.</p>
+During each cycle the local sampler runs, the flow is trained on the accumulated samples, and the global proposer runs.
+Increasing this gives the flow more opportunities to improve, at the cost of a longer warmup.</p>
 <h3 id="n_production_loops">n_production_loops<a class="headerlink" href="#n_production_loops" title="Permanent link">¤</a></h3>
 <p>Number of local–global cycles to run in the production phase.
-The flow is not updated during production, so detailed balance is restored and
-standard MCMC convergence diagnostics apply. All production samples are stored.</p>
+The flow is not updated during production, so detailed balance is restored and standard MCMC convergence diagnostics apply.
+All production samples are stored.</p>
 <h3 id="n_epochs">n_epochs<a class="headerlink" href="#n_epochs" title="Permanent link">¤</a></h3>
 <p>Number of gradient-descent epochs per training step.
 Higher values improve the flow fit but increase training time per loop.</p>
 <hr />
 <h2 id="local-sampler-parameters">Local sampler parameters<a class="headerlink" href="#local-sampler-parameters" title="Permanent link">¤</a></h2>
 <h3 id="mala_step_size">mala_step_size<a class="headerlink" href="#mala_step_size" title="Permanent link">¤</a></h3>
-<p><em>MALA bundles only.</em> Initial step size for MALA. Default <code>1e-1</code>.
-Accepts either a scalar (broadcast to all dimensions) or a 1-D array of length
-<code>n_dims</code> to set a different initial step size per dimension.
-The optimal MALA acceptance rate is ~57%, and <code>adapt_step_size</code> will drive the
-step size toward that target automatically.</p>
+<p><em>MALA bundles only.</em> Initial step size for MALA.
+Default <code>1e-1</code>.
+Accepts either a scalar (broadcast to all dimensions) or a 1-D array of length <code>n_dims</code> to set a different initial step size per dimension.
+The optimal MALA acceptance rate is ~57%, and <code>adapt_step_size</code> will drive the step size toward that target automatically.</p>
 <h3 id="hmc_step_size">hmc_step_size<a class="headerlink" href="#hmc_step_size" title="Permanent link">¤</a></h3>
-<p><em>HMC bundles only.</em> Initial leapfrog step size. Default <code>0.1</code>.
+<p><em>HMC bundles only.</em> Initial leapfrog step size.
+Default <code>0.1</code>.
 The optimal HMC acceptance rate is ~65%.</p>
 <h3 id="hmc_n_leapfrog">hmc_n_leapfrog<a class="headerlink" href="#hmc_n_leapfrog" title="Permanent link">¤</a></h3>
 <p><em>HMC bundles only.</em> Number of leapfrog steps per HMC proposal. Default <code>10</code>.
 More steps produce proposals further along the trajectory but increase cost per step.</p>
 <h3 id="condition_matrix">condition_matrix<a class="headerlink" href="#condition_matrix" title="Permanent link">¤</a></h3>
 <p><em>HMC bundles only.</em> Diagonal of the inverse mass matrix (preconditioning matrix).
-Default <code>1</code> (scalar, broadcast to all dimensions). Pass a 1-D array of length
-<code>n_dims</code> to set per-dimension scales. Useful when parameters have very different
-characteristic scales.</p>
+Default <code>1</code> (scalar, broadcast to all dimensions).
+Pass a 1-D array of length <code>n_dims</code> to set per-dimension scales.
+Useful when parameters have very different characteristic scales.</p>
 <h3 id="grw_step_size">grw_step_size<a class="headerlink" href="#grw_step_size" title="Permanent link">¤</a></h3>
 <p><em>GRW bundles only.</em> Initial step size for the Gaussian random walk proposal.
-Default <code>1e-1</code>. Accepts either a scalar (broadcast to all dimensions) or a 1-D
-array of length <code>n_dims</code> to set a different initial step size per dimension.
+Default <code>1e-1</code>.
+Accepts either a scalar (broadcast to all dimensions) or a 1-D array of length <code>n_dims</code> to set a different initial step size per dimension.
 The optimal random-walk acceptance rate is ~23%.</p>
 <h3 id="adapt_step_size">adapt_step_size<a class="headerlink" href="#adapt_step_size" title="Permanent link">¤</a></h3>
 <p>Whether to automatically adapt the local step size during the training phase.
-Default <code>True</code>. The step size is updated after each training loop using a simple
-multiplicative rule targeting the algorithm-specific optimal acceptance rate.
+Default <code>True</code>.
+The step size is updated after each training loop using a simple multiplicative rule targeting the algorithm-specific optimal acceptance rate.
 Adaptation is disabled during the production phase.</p>
 <h3 id="periodic">periodic<a class="headerlink" href="#periodic" title="Permanent link">¤</a></h3>
-<p>A <code>dict[int, tuple[float, float]]</code> mapping dimension indices to <code>(lower, upper)</code> bounds
-for periodic dimensions. Default <code>None</code> (no periodic dimensions). Proposals in periodic
-dimensions are automatically wrapped into <code>[lower, upper]</code>.</p>
+<p>A <code>dict[int, tuple[float, float]]</code> mapping dimension indices to <code>(lower, upper)</code> bounds for periodic dimensions.
+Default <code>None</code> (no periodic dimensions).
+Proposals in periodic dimensions are automatically wrapped into <code>[lower, upper]</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># e.g. dim 0 is periodic on [0, 2π] and dim 2 on [-1, 1]</span>
 <span class="n">periodic</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">6.283</span><span class="p">),</span> <span class="mi">2</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)}</span>
 </code></pre></div>
 <hr />
 <h2 id="normalizing-flow-parameters">Normalizing flow parameters<a class="headerlink" href="#normalizing-flow-parameters" title="Permanent link">¤</a></h2>
 <h3 id="rq_spline_n_layers">rq_spline_n_layers<a class="headerlink" href="#rq_spline_n_layers" title="Permanent link">¤</a></h3>
-<p>Number of masked coupling layers in the RQ-spline normalizing flow. Default <code>4</code>.
+<p>Number of masked coupling layers in the RQ-spline normalizing flow.
+Default <code>4</code>.
 More layers increase expressive power at the cost of memory and training time.</p>
 <h3 id="rq_spline_hidden_units">rq_spline_hidden_units<a class="headerlink" href="#rq_spline_hidden_units" title="Permanent link">¤</a></h3>
 <p>List of hidden layer widths for the conditioner MLPs inside each coupling layer.
-Default <code>[32, 32]</code>. Increasing the width or depth improves the flow's capacity to
-represent complex distributions.</p>
+Default <code>[32, 32]</code>.
+Increasing the width or depth improves the flow's capacity to represent complex distributions.</p>
 <h3 id="rq_spline_n_bins">rq_spline_n_bins<a class="headerlink" href="#rq_spline_n_bins" title="Permanent link">¤</a></h3>
-<p>Number of bins for the rational-quadratic spline bijection. Default <code>8</code>.
+<p>Number of bins for the rational-quadratic spline bijection.
+Default <code>8</code>.
 More bins give a finer piecewise approximation.</p>
 <h3 id="n_nfproposal_batch_size">n_NFproposal_batch_size<a class="headerlink" href="#n_nfproposal_batch_size" title="Permanent link">¤</a></h3>
-<p>Batch size used when running the NF proposal over many steps. Default <code>10000</code>.
-When <code>n_global_steps</code> exceeds this value, the flow samples are computed in chunks
-of this size using <code>jax.lax.map</code> rather than a single <code>vmap</code>, reducing peak memory.</p>
+<p>Batch size used when running the NF proposal over many steps.
+Default <code>10000</code>.
+When <code>n_global_steps</code> exceeds this value, the flow samples are computed in chunks of this size using <code>jax.lax.map</code> rather than a single <code>vmap</code>, reducing peak memory.</p>
 <hr />
 <h2 id="training-parameters">Training parameters<a class="headerlink" href="#training-parameters" title="Permanent link">¤</a></h2>
 <h3 id="learning_rate">learning_rate<a class="headerlink" href="#learning_rate" title="Permanent link">¤</a></h3>
 <p>Learning rate for the AdamW optimizer used to train the normalizing flow. Default <code>1e-3</code>.</p>
 <h3 id="batch_size">batch_size<a class="headerlink" href="#batch_size" title="Permanent link">¤</a></h3>
-<p>Mini-batch size for each gradient step during flow training. Default <code>10000</code>.
+<p>Mini-batch size for each gradient step during flow training.
+Default <code>10000</code>.
 The training loss is computed on random mini-batches of the accumulated samples.
-Within the memory budget, larger batches tend to be better because the training
-dataset is continuously evolving and overfitting is not a concern.</p>
+Within the memory budget, larger batches tend to be better because the training dataset is continuously evolving and overfitting is not a concern.</p>
 <h3 id="n_max_examples">n_max_examples<a class="headerlink" href="#n_max_examples" title="Permanent link">¤</a></h3>
-<p>Maximum number of samples retained in the training buffer. Default <code>10000</code>.
-When the buffer exceeds this size, only the most recent <code>n_max_examples</code> samples are
-kept for training. Choose this based on your device's memory capacity.
-Setting it too low risks mode collapse, as the flow may forget regions of the
-posterior not recently visited by the chains.</p>
+<p>Maximum number of samples retained in the training buffer.
+Default <code>10000</code>.
+When the buffer exceeds this size, only the most recent <code>n_max_examples</code> samples are kept for training.
+Choose this based on your device's memory capacity.
+Setting it too low risks mode collapse, as the flow may forget regions of the posterior not recently visited by the chains.</p>
 <h3 id="history_window">history_window<a class="headerlink" href="#history_window" title="Permanent link">¤</a></h3>
-<p>Number of most-recent position steps per chain used when selecting training data
-for the normalizing flow. Default <code>100</code>. At each training step, only the last
-<code>history_window</code> positions from each chain's buffer are considered; <code>n_max_examples</code>
-samples are then drawn from that pool. Reducing this value focuses the flow on the
-current mode but risks forgetting regions not recently visited.</p>
+<p>Number of most-recent position steps per chain used when selecting training data for the normalizing flow.
+Default <code>100</code>.
+At each training step, only the last <code>history_window</code> positions from each chain's buffer are considered; <code>n_max_examples</code> samples are then drawn from that pool.
+Reducing this value focuses the flow on the current mode but risks forgetting regions not recently visited.</p>
 <hr />
 <h2 id="execution-parameters">Execution parameters<a class="headerlink" href="#execution-parameters" title="Permanent link">¤</a></h2>
 <h3 id="chain_batch_size">chain_batch_size<a class="headerlink" href="#chain_batch_size" title="Permanent link">¤</a></h3>
 <p>If non-zero, splits the <code>vmap</code> over chains into sequential batches of this size.
-Default <code>0</code> (no splitting; all chains are vmapped at once). Use this when vmapping
-over all chains simultaneously exceeds device memory.</p>
+Default <code>0</code> (no splitting; all chains are vmapped at once).
+Use this when vmapping over all chains simultaneously exceeds device memory.</p>
 <h3 id="local_thinning">local_thinning<a class="headerlink" href="#local_thinning" title="Permanent link">¤</a></h3>
-<p>Store every <code>local_thinning</code>-th position from the local sampler. Default <code>1</code> (store
-all). All <code>n_local_steps</code> are always executed — thinning only controls which steps are
-written to the buffer. Increasing it reduces memory and the number of training samples
-available to the normalizing flow, but also reduces autocorrelation in the stored
-samples. The acceptance rate stored per slot is the mean over the corresponding
-thinning window. Note that <code>local_thinning</code> must not exceed <code>n_local_steps</code>.</p>
+<p>Store every <code>local_thinning</code>-th position from the local sampler.
+Default <code>1</code> (store all).
+All <code>n_local_steps</code> are always executed — thinning only controls which steps are written to the buffer.
+Increasing it reduces memory and the number of training samples available to the normalizing flow, but also reduces autocorrelation in the stored samples.
+The acceptance rate stored per slot is the mean over the corresponding thinning window.
+Note that <code>local_thinning</code> must not exceed <code>n_local_steps</code>.</p>
 <h3 id="global_thinning">global_thinning<a class="headerlink" href="#global_thinning" title="Permanent link">¤</a></h3>
-<p>Store every <code>global_thinning</code>-th position from the NF global proposal. Default <code>1</code>.
-Same semantics as <code>local_thinning</code>: all <code>n_global_steps</code> are always executed, but only
-every <code>global_thinning</code>-th result is written to the buffer. This affects memory, the
-acceptance-rate values seen by early stopping, and the number of samples available in
-the training buffer. <code>global_thinning</code> must not exceed <code>n_global_steps</code>.</p>
-<p>A key practical motivation for increasing <code>global_thinning</code> is that the normalizing
-flow can never perfectly represent the posterior, so the global acceptance rate is
-typically low. When many consecutive proposals are rejected, the chain stays at the
-same position, and storing every step fills the buffer with duplicate points that
-contribute nothing to the posterior estimate or NF training. Thinning skips over these
-repeated positions while still executing all <code>n_global_steps</code>, preserving the full
-opportunity to make large jumps whenever a proposal is accepted.</p>
+<p>Store every <code>global_thinning</code>-th position from the NF global proposal.
+Default <code>1</code>.
+Same semantics as <code>local_thinning</code>: all <code>n_global_steps</code> are always executed, but only every <code>global_thinning</code>-th result is written to the buffer.
+This affects memory, the acceptance-rate values seen by early stopping, and the number of samples available in the training buffer.
+<code>global_thinning</code> must not exceed <code>n_global_steps</code>.</p>
+<p>A key practical motivation for increasing <code>global_thinning</code> is that the normalizing flow can never perfectly represent the posterior, so the global acceptance rate is typically low.
+When many consecutive proposals are rejected, the chain stays at the same position, and storing every step fills the buffer with duplicate points that contribute nothing to the posterior estimate or NF training.
+Thinning skips over these repeated positions while still executing all <code>n_global_steps</code>, preserving the full opportunity to make large jumps whenever a proposal is accepted.</p>
 <h3 id="verbose">verbose<a class="headerlink" href="#verbose" title="Permanent link">¤</a></h3>
 <p>Print training loss and acceptance rates during sampling. Default <code>False</code>.</p>
 <hr />
 <h2 id="early-stopping-parameters">Early stopping parameters<a class="headerlink" href="#early-stopping-parameters" title="Permanent link">¤</a></h2>
 <h3 id="early_stopping">early_stopping<a class="headerlink" href="#early_stopping" title="Permanent link">¤</a></h3>
-<p>Whether to enable early stopping of the training phase. Default <code>False</code>.
-When enabled, the training phase ends early and the sampler transitions to the
-production phase once either of the two stopping conditions is met (see
-<code>early_stopping_tolerance</code> and <code>early_stopping_min_acceptance</code> below).
+<p>Whether to enable early stopping of the training phase.
+Default <code>False</code>.
+When enabled, the training phase ends early and the sampler transitions to the production phase once either of the two stopping conditions is met (see <code>early_stopping_tolerance</code> and <code>early_stopping_min_acceptance</code> below).
 The first 3 training loops are always completed regardless.</p>
 <h3 id="early_stopping_tolerance">early_stopping_tolerance<a class="headerlink" href="#early_stopping_tolerance" title="Permanent link">¤</a></h3>
 <p>Relative change threshold for the global acceptance rate stability check.
-Early stopping triggers when both the mean global acceptance rate <strong>and</strong> its
-coefficient of variation across chains change by less than this fraction for
-<code>early_stopping_patience</code> consecutive loops:
-<code>|current - prev| / prev &lt; tolerance</code>.
+Early stopping triggers when both the mean global acceptance rate <strong>and</strong> its coefficient of variation across chains change by less than this fraction for <code>early_stopping_patience</code> consecutive loops: <code>|current - prev| / prev &lt; tolerance</code>.
 Default <code>0.05</code>.</p>
 <h3 id="early_stopping_patience">early_stopping_patience<a class="headerlink" href="#early_stopping_patience" title="Permanent link">¤</a></h3>
-<p>Number of consecutive loops either stopping criterion must be satisfied before
-the training phase ends. Default <code>3</code>.</p>
+<p>Number of consecutive loops either stopping criterion must be satisfied before the training phase ends.
+Default <code>3</code>.</p>
 <h3 id="early_stopping_min_acceptance">early_stopping_min_acceptance<a class="headerlink" href="#early_stopping_min_acceptance" title="Permanent link">¤</a></h3>
-<p>Global acceptance rate threshold that, once reached, triggers early stopping
-regardless of stability (after <code>early_stopping_patience</code> consecutive loops).
-Default <code>0.1</code>. Set to <code>0</code> to disable this trigger and rely solely on the
-stability check.</p>
+<p>Global acceptance rate threshold that, once reached, triggers early stopping regardless of stability (after <code>early_stopping_patience</code> consecutive loops).
+Default <code>0.1</code>.
+Set to <code>0</code> to disable this trigger and rely solely on the stability check.</p>
 <hr />
 <h2 id="parallel-tempering-parameters">Parallel tempering parameters<a class="headerlink" href="#parallel-tempering-parameters" title="Permanent link">¤</a></h2>
-<p><em>These parameters are only available in the PT bundles:
-<code>RQSpline_MALA_PT_Bundle</code>, <code>RQSpline_HMC_PT_Bundle</code>, <code>RQSpline_GRW_PT_Bundle</code>.</em></p>
+<p><em>These parameters are only available in the PT bundles: <code>RQSpline_MALA_PT_Bundle</code>, <code>RQSpline_HMC_PT_Bundle</code>, <code>RQSpline_GRW_PT_Bundle</code>.</em></p>
 <h3 id="logprior">logprior<a class="headerlink" href="#logprior" title="Permanent link">¤</a></h3>
-<p>Log-prior function with signature <code>logprior(x, data) -&gt; float</code>. Default is a
-flat prior that always returns <code>0</code>. The tempered log-density is</p>
+<p>Log-prior function with signature <code>logprior(x, data) -&gt; float</code>. Default is a flat prior that always returns <code>0</code>.
+The tempered log-density is</p>
 <div class="arithmatex">\[\log \tilde{p}_T(x) = \frac{1}{T} \log \mathcal{L}(x) + \log \pi(x)\]</div>
 <p>so the prior is preserved at all temperatures.</p>
 <h3 id="n_temperatures">n_temperatures<a class="headerlink" href="#n_temperatures" title="Permanent link">¤</a></h3>
 <p>Number of temperature levels, including the target (temperature = 1). Default <code>5</code>.
-Chains at higher temperatures explore the prior more freely and occasionally swap
-positions with the target chains, helping escape local modes.</p>
+Chains at higher temperatures explore the prior more freely and occasionally swap positions with the target chains, helping escape local modes.</p>
 <h3 id="max_temperature">max_temperature<a class="headerlink" href="#max_temperature" title="Permanent link">¤</a></h3>
-<p>Highest temperature in the ladder. Default <code>5.0</code>. The temperatures are spaced
-linearly between 1 and <code>max_temperature</code>. A larger value allows more prior-like
-exploration but reduces the swap acceptance rate between adjacent levels.</p>
+<p>Highest temperature in the ladder.
+Default <code>5.0</code>.
+The temperatures are spaced linearly between 1 and <code>max_temperature</code>.
+A larger value allows more prior-like exploration but reduces the swap acceptance rate between adjacent levels.</p>
 <h3 id="n_tempered_steps">n_tempered_steps<a class="headerlink" href="#n_tempered_steps" title="Permanent link">¤</a></h3>
-<p>Number of parallel-tempering swap attempts per loop. Default <code>-1</code>, which is
-interpreted as equal to <code>n_local_steps</code>. Reduce this to save computation if
-swap acceptance is low.</p>
+<p>Number of parallel-tempering swap attempts per loop.
+Default <code>-1</code>, which is interpreted as equal to <code>n_local_steps</code>.
+Reduce this to save computation if swap acceptance is low.</p>
 
 
 

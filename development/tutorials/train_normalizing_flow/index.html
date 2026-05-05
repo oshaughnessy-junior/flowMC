@@ -2564,7 +2564,7 @@
 
 
 <h1 id="training-normalizing-flows">Training Normalizing Flows<a class="headerlink" href="#training-normalizing-flows" title="Permanent link">¤</a></h1>
-<p>In this notebook, we use the API in <code>flowMC</code> to train two different normalizing flow networks to approximate a simple test distribution. The API is built on top of the companion libraries of Jax for deep learning, <code>flax</code> and <code>optax</code>. </p>
+<p>In this notebook, we use the API in <code>flowMC</code> to train two different normalizing flow networks to approximate a simple test distribution. The API is built on top of the companion libraries of JAX for deep learning, <code>flax</code> and <code>optax</code>. </p>
 <p>In typical applications of <code>flowMC</code> to obtain samples from a given posterior distribution you will not need to interact with this level of the API, the training will be directly handled within the sampling. However you will need to choose the normalizing flow model and this tutorial exemplifies the abilities of the two models currently available in the package.</p>
 <p>We train both a RealNVP flow from <a href="https://arxiv.org/abs/1605.08803">[Dinh et al. 2016]</a> and a more complex normalizing flow model, the rational quadratic spline model <a href="https://arxiv.org/abs/1906.04032">[Durkan et al. 2019]</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
