@@ -2624,7 +2624,6 @@
 <p>This is a simple example of a 5-dimensional multi-modal distribution:</p>
 <p><img alt="Dual Moon" src="../dual_moon.png" /></p>
 <h2 id="1-the-target-distribution">1 - The target distribution<a class="headerlink" href="#1-the-target-distribution" title="Permanent link">¤</a></h2>
-<!-- #region -->
 <p>The first step is to define the target distribution using <code>jax</code>. The target distribution should be a function conforming to the following function signature (using <code>jaxtyping</code> convention for type hints):</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">target_log_prob_fn</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s2">&quot;n_dims&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Float</span><span class="p">:</span>
     <span class="o">...</span>
@@ -2632,8 +2631,6 @@
 </code></pre></div>
 <p><code>flowMC</code> will handle batching and compiling the function, so you simply have to provide the version of the function which is evaluated on a specific point in the sample space <code>X</code>. <code>data</code> represents any additional data that is needed to evaluate the target but not sampled. Note that <code>data</code> should remain fixed at run time.</p>
 <p>Here below we define our target function:</p>
-<!-- #endregion -->
-
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jax.scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">logsumexp</span>
@@ -2658,6 +2655,8 @@
 <span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_dims</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing the value of the target function at x=0: &quot;</span><span class="p">,</span> <span class="n">target_dual_moon</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
 </code></pre></div>
+<pre><code>Testing the value of the target function at x=0:  -218.14496
+</code></pre>
 <h2 id="2-choosing-the-sampling-resources-and-strategies">2 - Choosing the sampling resources and strategies<a class="headerlink" href="#2-choosing-the-sampling-resources-and-strategies" title="Permanent link">¤</a></h2>
 <p>The next step is to initialize the resources and strategies for the MCMC run. The default <code>flowMC</code> algorithm that involves a local proposal with MALA and a global proposal with normalizing flows is conveniently packaged in a bundle which the users only have to set its hyper-parameters instead of making sure the internal components are compatible. Here we will import the bundle and initialize it. In the quicks start, there is a detailed explanation of the resource-startegy interface.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.resource_strategy_bundle.RQSpline_MALA</span><span class="w"> </span><span class="kn">import</span> <span class="n">RQSpline_MALA_Bundle</span>
@@ -2721,6 +2720,22 @@
 <div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">sampler</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
 </code></pre></div>
+<pre><code>LogPDF with 5 dimensions
+Buffer positions_training with shape (100, 3300, 5)
+Buffer log_prob_training with shape (100, 3300)
+Buffer local_accs_training with shape (100, 3300)
+Buffer global_accs_training with shape (100, 3300)
+Buffer loss_buffer with shape (150,)
+Buffer positions_production with shape (100, 3300, 5)
+Buffer log_prob_production with shape (100, 3300)
+Buffer local_accs_production with shape (100, 3300)
+Buffer global_accs_production with shape (100, 3300)
+MALA with step size [0.18221645 0.18221645 0.18221645 0.18221645 0.18221645]
+NF proposal with MaskedCouplingRQSpline with n_features=5, n_layers=2
+MaskedCouplingRQSpline with n_features=5, n_layers=2
+Optimizer
+State sampler_state with shape 6
+</code></pre>
 <p>We can see there are a number of buffers that store the information about the run, along with some resources like MALA and NF proposal. There are two sets of buffers, one for results during the training phase and the other for the production phase. For each of the phase, there are <code>position</code>, <code>log_prob</code>, <code>local_accs</code> and <code>global_accs</code>, which corresponds to the chains, the log-probabilities, whether the proposals were accepted by the local or global proposal. In the training phase, there is an additional buffer <code>loss_buffer</code> which stores the loss of the normalizing flow during training. Let's start with inspecting the loss during the training.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
@@ -2731,6 +2746,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../dualmoon_files/dualmoon_14_0.png" /></p>
 <p>Loss goes down, looking good! Now let's plot the chains and have a look of the samples. There are a number of visualization tools like <a href="https://corner.readthedocs.io/en/latest/"><code>corner</code></a> and <a href="https://arviz-devs.github.io/arviz/"><code>arviz</code></a> that can be used to visualize the samples. Here we will use <code>corner</code> to plot the samples generated from <code>flowMC</code>, as well as samples from the trained normalizing flow.</p>
 <div class="alert alert-block alert-info">
 <b>Note:</b>
@@ -2753,6 +2769,8 @@ If you want to run the following cells with `corner` or `arviz`, you have to run
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">corner</span><span class="o">.</span><span class="n">corner</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nf_samples</span><span class="p">),</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
+<p><img alt="png" src="../dualmoon_files/dualmoon_16_0.png" /></p>
+<p><img alt="png" src="../dualmoon_files/dualmoon_16_1.png" /></p>
 <p>There is our posterior! Now let's also look at some diagnostics, such as the mean acceptance rate and the trace during the production phase.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -2777,6 +2795,7 @@ If you want to run the following cells with `corner` or `arviz`, you have to run
 <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Log probability&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../dualmoon_files/dualmoon_18_0.png" /></p>
 <p>The gap you see in the global acceptance rate plot is because those are the period when the local sampler is proposing, so there is no global acceptance during those periods.</p>
 <p>Lastly, let's look at the effective sample size (ESS) and r-hat values for the samples in the production phase.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">arviz</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">az</span>
@@ -2807,6 +2826,7 @@ If you want to run the following cells with `corner` or `arviz`, you have to run
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../dualmoon_files/dualmoon_20_0.png" /></p>
 
 
 
@@ -2815,9 +2835,6 @@ If you want to run the following cells with `corner` or `arviz`, you have to run
 
 
 
-
-  
-  
 
 
 

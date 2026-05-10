@@ -2598,6 +2598,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../train_normalizing_flow_files/train_normalizing_flow_4_0.png" /></p>
 <h2 id="realnvps">RealNVPs<a class="headerlink" href="#realnvps" title="Permanent link">¤</a></h2>
 <p>We first use the RealNVP model to fit the data. We need to specify: 
 - <code>n_layers</code>: the number of coupling layers. 
@@ -2621,6 +2622,16 @@
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="fm">__call__</span><span class="p">)(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
+<pre><code>(Array([[-0.99613   , -0.10127474],
+        [-0.14790912,  1.6296724 ],
+        [ 3.0793257 , -1.157111  ],
+        ...,
+        [ 0.67037183,  0.05505186],
+        [ 2.5246344 , -1.467852  ],
+        [-1.0591872 ,  0.1318307 ]], dtype=float32),
+ Array([1.3785942, 1.3574398, 1.3711026, ..., 1.3693422, 1.3767755,
+        1.3767034], dtype=float32))
+</code></pre>
 <p>Next, we initialize a <code>train_state</code> following <code>flax</code> logic and an <code>optax</code> optimizer beforw lanching the training. </p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Optimization parameters</span>
 <span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">100</span>
@@ -2635,11 +2646,14 @@
     <span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">optim</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 </code></pre></div>
+<pre><code>Training NF, current loss: 1.364: 100%|██████████| 100/100 [00:08&lt;00:00, 12.35it/s]
+</code></pre>
 <div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epoch&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../train_normalizing_flow_files/train_normalizing_flow_10_0.png" /></p>
 <p>Finally we can visualize what the flow has learned by comparing the data distribution to the distribution of samples from the flow.</p>
 <div class="highlight"><pre><span></span><code><span class="n">key</span><span class="p">,</span> <span class="n">subkey</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">nf_samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">subkey</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
@@ -2651,6 +2665,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../train_normalizing_flow_files/train_normalizing_flow_12_0.png" /></p>
 <h2 id="rqsplines">RQSplines<a class="headerlink" href="#rqsplines" title="Permanent link">¤</a></h2>
 <p>The second type of flows available are the RQSpline. These models are also based on coupling layers, however they allow for transformation more expressive than affine, namely splines of quotients of quadratic functions. Here the parameters are: 
 - <code>n_layers</code>: the number of coupling layers. 
@@ -2687,11 +2702,14 @@
     <span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">optim</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 </code></pre></div>
+<pre><code>Training NF, current loss: 1.196: 100%|██████████| 100/100 [00:17&lt;00:00,  5.60it/s]
+</code></pre>
 <div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epoch&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../train_normalizing_flow_files/train_normalizing_flow_15_0.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="n">key</span><span class="p">,</span> <span class="n">subkey</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">nf_samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">subkey</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
@@ -2702,6 +2720,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../train_normalizing_flow_files/train_normalizing_flow_16_0.png" /></p>
 <p>Here below is an example to show how the training model interact with the top level resource-strategy API</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.strategy.train_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrainModel</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.resource.optimizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optimizer</span>
@@ -2760,10 +2779,23 @@
     <span class="p">{},</span>
 <span class="p">)</span>
 </code></pre></div>
+<pre><code>[0.50011855 0.24977292] [[ 0.752463   -0.19324097]
+ [-0.19324097  0.24699372]]
+
+
+flowMC.strategy.train_model - INFO - Training model model
+flowMC.strategy.train_model - DEBUG -   Training data shape: (100000, 2)
+flowMC.strategy.train_model - DEBUG -   Number of epochs: 100
+flowMC.strategy.train_model - DEBUG -   Batch size: 10000
+Training NF, current loss: 1.336: 100%|██████████| 100/100 [00:12&lt;00:00,  7.98it/s]
+flowMC.strategy.train_model - INFO - Completed training model - Final loss: 1.257569
+flowMC.strategy.train_model - DEBUG -   Loss values: min=1.223082, max=2.802106
+</code></pre>
 <div class="highlight"><pre><span></span><code><span class="n">output_samples</span> <span class="o">=</span> <span class="n">resources</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">key</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="mi">10000</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">output_samples</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">output_samples</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../train_normalizing_flow_files/train_normalizing_flow_19_0.png" /></p>
 
 
 
@@ -2772,9 +2804,6 @@
 
 
 
-
-  
-  
 
 
 

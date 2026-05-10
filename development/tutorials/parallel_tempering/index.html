@@ -2581,6 +2581,8 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../parallel_tempering_files/parallel_tempering_4_0.png" /></p>
+<p><img alt="png" src="../parallel_tempering_files/parallel_tempering_4_1.png" /></p>
 <h1 id="now-lets-add-parallel-tempering-to-the-mix">Now let's add parallel tempering to the mix<a class="headerlink" href="#now-lets-add-parallel-tempering-to-the-mix" title="Permanent link">¤</a></h1>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
 
@@ -2701,6 +2703,10 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<pre><code>(5, 400, 5)
+</code></pre>
+<p><img alt="png" src="../parallel_tempering_files/parallel_tempering_10_1.png" /></p>
+<p><img alt="png" src="../parallel_tempering_files/parallel_tempering_10_2.png" /></p>
 <p>Now instead of defining your sampler from scratch, you can also use the parallel tempering bundle, which is the original flowMC sampler with the parallel tempering strategy.
 The training of the normalizing flow is a computationally expensive task, so one can expect this strategy bundle to be slower than the lighter version as shown above.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.resource_strategy_bundle.RQSpline_MALA_PT</span><span class="w"> </span><span class="kn">import</span> <span class="n">RQSpline_MALA_PT_Bundle</span>
@@ -2755,6 +2761,10 @@ The training of the normalizing flow is a computationally expensive task, so one
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<pre><code>(5, 400, 5)
+</code></pre>
+<p><img alt="png" src="../parallel_tempering_files/parallel_tempering_13_1.png" /></p>
+<p><img alt="png" src="../parallel_tempering_files/parallel_tempering_13_2.png" /></p>
 
 
 
@@ -2763,9 +2773,6 @@ The training of the normalizing flow is a computationally expensive task, so one
 
 
 
-
-  
-  
 
 
 

@@ -2481,7 +2481,6 @@
   
 
 
-<!-- #region -->
 <h1 id="custom-sampling-strategy">Custom Sampling Strategy<a class="headerlink" href="#custom-sampling-strategy" title="Permanent link">¤</a></h1>
 <p>The default strategy of flowMC looks like the following:</p>
 <ol>
@@ -2499,8 +2498,6 @@
 </li>
 </ol>
 <p>One of the major changes introduced in <code>flowMC</code> 0.4.0 is the ability to customize the sampling strategy. In this notebook, we will demonstrate how to build your own sampling strategy to sample a Normal distribution when the initialisation is very off from the true distribution.</p>
-<!-- #endregion -->
-
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.resource.kernel.Gaussian_random_walk</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianRandomWalk</span>
@@ -2591,6 +2588,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../custom_strategy_files/custom_strategy_5_0.png" /></p>
 <p>We can see the plot shows the samples started from the initialisation of 100, and all of the steps are just random walk toward a Normal distribution centred at 1. This corresponds to a chains that have not "burned in" yet.</p>
 <p>Now instead of only running the proposal kernel, we add an optimisation phase before the sampling to move the initialisation closer to the true distribution.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Defining hyperparameters for optimization</span>
@@ -2661,6 +2659,7 @@
 <span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../custom_strategy_files/custom_strategy_7_0.png" /></p>
 <p>Now we can see the sampling result is much close to the target distribution. It overshoots a little bit since we chose a fairly large step size for the optimisation phase. One can tune the step size to get a better result.</p>
 
 
@@ -2670,9 +2669,6 @@
 
 
 
-
-  
-  
 
 
 
