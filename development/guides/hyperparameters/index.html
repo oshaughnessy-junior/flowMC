@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.42">
+      <meta name="generator" content="zensical-0.0.43">
     
     
       
@@ -1188,6 +1188,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         adapt_step_size
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adapt_step_size_per_dim" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        adapt_step_size_per_dim
       </span>
     </span>
   </a>
@@ -3421,6 +3432,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#adapt_step_size_per_dim" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        adapt_step_size_per_dim
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#periodic" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3826,7 +3848,12 @@
 <tr>
 <td><a href="#adapt_step_size"><code>adapt_step_size</code></a></td>
 <td><code>True</code></td>
-<td>Auto-adapt step size</td>
+<td>Auto-adapt global step size</td>
+</tr>
+<tr>
+<td><a href="#adapt_step_size_per_dim"><code>adapt_step_size_per_dim</code></a></td>
+<td><code>True</code></td>
+<td>Auto-adapt per-dimension step sizes</td>
 </tr>
 <tr>
 <td><a href="#periodic"><code>periodic</code></a></td>
@@ -3863,7 +3890,12 @@
 <tr>
 <td><a href="#adapt_step_size"><code>adapt_step_size</code></a></td>
 <td><code>True</code></td>
-<td>Auto-adapt step size</td>
+<td>Auto-adapt global step size</td>
+</tr>
+<tr>
+<td><a href="#adapt_step_size_per_dim"><code>adapt_step_size_per_dim</code></a></td>
+<td><code>True</code></td>
+<td>Auto-adapt per-dimension step sizes</td>
 </tr>
 <tr>
 <td><a href="#periodic"><code>periodic</code></a></td>
@@ -3890,7 +3922,12 @@
 <tr>
 <td><a href="#adapt_step_size"><code>adapt_step_size</code></a></td>
 <td><code>True</code></td>
-<td>Auto-adapt step size</td>
+<td>Auto-adapt global step size</td>
+</tr>
+<tr>
+<td><a href="#adapt_step_size_per_dim"><code>adapt_step_size_per_dim</code></a></td>
+<td><code>True</code></td>
+<td>Auto-adapt per-dimension step sizes</td>
 </tr>
 <tr>
 <td><a href="#periodic"><code>periodic</code></a></td>
@@ -4117,6 +4154,13 @@ The optimal random-walk acceptance rate is ~23%.</p>
 <p>Whether to automatically adapt the local step size during the training phase.
 Default <code>True</code>.
 The step size is updated after each training loop using a simple multiplicative rule targeting the algorithm-specific optimal acceptance rate.
+Adaptation is disabled during the production phase.</p>
+<h3 id="adapt_step_size_per_dim">adapt_step_size_per_dim<a class="headerlink" href="#adapt_step_size_per_dim" title="Permanent link">¤</a></h3>
+<p>Whether to additionally tune the per-dimension step size profile using the empirical posterior scale.
+Default <code>True</code>.
+After the global step size is adjusted by <code>adapt_step_size</code>, this strategy rescales each dimension's step size so that parameters with a larger posterior scale get proportionally larger steps.
+The geometric mean of the step sizes is preserved, so <code>adapt_step_size</code> retains full control of the overall magnitude, while this strategy only reshapes the per-dimension profile.
+For MALA and GRW, the per-dimension <code>step_size</code> array is scaled directly; for HMC the <code>condition_matrix</code> (diagonal mass matrix) is adjusted instead.
 Adaptation is disabled during the production phase.</p>
 <h3 id="periodic">periodic<a class="headerlink" href="#periodic" title="Permanent link">¤</a></h3>
 <p>A <code>dict[int, tuple[float, float]]</code> mapping dimension indices to <code>(lower, upper)</code> bounds for periodic dimensions.

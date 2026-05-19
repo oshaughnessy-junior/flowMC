@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.42">
+      <meta name="generator" content="zensical-0.0.43">
     
     
       
@@ -2113,6 +2113,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#flowMC.strategy.adapt_step_size.AdaptStepSizePerDim" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        AdaptStepSizePerDim
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2556,6 +2567,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         AdaptStepSize
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flowMC.strategy.adapt_step_size.AdaptStepSizePerDim" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        AdaptStepSizePerDim
       </span>
     </span>
   </a>
@@ -3034,6 +3056,424 @@ to reach a stable state before adapting (warmup period).</p>
             <td>
               <div class="doc-md-description">
                 <p>Additional data.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="tuple">tuple</span>[<span title="jaxtyping.Key">Key</span>, <span title="dict">dict</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" href="../../resource/base/#flowMC.resource.base.Resource">Resource</a>], <span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, &#39;n_chains n_dim&#39;]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Tuple of (rng_key, resources, initial_position).</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="flowMC.strategy.adapt_step_size.AdaptStepSizePerDim" class="doc doc-heading">
+            <code>AdaptStepSizePerDim</code>
+
+
+<a href="#flowMC.strategy.adapt_step_size.AdaptStepSizePerDim" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/#flowMC.strategy.base.Strategy">Strategy</a></code></p>
+
+
+
+        <p>Strategy to adapt the per-dimension step size profile using empirical scale estimates.</p>
+<p>Computes the sample standard deviation of the most-recent <code>window</code> chain
+positions per chain and sets the per-dimension step size profile so that each
+dimension's effective step is proportional to its posterior scale.  The geometric mean
+of the step sizes is preserved, so this strategy controls the <em>shape</em> of the step size
+vector while <code>AdaptStepSize</code> continues to control its <em>global scale</em>.</p>
+<p>The positions buffer is fully overwritten every training loop (written from offset 0),
+so all stored positions are already from the most recent loop — no burn-in bias.
+Pass <code>window=n_local_steps // local_thinning</code> so the window covers exactly one
+training loop's worth of stored positions.  The fixed shape limits the array that
+enters the JIT-compiled variance kernel, keeping per-call runtime low.</p>
+<p>Each call drives the kernel's effective per-dim profile exactly to the current scale
+estimate in one step (no damping, no clipping).  Adaptation starts from the first call.</p>
+<p>Run this after AdaptStepSize in the training phase.
+Requires the kernel to implement get_effective_dim_profile() and apply_per_dim_scaling().</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="flowMC.strategy.adapt_step_size.AdaptStepSizePerDim.kernel_name" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">kernel_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kernel_name</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#flowMC.strategy.adapt_step_size.AdaptStepSizePerDim.kernel_name" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="flowMC.strategy.adapt_step_size.AdaptStepSizePerDim.state_name" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">state_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">state_name</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#flowMC.strategy.adapt_step_size.AdaptStepSizePerDim.state_name" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="flowMC.strategy.adapt_step_size.AdaptStepSizePerDim.positions_buffer_key" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">positions_buffer_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">positions_buffer_key</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#flowMC.strategy.adapt_step_size.AdaptStepSizePerDim.positions_buffer_key" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="flowMC.strategy.adapt_step_size.AdaptStepSizePerDim.window" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">window</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">window</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#flowMC.strategy.adapt_step_size.AdaptStepSizePerDim.window" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="flowMC.strategy.adapt_step_size.AdaptStepSizePerDim._call_count" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">_call_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#flowMC.strategy.adapt_step_size.AdaptStepSizePerDim._call_count" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="flowMC.strategy.adapt_step_size.AdaptStepSizePerDim.__init__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">kernel_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">positions_buffer_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">window</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span></code>
+
+<a href="#flowMC.strategy.adapt_step_size.AdaptStepSizePerDim.__init__" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initialize AdaptStepSizePerDim.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>kernel_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the kernel resource to adapt.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>state_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the State resource that tracks sampler state.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>positions_buffer_key</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Key in State that points to the positions buffer name
+(e.g. "target_positions").</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>window</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of most-recent steps per chain to use when estimating
+per-dimension scales. Pass <code>n_local_steps // local_thinning</code> so the
+window exactly covers the positions written in one training loop.</p>
+              </div>
+            </td>
+            <td>
+                  <code>50</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>verbose</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Log per-dim step sizes after each adaptation.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="flowMC.strategy.adapt_step_size.AdaptStepSizePerDim._compute_sigma" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">_compute_sigma</span><span class="p">(</span><span class="n">flat</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;N n_dim&#39;</span><span class="p">],</span> <span class="n">mask</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">]</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+<a href="#flowMC.strategy.adapt_step_size.AdaptStepSizePerDim._compute_sigma" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="flowMC.strategy.adapt_step_size.AdaptStepSizePerDim.__call__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="fm">__call__</span><span class="p">(</span><span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">resources</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Resource</span><span class="p">],</span> <span class="n">initial_position</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_chains n_dim&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Key</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Resource</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_chains n_dim&#39;</span><span class="p">]]</span></code>
+
+<a href="#flowMC.strategy.adapt_step_size.AdaptStepSizePerDim.__call__" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Adapt per-dimension step sizes based on the empirical std of recent chain positions.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>rng_key</code>
+            </td>
+            <td>
+                  <code><span title="jaxtyping.Key">Key</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>JAX PRNGKey.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>resources</code>
+            </td>
+            <td>
+                  <code><span title="dict">dict</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" href="../../resource/base/#flowMC.resource.base.Resource">Resource</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dictionary of resources.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>initial_position</code>
+            </td>
+            <td>
+                  <code><span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, &#39;n_chains n_dim&#39;]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Current positions of chains.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>data</code>
+            </td>
+            <td>
+                  <code><span title="dict">dict</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Additional data (unused).</p>
               </div>
             </td>
             <td>
