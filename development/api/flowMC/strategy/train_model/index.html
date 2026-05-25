@@ -2672,7 +2672,7 @@
         <p>Strategy that trains a normalizing flow model on buffered chain positions.</p>
 <p>Each call draws the most-recent <code>history_window</code> steps from the position
 buffer, sub-samples up to <code>n_max_examples</code> points, and runs <code>n_epochs</code>
-of gradient descent via the associated :class:<code>~flowMC.resource.optimizer.Optimizer</code>.</p>
+of gradient descent via the associated <code>flowMC.resource.optimizer.Optimizer</code>.</p>
 
 
 <p><span class="doc-section-title">Attributes:</span></p>
@@ -2692,7 +2692,7 @@ of gradient descent via the associated :class:<code>~flowMC.resource.optimizer.O
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Resource key for the :class:<code>~flowMC.resource.model.nf_model.base.NFModel</code>.</p>
+                <p>Resource key for the <code>flowMC.resource.model.nf_model.base.NFModel</code>.</p>
               </div>
             </td>
           </tr>
@@ -2703,7 +2703,7 @@ of gradient descent via the associated :class:<code>~flowMC.resource.optimizer.O
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Resource key for the position :class:<code>~flowMC.resource.buffers.Buffer</code>.</p>
+                <p>Resource key for the position <code>flowMC.resource.buffers.Buffer</code>.</p>
               </div>
             </td>
           </tr>
@@ -2714,7 +2714,7 @@ of gradient descent via the associated :class:<code>~flowMC.resource.optimizer.O
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Resource key for the :class:<code>~flowMC.resource.optimizer.Optimizer</code>.</p>
+                <p>Resource key for the <code>flowMC.resource.optimizer.Optimizer</code>.</p>
               </div>
             </td>
           </tr>
@@ -2726,7 +2726,7 @@ of gradient descent via the associated :class:<code>~flowMC.resource.optimizer.O
             <td>
               <div class="doc-md-description">
                 <p>Resource key for an optional
-:class:<code>~flowMC.resource.buffers.Buffer</code> to record loss values.
+<code>flowMC.resource.buffers.Buffer</code> to record loss values.
 Empty string disables loss recording.</p>
               </div>
             </td>
@@ -2917,7 +2917,7 @@ training data.</p>
             <td>
               <div class="doc-md-description">
                 <p>Resource key for an optional
-:class:<code>~flowMC.resource.buffers.Buffer</code> to record loss values.
+<code>flowMC.resource.buffers.Buffer</code> to record loss values.
 Pass <code>""</code> to disable. Defaults to <code>""</code>.</p>
               </div>
             </td>

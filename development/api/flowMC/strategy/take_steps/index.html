@@ -2954,7 +2954,7 @@ proposals are generated in a single batched call — no sequential dependency.</
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Proposal kernel (e.g., :class:<code>~flowMC.resource.kernel.NF_proposal.NFProposal</code>).</p>
+                <p>Proposal kernel (e.g., <code>flowMC.resource.kernel.NF_proposal.NFProposal</code>).</p>
               </div>
             </td>
             <td>
@@ -3405,9 +3405,9 @@ the previous step.</p>
 
 
         <p>Base class for strategies that run a kernel for a fixed number of steps.</p>
-<p>Subclasses implement :meth:<code>sample</code> to define how a single chain is advanced,
+<p>Subclasses implement <code>sample</code> to define how a single chain is advanced,
 and this base class handles vmapping over chains, thinning, and writing results
-into the associated :class:<code>~flowMC.resource.buffers.Buffer</code> resources.</p>
+into the associated <code>flowMC.resource.buffers.Buffer</code> resources.</p>
 
 
 <p><span class="doc-section-title">Attributes:</span></p>
@@ -3427,7 +3427,7 @@ into the associated :class:<code>~flowMC.resource.buffers.Buffer</code> resource
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Resource key for the :class:<code>~flowMC.resource.logPDF.LogPDF</code>.</p>
+                <p>Resource key for the <code>flowMC.resource.logPDF.LogPDF</code>.</p>
               </div>
             </td>
           </tr>
@@ -3449,7 +3449,7 @@ into the associated :class:<code>~flowMC.resource.buffers.Buffer</code> resource
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Resource key for the sampler :class:<code>~flowMC.resource.states.State</code>.</p>
+                <p>Resource key for the sampler <code>flowMC.resource.states.State</code>.</p>
               </div>
             </td>
           </tr>
@@ -3892,7 +3892,7 @@ size to reduce peak memory. 0 disables batching. Defaults to 0.</p>
     <div class="doc doc-contents ">
 
         <p>Advance a single chain for <code>n_steps</code> using the given kernel.</p>
-<p>This method is vmapped over chains by :meth:<code>__call__</code>, so it operates
+<p>This method is vmapped over chains by <code>__call__</code>, so it operates
 on a single chain at a time.</p>
 
 
