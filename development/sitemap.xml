@@ -46,13 +46,13 @@
         <loc>https://gw-jax-team.github.io/flowMC/development/contributing/</loc>
       </url>
       <url>
-        <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/Sampler/</loc>
-      </url>
-      <url>
         <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource/base/</loc>
       </url>
       <url>
         <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource/buffers/</loc>
+      </url>
+      <url>
+        <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource/kernel/base/</loc>
       </url>
       <url>
         <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource/kernel/Gaussian_random_walk/</loc>
@@ -65,9 +65,6 @@
       </url>
       <url>
         <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource/kernel/NF_proposal/</loc>
-      </url>
-      <url>
-        <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource/kernel/base/</loc>
       </url>
       <url>
         <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource/logPDF/</loc>
@@ -94,6 +91,9 @@
         <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource/states/</loc>
       </url>
       <url>
+        <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource_strategy_bundle/base/</loc>
+      </url>
+      <url>
         <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource_strategy_bundle/RQSpline_GRW/</loc>
       </url>
       <url>
@@ -112,7 +112,7 @@
         <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource_strategy_bundle/RQSpline_MALA_PT/</loc>
       </url>
       <url>
-        <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource_strategy_bundle/base/</loc>
+        <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/Sampler/</loc>
       </url>
       <url>
         <loc>https://gw-jax-team.github.io/flowMC/development/api/flowMC/strategy/adapt_step_size/</loc>
