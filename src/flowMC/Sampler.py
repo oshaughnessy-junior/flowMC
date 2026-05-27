@@ -183,8 +183,14 @@ class Sampler:
             ValueError: If the checkpoint config is inconsistent with the
                 current sampler, or if the logpdf fingerprint has changed.
         """
-        with open(ckpt_path, "rb") as f:
-            ckpt = pickle.load(f)
+        try:
+            with open(ckpt_path, "rb") as f:
+                ckpt = pickle.load(f)
+        except Exception as e:
+            raise ValueError(
+                f"Checkpoint file at {ckpt_path} is corrupt or unreadable ({e}). "
+                "Delete it to start a fresh run."
+            ) from e
 
         meta = ckpt["_meta"]
         if meta["n_dim"] != self.n_dim or meta["n_chains"] != self.n_chains:
