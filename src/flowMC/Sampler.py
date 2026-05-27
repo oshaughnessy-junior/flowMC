@@ -1,9 +1,11 @@
+import io
 import logging
 import pickle
 import time
 from pathlib import Path
-from typing import Any, Optional
+from typing import Optional
 
+import equinox as eqx
 import jax.numpy as jnp
 from jaxtyping import Array, Float, Key
 
@@ -163,7 +165,7 @@ class Sampler:
 
     def _resume_from_checkpoint(
         self, ckpt_path: Path, data: dict
-    ) -> tuple[int, Any, Any]:
+    ) -> tuple[int, Key, Float[Array, "n_chains n_dim"]]:
         """Load and validate a checkpoint; restore sampler state in-place.
 
         Mutates ``self.resources`` and ``self.strategies`` with the saved state.
@@ -219,8 +221,20 @@ class Sampler:
                     "Delete the checkpoint file to start a fresh run."
                 )
 
-        for k, v in ckpt["resources"].items():
-            self.resources[k] = v
+        for k, entry in ckpt["resources"].items():
+            if isinstance(entry, tuple) and len(entry) == 2:
+                method, payload = entry
+                if method == "pkl":
+                    self.resources[k] = payload
+                elif method == "eqx" and k in self.resources:
+                    buf = io.BytesIO(payload)
+                    self.resources[k] = eqx.tree_deserialise_leaves(
+                        buf, self.resources[k]
+                    )
+                else:
+                    logger.warning("Cannot restore resource '%s' — skipping.", k)
+            else:
+                self.resources[k] = entry  # type: ignore[assignment]
         for name, cursor in ckpt["stepper_cursors"].items():
             if name in self.strategies and hasattr(
                 self.strategies[name], "set_current_position"
@@ -243,8 +257,8 @@ class Sampler:
         self,
         ckpt_path: Path,
         strategy_idx: int,
-        rng_key: Any,
-        last_step: Any,
+        rng_key: Key,
+        last_step: Float[Array, "n_chains n_dim"],
         data: dict,
     ) -> None:
         """Atomically write a checkpoint to ``ckpt_path``.
@@ -264,7 +278,17 @@ class Sampler:
             data: Data dict passed to the strategy calls, used to record the
                 logpdf fingerprint.
         """
-        resources_to_save = {k: v for k, v in self.resources.items() if k != "logpdf"}
+        resources_to_save: dict[str, tuple[str, Resource | bytes]] = {}
+        for k, v in self.resources.items():
+            if k == "logpdf":
+                continue
+            try:
+                pickle.dumps(v, protocol=pickle.HIGHEST_PROTOCOL)
+                resources_to_save[k] = ("pkl", v)
+            except Exception:
+                buf = io.BytesIO()
+                eqx.tree_serialise_leaves(buf, v)
+                resources_to_save[k] = ("eqx", buf.getvalue())
 
         stepper_cursors = {
             name: s.current_position  # type: ignore[union-attr]
