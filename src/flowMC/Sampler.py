@@ -328,7 +328,7 @@ class Sampler:
         tmp = ckpt_path.with_suffix(".pkl.tmp")
         with open(tmp, "wb") as f:
             pickle.dump(ckpt_data, f)
-        tmp.rename(ckpt_path)
+        tmp.replace(ckpt_path)
         logger.debug("Checkpoint saved at strategy_idx=%d", strategy_idx)
 
     def sample(self, initial_position: Float[Array, "n_chains n_dim"], data: dict):
