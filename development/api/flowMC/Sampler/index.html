@@ -2858,6 +2858,44 @@ containing resources and strategies.</p>
                   <code>None</code>
             </td>
           </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>checkpoint_path</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="pathlib.Path">Path</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Path for the checkpoint <code>.pkl</code> file.
+<code>None</code> (default) disables checkpointing.  When set, the sampler
+writes a checkpoint atomically after each complete training loop and
+resumes from it on the next call to <code>sample</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>checkpoint_interval</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Minimum wall-clock seconds that must elapse
+since the previous write before a new checkpoint is written.
+Default <code>600</code> (10 minutes).  Set to <code>0.0</code> to write after every
+completed training loop.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
       </tbody>
     </table>
 
@@ -2898,7 +2936,7 @@ containing resources and strategies.</p>
               <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initial_position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;n_chains n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.Sampler.Sampler.sample">sample</a></code></td>
               <td>
                 <div class="doc-md-description">
-                  <p>Sample from the posterior using the local sampler.</p>
+                  <p>Execute the strategy loop and populate resource buffers with samples.</p>
                 </div>
               </td>
             </tr>
@@ -3080,8 +3118,10 @@ bundle that provides resources, strategies, and ordering.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Additional keyword arguments that override class-level attributes
-(e.g. <code>logging</code>, <code>outdir</code>).</p>
+                <p>Additional keyword arguments that override class-level
+attributes, including <code>checkpoint_path</code> (<code>Path | None</code>,
+default <code>None</code>) and <code>checkpoint_interval</code> (float seconds,
+default <code>600.0</code>).</p>
               </div>
             </td>
             <td>
@@ -3149,7 +3189,20 @@ bundle that provides resources, strategies, and ordering.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Sample from the posterior using the local sampler.</p>
+        <p>Execute the strategy loop and populate resource buffers with samples.</p>
+<p>If <code>checkpoint_path</code> is set, the sampler writes a checkpoint atomically
+after each complete training loop (when at least <code>checkpoint_interval</code>
+seconds have elapsed since the previous write).  On the next call with the
+same arguments the sampler detects the existing file, validates it against
+the current configuration, and resumes from the strategy immediately after
+the last checkpointed one.</p>
+<p>Checkpoint validation raises <code>ValueError</code> if:</p>
+<ul>
+<li><code>n_dim</code> or <code>n_chains</code> differ from the checkpoint.</li>
+<li><code>strategy_order</code> differs from the checkpoint.</li>
+<li>The logpdf fingerprint (evaluated at the first chain's position) differs
+  by more than <code>1e-6</code>, indicating a change in the likelihood or data.</li>
+</ul>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -3168,11 +3221,13 @@ bundle that provides resources, strategies, and ordering.</p>
                 <code>initial_position</code>
             </td>
             <td>
-                  <code>Device Array</code>
+                  <code><span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, &#39;n_chains n_dim&#39;]</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Initial position.</p>
+                <p>Starting chain positions, shape
+<code>(n_chains, n_dim)</code> or broadcastable.  Ignored when resuming
+from a checkpoint (the checkpointed positions are used instead).</p>
               </div>
             </td>
             <td>
@@ -3188,7 +3243,9 @@ bundle that provides resources, strategies, and ordering.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Data to be used by the likelihood functions</p>
+                <p>Arbitrary data dict forwarded to every strategy call.  Must be
+consistent with any checkpoint on disk; changes are detected via
+the logpdf fingerprint when available.</p>
               </div>
             </td>
             <td>
