@@ -28,9 +28,9 @@ On the top level, the `Sampler` class is a thin wrapper on top of the resource-s
 
 ```python
 nf_sampler = Sampler(
-    n_dim,
-    n_chains,
-    rng_key,
+    n_dim=n_dim,
+    n_chains=n_chains,
+    rng_key=rng_key,
     # you can either supply the resources and strategies directly,
     # which is prioritized over the resource-strategy bundles
     resources=resources,

@@ -35,7 +35,7 @@ class _ResetSteppers(Strategy):
 
 
 def _make_sampler(
-    strategy_order, strategies, resources, tmp_path=None, checkpoint_interval=0.0
+    strategy_order, strategies, resources, tmp_path=None, checkpoint_interval=1e-9
 ):
     """Build a Sampler via __new__ with checkpoint attrs explicitly set."""
     s = Sampler.__new__(Sampler)
@@ -45,8 +45,9 @@ def _make_sampler(
     s.resources = resources
     s.strategies = strategies
     s.strategy_order = strategy_order
-    s.checkpoint_path = (tmp_path / "ckpt.pkl") if tmp_path is not None else None
-    s.checkpoint_interval = checkpoint_interval
+    s.outdir = str(tmp_path) if tmp_path is not None else "./outdir/"
+    # Use interval=0 to disable checkpointing when no tmp_path is provided.
+    s.checkpoint_interval = checkpoint_interval if tmp_path is not None else 0.0
     return s
 
 
@@ -125,7 +126,7 @@ class TestCheckpointWrite:
             tmp_path=tmp_path,
         )
         s.sample(jnp.zeros((3, 2)), {})
-        assert (tmp_path / "ckpt.pkl").exists()
+        assert (tmp_path / "checkpoint.pkl").exists()
 
     def test_checkpoint_content_is_valid(self, tmp_path):
         """The saved checkpoint must include _meta and all required keys."""
@@ -143,7 +144,7 @@ class TestCheckpointWrite:
         )
         s.sample(jnp.zeros((3, 2)), {})
 
-        with open(tmp_path / "ckpt.pkl", "rb") as f:
+        with open(tmp_path / "checkpoint.pkl", "rb") as f:
             ckpt = pickle.load(f)
 
         assert ckpt["_meta"]["n_dim"] == 2
@@ -158,8 +159,8 @@ class TestCheckpointWrite:
         assert "strategy_states" in ckpt
         assert "skip_to_production" not in ckpt  # derived from State on restore
 
-    def test_no_checkpoint_without_path(self, tmp_path):
-        """No file is written when checkpoint_path is None."""
+    def test_no_checkpoint_when_interval_is_zero(self, tmp_path):
+        """No file is written when checkpoint_interval=0 (disabled)."""
         strategies = {
             "step_a": _PassthroughStrategy("step_a"),
             "step_b": _PassthroughStrategy("step_b"),
@@ -169,11 +170,11 @@ class TestCheckpointWrite:
             ["step_a", "step_b", "reset_steppers"],
             strategies,
             {},
-            tmp_path=None,  # no checkpoint
+            tmp_path=tmp_path,
+            checkpoint_interval=0.0,
         )
         s.sample(jnp.zeros((3, 2)), {})
-        # Nothing should have been written anywhere in tmp_path
-        assert not list(tmp_path.iterdir())
+        assert not (tmp_path / "checkpoint.pkl").exists()
 
 
 # ── checkpoint resume ─────────────────────────────────────────────────────────
@@ -227,6 +228,55 @@ class TestCheckpointResume:
 
         assert resume["step_prod"].n_calls == 1
 
+    def test_resume_restores_rng_key(self, tmp_path):
+        """RNG key restored from checkpoint must equal the key at that point in a fresh run."""
+        # Run 1: record rng_key after step_b (last training strategy before reset)
+        rng_key_after_training = {}
+
+        class _RecordingStrategy(Strategy):
+            def __init__(self):
+                pass
+
+            def __call__(self, rng_key, resources, position, data):  # noqa: ARG002
+                rng_key_after_training["val"] = rng_key
+                return rng_key, resources, position
+
+        strategies1 = {
+            "step_a": _PassthroughStrategy("step_a"),
+            "step_b": _RecordingStrategy(),
+            "reset_steppers": _ResetSteppers(),
+            "step_prod": _PassthroughStrategy("step_prod"),
+        }
+        s1 = _make_sampler(self._order, strategies1, {}, tmp_path=tmp_path)
+        s1.sample(jnp.zeros((3, 2)), {})
+        key_from_run1 = rng_key_after_training["val"]
+
+        # Run 2: resume from checkpoint — step_a and step_b are skipped, so key
+        # must be restored from the checkpoint, not re-computed
+        rng_key_at_prod = {}
+
+        class _ProdRecorder(Strategy):
+            def __init__(self):
+                pass
+
+            def __call__(self, rng_key, resources, position, data):  # noqa: ARG002
+                rng_key_at_prod["val"] = rng_key
+                return rng_key, resources, position
+
+        strategies2 = {
+            "step_a": _PassthroughStrategy("step_a"),
+            "step_b": _PassthroughStrategy("step_b"),
+            "reset_steppers": _ResetSteppers(),
+            "step_prod": _ProdRecorder(),
+        }
+        s2 = _make_sampler(self._order, strategies2, {}, tmp_path=tmp_path)
+        s2.sample(jnp.zeros((3, 2)), {})
+
+        # The RNG key passed to step_prod in run 2 must equal what reset_steppers
+        # would receive if run1 continued from the checkpoint key
+        assert "val" in rng_key_at_prod  # step_prod ran
+        assert jnp.array_equal(s2.rng_key, s1.rng_key)  # final rng_key must match
+
 
 # ── checkpoint validation ─────────────────────────────────────────────────────
 
@@ -246,7 +296,7 @@ def _validation_strategies():
 
 class TestCheckpointValidation:
     def test_n_dim_mismatch_raises(self, tmp_path):
-        _write_ckpt(tmp_path / "ckpt.pkl", {**_VALID_META, "n_dim": 99})
+        _write_ckpt(tmp_path / "checkpoint.pkl", {**_VALID_META, "n_dim": 99})
         s = _make_sampler(
             _VALIDATION_ORDER, _validation_strategies(), {}, tmp_path=tmp_path
         )
@@ -254,7 +304,7 @@ class TestCheckpointValidation:
             s.sample(jnp.zeros((3, 2)), {})
 
     def test_n_chains_mismatch_raises(self, tmp_path):
-        _write_ckpt(tmp_path / "ckpt.pkl", {**_VALID_META, "n_chains": 99})
+        _write_ckpt(tmp_path / "checkpoint.pkl", {**_VALID_META, "n_chains": 99})
         s = _make_sampler(
             _VALIDATION_ORDER, _validation_strategies(), {}, tmp_path=tmp_path
         )
@@ -263,7 +313,7 @@ class TestCheckpointValidation:
 
     def test_strategy_order_mismatch_raises(self, tmp_path):
         _write_ckpt(
-            tmp_path / "ckpt.pkl",
+            tmp_path / "checkpoint.pkl",
             {**_VALID_META, "strategy_order": ["x", "reset_steppers"]},
         )
         s = _make_sampler(

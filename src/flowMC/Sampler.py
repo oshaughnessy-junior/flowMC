@@ -29,14 +29,10 @@ class Sampler:
         strategy_order (list[str]): Order of strategies to execute.
         resource_strategy_bundles (ResourceStrategyBundle): Pre-configured bundle
             containing resources and strategies.
-        checkpoint_path (Optional[Path]): Path for the checkpoint ``.pkl`` file.
-            ``None`` (default) disables checkpointing.  When set, the sampler
-            writes a checkpoint atomically after each complete training loop and
-            resumes from it on the next call to ``sample``.
         checkpoint_interval (float): Minimum wall-clock seconds that must elapse
             since the previous write before a new checkpoint is written.
-            Default ``600`` (10 minutes).  Set to ``0.0`` to write after every
-            completed training loop.
+            Default ``600`` (10 minutes).  Set to ``0`` to disable checkpointing
+            entirely.
     """
 
     # Essential parameters
@@ -47,16 +43,14 @@ class Sampler:
     strategies: dict[str, Strategy]
     strategy_order: Optional[list[str]]
 
-    # Logging hyperparameters
-    logging: bool = True
     outdir: str = "./outdir/"
 
     # Checkpoint / resume
-    checkpoint_path: Optional[Path] = None
     checkpoint_interval: float = 600.0
 
     def __init__(
         self,
+        *,
         n_dim: int,
         n_chains: int,
         rng_key: Key,
@@ -64,7 +58,8 @@ class Sampler:
         strategies: Optional[dict[str, Strategy]] = None,
         strategy_order: Optional[list[str]] = None,
         resource_strategy_bundles: Optional[ResourceStrategyBundle] = None,
-        **kwargs,
+        outdir: str = "./outdir/",
+        checkpoint_interval: float = 600.0,
     ) -> None:
         """Initialize the sampler.
 
@@ -83,11 +78,11 @@ class Sampler:
                 execute each call to ``sample``.
             resource_strategy_bundles (Optional[ResourceStrategyBundle]): Pre-configured
                 bundle that provides resources, strategies, and ordering.
-            **kwargs: Additional keyword arguments that override class-level
-                attributes, including ``checkpoint_path`` (``Path | None``,
-                default ``None``) and ``checkpoint_interval`` (float seconds,
-                default ``600.0``).
-
+            outdir (str): Directory where ``checkpoint.pkl`` is written.
+                Created automatically if it does not exist.  Default ``"./outdir/"``.
+            checkpoint_interval (float): Minimum wall-clock seconds that must elapse
+                since the previous write before a new checkpoint is written.
+                Default ``600`` (10 minutes).  Set to ``0`` to disable checkpointing.
         Raises:
             ValueError: If neither ``resources``/``strategies`` nor
                 ``resource_strategy_bundles`` is provided.
@@ -95,6 +90,8 @@ class Sampler:
         self.n_dim = n_dim
         self.n_chains = n_chains
         self.rng_key = rng_key
+        self.outdir = outdir
+        self.checkpoint_interval = checkpoint_interval
 
         if resources is not None and strategies is not None:
             logger.info(
@@ -116,13 +113,6 @@ class Sampler:
             self.resources = resource_strategy_bundles.resources
             self.strategies = resource_strategy_bundles.strategies
             self.strategy_order = resource_strategy_bundles.strategy_order
-
-        # Set and override any given hyperparameters
-        class_keys = list(self.__class__.__dict__.keys())
-        for key, value in kwargs.items():
-            if key in class_keys:
-                if not key.startswith("__"):
-                    setattr(self, key, value)
 
     def _training_loop_end_indices(self) -> set[int]:
         """Return the set of strategy_order indices that are the last step of each training loop.
@@ -340,12 +330,13 @@ class Sampler:
     def sample(self, initial_position: Float[Array, "n_chains n_dim"], data: dict):
         """Execute the strategy loop and populate resource buffers with samples.
 
-        If ``checkpoint_path`` is set, the sampler writes a checkpoint atomically
-        after each complete training loop (when at least ``checkpoint_interval``
-        seconds have elapsed since the previous write).  On the next call with the
-        same arguments the sampler detects the existing file, validates it against
-        the current configuration, and resumes from the strategy immediately after
-        the last checkpointed one.
+        If ``outdir`` is set and ``checkpoint_interval > 0``, the sampler writes
+        a checkpoint to ``{outdir}/checkpoint.pkl`` atomically after each complete
+        training loop (when at least ``checkpoint_interval`` seconds have elapsed
+        since the previous write).  On the next call with the same ``outdir`` the
+        sampler detects the existing file, validates it against the current
+        configuration, and resumes from the strategy immediately after the last
+        checkpointed one.
 
         Checkpoint validation raises ``ValueError`` if:
 
@@ -370,11 +361,18 @@ class Sampler:
         start_idx = 0
 
         # Check for an existing checkpoint and resume from it if found.
-        ckpt_path = self.checkpoint_path
-        if ckpt_path is not None and ckpt_path.exists():
-            start_idx, rng_key, last_step = self._resume_from_checkpoint(
-                ckpt_path, data
-            )
+        ckpt_path: Optional[Path] = (
+            Path(self.outdir) / "checkpoint.pkl"
+            if self.checkpoint_interval > 0
+            else None
+        )
+        if ckpt_path is not None:
+            if ckpt_path.exists():
+                start_idx, rng_key, last_step = self._resume_from_checkpoint(
+                    ckpt_path, data
+                )
+            else:
+                ckpt_path.parent.mkdir(parents=True, exist_ok=True)
 
         # early_stopped in any State resource means we should skip remaining training loops.
         skip_to_production = any(

@@ -256,7 +256,12 @@ def test_bundle_end_to_end_periodic_boundary_crossing():
         rq_spline_n_bins=4,
         rq_spline_n_layers=2,
     )
-    sampler = Sampler(n_dims, n_chains, k_sampler, resource_strategy_bundles=bundle)
+    sampler = Sampler(
+        n_dim=n_dims,
+        n_chains=n_chains,
+        rng_key=k_sampler,
+        resource_strategy_bundles=bundle,
+    )
     sampler.sample(initial_position, {})
 
     buf = sampler.resources["positions_production"]
