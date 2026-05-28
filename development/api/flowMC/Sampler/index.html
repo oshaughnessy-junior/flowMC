@@ -2860,25 +2860,6 @@ containing resources and strategies.</p>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>checkpoint_path</code>
-            </td>
-            <td>
-                  <code><span title="typing.Optional">Optional</span>[<span title="pathlib.Path">Path</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Path for the checkpoint <code>.pkl</code> file.
-<code>None</code> (default) disables checkpointing.  When set, the sampler
-writes a checkpoint atomically after each complete training loop and
-resumes from it on the next call to <code>sample</code>.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
                 <code>checkpoint_interval</code>
             </td>
             <td>
@@ -2888,12 +2869,12 @@ resumes from it on the next call to <code>sample</code>.</p>
               <div class="doc-md-description">
                 <p>Minimum wall-clock seconds that must elapse
 since the previous write before a new checkpoint is written.
-Default <code>600</code> (10 minutes).  Set to <code>0.0</code> to write after every
-completed training loop.</p>
+Default <code>600</code> (10 minutes).  Set to <code>0</code> to disable checkpointing
+entirely.</p>
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>600.0</code>
             </td>
           </tr>
       </tbody>
@@ -2917,7 +2898,7 @@ completed training loop.</p>
       </thead>
       <tbody>
             <tr class="doc-section-item">
-              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;fm&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_dim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_chains&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rng_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Resource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strategies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Strategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strategy_order&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resource_strategy_bundles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ResourceStrategyBundle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kwargs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.Sampler.Sampler.__init__">__init__</a></code></td>
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;fm&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_dim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_chains&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rng_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Resource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strategies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Strategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strategy_order&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resource_strategy_bundles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ResourceStrategyBundle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;./outdir/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;checkpoint_interval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;600.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.Sampler.Sampler.__init__">__init__</a></code></td>
               <td>
                 <div class="doc-md-description">
                   <p>Initialize the sampler.</p>
@@ -2971,7 +2952,7 @@ completed training loop.</p>
 
 
 <h4 id="flowMC.Sampler.Sampler.__init__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">n_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_chains</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">resources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Resource</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">strategies</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Strategy</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">strategy_order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">resource_strategy_bundles</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ResourceStrategyBundle</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">n_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_chains</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">resources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Resource</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">strategies</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Strategy</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">strategy_order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">resource_strategy_bundles</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ResourceStrategyBundle</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;./outdir/&#39;</span><span class="p">,</span> <span class="n">checkpoint_interval</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">600.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
 
 <a href="#flowMC.Sampler.Sampler.__init__" class="headerlink" title="Permanent link">¤</a></h4>
 
@@ -3112,48 +3093,44 @@ bundle that provides resources, strategies, and ordering.</p>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>**kwargs</code>
+                <code>outdir</code>
             </td>
             <td>
+                  <code><span title="str">str</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Additional keyword arguments that override class-level
-attributes, including <code>checkpoint_path</code> (<code>Path | None</code>,
-default <code>None</code>) and <code>checkpoint_interval</code> (float seconds,
-default <code>600.0</code>).</p>
+                <p>Directory where <code>checkpoint.pkl</code> is written.
+Created automatically if it does not exist.  Default <code>"./outdir/"</code>.</p>
               </div>
             </td>
             <td>
-                  <code>{}</code>
+                  <code>&#39;./outdir/&#39;</code>
             </td>
           </tr>
-      </tbody>
-    </table>
-
-
-<p><span class="doc-section-title">Raises:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="ValueError">ValueError</span></code>
+                <code>checkpoint_interval</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>If neither <code>resources</code>/<code>strategies</code> nor
-<code>resource_strategy_bundles</code> is provided.</p>
+                <p>Minimum wall-clock seconds that must elapse
+since the previous write before a new checkpoint is written.
+Default <code>600</code> (10 minutes).  Set to <code>0</code> to disable checkpointing.</p>
               </div>
+            </td>
+            <td>
+                  <code>600.0</code>
             </td>
           </tr>
       </tbody>
     </table>
+        <p>Raises:
+    ValueError: If neither <code>resources</code>/<code>strategies</code> nor
+        <code>resource_strategy_bundles</code> is provided.</p>
 
 
     </div>
@@ -3190,12 +3167,13 @@ default <code>600.0</code>).</p>
     <div class="doc doc-contents ">
 
         <p>Execute the strategy loop and populate resource buffers with samples.</p>
-<p>If <code>checkpoint_path</code> is set, the sampler writes a checkpoint atomically
-after each complete training loop (when at least <code>checkpoint_interval</code>
-seconds have elapsed since the previous write).  On the next call with the
-same arguments the sampler detects the existing file, validates it against
-the current configuration, and resumes from the strategy immediately after
-the last checkpointed one.</p>
+<p>If <code>outdir</code> is set and <code>checkpoint_interval &gt; 0</code>, the sampler writes
+a checkpoint to <code>{outdir}/checkpoint.pkl</code> atomically after each complete
+training loop (when at least <code>checkpoint_interval</code> seconds have elapsed
+since the previous write).  On the next call with the same <code>outdir</code> the
+sampler detects the existing file, validates it against the current
+configuration, and resumes from the strategy immediately after the last
+checkpointed one.</p>
 <p>Checkpoint validation raises <code>ValueError</code> if:</p>
 <ul>
 <li><code>n_dim</code> or <code>n_chains</code> differ from the checkpoint.</li>

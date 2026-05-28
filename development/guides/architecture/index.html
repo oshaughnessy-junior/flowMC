@@ -2738,9 +2738,9 @@
 <h3 id="sampler">Sampler<a class="headerlink" href="#sampler" title="Permanent link">¤</a></h3>
 <p>On the top level, the <code>Sampler</code> class is a thin wrapper on top of the resource-strategy pair (defined below) that provides a couple of extra functionality. The <code>Sampler</code> class manages the resources and strategies, as well as run-related parameters such as where would the resources be stored if the user decides to serialise the resources.</p>
 <div class="highlight"><pre><span></span><code><span class="n">nf_sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span>
-    <span class="n">n_dim</span><span class="p">,</span>
-    <span class="n">n_chains</span><span class="p">,</span>
-    <span class="n">rng_key</span><span class="p">,</span>
+    <span class="n">n_dim</span><span class="o">=</span><span class="n">n_dim</span><span class="p">,</span>
+    <span class="n">n_chains</span><span class="o">=</span><span class="n">n_chains</span><span class="p">,</span>
+    <span class="n">rng_key</span><span class="o">=</span><span class="n">rng_key</span><span class="p">,</span>
     <span class="c1"># you can either supply the resources and strategies directly,</span>
     <span class="c1"># which is prioritized over the resource-strategy bundles</span>
     <span class="n">resources</span><span class="o">=</span><span class="n">resources</span><span class="p">,</span>

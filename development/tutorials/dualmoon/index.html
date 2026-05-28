@@ -2720,9 +2720,9 @@
 <span class="n">initial_position</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">subkey</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_chains</span><span class="p">,</span> <span class="n">n_dims</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1</span>
 
 <span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span>
-    <span class="n">n_dims</span><span class="p">,</span>
-    <span class="n">n_chains</span><span class="p">,</span>
-    <span class="n">rng_key</span><span class="p">,</span>
+    <span class="n">n_dim</span><span class="o">=</span><span class="n">n_dims</span><span class="p">,</span>
+    <span class="n">n_chains</span><span class="o">=</span><span class="n">n_chains</span><span class="p">,</span>
+    <span class="n">rng_key</span><span class="o">=</span><span class="n">rng_key</span><span class="p">,</span>
     <span class="n">resource_strategy_bundles</span><span class="o">=</span><span class="n">bundle</span><span class="p">,</span>
 <span class="p">)</span>
 
