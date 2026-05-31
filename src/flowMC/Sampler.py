@@ -48,6 +48,7 @@ class Sampler:
 
     # Checkpoint / resume
     checkpoint_interval: float = 600.0
+    _prev_elapsed: float  # cumulative wall-clock seconds from all prior runs
 
     def __init__(
         self,
@@ -96,6 +97,7 @@ class Sampler:
         self.rng_key = rng_key
         self.outdir = outdir
         self.checkpoint_interval = checkpoint_interval
+        self._prev_elapsed = 0.0
 
         if checkpoint_interval > 0:
             cache_dir = Path(outdir) / "jax_cache"
@@ -251,6 +253,7 @@ class Sampler:
                 for attr, val in attrs.items():
                     setattr(self.strategies[name], attr, val)
 
+        self._prev_elapsed = float(ckpt["elapsed_time"])
         start_idx = ckpt["strategy_idx"] + 1
         logger.info(
             "Resumed from checkpoint at strategy_idx=%d (%s)",
@@ -266,6 +269,7 @@ class Sampler:
         rng_key: Key,
         last_step: Float[Array, "n_chains n_dim"],
         data: dict,
+        elapsed_time: float,
     ) -> None:
         """Atomically write a checkpoint to ``ckpt_path``.
 
@@ -283,6 +287,9 @@ class Sampler:
             last_step: Current chain positions, shape ``(n_chains, n_dim)``.
             data: Data dict passed to the strategy calls, used to record the
                 logpdf fingerprint.
+            elapsed_time: Cumulative wall-clock seconds across all runs up to
+                this checkpoint write (``_prev_elapsed`` + seconds since
+                ``sample`` was called).
         """
         resources_to_save: dict[str, tuple[str, Resource | bytes]] = {}
         for k, v in self.resources.items():
@@ -331,6 +338,7 @@ class Sampler:
             "strategy_idx": strategy_idx,
             "rng_key": rng_key,
             "last_step": last_step,
+            "elapsed_time": elapsed_time,
             "resources": resources_to_save,
             "stepper_cursors": stepper_cursors,
             "strategy_states": strategy_states,
@@ -374,6 +382,7 @@ class Sampler:
         rng_key = self.rng_key
         last_step = initial_position
         start_idx = 0
+        _t0 = time.perf_counter()
 
         # Check for an existing checkpoint and resume from it if found.
         ckpt_path: Optional[Path] = (
@@ -444,7 +453,14 @@ class Sampler:
                 and idx in training_end_indices
                 and time.perf_counter() - last_ckpt_t >= self.checkpoint_interval
             ):
-                self._save_checkpoint(ckpt_path, idx, rng_key, last_step, data)
+                self._save_checkpoint(
+                    ckpt_path,
+                    idx,
+                    rng_key,
+                    last_step,
+                    data,
+                    elapsed_time=self._prev_elapsed + (time.perf_counter() - _t0),
+                )
                 last_ckpt_t = time.perf_counter()
 
     # TODO: Implement quick access and summary functions that operates on buffer
