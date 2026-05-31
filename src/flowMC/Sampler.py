@@ -292,7 +292,12 @@ class Sampler:
             if hasattr(s, "current_position")
         }
 
-        state_attrs = ("_call_count", "_prev_acceptance", "_patience_count")
+        state_attrs = (
+            "_call_count",
+            "_prev_acceptance",
+            "_prev_cov",
+            "_patience_count",
+        )
         strategy_states = {
             name: {attr: getattr(s, attr) for attr in state_attrs if hasattr(s, attr)}
             for name, s in self.strategies.items()
