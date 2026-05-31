@@ -48,6 +48,7 @@ def _make_sampler(
     s.outdir = str(tmp_path) if tmp_path is not None else "./outdir/"
     # Use interval=0 to disable checkpointing when no tmp_path is provided.
     s.checkpoint_interval = checkpoint_interval if tmp_path is not None else 0.0
+    s._prev_elapsed = 0.0
     return s
 
 
