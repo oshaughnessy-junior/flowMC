@@ -3119,7 +3119,10 @@ Created automatically if it does not exist.  Default <code>"./outdir/"</code>.</
               <div class="doc-md-description">
                 <p>Minimum wall-clock seconds that must elapse
 since the previous write before a new checkpoint is written.
-Default <code>600</code> (10 minutes).  Set to <code>0</code> to disable checkpointing.</p>
+Default <code>600</code> (10 minutes).  Set to <code>0</code> to disable checkpointing.
+When checkpointing is enabled the JAX XLA compilation cache is also
+activated at <code>{outdir}/jax_cache/</code> so that compiled step functions
+are reused across processes (no recompilation on resume).</p>
               </div>
             </td>
             <td>
