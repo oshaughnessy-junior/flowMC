@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Optional
 
 import equinox as eqx
+import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float, Key
 
@@ -83,6 +84,9 @@ class Sampler:
             checkpoint_interval (float): Minimum wall-clock seconds that must elapse
                 since the previous write before a new checkpoint is written.
                 Default ``600`` (10 minutes).  Set to ``0`` to disable checkpointing.
+                When checkpointing is enabled the JAX XLA compilation cache is also
+                activated at ``{outdir}/jax_cache/`` so that compiled step functions
+                are reused across processes (no recompilation on resume).
         Raises:
             ValueError: If neither ``resources``/``strategies`` nor
                 ``resource_strategy_bundles`` is provided.
@@ -92,6 +96,12 @@ class Sampler:
         self.rng_key = rng_key
         self.outdir = outdir
         self.checkpoint_interval = checkpoint_interval
+
+        if checkpoint_interval > 0:
+            cache_dir = Path(outdir) / "jax_cache"
+            cache_dir.mkdir(parents=True, exist_ok=True)
+            jax.config.update("jax_compilation_cache_dir", str(cache_dir))
+            jax.config.update("jax_persistent_cache_min_compile_time_secs", 0.0)
 
         if resources is not None and strategies is not None:
             logger.info(
