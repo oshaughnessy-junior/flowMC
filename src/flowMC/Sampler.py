@@ -1,6 +1,7 @@
 import io
 import logging
 import pickle
+import shutil
 import time
 from pathlib import Path
 from typing import Optional
@@ -465,6 +466,8 @@ class Sampler:
 
         if ckpt_path is not None:
             ckpt_path.unlink(missing_ok=True)
+        if self.checkpoint_interval > 0:
+            shutil.rmtree(Path(self.outdir) / "jax_cache", ignore_errors=True)
 
     # TODO: Implement quick access and summary functions that operates on buffer
 
