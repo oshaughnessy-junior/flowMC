@@ -463,6 +463,9 @@ class Sampler:
                 )
                 last_ckpt_t = time.perf_counter()
 
+        if ckpt_path is not None:
+            ckpt_path.unlink(missing_ok=True)
+
     # TODO: Implement quick access and summary functions that operates on buffer
 
     def serialize(self):
