@@ -1,6 +1,7 @@
 """Unit tests for flowMC.Sampler checkpoint/resume behaviour."""
 
 import pickle
+from pathlib import Path
 
 import jax
 import jax.numpy as jnp
@@ -59,6 +60,7 @@ def _write_ckpt(path, meta, strategy_idx=0):
         "strategy_idx": strategy_idx,
         "rng_key": jax.random.key(0),
         "last_step": jnp.zeros((3, 2)),
+        "elapsed_time": 0.0,
         "resources": {},
         "stepper_cursors": {},
         "strategy_states": {},
@@ -113,8 +115,8 @@ class TestTrainingPhaseEndIndices:
 
 
 class TestCheckpointWrite:
-    def test_checkpoint_file_created(self, tmp_path):
-        """Checkpoint file must be written after the training loop completes."""
+    def test_checkpoint_file_created(self, tmp_path, monkeypatch):
+        """Checkpoint is written during sampling and deleted on clean completion."""
         strategies = {
             "step_a": _PassthroughStrategy("step_a"),
             "step_b": _PassthroughStrategy("step_b"),
@@ -126,11 +128,22 @@ class TestCheckpointWrite:
             {},
             tmp_path=tmp_path,
         )
+        # Suppress deletion of only the checkpoint file so we can inspect it.
+        ckpt_path = tmp_path / "checkpoint.pkl"
+        _orig = Path.unlink
+        monkeypatch.setattr(
+            Path,
+            "unlink",
+            lambda self, missing_ok=False: (
+                None if self == ckpt_path else _orig(self, missing_ok=missing_ok)
+            ),
+        )
         s.sample(jnp.zeros((3, 2)), {})
-        assert (tmp_path / "checkpoint.pkl").exists()
+        monkeypatch.setattr(Path, "unlink", _orig)
+        assert ckpt_path.exists()
 
-    def test_checkpoint_content_is_valid(self, tmp_path):
-        """The saved checkpoint must include _meta and all required keys."""
+    def test_checkpoint_content_is_valid(self, tmp_path, monkeypatch):
+        """The saved checkpoint must include _meta, elapsed_time, and all required keys."""
         state = State({"value": 42}, name="some_state")
         strategies = {
             "step_a": _PassthroughStrategy("step_a"),
@@ -143,7 +156,17 @@ class TestCheckpointWrite:
             {"some_state": state},
             tmp_path=tmp_path,
         )
+        ckpt_path = tmp_path / "checkpoint.pkl"
+        _orig = Path.unlink
+        monkeypatch.setattr(
+            Path,
+            "unlink",
+            lambda self, missing_ok=False: (
+                None if self == ckpt_path else _orig(self, missing_ok=missing_ok)
+            ),
+        )
         s.sample(jnp.zeros((3, 2)), {})
+        monkeypatch.setattr(Path, "unlink", _orig)
 
         with open(tmp_path / "checkpoint.pkl", "rb") as f:
             ckpt = pickle.load(f)
@@ -153,6 +176,8 @@ class TestCheckpointWrite:
         assert ckpt["_meta"]["strategy_order"] == ["step_a", "step_b", "reset_steppers"]
         # step_b is at index 1, the last strategy before reset_steppers
         assert ckpt["strategy_idx"] == 1
+        assert "elapsed_time" in ckpt
+        assert ckpt["elapsed_time"] >= 0.0
         assert "rng_key" in ckpt
         assert "last_step" in ckpt
         assert "resources" in ckpt
@@ -186,7 +211,8 @@ class TestCheckpointResume:
 
     _order = ["step_a", "step_b", "reset_steppers", "step_prod"]
 
-    def _first_run(self, tmp_path):
+    def _first_run(self, tmp_path, monkeypatch):
+        """Run to completion while preserving the checkpoint (simulates a crash)."""
         strategies = {
             "step_a": _PassthroughStrategy("step_a"),
             "step_b": _PassthroughStrategy("step_b"),
@@ -194,12 +220,22 @@ class TestCheckpointResume:
             "step_prod": _PassthroughStrategy("step_prod"),
         }
         s = _make_sampler(self._order, strategies, {}, tmp_path=tmp_path)
+        ckpt_path = tmp_path / "checkpoint.pkl"
+        _orig = Path.unlink
+        monkeypatch.setattr(
+            Path,
+            "unlink",
+            lambda self, missing_ok=False: (
+                None if self == ckpt_path else _orig(self, missing_ok=missing_ok)
+            ),
+        )
         s.sample(jnp.zeros((3, 2)), {})
+        monkeypatch.setattr(Path, "unlink", _orig)
         return strategies
 
-    def test_completed_strategies_not_re_run(self, tmp_path):
+    def test_completed_strategies_not_re_run(self, tmp_path, monkeypatch):
         """step_a and step_b must not run again after they were checkpointed."""
-        self._first_run(tmp_path)
+        self._first_run(tmp_path, monkeypatch)
 
         resume = {
             "step_a": _PassthroughStrategy("step_a"),
@@ -214,9 +250,9 @@ class TestCheckpointResume:
         assert resume["step_a"].n_calls == 0
         assert resume["step_b"].n_calls == 0
 
-    def test_post_checkpoint_strategies_still_run(self, tmp_path):
+    def test_post_checkpoint_strategies_still_run(self, tmp_path, monkeypatch):
         """reset_steppers and step_prod must still execute on resume."""
-        self._first_run(tmp_path)
+        self._first_run(tmp_path, monkeypatch)
 
         resume = {
             "step_a": _PassthroughStrategy("step_a"),
@@ -229,7 +265,7 @@ class TestCheckpointResume:
 
         assert resume["step_prod"].n_calls == 1
 
-    def test_resume_restores_rng_key(self, tmp_path):
+    def test_resume_restores_rng_key(self, tmp_path, monkeypatch):
         """RNG key restored from checkpoint must equal the key at that point in a fresh run."""
         # Run 1: record rng_key after step_b (last training strategy before reset)
         rng_key_after_training = {}
@@ -249,8 +285,17 @@ class TestCheckpointResume:
             "step_prod": _PassthroughStrategy("step_prod"),
         }
         s1 = _make_sampler(self._order, strategies1, {}, tmp_path=tmp_path)
+        ckpt_path = tmp_path / "checkpoint.pkl"
+        _orig = Path.unlink
+        monkeypatch.setattr(
+            Path,
+            "unlink",
+            lambda self, missing_ok=False: (
+                None if self == ckpt_path else _orig(self, missing_ok=missing_ok)
+            ),
+        )
         s1.sample(jnp.zeros((3, 2)), {})
-        key_from_run1 = rng_key_after_training["val"]
+        monkeypatch.setattr(Path, "unlink", _orig)
 
         # Run 2: resume from checkpoint — step_a and step_b are skipped, so key
         # must be restored from the checkpoint, not re-computed
