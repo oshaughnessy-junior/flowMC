@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.36">
+      <meta name="generator" content="zensical-0.0.44">
     
     
       
@@ -36,7 +36,7 @@
       
         
       
-      <link rel="stylesheet" href="../../../../assets/stylesheets/modern/main.1e981d71.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/modern/main.fba56155.min.css">
       
         
           
@@ -60,7 +60,7 @@
       
     
     
-    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    <script>__md_scope=new URL("../../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
 
@@ -255,12 +255,37 @@
   
   
     
+      
+    
+    
     
       <li class="md-tabs__item">
         <a href="../../../../tutorials/" class="md-tabs__link">
           
   
   Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../guides/" class="md-tabs__link">
+          
+  
+  Guides
 
         </a>
       </li>
@@ -304,25 +329,12 @@
   
   
   
-  
-    <li class="md-tabs__item">
-      <a href="../../../../development_guide/" class="md-tabs__link">
-        
-  
-  Development Guide
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
     
   
   
+    
+      
+    
     
     
       
@@ -332,16 +344,34 @@
     
   
   
+    
+      
+    
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+      
+    
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../Sampler/" class="md-tabs__link">
+        <a href="../../resource/base/" class="md-tabs__link">
           
   
-  API
+  Reference
 
         </a>
       </li>
+    
+  
+
     
   
 
@@ -408,8 +438,7 @@
   <span class="md-ellipsis">
     
   
-    Home
-  
+  Home
 
     
   </span>
@@ -435,8 +464,7 @@
   <span class="md-ellipsis">
     
   
-    Installation
-  
+  Installation
 
     
   </span>
@@ -462,8 +490,7 @@
   <span class="md-ellipsis">
     
   
-    Quick Start
-  
+  Quick Start
 
     
   </span>
@@ -503,8 +530,7 @@
   <span class="md-ellipsis">
     
   
-    Tutorials
-  
+  Tutorials
 
     
   </span>
@@ -519,8 +545,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Tutorials
-  
+  Tutorials
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -539,8 +564,7 @@
   <span class="md-ellipsis">
     
   
-    Tutorials
-  
+  Tutorials
 
     
   </span>
@@ -567,64 +591,7 @@
   <span class="md-ellipsis">
     
   
-    Step-by-Step Example
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../tutorials/bundles/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Bundles
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../tutorials/hyperparameters/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hyperparameter Reference
-  
+  Step-by-Step Example
 
     
   </span>
@@ -651,8 +618,7 @@
   <span class="md-ellipsis">
     
   
-    Parallel Tempering
-  
+  Parallel Tempering
 
     
   </span>
@@ -679,8 +645,7 @@
   <span class="md-ellipsis">
     
   
-    Custom Sampling Strategy
-  
+  Custom Sampling Strategy
 
     
   </span>
@@ -707,8 +672,7 @@
   <span class="md-ellipsis">
     
   
-    Training Normalizing Flows
-  
+  Training Normalizing Flows
 
     
   </span>
@@ -735,8 +699,170 @@
   <span class="md-ellipsis">
     
   
-    Training Flow Matching Models
+  Training Flow Matching Models
+
+    
+  </span>
   
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Guides
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Guides
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Guides
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Architecture
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/bundles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Bundles
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/hyperparameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Hyperparameter Reference
 
     
   </span>
@@ -770,8 +896,7 @@
   <span class="md-ellipsis">
     
   
-    FAQ
-  
+  FAQ
 
     
   </span>
@@ -797,35 +922,7 @@
   <span class="md-ellipsis">
     
   
-    Contributing
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../development_guide/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Development Guide
-  
+  Contributing
 
     
   </span>
@@ -870,8 +967,7 @@
   <span class="md-ellipsis">
     
   
-    API
-  
+  Reference
 
     
   </span>
@@ -886,8 +982,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    API
-  
+  Reference
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -922,8 +1017,7 @@
   <span class="md-ellipsis">
     
   
-    flowMC
-  
+  flowMC
 
     
   </span>
@@ -938,39 +1032,10 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    flowMC
-  
+  flowMC
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../Sampler/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Sampler
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -990,18 +1055,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2" id="__nav_8_1_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1" id="__nav_8_1_1_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    resource
-  
+  resource
 
     
   </span>
@@ -1011,13 +1075,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1">
             <span class="md-nav__icon md-icon"></span>
             
   
-    resource
-  
+  resource
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1036,8 +1099,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -1064,8 +1126,7 @@
   <span class="md-ellipsis">
     
   
-    buffers
-  
+  buffers
 
     
   </span>
@@ -1096,18 +1157,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_3" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_3" id="__nav_8_1_2_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_3" id="__nav_8_1_1_3_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    kernel
-  
+  kernel
 
     
   </span>
@@ -1117,16 +1177,42 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_3">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_3">
             <span class="md-nav__icon md-icon"></span>
             
   
-    kernel
-  
+  kernel
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resource/kernel/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  base
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1142,8 +1228,7 @@
   <span class="md-ellipsis">
     
   
-    Gaussian_random_walk
-  
+  Gaussian_random_walk
 
     
   </span>
@@ -1170,8 +1255,7 @@
   <span class="md-ellipsis">
     
   
-    HMC
-  
+  HMC
 
     
   </span>
@@ -1198,8 +1282,7 @@
   <span class="md-ellipsis">
     
   
-    MALA
-  
+  MALA
 
     
   </span>
@@ -1226,36 +1309,7 @@
   <span class="md-ellipsis">
     
   
-    NF_proposal
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../resource/kernel/base/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    base
-  
+  NF_proposal
 
     
   </span>
@@ -1290,8 +1344,7 @@
   <span class="md-ellipsis">
     
   
-    logPDF
-  
+  logPDF
 
     
   </span>
@@ -1322,18 +1375,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_5" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_5" id="__nav_8_1_2_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_5" id="__nav_8_1_1_5_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    model
-  
+  model
 
     
   </span>
@@ -1343,13 +1395,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_2_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_5">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_5">
             <span class="md-nav__icon md-icon"></span>
             
   
-    model
-  
+  model
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1368,8 +1419,7 @@
   <span class="md-ellipsis">
     
   
-    common
-  
+  common
 
     
   </span>
@@ -1400,18 +1450,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_5_2" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_5_2" id="__nav_8_1_2_5_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_5_2" id="__nav_8_1_1_5_2_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    flowmatching
-  
+  flowmatching
 
     
   </span>
@@ -1421,13 +1470,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_2_5_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_5_2">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_1_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_5_2">
             <span class="md-nav__icon md-icon"></span>
             
   
-    flowmatching
-  
+  flowmatching
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1446,8 +1494,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -1486,18 +1533,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_5_3" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_5_3" id="__nav_8_1_2_5_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_5_3" id="__nav_8_1_1_5_3_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    nf_model
-  
+  nf_model
 
     
   </span>
@@ -1507,13 +1553,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_2_5_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_5_3">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_1_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_5_3">
             <span class="md-nav__icon md-icon"></span>
             
   
-    nf_model
-  
+  nf_model
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1532,8 +1577,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -1560,8 +1604,7 @@
   <span class="md-ellipsis">
     
   
-    realNVP
-  
+  realNVP
 
     
   </span>
@@ -1588,8 +1631,7 @@
   <span class="md-ellipsis">
     
   
-    rqSpline
-  
+  rqSpline
 
     
   </span>
@@ -1632,8 +1674,7 @@
   <span class="md-ellipsis">
     
   
-    optimizer
-  
+  optimizer
 
     
   </span>
@@ -1660,8 +1701,7 @@
   <span class="md-ellipsis">
     
   
-    states
-  
+  states
 
     
   </span>
@@ -1700,18 +1740,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_2" id="__nav_8_1_2_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    resource_strategy_bundle
-  
+  resource_strategy_bundle
 
     
   </span>
@@ -1721,16 +1760,42 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_3">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_2">
             <span class="md-nav__icon md-icon"></span>
             
   
-    resource_strategy_bundle
-  
+  resource_strategy_bundle
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resource_strategy_bundle/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  base
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1746,8 +1811,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_GRW
-  
+  RQSpline_GRW
 
     
   </span>
@@ -1774,8 +1838,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_GRW_PT
-  
+  RQSpline_GRW_PT
 
     
   </span>
@@ -1802,8 +1865,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_HMC
-  
+  RQSpline_HMC
 
     
   </span>
@@ -1830,8 +1892,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_HMC_PT
-  
+  RQSpline_HMC_PT
 
     
   </span>
@@ -1858,8 +1919,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_MALA
-  
+  RQSpline_MALA
 
     
   </span>
@@ -1886,36 +1946,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_MALA_PT
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../resource_strategy_bundle/base/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    base
-  
+  RQSpline_MALA_PT
 
     
   </span>
@@ -1931,6 +1962,33 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Sampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Sampler
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1966,8 +2024,7 @@
   <span class="md-ellipsis">
     
   
-    strategy
-  
+  strategy
 
     
   </span>
@@ -1982,8 +2039,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    strategy
-  
+  strategy
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -2002,8 +2058,7 @@
   <span class="md-ellipsis">
     
   
-    adapt_step_size
-  
+  adapt_step_size
 
     
   </span>
@@ -2030,8 +2085,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -2058,8 +2112,7 @@
   <span class="md-ellipsis">
     
   
-    check_early_stop
-  
+  check_early_stop
 
     
   </span>
@@ -2086,8 +2139,7 @@
   <span class="md-ellipsis">
     
   
-    importance_sampling
-  
+  importance_sampling
 
     
   </span>
@@ -2114,8 +2166,7 @@
   <span class="md-ellipsis">
     
   
-    lambda_function
-  
+  lambda_function
 
     
   </span>
@@ -2142,8 +2193,7 @@
   <span class="md-ellipsis">
     
   
-    optimization
-  
+  optimization
 
     
   </span>
@@ -2170,8 +2220,7 @@
   <span class="md-ellipsis">
     
   
-    parallel_tempering
-  
+  parallel_tempering
 
     
   </span>
@@ -2198,8 +2247,7 @@
   <span class="md-ellipsis">
     
   
-    sequential_monte_carlo
-  
+  sequential_monte_carlo
 
     
   </span>
@@ -2233,8 +2281,7 @@
   <span class="md-ellipsis">
     
   
-    take_steps
-  
+  take_steps
 
     
   </span>
@@ -2251,8 +2298,7 @@
   <span class="md-ellipsis">
     
   
-    take_steps
-  
+  take_steps
 
     
   </span>
@@ -2284,21 +2330,37 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="take_steps">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeGroupSteps" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        TakeGroupSteps
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TakeGroupSteps">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#flowMC.strategy.take_steps.TakeSteps" class="md-nav__link">
+  <a href="#flowMC.strategy.take_steps.TakeGroupSteps.sample" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        TakeSteps
+        sample
       </span>
     </span>
   </a>
   
 </li>
         
-          <li class="md-nav__item">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#flowMC.strategy.take_steps.TakeSerialSteps" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2307,13 +2369,86 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="TakeSerialSteps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeSerialSteps.body" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        body
+      </span>
+    </span>
+  </a>
+  
 </li>
         
           <li class="md-nav__item">
-  <a href="#flowMC.strategy.take_steps.TakeGroupSteps" class="md-nav__link">
+  <a href="#flowMC.strategy.take_steps.TakeSerialSteps.sample" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        TakeGroupSteps
+        sample
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeSteps" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        TakeSteps
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TakeSteps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeSteps.__call__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        __call__
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeSteps.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        __init__
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeSteps.sample" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        sample
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeSteps.set_current_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        set_current_position
       </span>
     </span>
   </a>
@@ -2348,8 +2483,7 @@
   <span class="md-ellipsis">
     
   
-    train_model
-  
+  train_model
 
     
   </span>
@@ -2376,8 +2510,7 @@
   <span class="md-ellipsis">
     
   
-    update_state
-  
+  update_state
 
     
   </span>
@@ -2426,8 +2559,7 @@
   <span class="md-ellipsis">
     
   
-    utils
-  
+  utils
 
     
   </span>
@@ -2442,8 +2574,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    utils
-  
+  utils
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -2462,8 +2593,7 @@
   <span class="md-ellipsis">
     
   
-    logging
-  
+  logging
 
     
   </span>
@@ -2544,21 +2674,37 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="take_steps">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeGroupSteps" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        TakeGroupSteps
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TakeGroupSteps">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#flowMC.strategy.take_steps.TakeSteps" class="md-nav__link">
+  <a href="#flowMC.strategy.take_steps.TakeGroupSteps.sample" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        TakeSteps
+        sample
       </span>
     </span>
   </a>
   
 </li>
         
-          <li class="md-nav__item">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#flowMC.strategy.take_steps.TakeSerialSteps" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2567,13 +2713,86 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="TakeSerialSteps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeSerialSteps.body" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        body
+      </span>
+    </span>
+  </a>
+  
 </li>
         
           <li class="md-nav__item">
-  <a href="#flowMC.strategy.take_steps.TakeGroupSteps" class="md-nav__link">
+  <a href="#flowMC.strategy.take_steps.TakeSerialSteps.sample" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        TakeGroupSteps
+        sample
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeSteps" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        TakeSteps
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TakeSteps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeSteps.__call__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        __call__
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeSteps.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        __init__
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeSteps.sample" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        sample
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flowMC.strategy.take_steps.TakeSteps.set_current_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        set_current_position
       </span>
     </span>
   </a>
@@ -2609,13 +2828,10 @@
 
 
 
-<h3 id="flowMC.strategy.take_steps" class="doc doc-heading">
-            <code>flowMC.strategy.take_steps</code>
-
-
-<a href="#flowMC.strategy.take_steps" class="headerlink" title="Permanent link">¤</a></h3>
-
+<a id="flowMC.strategy.take_steps"></a>
     <div class="doc doc-contents first">
+
+
 
 
 
@@ -2640,163 +2856,51 @@
 
 
 
-<h4 id="flowMC.strategy.take_steps.TakeSteps" class="doc doc-heading">
-            <code>TakeSteps</code>
+<h3 id="flowMC.strategy.take_steps.TakeGroupSteps" class="doc doc-heading">
+            <code>TakeGroupSteps</code>
 
 
-<a href="#flowMC.strategy.take_steps.TakeSteps" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#flowMC.strategy.take_steps.TakeGroupSteps" class="headerlink" title="Permanent link">¤</a></h3>
 
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" href="../base/#flowMC.strategy.base.Strategy">Strategy</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#flowMC.strategy.take_steps.TakeSteps">TakeSteps</a></code></p>
 
 
 
-        <p>Base class for strategies that run a kernel for a fixed number of steps.</p>
-<p>Subclasses implement :meth:<code>sample</code> to define how a single chain is advanced,
-and this base class handles vmapping over chains, thinning, and writing results
-into the associated :class:<code>~flowMC.resource.buffers.Buffer</code> resources.</p>
+        <p>TakeGroupSteps is a strategy that takes a number of steps in a group manner, i.e.
+all steps are taken at once.</p>
+<p>This is intended to be used for kernels such as normalizing flow, which proposal
+steps are independent of each other, and benefit from being computed in parallel.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+
+
+
+
+
+
+
+<p><span class="doc-section-title">Methods:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
-          <th>Type</th>
           <th>Description</th>
         </tr>
       </thead>
       <tbody>
-          <tr class="doc-section-item">
-            <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;logpdf_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logpdf_name&lt;/span&gt;&lt;/code&gt;
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-instance-attribute&quot;&gt;&lt;code&gt;instance-attribute&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#flowMC.strategy.take_steps.TakeSteps.logpdf_name">logpdf_name</a></code></td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Resource key for the :class:<code>~flowMC.resource.logPDF.LogPDF</code>.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;kernel_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kernel_name&lt;/span&gt;&lt;/code&gt;
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-instance-attribute&quot;&gt;&lt;code&gt;instance-attribute&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#flowMC.strategy.take_steps.TakeSteps.kernel_name">kernel_name</a></code></td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Resource key for the proposal kernel.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;state_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state_name&lt;/span&gt;&lt;/code&gt;
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-instance-attribute&quot;&gt;&lt;code&gt;instance-attribute&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#flowMC.strategy.take_steps.TakeSteps.state_name">state_name</a></code></td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Resource key for the sampler :class:<code>~flowMC.resource.states.State</code>.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;buffer_names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer_names&lt;/span&gt;&lt;/code&gt;
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-instance-attribute&quot;&gt;&lt;code&gt;instance-attribute&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#flowMC.strategy.take_steps.TakeSteps.buffer_names">buffer_names</a></code></td>
-            <td>
-                  <code><span title="list">list</span>[<span title="str">str</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>State keys pointing to the position, log-prob, and
-acceptance-rate buffer names (in that order).</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;n_steps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_steps&lt;/span&gt;&lt;/code&gt;
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-instance-attribute&quot;&gt;&lt;code&gt;instance-attribute&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#flowMC.strategy.take_steps.TakeSteps.n_steps">n_steps</a></code></td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of kernel steps per call.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;current_position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;/code&gt;
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-instance-attribute&quot;&gt;&lt;code&gt;instance-attribute&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#flowMC.strategy.take_steps.TakeSteps.current_position">current_position</a></code></td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Write cursor along the buffer's <code>cursor_dim</code>.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;thinning&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thinning&lt;/span&gt;&lt;/code&gt;
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-instance-attribute&quot;&gt;&lt;code&gt;instance-attribute&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#flowMC.strategy.take_steps.TakeSteps.thinning">thinning</a></code></td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Store every <code>thinning</code>-th step.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;chain_batch_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chain_batch_size&lt;/span&gt;&lt;/code&gt;
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-instance-attribute&quot;&gt;&lt;code&gt;instance-attribute&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#flowMC.strategy.take_steps.TakeSteps.chain_batch_size">chain_batch_size</a></code></td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of chains per vmap batch; 0 means no batching.</p>
-              </div>
-            </td>
-          </tr>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ProposalBase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rng_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initial_position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logpdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogPDF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;n_steps n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_steps&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_steps&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.strategy.take_steps.TakeGroupSteps.sample">sample</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Advance a single chain by running all steps simultaneously via the kernel.</p>
+                </div>
+              </td>
+            </tr>
       </tbody>
     </table>
-
-
-
-
-
 
 
 
@@ -2811,349 +2915,23 @@ acceptance-rate buffer names (in that order).</p>
 
 
 
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSteps.logpdf_name" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">logpdf_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">logpdf_name</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSteps.logpdf_name" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSteps.kernel_name" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">kernel_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kernel_name</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSteps.kernel_name" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSteps.state_name" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">state_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">state_name</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSteps.state_name" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSteps.buffer_names" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">buffer_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer_names</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSteps.buffer_names" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSteps.n_steps" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">n_steps</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSteps.n_steps" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSteps.current_position" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">current_position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSteps.current_position" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSteps.thinning" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">thinning</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">thinning</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSteps.thinning" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSteps.chain_batch_size" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">chain_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">chain_batch_size</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSteps.chain_batch_size" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
 
 
 
 <div class="doc doc-object doc-function">
 
 
-<h5 id="flowMC.strategy.take_steps.TakeSteps.__init__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">logpdf_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">kernel_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">buffer_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">thinning</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">chain_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
-
-<a href="#flowMC.strategy.take_steps.TakeSteps.__init__" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>logpdf_name</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Resource key for the log-PDF to sample from.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>kernel_name</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Resource key for the proposal kernel.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>state_name</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Resource key for the sampler state.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>buffer_names</code>
-            </td>
-            <td>
-                  <code><span title="list">list</span>[<span title="str">str</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>List of three state keys that resolve to the
-buffer resource names for positions, log-probs, and acceptance rates.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>n_steps</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of kernel steps to take per call.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>thinning</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Keep every <code>thinning</code>-th step. Defaults to 1.</p>
-              </div>
-            </td>
-            <td>
-                  <code>1</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>chain_batch_size</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If &gt; 1, process chains in sub-batches of this
-size to reduce peak memory. 0 disables batching. Defaults to 0.</p>
-              </div>
-            </td>
-            <td>
-                  <code>0</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>verbose</code>
-            </td>
-            <td>
-                  <code><span title="bool">bool</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Enable debug logging. Defaults to False.</p>
-              </div>
-            </td>
-            <td>
-                  <code>False</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSteps.sample" class="doc doc-heading">
+<h4 id="flowMC.strategy.take_steps.TakeGroupSteps.sample" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">sample</span><span class="p">(</span><span class="n">kernel</span><span class="p">:</span> <span class="n">ProposalBase</span><span class="p">,</span> <span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">initial_position</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">logpdf</span><span class="p">:</span> <span class="n">LogPDF</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_steps n_dim&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_steps&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_steps&#39;</span><span class="p">]]</span></code>
 
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSteps.sample" class="headerlink" title="Permanent link">¤</a></h5>
+<a href="#flowMC.strategy.take_steps.TakeGroupSteps.sample" class="headerlink" title="Permanent link">¤</a></h4>
 
 
     <div class="doc doc-contents ">
 
-        <p>Advance a single chain for <code>n_steps</code> using the given kernel.</p>
-<p>This method is vmapped over chains by :meth:<code>__call__</code>, so it operates
-on a single chain at a time.</p>
+        <p>Advance a single chain by running all steps simultaneously via the kernel.</p>
+<p>The kernel is called once with <code>n_steps</code> injected into <code>data</code>, so all
+proposals are generated in a single batched call — no sequential dependency.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -3176,7 +2954,7 @@ on a single chain at a time.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Proposal kernel.</p>
+                <p>Proposal kernel (e.g., <code>flowMC.resource.kernel.NF_proposal.NFProposal</code>).</p>
               </div>
             </td>
             <td>
@@ -3278,185 +3056,6 @@ on a single chain at a time.</p>
 
 </div>
 
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSteps.set_current_position" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">set_current_position</span><span class="p">(</span><span class="n">current_position</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
-
-<a href="#flowMC.strategy.take_steps.TakeSteps.set_current_position" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Set the write cursor position for the output buffers.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>current_position</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>New cursor value along the buffer's step dimension.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSteps.__call__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__call__</span><span class="p">(</span><span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">resources</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Resource</span><span class="p">],</span> <span class="n">initial_position</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_chains n_dim&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Key</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Resource</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_chains n_dim&#39;</span><span class="p">]]</span></code>
-
-<a href="#flowMC.strategy.take_steps.TakeSteps.__call__" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Run the kernel for all chains, apply thinning, and update buffers.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>rng_key</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Key">Key</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>JAX PRNGKey (consumed and split internally).</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>resources</code>
-            </td>
-            <td>
-                  <code><span title="dict">dict</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" href="../../resource/base/#flowMC.resource.base.Resource">Resource</a>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Mutable resource dictionary.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>initial_position</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, &#39;n_chains n_dim&#39;]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Current chain positions.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>data</code>
-            </td>
-            <td>
-                  <code><span title="dict">dict</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Auxiliary data passed to log-PDF calls.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-<th>Name</th>          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-<td><code>tuple</code></td>            <td>
-                  <code><span title="jaxtyping.Key">Key</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p><code>(rng_key, resources, last_positions)</code> where <code>last_positions</code></p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-<td></td>            <td>
-                  <code><span title="dict">dict</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" href="../../resource/base/#flowMC.resource.base.Resource">Resource</a>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>has shape <code>(n_chains, n_dim)</code>.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
 
 
   </div>
@@ -3469,11 +3068,11 @@ on a single chain at a time.</p>
 
 
 
-<h4 id="flowMC.strategy.take_steps.TakeSerialSteps" class="doc doc-heading">
+<h3 id="flowMC.strategy.take_steps.TakeSerialSteps" class="doc doc-heading">
             <code>TakeSerialSteps</code>
 
 
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#flowMC.strategy.take_steps.TakeSerialSteps" class="headerlink" title="Permanent link">¤</a></h3>
 
 
     <div class="doc doc-contents ">
@@ -3496,6 +3095,37 @@ the previous step.</p>
 
 
 
+<p><span class="doc-section-title">Methods:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ProposalBase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;carry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aux&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.strategy.take_steps.TakeSerialSteps.body">body</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Single scan body: advance position by one kernel step.</p>
+                </div>
+              </td>
+            </tr>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ProposalBase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rng_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initial_position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logpdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogPDF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;n_steps n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_steps&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_steps&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.strategy.take_steps.TakeSerialSteps.sample">sample</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Advance a single chain serially using <code>jax.lax.scan</code>.</p>
+                </div>
+              </td>
+            </tr>
+      </tbody>
+    </table>
+
+
+
+
 
 
 <div class="doc doc-children">
@@ -3506,176 +3136,16 @@ the previous step.</p>
 
 
 
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.logpdf_name" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">logpdf_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">logpdf_name</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.logpdf_name" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.kernel_name" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">kernel_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kernel_name</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.kernel_name" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.state_name" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">state_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">state_name</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.state_name" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.buffer_names" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">buffer_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer_names</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.buffer_names" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.n_steps" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">n_steps</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.n_steps" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.current_position" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">current_position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.current_position" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.thinning" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">thinning</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">thinning</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.thinning" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.chain_batch_size" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">chain_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">chain_batch_size</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.chain_batch_size" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
 
 
 
 <div class="doc doc-object doc-function">
 
 
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.body" class="doc doc-heading">
+<h4 id="flowMC.strategy.take_steps.TakeSerialSteps.body" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">body</span><span class="p">(</span><span class="n">kernel</span><span class="p">:</span> <span class="n">ProposalBase</span><span class="p">,</span> <span class="n">carry</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">aux</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]</span></code>
 
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.body" class="headerlink" title="Permanent link">¤</a></h5>
+<a href="#flowMC.strategy.take_steps.TakeSerialSteps.body" class="headerlink" title="Permanent link">¤</a></h4>
 
 
     <div class="doc doc-contents ">
@@ -3776,10 +3246,10 @@ the previous step.</p>
 <div class="doc doc-object doc-function">
 
 
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.sample" class="doc doc-heading">
+<h4 id="flowMC.strategy.take_steps.TakeSerialSteps.sample" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">sample</span><span class="p">(</span><span class="n">kernel</span><span class="p">:</span> <span class="n">ProposalBase</span><span class="p">,</span> <span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">initial_position</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">logpdf</span><span class="p">:</span> <span class="n">LogPDF</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_steps n_dim&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_steps&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_steps&#39;</span><span class="p">]]</span></code>
 
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.sample" class="headerlink" title="Permanent link">¤</a></h5>
+<a href="#flowMC.strategy.take_steps.TakeSerialSteps.sample" class="headerlink" title="Permanent link">¤</a></h4>
 
 
     <div class="doc doc-contents ">
@@ -3909,13 +3379,348 @@ the previous step.</p>
 
 </div>
 
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="flowMC.strategy.take_steps.TakeSteps" class="doc doc-heading">
+            <code>TakeSteps</code>
+
+
+<a href="#flowMC.strategy.take_steps.TakeSteps" class="headerlink" title="Permanent link">¤</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/#flowMC.strategy.base.Strategy">Strategy</a></code></p>
+
+
+
+        <p>Base class for strategies that run a kernel for a fixed number of steps.</p>
+<p>Subclasses implement <code>sample</code> to define how a single chain is advanced,
+and this base class handles vmapping over chains, thinning, and writing results
+into the associated <code>flowMC.resource.buffers.Buffer</code> resources.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="flowMC.strategy.take_steps.TakeSteps.logpdf_name">logpdf_name</span></code></td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Resource key for the <code>flowMC.resource.logPDF.LogPDF</code>.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="flowMC.strategy.take_steps.TakeSteps.kernel_name">kernel_name</span></code></td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Resource key for the proposal kernel.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="flowMC.strategy.take_steps.TakeSteps.state_name">state_name</span></code></td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Resource key for the sampler <code>flowMC.resource.states.State</code>.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="flowMC.strategy.take_steps.TakeSteps.buffer_names">buffer_names</span></code></td>
+            <td>
+                  <code><span title="list">list</span>[<span title="str">str</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>State keys pointing to the position, log-prob, and
+acceptance-rate buffer names (in that order).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="flowMC.strategy.take_steps.TakeSteps.n_steps">n_steps</span></code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of kernel steps per call.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="flowMC.strategy.take_steps.TakeSteps.current_position">current_position</span></code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Write cursor along the buffer's <code>cursor_dim</code>.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="flowMC.strategy.take_steps.TakeSteps.thinning">thinning</span></code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Store every <code>thinning</code>-th step.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="flowMC.strategy.take_steps.TakeSteps.chain_batch_size">chain_batch_size</span></code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of chains per vmap batch; 0 means no batching.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+<p><span class="doc-section-title">Methods:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;fm&quot;&gt;__call__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rng_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Resource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initial_position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;n_chains n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Resource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;n_chains n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.strategy.take_steps.TakeSteps.__call__">__call__</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Run the kernel for all chains, apply thinning, and update buffers.</p>
+                </div>
+              </td>
+            </tr>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;fm&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logpdf_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kernel_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer_names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_steps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thinning&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chain_batch_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;verbose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.strategy.take_steps.TakeSteps.__init__">__init__</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Args:</p>
+                </div>
+              </td>
+            </tr>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ProposalBase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rng_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initial_position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logpdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogPDF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;n_steps n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_steps&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_steps&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-abstractmethod&quot;&gt;&lt;code&gt;abstractmethod&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="./#flowMC.strategy.take_steps.TakeSteps.sample">sample</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Advance a single chain for <code>n_steps</code> using the given kernel.</p>
+                </div>
+              </td>
+            </tr>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;set_current_position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;current_position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.strategy.take_steps.TakeSteps.set_current_position">set_current_position</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Set the write cursor position for the output buffers.</p>
+                </div>
+              </td>
+            </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
 <div class="doc doc-object doc-function">
 
 
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.__init__" class="doc doc-heading">
+<h4 id="flowMC.strategy.take_steps.TakeSteps.__call__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="fm">__call__</span><span class="p">(</span><span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">resources</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Resource</span><span class="p">],</span> <span class="n">initial_position</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_chains n_dim&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Key</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Resource</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_chains n_dim&#39;</span><span class="p">]]</span></code>
+
+<a href="#flowMC.strategy.take_steps.TakeSteps.__call__" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Run the kernel for all chains, apply thinning, and update buffers.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>rng_key</code>
+            </td>
+            <td>
+                  <code><span title="jaxtyping.Key">Key</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>JAX PRNGKey (consumed and split internally).</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>resources</code>
+            </td>
+            <td>
+                  <code><span title="dict">dict</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" href="../../resource/base/#flowMC.resource.base.Resource">Resource</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Mutable resource dictionary.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>initial_position</code>
+            </td>
+            <td>
+                  <code><span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, &#39;n_chains n_dim&#39;]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Current chain positions.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>data</code>
+            </td>
+            <td>
+                  <code><span title="dict">dict</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Auxiliary data passed to log-PDF calls.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>tuple</code></td>            <td>
+                  <code><span title="jaxtyping.Key">Key</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><code>(rng_key, resources, last_positions)</code> where <code>last_positions</code></p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+<td></td>            <td>
+                  <code><span title="dict">dict</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" href="../../resource/base/#flowMC.resource.base.Resource">Resource</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>has shape <code>(n_chains, n_dim)</code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="flowMC.strategy.take_steps.TakeSteps.__init__" class="doc doc-heading">
             <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">logpdf_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">kernel_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">buffer_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">thinning</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">chain_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
 
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.__init__" class="headerlink" title="Permanent link">¤</a></h5>
+<a href="#flowMC.strategy.take_steps.TakeSteps.__init__" class="headerlink" title="Permanent link">¤</a></h4>
 
 
     <div class="doc doc-contents ">
@@ -4074,407 +3879,21 @@ size to reduce peak memory. 0 disables batching. Defaults to 0.</p>
 <div class="doc doc-object doc-function">
 
 
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.__call__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__call__</span><span class="p">(</span><span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">resources</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Resource</span><span class="p">],</span> <span class="n">initial_position</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_chains n_dim&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Key</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Resource</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_chains n_dim&#39;</span><span class="p">]]</span></code>
-
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.__call__" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Run the kernel for all chains, apply thinning, and update buffers.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>rng_key</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Key">Key</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>JAX PRNGKey (consumed and split internally).</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>resources</code>
-            </td>
-            <td>
-                  <code><span title="dict">dict</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" href="../../resource/base/#flowMC.resource.base.Resource">Resource</a>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Mutable resource dictionary.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>initial_position</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, &#39;n_chains n_dim&#39;]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Current chain positions.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>data</code>
-            </td>
-            <td>
-                  <code><span title="dict">dict</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Auxiliary data passed to log-PDF calls.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-<th>Name</th>          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-<td><code>tuple</code></td>            <td>
-                  <code><span title="jaxtyping.Key">Key</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p><code>(rng_key, resources, last_positions)</code> where <code>last_positions</code></p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-<td></td>            <td>
-                  <code><span title="dict">dict</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" href="../../resource/base/#flowMC.resource.base.Resource">Resource</a>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>has shape <code>(n_chains, n_dim)</code>.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.strategy.take_steps.TakeSerialSteps.set_current_position" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">set_current_position</span><span class="p">(</span><span class="n">current_position</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
-
-<a href="#flowMC.strategy.take_steps.TakeSerialSteps.set_current_position" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Set the write cursor position for the output buffers.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>current_position</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>New cursor value along the buffer's step dimension.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-class">
-
-
-
-<h4 id="flowMC.strategy.take_steps.TakeGroupSteps" class="doc doc-heading">
-            <code>TakeGroupSteps</code>
-
-
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps" class="headerlink" title="Permanent link">¤</a></h4>
-
-
-    <div class="doc doc-contents ">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" href="./#flowMC.strategy.take_steps.TakeSteps">TakeSteps</a></code></p>
-
-
-
-        <p>TakeGroupSteps is a strategy that takes a number of steps in a group manner, i.e.
-all steps are taken at once.</p>
-<p>This is intended to be used for kernels such as normalizing flow, which proposal
-steps are independent of each other, and benefit from being computed in parallel.</p>
-
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeGroupSteps.logpdf_name" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">logpdf_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">logpdf_name</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps.logpdf_name" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeGroupSteps.kernel_name" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">kernel_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kernel_name</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps.kernel_name" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeGroupSteps.state_name" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">state_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">state_name</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps.state_name" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeGroupSteps.buffer_names" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">buffer_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer_names</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps.buffer_names" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeGroupSteps.n_steps" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">n_steps</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps.n_steps" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeGroupSteps.current_position" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">current_position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps.current_position" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeGroupSteps.thinning" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">thinning</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">thinning</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps.thinning" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.strategy.take_steps.TakeGroupSteps.chain_batch_size" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">chain_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">chain_batch_size</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps.chain_batch_size" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.strategy.take_steps.TakeGroupSteps.sample" class="doc doc-heading">
+<h4 id="flowMC.strategy.take_steps.TakeSteps.sample" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">sample</span><span class="p">(</span><span class="n">kernel</span><span class="p">:</span> <span class="n">ProposalBase</span><span class="p">,</span> <span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">initial_position</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">logpdf</span><span class="p">:</span> <span class="n">LogPDF</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_steps n_dim&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_steps&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_steps&#39;</span><span class="p">]]</span></code>
 
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps.sample" class="headerlink" title="Permanent link">¤</a></h5>
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
+  </span>
+
+<a href="#flowMC.strategy.take_steps.TakeSteps.sample" class="headerlink" title="Permanent link">¤</a></h4>
 
 
     <div class="doc doc-contents ">
 
-        <p>Advance a single chain by running all steps simultaneously via the kernel.</p>
-<p>The kernel is called once with <code>n_steps</code> injected into <code>data</code>, so all
-proposals are generated in a single batched call — no sequential dependency.</p>
+        <p>Advance a single chain for <code>n_steps</code> using the given kernel.</p>
+<p>This method is vmapped over chains by <code>__call__</code>, so it operates
+on a single chain at a time.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -4497,7 +3916,7 @@ proposals are generated in a single batched call — no sequential dependency.</
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Proposal kernel (e.g., :class:<code>~flowMC.resource.kernel.NF_proposal.NFProposal</code>).</p>
+                <p>Proposal kernel.</p>
               </div>
             </td>
             <td>
@@ -4602,302 +4021,10 @@ proposals are generated in a single batched call — no sequential dependency.</
 <div class="doc doc-object doc-function">
 
 
-<h5 id="flowMC.strategy.take_steps.TakeGroupSteps.__init__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">logpdf_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">kernel_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">buffer_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">thinning</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">chain_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
-
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps.__init__" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>logpdf_name</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Resource key for the log-PDF to sample from.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>kernel_name</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Resource key for the proposal kernel.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>state_name</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Resource key for the sampler state.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>buffer_names</code>
-            </td>
-            <td>
-                  <code><span title="list">list</span>[<span title="str">str</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>List of three state keys that resolve to the
-buffer resource names for positions, log-probs, and acceptance rates.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>n_steps</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of kernel steps to take per call.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>thinning</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Keep every <code>thinning</code>-th step. Defaults to 1.</p>
-              </div>
-            </td>
-            <td>
-                  <code>1</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>chain_batch_size</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If &gt; 1, process chains in sub-batches of this
-size to reduce peak memory. 0 disables batching. Defaults to 0.</p>
-              </div>
-            </td>
-            <td>
-                  <code>0</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>verbose</code>
-            </td>
-            <td>
-                  <code><span title="bool">bool</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Enable debug logging. Defaults to False.</p>
-              </div>
-            </td>
-            <td>
-                  <code>False</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.strategy.take_steps.TakeGroupSteps.__call__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__call__</span><span class="p">(</span><span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">resources</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Resource</span><span class="p">],</span> <span class="n">initial_position</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_chains n_dim&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Key</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Resource</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_chains n_dim&#39;</span><span class="p">]]</span></code>
-
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps.__call__" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Run the kernel for all chains, apply thinning, and update buffers.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>rng_key</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Key">Key</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>JAX PRNGKey (consumed and split internally).</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>resources</code>
-            </td>
-            <td>
-                  <code><span title="dict">dict</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" href="../../resource/base/#flowMC.resource.base.Resource">Resource</a>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Mutable resource dictionary.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>initial_position</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, &#39;n_chains n_dim&#39;]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Current chain positions.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>data</code>
-            </td>
-            <td>
-                  <code><span title="dict">dict</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Auxiliary data passed to log-PDF calls.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-<th>Name</th>          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-<td><code>tuple</code></td>            <td>
-                  <code><span title="jaxtyping.Key">Key</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p><code>(rng_key, resources, last_positions)</code> where <code>last_positions</code></p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-<td></td>            <td>
-                  <code><span title="dict">dict</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" href="../../resource/base/#flowMC.resource.base.Resource">Resource</a>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>has shape <code>(n_chains, n_dim)</code>.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.strategy.take_steps.TakeGroupSteps.set_current_position" class="doc doc-heading">
+<h4 id="flowMC.strategy.take_steps.TakeSteps.set_current_position" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">set_current_position</span><span class="p">(</span><span class="n">current_position</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
 
-<a href="#flowMC.strategy.take_steps.TakeGroupSteps.set_current_position" class="headerlink" title="Permanent link">¤</a></h5>
+<a href="#flowMC.strategy.take_steps.TakeSteps.set_current_position" class="headerlink" title="Permanent link">¤</a></h4>
 
 
     <div class="doc doc-contents ">
@@ -5016,7 +4143,7 @@ size to reduce peak memory. 0 disables batching. Defaults to 0.</p>
       <script id="__config" type="application/json">{"annotate":null,"base":"../../../..","features":["navigation.instant","navigation.tabs","navigation.top","toc.follow","header.autohide"],"search":"../../../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"default":"stable","provider":"mike"}}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.dbc0afdc.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.6e5f0216.min.js"></script>
       
         <script src="../../../../javascripts/mathjax.js"></script>
       

@@ -18,14 +18,14 @@
         <link rel="prev" href="../optimizer/">
       
       
-        <link rel="next" href="../../resource_strategy_bundle/RQSpline_GRW/">
+        <link rel="next" href="../../resource_strategy_bundle/base/">
       
       
         
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.36">
+      <meta name="generator" content="zensical-0.0.44">
     
     
       
@@ -36,7 +36,7 @@
       
         
       
-      <link rel="stylesheet" href="../../../../assets/stylesheets/modern/main.1e981d71.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/modern/main.fba56155.min.css">
       
         
           
@@ -60,7 +60,7 @@
       
     
     
-    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    <script>__md_scope=new URL("../../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
 
@@ -255,12 +255,37 @@
   
   
     
+      
+    
+    
     
       <li class="md-tabs__item">
         <a href="../../../../tutorials/" class="md-tabs__link">
           
   
   Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../guides/" class="md-tabs__link">
+          
+  
+  Guides
 
         </a>
       </li>
@@ -304,25 +329,12 @@
   
   
   
-  
-    <li class="md-tabs__item">
-      <a href="../../../../development_guide/" class="md-tabs__link">
-        
-  
-  Development Guide
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
     
   
   
+    
+      
+    
     
     
       
@@ -332,16 +344,34 @@
     
   
   
+    
+      
+    
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+      
+    
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../Sampler/" class="md-tabs__link">
+        <a href="../base/" class="md-tabs__link">
           
   
-  API
+  Reference
 
         </a>
       </li>
+    
+  
+
     
   
 
@@ -408,8 +438,7 @@
   <span class="md-ellipsis">
     
   
-    Home
-  
+  Home
 
     
   </span>
@@ -435,8 +464,7 @@
   <span class="md-ellipsis">
     
   
-    Installation
-  
+  Installation
 
     
   </span>
@@ -462,8 +490,7 @@
   <span class="md-ellipsis">
     
   
-    Quick Start
-  
+  Quick Start
 
     
   </span>
@@ -503,8 +530,7 @@
   <span class="md-ellipsis">
     
   
-    Tutorials
-  
+  Tutorials
 
     
   </span>
@@ -519,8 +545,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Tutorials
-  
+  Tutorials
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -539,8 +564,7 @@
   <span class="md-ellipsis">
     
   
-    Tutorials
-  
+  Tutorials
 
     
   </span>
@@ -567,64 +591,7 @@
   <span class="md-ellipsis">
     
   
-    Step-by-Step Example
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../tutorials/bundles/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Bundles
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../tutorials/hyperparameters/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hyperparameter Reference
-  
+  Step-by-Step Example
 
     
   </span>
@@ -651,8 +618,7 @@
   <span class="md-ellipsis">
     
   
-    Parallel Tempering
-  
+  Parallel Tempering
 
     
   </span>
@@ -679,8 +645,7 @@
   <span class="md-ellipsis">
     
   
-    Custom Sampling Strategy
-  
+  Custom Sampling Strategy
 
     
   </span>
@@ -707,8 +672,7 @@
   <span class="md-ellipsis">
     
   
-    Training Normalizing Flows
-  
+  Training Normalizing Flows
 
     
   </span>
@@ -735,8 +699,170 @@
   <span class="md-ellipsis">
     
   
-    Training Flow Matching Models
+  Training Flow Matching Models
+
+    
+  </span>
   
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Guides
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Guides
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Guides
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Architecture
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/bundles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Bundles
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/hyperparameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Hyperparameter Reference
 
     
   </span>
@@ -770,8 +896,7 @@
   <span class="md-ellipsis">
     
   
-    FAQ
-  
+  FAQ
 
     
   </span>
@@ -797,35 +922,7 @@
   <span class="md-ellipsis">
     
   
-    Contributing
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../development_guide/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Development Guide
-  
+  Contributing
 
     
   </span>
@@ -870,8 +967,7 @@
   <span class="md-ellipsis">
     
   
-    API
-  
+  Reference
 
     
   </span>
@@ -886,8 +982,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    API
-  
+  Reference
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -922,8 +1017,7 @@
   <span class="md-ellipsis">
     
   
-    flowMC
-  
+  flowMC
 
     
   </span>
@@ -938,39 +1032,10 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    flowMC
-  
+  flowMC
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../Sampler/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Sampler
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -992,18 +1057,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1" checked>
         
           
-          <label class="md-nav__link" for="__nav_8_1_2" id="__nav_8_1_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1" id="__nav_8_1_1_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    resource
-  
+  resource
 
     
   </span>
@@ -1013,13 +1077,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_8_1_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_1_1">
             <span class="md-nav__icon md-icon"></span>
             
   
-    resource
-  
+  resource
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1038,8 +1101,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -1066,8 +1128,7 @@
   <span class="md-ellipsis">
     
   
-    buffers
-  
+  buffers
 
     
   </span>
@@ -1098,18 +1159,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_3" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_3" id="__nav_8_1_2_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_3" id="__nav_8_1_1_3_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    kernel
-  
+  kernel
 
     
   </span>
@@ -1119,16 +1179,42 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_3">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_3">
             <span class="md-nav__icon md-icon"></span>
             
   
-    kernel
-  
+  kernel
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kernel/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  base
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1144,8 +1230,7 @@
   <span class="md-ellipsis">
     
   
-    Gaussian_random_walk
-  
+  Gaussian_random_walk
 
     
   </span>
@@ -1172,8 +1257,7 @@
   <span class="md-ellipsis">
     
   
-    HMC
-  
+  HMC
 
     
   </span>
@@ -1200,8 +1284,7 @@
   <span class="md-ellipsis">
     
   
-    MALA
-  
+  MALA
 
     
   </span>
@@ -1228,36 +1311,7 @@
   <span class="md-ellipsis">
     
   
-    NF_proposal
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../kernel/base/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    base
-  
+  NF_proposal
 
     
   </span>
@@ -1292,8 +1346,7 @@
   <span class="md-ellipsis">
     
   
-    logPDF
-  
+  logPDF
 
     
   </span>
@@ -1324,18 +1377,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_5" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_5" id="__nav_8_1_2_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_5" id="__nav_8_1_1_5_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    model
-  
+  model
 
     
   </span>
@@ -1345,13 +1397,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_2_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_5">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_5">
             <span class="md-nav__icon md-icon"></span>
             
   
-    model
-  
+  model
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1370,8 +1421,7 @@
   <span class="md-ellipsis">
     
   
-    common
-  
+  common
 
     
   </span>
@@ -1402,18 +1452,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_5_2" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_5_2" id="__nav_8_1_2_5_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_5_2" id="__nav_8_1_1_5_2_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    flowmatching
-  
+  flowmatching
 
     
   </span>
@@ -1423,13 +1472,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_2_5_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_5_2">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_1_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_5_2">
             <span class="md-nav__icon md-icon"></span>
             
   
-    flowmatching
-  
+  flowmatching
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1448,8 +1496,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -1488,18 +1535,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_5_3" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_5_3" id="__nav_8_1_2_5_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_5_3" id="__nav_8_1_1_5_3_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    nf_model
-  
+  nf_model
 
     
   </span>
@@ -1509,13 +1555,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_2_5_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_5_3">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_1_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_5_3">
             <span class="md-nav__icon md-icon"></span>
             
   
-    nf_model
-  
+  nf_model
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1534,8 +1579,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -1562,8 +1606,7 @@
   <span class="md-ellipsis">
     
   
-    realNVP
-  
+  realNVP
 
     
   </span>
@@ -1590,8 +1633,7 @@
   <span class="md-ellipsis">
     
   
-    rqSpline
-  
+  rqSpline
 
     
   </span>
@@ -1634,8 +1676,7 @@
   <span class="md-ellipsis">
     
   
-    optimizer
-  
+  optimizer
 
     
   </span>
@@ -1669,8 +1710,7 @@
   <span class="md-ellipsis">
     
   
-    states
-  
+  states
 
     
   </span>
@@ -1687,8 +1727,7 @@
   <span class="md-ellipsis">
     
   
-    states
-  
+  states
 
     
   </span>
@@ -1720,14 +1759,25 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="states">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flowMC.resource.states.State" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        State
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="State">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#flowMC.resource.states.TState" class="md-nav__link">
+  <a href="#flowMC.resource.states.State.__init__" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        TState
+        __init__
       </span>
     </span>
   </a>
@@ -1735,10 +1785,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#flowMC.resource.states.State" class="md-nav__link">
+  <a href="#flowMC.resource.states.State.update" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        State
+        update
       </span>
     </span>
   </a>
@@ -1785,18 +1835,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_2" id="__nav_8_1_2_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    resource_strategy_bundle
-  
+  resource_strategy_bundle
 
     
   </span>
@@ -1806,16 +1855,42 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_3">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_2">
             <span class="md-nav__icon md-icon"></span>
             
   
-    resource_strategy_bundle
-  
+  resource_strategy_bundle
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resource_strategy_bundle/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  base
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1831,8 +1906,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_GRW
-  
+  RQSpline_GRW
 
     
   </span>
@@ -1859,8 +1933,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_GRW_PT
-  
+  RQSpline_GRW_PT
 
     
   </span>
@@ -1887,8 +1960,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_HMC
-  
+  RQSpline_HMC
 
     
   </span>
@@ -1915,8 +1987,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_HMC_PT
-  
+  RQSpline_HMC_PT
 
     
   </span>
@@ -1943,8 +2014,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_MALA
-  
+  RQSpline_MALA
 
     
   </span>
@@ -1971,36 +2041,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_MALA_PT
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../resource_strategy_bundle/base/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    base
-  
+  RQSpline_MALA_PT
 
     
   </span>
@@ -2016,6 +2057,33 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Sampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Sampler
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2049,8 +2117,7 @@
   <span class="md-ellipsis">
     
   
-    strategy
-  
+  strategy
 
     
   </span>
@@ -2065,8 +2132,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    strategy
-  
+  strategy
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -2085,8 +2151,7 @@
   <span class="md-ellipsis">
     
   
-    adapt_step_size
-  
+  adapt_step_size
 
     
   </span>
@@ -2113,8 +2178,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -2141,8 +2205,7 @@
   <span class="md-ellipsis">
     
   
-    check_early_stop
-  
+  check_early_stop
 
     
   </span>
@@ -2169,8 +2232,7 @@
   <span class="md-ellipsis">
     
   
-    importance_sampling
-  
+  importance_sampling
 
     
   </span>
@@ -2197,8 +2259,7 @@
   <span class="md-ellipsis">
     
   
-    lambda_function
-  
+  lambda_function
 
     
   </span>
@@ -2225,8 +2286,7 @@
   <span class="md-ellipsis">
     
   
-    optimization
-  
+  optimization
 
     
   </span>
@@ -2253,8 +2313,7 @@
   <span class="md-ellipsis">
     
   
-    parallel_tempering
-  
+  parallel_tempering
 
     
   </span>
@@ -2281,8 +2340,7 @@
   <span class="md-ellipsis">
     
   
-    sequential_monte_carlo
-  
+  sequential_monte_carlo
 
     
   </span>
@@ -2309,8 +2367,7 @@
   <span class="md-ellipsis">
     
   
-    take_steps
-  
+  take_steps
 
     
   </span>
@@ -2337,8 +2394,7 @@
   <span class="md-ellipsis">
     
   
-    train_model
-  
+  train_model
 
     
   </span>
@@ -2365,8 +2421,7 @@
   <span class="md-ellipsis">
     
   
-    update_state
-  
+  update_state
 
     
   </span>
@@ -2415,8 +2470,7 @@
   <span class="md-ellipsis">
     
   
-    utils
-  
+  utils
 
     
   </span>
@@ -2431,8 +2485,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    utils
-  
+  utils
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -2451,8 +2504,7 @@
   <span class="md-ellipsis">
     
   
-    logging
-  
+  logging
 
     
   </span>
@@ -2533,14 +2585,25 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="states">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flowMC.resource.states.State" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        State
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="State">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#flowMC.resource.states.TState" class="md-nav__link">
+  <a href="#flowMC.resource.states.State.__init__" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        TState
+        __init__
       </span>
     </span>
   </a>
@@ -2548,10 +2611,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#flowMC.resource.states.State" class="md-nav__link">
+  <a href="#flowMC.resource.states.State.update" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        State
+        update
       </span>
     </span>
   </a>
@@ -2587,13 +2650,10 @@
 
 
 
-<h3 id="flowMC.resource.states" class="doc doc-heading">
-            <code>flowMC.resource.states</code>
-
-
-<a href="#flowMC.resource.states" class="headerlink" title="Permanent link">¤</a></h3>
-
+<a id="flowMC.resource.states"></a>
     <div class="doc doc-contents first">
+
+
 
 
 
@@ -2612,37 +2672,17 @@
 
 
 
-<div class="doc doc-object doc-attribute">
-
-
-
-<h4 id="flowMC.resource.states.TState" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">TState</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;TState&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s1">&#39;State&#39;</span><span class="p">)</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.states.TState" class="headerlink" title="Permanent link">¤</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
 
 
 <div class="doc doc-object doc-class">
 
 
 
-<h4 id="flowMC.resource.states.State" class="doc doc-heading">
+<h3 id="flowMC.resource.states.State" class="doc doc-heading">
             <code>State</code>
 
 
-<a href="#flowMC.resource.states.State" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#flowMC.resource.states.State" class="headerlink" title="Permanent link">¤</a></h3>
 
 
     <div class="doc doc-contents ">
@@ -2668,6 +2708,37 @@ But not mass matrix of a kernel per se.</p>
 
 
 
+<p><span class="doc-section-title">Methods:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;fm&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;State&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.resource.states.State.__init__">__init__</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Initialize the state.</p>
+                </div>
+              </td>
+            </tr>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.resource.states.State.update">update</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Update the state with new data.</p>
+                </div>
+              </td>
+            </tr>
+      </tbody>
+    </table>
+
+
+
+
 
 
 <div class="doc doc-children">
@@ -2678,72 +2749,16 @@ But not mass matrix of a kernel per se.</p>
 
 
 
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.states.State.name" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">name</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.states.State.name" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.states.State.data" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.states.State.data" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
 
 
 
 <div class="doc doc-object doc-function">
 
 
-<h5 id="flowMC.resource.states.State.__repr__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__repr__</span><span class="p">()</span></code>
-
-<a href="#flowMC.resource.states.State.__repr__" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.states.State.__init__" class="doc doc-heading">
+<h4 id="flowMC.resource.states.State.__init__" class="doc doc-heading">
             <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">str</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;State&#39;</span><span class="p">)</span></code>
 
-<a href="#flowMC.resource.states.State.__init__" class="headerlink" title="Permanent link">¤</a></h5>
+<a href="#flowMC.resource.states.State.__init__" class="headerlink" title="Permanent link">¤</a></h4>
 
 
     <div class="doc doc-contents ">
@@ -2805,10 +2820,10 @@ But not mass matrix of a kernel per se.</p>
 <div class="doc doc-object doc-function">
 
 
-<h5 id="flowMC.resource.states.State.update" class="doc doc-heading">
+<h4 id="flowMC.resource.states.State.update" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">update</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">str</span><span class="p">])</span></code>
 
-<a href="#flowMC.resource.states.State.update" class="headerlink" title="Permanent link">¤</a></h5>
+<a href="#flowMC.resource.states.State.update" class="headerlink" title="Permanent link">¤</a></h4>
 
 
     <div class="doc doc-contents ">
@@ -2862,54 +2877,6 @@ But not mass matrix of a kernel per se.</p>
           </tr>
       </tbody>
     </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.states.State.print_parameters" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">print_parameters</span><span class="p">()</span></code>
-
-<a href="#flowMC.resource.states.State.print_parameters" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.states.State.save_resource" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">save_resource</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span></code>
-
-<a href="#flowMC.resource.states.State.save_resource" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.states.State.load_resource" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">load_resource</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TState</span></code>
-
-<a href="#flowMC.resource.states.State.load_resource" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
 
 
     </div>
@@ -2992,7 +2959,7 @@ But not mass matrix of a kernel per se.</p>
       <script id="__config" type="application/json">{"annotate":null,"base":"../../../..","features":["navigation.instant","navigation.tabs","navigation.top","toc.follow","header.autohide"],"search":"../../../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"default":"stable","provider":"mike"}}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.dbc0afdc.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.6e5f0216.min.js"></script>
       
         <script src="../../../../javascripts/mathjax.js"></script>
       
