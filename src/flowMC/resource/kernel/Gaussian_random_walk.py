@@ -64,7 +64,7 @@ class GaussianRandomWalk(ProposalBase):
         chain.
 
         Args:
-            rng_key (Key): Jax PRNGKey
+            rng_key (Key): JAX PRNGKey
             position (Float[Array, "n_dim"]): current position of the chain
             log_prob (Float[Array, "1"]): current log-probability of the chain
             data (PyTree): data to be passed to the logpdf function
@@ -112,6 +112,24 @@ class GaussianRandomWalk(ProposalBase):
         """
         diff = acceptance_rate - target_rate
         new_step_size = self.step_size * (1.0 + self.ADAPTATION_RATE * diff)
+        return tree_at(lambda k: k.step_size, self, new_step_size)
+
+    def get_effective_dim_profile(self) -> Float[Array, " n_dim"]:
+        """Return the current per-dim step size profile normalised to geometric mean 1."""
+        safe = jnp.maximum(self.step_size, jnp.finfo(self.step_size.dtype).eps)
+        log_step = jnp.log(safe)
+        return jnp.exp(log_step - jnp.mean(log_step))
+
+    def apply_per_dim_scaling(self, ratios: Float[Array, " n_dim"]) -> Self:
+        """Multiply step_size element-wise by ratios (returns a new GaussianRandomWalk).
+
+        Args:
+            ratios: Per-dimension multiplicative scaling factors, shape (n_dim,).
+
+        Returns:
+            GaussianRandomWalk: A new instance with updated step_size.
+        """
+        new_step_size = self.step_size * ratios
         return tree_at(lambda k: k.step_size, self, new_step_size)
 
     def print_parameters(self):

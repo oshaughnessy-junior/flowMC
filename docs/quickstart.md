@@ -39,9 +39,9 @@ bundle = RQSpline_MALA_Bundle(
 
 initial_position = jax.random.normal(key_1, shape=(n_chains, n_dims)) * 1
 sampler = Sampler(
-    n_dims,
-    n_chains,
-    key_2,
+    n_dim=n_dims,
+    n_chains=n_chains,
+    rng_key=key_2,
     resource_strategy_bundles=bundle,
 )
 
