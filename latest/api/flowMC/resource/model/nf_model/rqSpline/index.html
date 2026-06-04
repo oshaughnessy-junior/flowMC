@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../../../../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.36">
+      <meta name="generator" content="zensical-0.0.44">
     
     
       
@@ -36,7 +36,7 @@
       
         
       
-      <link rel="stylesheet" href="../../../../../../assets/stylesheets/modern/main.1e981d71.min.css">
+      <link rel="stylesheet" href="../../../../../../assets/stylesheets/modern/main.fba56155.min.css">
       
         
           
@@ -60,7 +60,7 @@
       
     
     
-    <script>__md_scope=new URL("../../../../../..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    <script>__md_scope=new URL("../../../../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
 
@@ -255,12 +255,37 @@
   
   
     
+      
+    
+    
     
       <li class="md-tabs__item">
         <a href="../../../../../../tutorials/" class="md-tabs__link">
           
   
   Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../../guides/" class="md-tabs__link">
+          
+  
+  Guides
 
         </a>
       </li>
@@ -304,25 +329,12 @@
   
   
   
-  
-    <li class="md-tabs__item">
-      <a href="../../../../../../development_guide/" class="md-tabs__link">
-        
-  
-  Development Guide
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
     
   
   
+    
+      
+    
     
     
       
@@ -332,16 +344,34 @@
     
   
   
+    
+      
+    
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+      
+    
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../../../Sampler/" class="md-tabs__link">
+        <a href="../../../base/" class="md-tabs__link">
           
   
-  API
+  Reference
 
         </a>
       </li>
+    
+  
+
     
   
 
@@ -408,8 +438,7 @@
   <span class="md-ellipsis">
     
   
-    Home
-  
+  Home
 
     
   </span>
@@ -435,8 +464,7 @@
   <span class="md-ellipsis">
     
   
-    Installation
-  
+  Installation
 
     
   </span>
@@ -462,8 +490,7 @@
   <span class="md-ellipsis">
     
   
-    Quick Start
-  
+  Quick Start
 
     
   </span>
@@ -503,8 +530,7 @@
   <span class="md-ellipsis">
     
   
-    Tutorials
-  
+  Tutorials
 
     
   </span>
@@ -519,8 +545,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Tutorials
-  
+  Tutorials
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -539,8 +564,7 @@
   <span class="md-ellipsis">
     
   
-    Tutorials
-  
+  Tutorials
 
     
   </span>
@@ -567,64 +591,7 @@
   <span class="md-ellipsis">
     
   
-    Step-by-Step Example
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../../../tutorials/bundles/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Bundles
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../../../tutorials/hyperparameters/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hyperparameter Reference
-  
+  Step-by-Step Example
 
     
   </span>
@@ -651,8 +618,7 @@
   <span class="md-ellipsis">
     
   
-    Parallel Tempering
-  
+  Parallel Tempering
 
     
   </span>
@@ -679,8 +645,7 @@
   <span class="md-ellipsis">
     
   
-    Custom Sampling Strategy
-  
+  Custom Sampling Strategy
 
     
   </span>
@@ -707,8 +672,7 @@
   <span class="md-ellipsis">
     
   
-    Training Normalizing Flows
-  
+  Training Normalizing Flows
 
     
   </span>
@@ -735,8 +699,170 @@
   <span class="md-ellipsis">
     
   
-    Training Flow Matching Models
+  Training Flow Matching Models
+
+    
+  </span>
   
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Guides
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Guides
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Guides
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../guides/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Architecture
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../guides/bundles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Bundles
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../guides/hyperparameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Hyperparameter Reference
 
     
   </span>
@@ -770,8 +896,7 @@
   <span class="md-ellipsis">
     
   
-    FAQ
-  
+  FAQ
 
     
   </span>
@@ -797,35 +922,7 @@
   <span class="md-ellipsis">
     
   
-    Contributing
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../../../development_guide/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Development Guide
-  
+  Contributing
 
     
   </span>
@@ -870,8 +967,7 @@
   <span class="md-ellipsis">
     
   
-    API
-  
+  Reference
 
     
   </span>
@@ -886,8 +982,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    API
-  
+  Reference
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -922,8 +1017,7 @@
   <span class="md-ellipsis">
     
   
-    flowMC
-  
+  flowMC
 
     
   </span>
@@ -938,39 +1032,10 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    flowMC
-  
+  flowMC
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../Sampler/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Sampler
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -992,18 +1057,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1" checked>
         
           
-          <label class="md-nav__link" for="__nav_8_1_2" id="__nav_8_1_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1" id="__nav_8_1_1_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    resource
-  
+  resource
 
     
   </span>
@@ -1013,13 +1077,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_8_1_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_1_1">
             <span class="md-nav__icon md-icon"></span>
             
   
-    resource
-  
+  resource
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1038,8 +1101,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -1066,8 +1128,7 @@
   <span class="md-ellipsis">
     
   
-    buffers
-  
+  buffers
 
     
   </span>
@@ -1098,18 +1159,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_3" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_3" id="__nav_8_1_2_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_3" id="__nav_8_1_1_3_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    kernel
-  
+  kernel
 
     
   </span>
@@ -1119,16 +1179,42 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_3">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_3">
             <span class="md-nav__icon md-icon"></span>
             
   
-    kernel
-  
+  kernel
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kernel/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  base
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1144,8 +1230,7 @@
   <span class="md-ellipsis">
     
   
-    Gaussian_random_walk
-  
+  Gaussian_random_walk
 
     
   </span>
@@ -1172,8 +1257,7 @@
   <span class="md-ellipsis">
     
   
-    HMC
-  
+  HMC
 
     
   </span>
@@ -1200,8 +1284,7 @@
   <span class="md-ellipsis">
     
   
-    MALA
-  
+  MALA
 
     
   </span>
@@ -1228,36 +1311,7 @@
   <span class="md-ellipsis">
     
   
-    NF_proposal
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../kernel/base/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    base
-  
+  NF_proposal
 
     
   </span>
@@ -1292,8 +1346,7 @@
   <span class="md-ellipsis">
     
   
-    logPDF
-  
+  logPDF
 
     
   </span>
@@ -1326,18 +1379,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_5" id="__nav_8_1_2_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_5" id="__nav_8_1_1_5_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    model
-  
+  model
 
     
   </span>
@@ -1347,13 +1399,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_2_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_8_1_2_5">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_1_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_1_1_5">
             <span class="md-nav__icon md-icon"></span>
             
   
-    model
-  
+  model
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1372,8 +1423,7 @@
   <span class="md-ellipsis">
     
   
-    common
-  
+  common
 
     
   </span>
@@ -1404,18 +1454,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_5_2" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_5_2" id="__nav_8_1_2_5_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_5_2" id="__nav_8_1_1_5_2_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    flowmatching
-  
+  flowmatching
 
     
   </span>
@@ -1425,13 +1474,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_2_5_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_5_2">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_1_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_5_2">
             <span class="md-nav__icon md-icon"></span>
             
   
-    flowmatching
-  
+  flowmatching
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1450,8 +1498,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -1492,18 +1539,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_5_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_5_3" id="__nav_8_1_2_5_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_5_3" id="__nav_8_1_1_5_3_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    nf_model
-  
+  nf_model
 
     
   </span>
@@ -1513,13 +1559,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_2_5_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_8_1_2_5_3">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_1_5_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_1_1_5_3">
             <span class="md-nav__icon md-icon"></span>
             
   
-    nf_model
-  
+  nf_model
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1538,8 +1583,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -1566,8 +1610,7 @@
   <span class="md-ellipsis">
     
   
-    realNVP
-  
+  realNVP
 
     
   </span>
@@ -1601,8 +1644,7 @@
   <span class="md-ellipsis">
     
   
-    rqSpline
-  
+  rqSpline
 
     
   </span>
@@ -1619,8 +1661,7 @@
   <span class="md-ellipsis">
     
   
-    rqSpline
-  
+  rqSpline
 
     
   </span>
@@ -1652,21 +1693,9 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="rqSpline">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        RQSpline
-      </span>
-    </span>
-  </a>
-  
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1675,13 +1704,14 @@
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="MaskedCouplingRQSpline">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#flowMC.resource.model.nf_model.rqSpline._normalize_bin_sizes" class="md-nav__link">
+  <a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.__init__" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        _normalize_bin_sizes
+        __init__
       </span>
     </span>
   </a>
@@ -1689,10 +1719,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#flowMC.resource.model.nf_model.rqSpline._normalize_knot_slopes" class="md-nav__link">
+  <a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.inverse" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        _normalize_knot_slopes
+        inverse
       </span>
     </span>
   </a>
@@ -1700,32 +1730,38 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#flowMC.resource.model.nf_model.rqSpline._rational_quadratic_spline_fwd" class="md-nav__link">
+  <a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.log_prob" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        _rational_quadratic_spline_fwd
+        log_prob
       </span>
     </span>
   </a>
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#flowMC.resource.model.nf_model.rqSpline._safe_quadratic_root" class="md-nav__link">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        _safe_quadratic_root
+        RQSpline
       </span>
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="RQSpline">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#flowMC.resource.model.nf_model.rqSpline._rational_quadratic_spline_inv" class="md-nav__link">
+  <a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.conditioner" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        _rational_quadratic_spline_inv
+        conditioner
       </span>
     </span>
   </a>
@@ -1776,8 +1812,7 @@
   <span class="md-ellipsis">
     
   
-    optimizer
-  
+  optimizer
 
     
   </span>
@@ -1804,8 +1839,7 @@
   <span class="md-ellipsis">
     
   
-    states
-  
+  states
 
     
   </span>
@@ -1844,18 +1878,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_2" id="__nav_8_1_2_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    resource_strategy_bundle
-  
+  resource_strategy_bundle
 
     
   </span>
@@ -1865,16 +1898,42 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_3">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_2">
             <span class="md-nav__icon md-icon"></span>
             
   
-    resource_strategy_bundle
-  
+  resource_strategy_bundle
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../resource_strategy_bundle/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  base
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1890,8 +1949,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_GRW
-  
+  RQSpline_GRW
 
     
   </span>
@@ -1918,8 +1976,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_GRW_PT
-  
+  RQSpline_GRW_PT
 
     
   </span>
@@ -1946,8 +2003,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_HMC
-  
+  RQSpline_HMC
 
     
   </span>
@@ -1974,8 +2030,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_HMC_PT
-  
+  RQSpline_HMC_PT
 
     
   </span>
@@ -2002,8 +2057,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_MALA
-  
+  RQSpline_MALA
 
     
   </span>
@@ -2030,36 +2084,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_MALA_PT
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../resource_strategy_bundle/base/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    base
-  
+  RQSpline_MALA_PT
 
     
   </span>
@@ -2075,6 +2100,33 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Sampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Sampler
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2108,8 +2160,7 @@
   <span class="md-ellipsis">
     
   
-    strategy
-  
+  strategy
 
     
   </span>
@@ -2124,8 +2175,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    strategy
-  
+  strategy
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -2144,8 +2194,7 @@
   <span class="md-ellipsis">
     
   
-    adapt_step_size
-  
+  adapt_step_size
 
     
   </span>
@@ -2172,8 +2221,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -2200,8 +2248,7 @@
   <span class="md-ellipsis">
     
   
-    check_early_stop
-  
+  check_early_stop
 
     
   </span>
@@ -2228,8 +2275,7 @@
   <span class="md-ellipsis">
     
   
-    importance_sampling
-  
+  importance_sampling
 
     
   </span>
@@ -2256,8 +2302,7 @@
   <span class="md-ellipsis">
     
   
-    lambda_function
-  
+  lambda_function
 
     
   </span>
@@ -2284,8 +2329,7 @@
   <span class="md-ellipsis">
     
   
-    optimization
-  
+  optimization
 
     
   </span>
@@ -2312,8 +2356,7 @@
   <span class="md-ellipsis">
     
   
-    parallel_tempering
-  
+  parallel_tempering
 
     
   </span>
@@ -2340,8 +2383,7 @@
   <span class="md-ellipsis">
     
   
-    sequential_monte_carlo
-  
+  sequential_monte_carlo
 
     
   </span>
@@ -2368,8 +2410,7 @@
   <span class="md-ellipsis">
     
   
-    take_steps
-  
+  take_steps
 
     
   </span>
@@ -2396,8 +2437,7 @@
   <span class="md-ellipsis">
     
   
-    train_model
-  
+  train_model
 
     
   </span>
@@ -2424,8 +2464,7 @@
   <span class="md-ellipsis">
     
   
-    update_state
-  
+  update_state
 
     
   </span>
@@ -2474,8 +2513,7 @@
   <span class="md-ellipsis">
     
   
-    utils
-  
+  utils
 
     
   </span>
@@ -2490,8 +2528,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    utils
-  
+  utils
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -2510,8 +2547,7 @@
   <span class="md-ellipsis">
     
   
-    logging
-  
+  logging
 
     
   </span>
@@ -2592,21 +2628,9 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="rqSpline">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        RQSpline
-      </span>
-    </span>
-  </a>
-  
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2615,13 +2639,14 @@
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="MaskedCouplingRQSpline">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#flowMC.resource.model.nf_model.rqSpline._normalize_bin_sizes" class="md-nav__link">
+  <a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.__init__" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        _normalize_bin_sizes
+        __init__
       </span>
     </span>
   </a>
@@ -2629,10 +2654,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#flowMC.resource.model.nf_model.rqSpline._normalize_knot_slopes" class="md-nav__link">
+  <a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.inverse" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        _normalize_knot_slopes
+        inverse
       </span>
     </span>
   </a>
@@ -2640,32 +2665,38 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#flowMC.resource.model.nf_model.rqSpline._rational_quadratic_spline_fwd" class="md-nav__link">
+  <a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.log_prob" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        _rational_quadratic_spline_fwd
+        log_prob
       </span>
     </span>
   </a>
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#flowMC.resource.model.nf_model.rqSpline._safe_quadratic_root" class="md-nav__link">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        _safe_quadratic_root
+        RQSpline
       </span>
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="RQSpline">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#flowMC.resource.model.nf_model.rqSpline._rational_quadratic_spline_inv" class="md-nav__link">
+  <a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.conditioner" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        _rational_quadratic_spline_inv
+        conditioner
       </span>
     </span>
   </a>
@@ -2701,13 +2732,10 @@
 
 
 
-<h3 id="flowMC.resource.model.nf_model.rqSpline" class="doc doc-heading">
-            <code>flowMC.resource.model.nf_model.rqSpline</code>
-
-
-<a href="#flowMC.resource.model.nf_model.rqSpline" class="headerlink" title="Permanent link">¤</a></h3>
-
+<a id="flowMC.resource.model.nf_model.rqSpline"></a>
     <div class="doc doc-contents first">
+
+
 
 
 
@@ -2732,11 +2760,402 @@
 
 
 
-<h4 id="flowMC.resource.model.nf_model.rqSpline.RQSpline" class="doc doc-heading">
+<h3 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline" class="doc doc-heading">
+            <code>MaskedCouplingRQSpline</code>
+
+
+<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline" class="headerlink" title="Permanent link">¤</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/#flowMC.resource.model.nf_model.base.NFModel">NFModel</a></code></p>
+
+
+
+        <p>Rational quadratic spline normalizing flow model using distrax.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_features</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of features in the data.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_layers</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of layers in the conditioner.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>hidden_size</code>
+            </td>
+            <td>
+                  <code><span title="list">list</span>[<span title="int">int</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Hidden size of the conditioner.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>num_bins</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of bins in the spline.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>key</code>
+            </td>
+            <td>
+                  <code><span title="jaxtyping.Key">Key</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Random key for initialization.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>spline_range</code>
+            </td>
+            <td>
+                  <code><span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Range of the spline. Defaults to (-10.0, 10.0).</p>
+              </div>
+            </td>
+            <td>
+                  <code>(-10.0, 10.0)</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="properties" open>
+  <summary>Properties</summary>
+  <p>n_features (int) :  Number of features in the data.
+data_mean (Array) : Mean of the data.
+data_cov (Array) : Covariance of the data.</p>
+</details>
+
+
+
+
+
+
+
+
+<p><span class="doc-section-title">Methods:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;fm&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_features&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_layers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hidden_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_bins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spline_range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;10.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;10.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kwargs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.__init__">__init__</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Args:</p>
+                </div>
+              </td>
+            </tr>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;inverse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;condition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_condition&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.inverse">inverse</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>From latent space to data space.</p>
+                </div>
+              </td>
+            </tr>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;log_prob&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;n_sample n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_sample&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.log_prob">log_prob</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>From data space to latent space.</p>
+                </div>
+              </td>
+            </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.__init__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_layers</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">num_bins</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">spline_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.__init__" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_features</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dimensionality of the data.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_layers</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of masked coupling layers.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>hidden_size</code>
+            </td>
+            <td>
+                  <code><span title="list">list</span>[<span title="int">int</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Hidden layer widths for the conditioner MLP.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>num_bins</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of rational-quadratic spline bins.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>key</code>
+            </td>
+            <td>
+                  <code><span title="jaxtyping.Key">Key</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>JAX PRNGKey for parameter initialisation.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>spline_range</code>
+            </td>
+            <td>
+                  <code><span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><code>(min, max)</code> range of the spline.
+Inputs outside this range are mapped linearly. Defaults to <code>(-10.0, 10.0)</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>(-10.0, 10.0)</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>**kwargs</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optional overrides:
+- <code>base_dist</code> (Distribution): Custom base distribution.
+  Defaults to a standard Gaussian.
+- <code>data_mean</code> (Array): Initial data mean for whitening.
+  Updated during training.
+- <code>data_cov</code> (Array): Initial data covariance for whitening.
+  Updated during training.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.inverse" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">inverse</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">condition</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_condition&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">]</span></code>
+
+<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.inverse" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>From latent space to data space.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.log_prob" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">log_prob</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_sample n_dim&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_sample&#39;</span><span class="p">]</span></code>
+
+<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.log_prob" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>From data space to latent space.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="flowMC.resource.model.nf_model.rqSpline.RQSpline" class="doc doc-heading">
             <code>RQSpline</code>
 
 
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline" class="headerlink" title="Permanent link">¤</a></h3>
 
 
     <div class="doc doc-contents ">
@@ -2755,6 +3174,37 @@
 
 
 
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;conditioner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MLP&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;conditioner&lt;/span&gt;&lt;/code&gt;
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-instance-attribute&quot;&gt;&lt;code&gt;instance-attribute&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="./#flowMC.resource.model.nf_model.rqSpline.RQSpline.conditioner">conditioner</a></code></td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" href="../../common/#flowMC.resource.model.common.MLP">MLP</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A rational-quadratic spline bijection.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
 <div class="doc doc-children">
 
 
@@ -2767,234 +3217,14 @@
 
 
 
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.range_min" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">range_min</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.range_min" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.range_max" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">range_max</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.range_max" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.num_bins" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">num_bins</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.num_bins" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.min_bin_size" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">min_bin_size</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.min_bin_size" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.min_knot_slope" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">min_knot_slope</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.min_knot_slope" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.dtype" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">dtype</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.dtype" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline._range_min" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_range_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">range_min</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline._range_min" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline._range_max" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_range_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">range_max</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline._range_max" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline._min_bin_size" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_min_bin_size</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">min_bin_size</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline._min_bin_size" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline._min_knot_slope" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_min_knot_slope</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">min_knot_slope</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline._min_knot_slope" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline._num_bins" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_num_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">conditioner</span><span class="o">.</span><span class="n">n_output</span> <span class="o">/</span> <span class="n">conditioner</span><span class="o">.</span><span class="n">n_input</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">3</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline._num_bins" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.conditioner" class="doc doc-heading">
+<h4 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.conditioner" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">conditioner</span><span class="p">:</span> <span class="n">MLP</span> <span class="o">=</span> <span class="n">conditioner</span></code>
 
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
   </span>
 
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.conditioner" class="headerlink" title="Permanent link">¤</a></h5>
+<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.conditioner" class="headerlink" title="Permanent link">¤</a></h4>
 
 
     <div class="doc doc-contents ">
@@ -3160,86 +3390,6 @@ the parameters of the spline.</p>
 
 
 
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.__init__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">conditioner</span><span class="p">:</span> <span class="n">MLP</span><span class="p">,</span> <span class="n">range_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">range_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">min_bin_size</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">,</span> <span class="n">min_knot_slope</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">)</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.__init__" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.get_params" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">get_params</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_condition&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_param&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_param&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_param&#39;</span><span class="p">]]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.get_params" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.__call__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__call__</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">condition</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_condition&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.__call__" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.forward" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">forward</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">condition</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_condition&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.forward" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.RQSpline.inverse" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">inverse</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">condition</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_condition&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.RQSpline.inverse" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
 
 
   </div>
@@ -3248,1414 +3398,6 @@ the parameters of the spline.</p>
 
 </div>
 
-<div class="doc doc-object doc-class">
-
-
-
-<h4 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline" class="doc doc-heading">
-            <code>MaskedCouplingRQSpline</code>
-
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline" class="headerlink" title="Permanent link">¤</a></h4>
-
-
-    <div class="doc doc-contents ">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" href="../base/#flowMC.resource.model.nf_model.base.NFModel">NFModel</a></code></p>
-
-
-
-        <p>Rational quadratic spline normalizing flow model using distrax.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>n_features</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of features in the data.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>n_layers</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of layers in the conditioner.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>hidden_size</code>
-            </td>
-            <td>
-                  <code><span title="list">list</span>[<span title="int">int</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Hidden size of the conditioner.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>num_bins</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of bins in the spline.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>key</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Key">Key</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Random key for initialization.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>spline_range</code>
-            </td>
-            <td>
-                  <code><span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Range of the spline. Defaults to (-10.0, 10.0).</p>
-              </div>
-            </td>
-            <td>
-                  <code>(-10.0, 10.0)</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-<details class="properties" open>
-  <summary>Properties</summary>
-  <p>n_features (int) :  Number of features in the data.
-data_mean (Array) : Mean of the data.
-data_cov (Array) : Covariance of the data.</p>
-</details>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.base_dist" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">base_dist</span><span class="p">:</span> <span class="n">Distribution</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.base_dist" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline._data_mean" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_data_mean</span> <span class="o">=</span> <span class="n">data_mean</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline._data_mean" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline._data_cov" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_data_cov</span> <span class="o">=</span> <span class="n">data_cov</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline._data_cov" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline._n_features" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_n_features</span> <span class="o">=</span> <span class="n">n_features</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline._n_features" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.layers" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">layers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Bijection</span><span class="p">]</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">filter_vmap</span><span class="p">(</span><span class="n">make_layer</span><span class="p">)(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_layers</span><span class="p">),</span> <span class="n">keys</span><span class="p">)</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.layers" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.save_resource" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">save_resource</span> <span class="o">=</span> <span class="n">save_model</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.save_resource" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.load_resource" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">load_resource</span> <span class="o">=</span> <span class="n">load_model</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.load_resource" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.n_features" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">n_features</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.n_features" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.data_mean" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">data_mean</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.data_mean" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.data_cov" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">data_cov</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.data_cov" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.__repr__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__repr__</span><span class="p">()</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.__repr__" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.__init__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_layers</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">num_bins</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">spline_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.__init__" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>n_features</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Dimensionality of the data.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>n_layers</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of masked coupling layers.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>hidden_size</code>
-            </td>
-            <td>
-                  <code><span title="list">list</span>[<span title="int">int</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Hidden layer widths for the conditioner MLP.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>num_bins</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of rational-quadratic spline bins.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>key</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Key">Key</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>JAX PRNGKey for parameter initialisation.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>spline_range</code>
-            </td>
-            <td>
-                  <code><span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p><code>(min, max)</code> range of the spline.
-Inputs outside this range are mapped linearly. Defaults to <code>(-10.0, 10.0)</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>(-10.0, 10.0)</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>**kwargs</code>
-            </td>
-            <td>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Optional overrides:
-- <code>base_dist</code> (Distribution): Custom base distribution.
-  Defaults to a standard Gaussian.
-- <code>data_mean</code> (Array): Initial data mean for whitening.
-  Updated during training.
-- <code>data_cov</code> (Array): Initial data covariance for whitening.
-  Updated during training.</p>
-              </div>
-            </td>
-            <td>
-                  <code>{}</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.__call__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__call__</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.__call__" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.forward" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">forward</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Key</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_condition&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.forward" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.inverse" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">inverse</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">condition</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_condition&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.inverse" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-        <p>From latent space to data space.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.sample" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">sample</span><span class="p">(</span><span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_samples n_dim&#39;</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.sample" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.log_prob" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">log_prob</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_sample n_dim&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_sample&#39;</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.log_prob" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-        <p>From data space to latent space.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.print_parameters" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">print_parameters</span><span class="p">()</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.print_parameters" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.save_model" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">save_model</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.save_model" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.load_model" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">load_model</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.load_model" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.loss_fn" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">loss_fn</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_batch n_dim&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Float</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.loss_fn" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.train_step" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">train_step</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_batch n_dim&#39;</span><span class="p">],</span> <span class="n">optim</span><span class="p">:</span> <span class="n">optax</span><span class="o">.</span><span class="n">GradientTransformation</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">optax</span><span class="o">.</span><span class="n">OptState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Self</span><span class="p">,</span> <span class="n">optax</span><span class="o">.</span><span class="n">OptState</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.train_step" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Train for a single step.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>x</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Training data.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>optim</code>
-            </td>
-            <td>
-                  <code><span title="optax.GradientTransformation">GradientTransformation</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Optimizer.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>state</code>
-            </td>
-            <td>
-                  <code><span title="optax.OptState">OptState</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Optimizer state.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-<th>Name</th>          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-<td><code>tuple</code></td>            <td>
-                  <code><span title="tuple">tuple</span>[<span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, 1], <span title="typing_extensions.Self">Self</span>, <span title="optax.OptState">OptState</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>(loss, model, state).</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.train_epoch" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">train_epoch</span><span class="p">(</span><span class="n">rng</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">optim</span><span class="p">:</span> <span class="n">optax</span><span class="o">.</span><span class="n">GradientTransformation</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">optax</span><span class="o">.</span><span class="n">OptState</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_example n_dim&#39;</span><span class="p">],</span> <span class="n">batch_size</span><span class="p">:</span> <span class="n">Float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">,</span> <span class="n">Self</span><span class="p">,</span> <span class="n">optax</span><span class="o">.</span><span class="n">OptState</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.train_epoch" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Train for a single epoch.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.train" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="n">rng</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">optim</span><span class="p">:</span> <span class="n">optax</span><span class="o">.</span><span class="n">GradientTransformation</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">optax</span><span class="o">.</span><span class="n">OptState</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Key</span><span class="p">,</span> <span class="n">Self</span><span class="p">,</span> <span class="n">optax</span><span class="o">.</span><span class="n">OptState</span><span class="p">,</span> <span class="n">Array</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.train" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Train a normalizing flow model.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>rng</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Key">Key</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>JAX PRNGKey.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>data</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Training data.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>optim</code>
-            </td>
-            <td>
-                  <code><span title="optax.GradientTransformation">GradientTransformation</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Optimizer.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>state</code>
-            </td>
-            <td>
-                  <code><span title="optax.OptState">OptState</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Optimizer state.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>num_epochs</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of epochs to train for.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>batch_size</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Batch size.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>verbose</code>
-            </td>
-            <td>
-                  <code><span title="bool">bool</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Whether to print progress.</p>
-              </div>
-            </td>
-            <td>
-                  <code>True</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-<th>Name</th>          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-<td><code>rng</code></td>            <td>
-                  <code><span title="jaxtyping.Key">Key</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Updated JAX PRNGKey.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-<td><code>model</code></td>            <td>
-                  <code><span title="typing_extensions.Self">Self</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Best model found during training.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-<td><code>state</code></td>            <td>
-                  <code><span title="optax.OptState">OptState</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Optimizer state corresponding to the best model.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-<td><code>loss_values</code></td>            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Loss values for each epoch.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h5 id="flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.to_precision" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">to_precision</span><span class="p">(</span><span class="n">precision</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;float32&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline.MaskedCouplingRQSpline.to_precision" class="headerlink" title="Permanent link">¤</a></h5>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Convert all parameters to a given precision.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This function is <strong>experimental</strong> and may change in the future.</p>
-</div>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>precision</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Precision to convert to.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;float32&#39;</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-<th>Name</th>          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-<td><code>Self</code></td>            <td>
-                  <code><span title="typing_extensions.Self">Self</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Model with parameters converted to the given precision.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="flowMC.resource.model.nf_model.rqSpline._normalize_bin_sizes" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_normalize_bin_sizes</span><span class="p">(</span><span class="n">unnormalized_bin_sizes</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">total_size</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">min_bin_size</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline._normalize_bin_sizes" class="headerlink" title="Permanent link">¤</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Make bin sizes sum to <code>total_size</code> and be no less than <code>min_bin_size</code>.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="flowMC.resource.model.nf_model.rqSpline._normalize_knot_slopes" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_normalize_knot_slopes</span><span class="p">(</span><span class="n">unnormalized_knot_slopes</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">min_knot_slope</span><span class="p">:</span> <span class="n">Float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline._normalize_knot_slopes" class="headerlink" title="Permanent link">¤</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Make knot slopes be no less than <code>min_knot_slope</code>.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="flowMC.resource.model.nf_model.rqSpline._rational_quadratic_spline_fwd" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_rational_quadratic_spline_fwd</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">x_pos</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">knot_slopes</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline._rational_quadratic_spline_fwd" class="headerlink" title="Permanent link">¤</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Applies a rational-quadratic spline to a scalar.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>x</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A scalar (0-dimensional array). The scalar <code>x</code> can be any real number; it
-will be transformed by the spline if it's in the closed interval
-<code>[x_pos[0], x_pos[-1]]</code>, and it will be transformed linearly if it's
-outside that interval.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>x_pos</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Array of shape [num_bins + 1], the bin boundaries on the x axis.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>y_pos</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Array of shape [num_bins + 1], the bin boundaries on the y axis.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>knot_slopes</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Array of shape [num_bins + 1], the slopes at the knot points.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>tuple[Array, Array]: A tuple of two scalars: the output of the transformation</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>and the log of the absolute first derivative at <code>x</code>.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="flowMC.resource.model.nf_model.rqSpline._safe_quadratic_root" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_safe_quadratic_root</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline._safe_quadratic_root" class="headerlink" title="Permanent link">¤</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Implement a numerically stable version of the quadratic formula.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="flowMC.resource.model.nf_model.rqSpline._rational_quadratic_spline_inv" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">_rational_quadratic_spline_inv</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">x_pos</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">knot_slopes</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">]</span></code>
-
-<a href="#flowMC.resource.model.nf_model.rqSpline._rational_quadratic_spline_inv" class="headerlink" title="Permanent link">¤</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Applies the inverse of a rational-quadratic spline to a scalar.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>y</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A scalar (0-dimensional array). The scalar <code>y</code> can be any real number; it
-will be transformed by the spline if it's in the closed interval
-<code>[y_pos[0], y_pos[-1]]</code>, and it will be transformed linearly if it's
-outside that interval.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>x_pos</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Array of shape [num_bins + 1], the bin boundaries on the x axis.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>y_pos</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Array of shape [num_bins + 1], the bin boundaries on the y axis.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>knot_slopes</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Array of shape [num_bins + 1], the slopes at the knot points.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>tuple[Array, Array]: A tuple of two scalars: the output of the inverse</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="jaxtyping.Array">Array</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>transformation and the log of the absolute first derivative of the inverse</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="tuple">tuple</span>[<span title="jaxtyping.Array">Array</span>, <span title="jaxtyping.Array">Array</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>at <code>y</code>.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
 
 
 
@@ -4724,7 +3466,7 @@ outside that interval.</p>
       <script id="__config" type="application/json">{"annotate":null,"base":"../../../../../..","features":["navigation.instant","navigation.tabs","navigation.top","toc.follow","header.autohide"],"search":"../../../../../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"default":"stable","provider":"mike"}}</script>
     
     
-      <script src="../../../../../../assets/javascripts/bundle.dbc0afdc.min.js"></script>
+      <script src="../../../../../../assets/javascripts/bundle.6e5f0216.min.js"></script>
       
         <script src="../../../../../../javascripts/mathjax.js"></script>
       

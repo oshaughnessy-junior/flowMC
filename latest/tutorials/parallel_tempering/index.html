@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://gw-jax-team.github.io/flowMC/latest/tutorials/parallel_tempering/">
       
       
-        <link rel="prev" href="../hyperparameters/">
+        <link rel="prev" href="../dualmoon/">
       
       
         <link rel="next" href="../custom_strategy/">
@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.36">
+      <meta name="generator" content="zensical-0.0.44">
     
     
       
@@ -36,7 +36,7 @@
       
         
       
-      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.1e981d71.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.fba56155.min.css">
       
         
           
@@ -60,7 +60,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
 
@@ -257,12 +257,37 @@
   
   
     
+      
+    
+    
     
       <li class="md-tabs__item md-tabs__item--active">
         <a href="../" class="md-tabs__link">
           
   
   Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/" class="md-tabs__link">
+          
+  
+  Guides
 
         </a>
       </li>
@@ -307,22 +332,9 @@
   
   
   
-    <li class="md-tabs__item">
-      <a href="../../development_guide/" class="md-tabs__link">
-        
-  
-  Development Guide
-
-      </a>
-    </li>
-  
-
+    
       
-        
-  
-  
-  
-  
+    
     
     
       
@@ -330,16 +342,32 @@
   
   
   
+    
+      
+    
+    
+    
+      
+  
+  
+  
+  
+    
+      
+    
     
     
       <li class="md-tabs__item">
-        <a href="../../api/flowMC/Sampler/" class="md-tabs__link">
+        <a href="../../api/flowMC/resource/base/" class="md-tabs__link">
           
   
-  API
+  Reference
 
         </a>
       </li>
+    
+  
+
     
   
 
@@ -406,8 +434,7 @@
   <span class="md-ellipsis">
     
   
-    Home
-  
+  Home
 
     
   </span>
@@ -433,8 +460,7 @@
   <span class="md-ellipsis">
     
   
-    Installation
-  
+  Installation
 
     
   </span>
@@ -460,8 +486,7 @@
   <span class="md-ellipsis">
     
   
-    Quick Start
-  
+  Quick Start
 
     
   </span>
@@ -506,8 +531,7 @@
   <span class="md-ellipsis">
     
   
-    Tutorials
-  
+  Tutorials
 
     
   </span>
@@ -522,8 +546,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Tutorials
-  
+  Tutorials
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -542,8 +565,7 @@
   <span class="md-ellipsis">
     
   
-    Tutorials
-  
+  Tutorials
 
     
   </span>
@@ -570,64 +592,7 @@
   <span class="md-ellipsis">
     
   
-    Step-by-Step Example
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../bundles/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Bundles
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hyperparameters/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hyperparameter Reference
-  
+  Step-by-Step Example
 
     
   </span>
@@ -663,8 +628,7 @@
   <span class="md-ellipsis">
     
   
-    Parallel Tempering
-  
+  Parallel Tempering
 
     
   </span>
@@ -692,8 +656,7 @@
   <span class="md-ellipsis">
     
   
-    Custom Sampling Strategy
-  
+  Custom Sampling Strategy
 
     
   </span>
@@ -720,8 +683,7 @@
   <span class="md-ellipsis">
     
   
-    Training Normalizing Flows
-  
+  Training Normalizing Flows
 
     
   </span>
@@ -748,8 +710,170 @@
   <span class="md-ellipsis">
     
   
-    Training Flow Matching Models
+  Training Flow Matching Models
+
+    
+  </span>
   
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Guides
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Guides
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Guides
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Architecture
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/bundles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Bundles
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/hyperparameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Hyperparameter Reference
 
     
   </span>
@@ -783,8 +907,7 @@
   <span class="md-ellipsis">
     
   
-    FAQ
-  
+  FAQ
 
     
   </span>
@@ -810,35 +933,7 @@
   <span class="md-ellipsis">
     
   
-    Contributing
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../development_guide/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Development Guide
-  
+  Contributing
 
     
   </span>
@@ -878,8 +973,7 @@
   <span class="md-ellipsis">
     
   
-    API
-  
+  Reference
 
     
   </span>
@@ -894,8 +988,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    API
-  
+  Reference
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -928,8 +1021,7 @@
   <span class="md-ellipsis">
     
   
-    flowMC
-  
+  flowMC
 
     
   </span>
@@ -944,39 +1036,10 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    flowMC
-  
+  flowMC
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../api/flowMC/Sampler/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Sampler
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -996,18 +1059,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2" id="__nav_8_1_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1" id="__nav_8_1_1_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    resource
-  
+  resource
 
     
   </span>
@@ -1017,13 +1079,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1">
             <span class="md-nav__icon md-icon"></span>
             
   
-    resource
-  
+  resource
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1042,8 +1103,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -1070,8 +1130,7 @@
   <span class="md-ellipsis">
     
   
-    buffers
-  
+  buffers
 
     
   </span>
@@ -1102,18 +1161,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_3" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_3" id="__nav_8_1_2_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_3" id="__nav_8_1_1_3_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    kernel
-  
+  kernel
 
     
   </span>
@@ -1123,16 +1181,42 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_3">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_3">
             <span class="md-nav__icon md-icon"></span>
             
   
-    kernel
-  
+  kernel
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource/kernel/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  base
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1148,8 +1232,7 @@
   <span class="md-ellipsis">
     
   
-    Gaussian_random_walk
-  
+  Gaussian_random_walk
 
     
   </span>
@@ -1176,8 +1259,7 @@
   <span class="md-ellipsis">
     
   
-    HMC
-  
+  HMC
 
     
   </span>
@@ -1204,8 +1286,7 @@
   <span class="md-ellipsis">
     
   
-    MALA
-  
+  MALA
 
     
   </span>
@@ -1232,36 +1313,7 @@
   <span class="md-ellipsis">
     
   
-    NF_proposal
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../api/flowMC/resource/kernel/base/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    base
-  
+  NF_proposal
 
     
   </span>
@@ -1296,8 +1348,7 @@
   <span class="md-ellipsis">
     
   
-    logPDF
-  
+  logPDF
 
     
   </span>
@@ -1328,18 +1379,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_5" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_5" id="__nav_8_1_2_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_5" id="__nav_8_1_1_5_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    model
-  
+  model
 
     
   </span>
@@ -1349,13 +1399,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_2_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_5">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_8_1_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_5">
             <span class="md-nav__icon md-icon"></span>
             
   
-    model
-  
+  model
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1374,8 +1423,7 @@
   <span class="md-ellipsis">
     
   
-    common
-  
+  common
 
     
   </span>
@@ -1406,18 +1454,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_5_2" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_5_2" id="__nav_8_1_2_5_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_5_2" id="__nav_8_1_1_5_2_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    flowmatching
-  
+  flowmatching
 
     
   </span>
@@ -1427,13 +1474,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_2_5_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_5_2">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_1_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_5_2">
             <span class="md-nav__icon md-icon"></span>
             
   
-    flowmatching
-  
+  flowmatching
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1452,8 +1498,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -1492,18 +1537,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2_5_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_1_5_3" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_2_5_3" id="__nav_8_1_2_5_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_1_5_3" id="__nav_8_1_1_5_3_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    nf_model
-  
+  nf_model
 
     
   </span>
@@ -1513,13 +1557,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_2_5_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_2_5_3">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_8_1_1_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_1_5_3">
             <span class="md-nav__icon md-icon"></span>
             
   
-    nf_model
-  
+  nf_model
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1538,8 +1581,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -1566,8 +1608,7 @@
   <span class="md-ellipsis">
     
   
-    realNVP
-  
+  realNVP
 
     
   </span>
@@ -1594,8 +1635,7 @@
   <span class="md-ellipsis">
     
   
-    rqSpline
-  
+  rqSpline
 
     
   </span>
@@ -1638,8 +1678,7 @@
   <span class="md-ellipsis">
     
   
-    optimizer
-  
+  optimizer
 
     
   </span>
@@ -1666,8 +1705,7 @@
   <span class="md-ellipsis">
     
   
-    states
-  
+  states
 
     
   </span>
@@ -1706,18 +1744,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_2" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_2" id="__nav_8_1_2_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    resource_strategy_bundle
-  
+  resource_strategy_bundle
 
     
   </span>
@@ -1727,16 +1764,42 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_3">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_2">
             <span class="md-nav__icon md-icon"></span>
             
   
-    resource_strategy_bundle
-  
+  resource_strategy_bundle
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/resource_strategy_bundle/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  base
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1752,8 +1815,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_GRW
-  
+  RQSpline_GRW
 
     
   </span>
@@ -1780,8 +1842,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_GRW_PT
-  
+  RQSpline_GRW_PT
 
     
   </span>
@@ -1808,8 +1869,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_HMC
-  
+  RQSpline_HMC
 
     
   </span>
@@ -1836,8 +1896,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_HMC_PT
-  
+  RQSpline_HMC_PT
 
     
   </span>
@@ -1864,8 +1923,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_MALA
-  
+  RQSpline_MALA
 
     
   </span>
@@ -1892,36 +1950,7 @@
   <span class="md-ellipsis">
     
   
-    RQSpline_MALA_PT
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../api/flowMC/resource_strategy_bundle/base/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    base
-  
+  RQSpline_MALA_PT
 
     
   </span>
@@ -1937,6 +1966,33 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/flowMC/Sampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Sampler
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1970,8 +2026,7 @@
   <span class="md-ellipsis">
     
   
-    strategy
-  
+  strategy
 
     
   </span>
@@ -1986,8 +2041,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    strategy
-  
+  strategy
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -2006,8 +2060,7 @@
   <span class="md-ellipsis">
     
   
-    adapt_step_size
-  
+  adapt_step_size
 
     
   </span>
@@ -2034,8 +2087,7 @@
   <span class="md-ellipsis">
     
   
-    base
-  
+  base
 
     
   </span>
@@ -2062,8 +2114,7 @@
   <span class="md-ellipsis">
     
   
-    check_early_stop
-  
+  check_early_stop
 
     
   </span>
@@ -2090,8 +2141,7 @@
   <span class="md-ellipsis">
     
   
-    importance_sampling
-  
+  importance_sampling
 
     
   </span>
@@ -2118,8 +2168,7 @@
   <span class="md-ellipsis">
     
   
-    lambda_function
-  
+  lambda_function
 
     
   </span>
@@ -2146,8 +2195,7 @@
   <span class="md-ellipsis">
     
   
-    optimization
-  
+  optimization
 
     
   </span>
@@ -2174,8 +2222,7 @@
   <span class="md-ellipsis">
     
   
-    parallel_tempering
-  
+  parallel_tempering
 
     
   </span>
@@ -2202,8 +2249,7 @@
   <span class="md-ellipsis">
     
   
-    sequential_monte_carlo
-  
+  sequential_monte_carlo
 
     
   </span>
@@ -2230,8 +2276,7 @@
   <span class="md-ellipsis">
     
   
-    take_steps
-  
+  take_steps
 
     
   </span>
@@ -2258,8 +2303,7 @@
   <span class="md-ellipsis">
     
   
-    train_model
-  
+  train_model
 
     
   </span>
@@ -2286,8 +2330,7 @@
   <span class="md-ellipsis">
     
   
-    update_state
-  
+  update_state
 
     
   </span>
@@ -2336,8 +2379,7 @@
   <span class="md-ellipsis">
     
   
-    utils
-  
+  utils
 
     
   </span>
@@ -2352,8 +2394,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    utils
-  
+  utils
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -2372,8 +2413,7 @@
   <span class="md-ellipsis">
     
   
-    logging
-  
+  logging
 
     
   </span>
@@ -2554,6 +2594,8 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="png" src="../parallel_tempering_files/parallel_tempering_4_0.png" /></p>
+<p><img alt="png" src="../parallel_tempering_files/parallel_tempering_4_1.png" /></p>
 <h1 id="now-lets-add-parallel-tempering-to-the-mix">Now let's add parallel tempering to the mix<a class="headerlink" href="#now-lets-add-parallel-tempering-to-the-mix" title="Permanent link">¤</a></h1>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
 
@@ -2674,6 +2716,10 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<pre><code>(5, 400, 5)
+</code></pre>
+<p><img alt="png" src="../parallel_tempering_files/parallel_tempering_10_1.png" /></p>
+<p><img alt="png" src="../parallel_tempering_files/parallel_tempering_10_2.png" /></p>
 <p>Now instead of defining your sampler from scratch, you can also use the parallel tempering bundle, which is the original flowMC sampler with the parallel tempering strategy.
 The training of the normalizing flow is a computationally expensive task, so one can expect this strategy bundle to be slower than the lighter version as shown above.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.resource_strategy_bundle.RQSpline_MALA_PT</span><span class="w"> </span><span class="kn">import</span> <span class="n">RQSpline_MALA_PT_Bundle</span>
@@ -2728,6 +2774,10 @@ The training of the normalizing flow is a computationally expensive task, so one
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<pre><code>(5, 400, 5)
+</code></pre>
+<p><img alt="png" src="../parallel_tempering_files/parallel_tempering_13_1.png" /></p>
+<p><img alt="png" src="../parallel_tempering_files/parallel_tempering_13_2.png" /></p>
 
 
 
@@ -2736,9 +2786,6 @@ The training of the normalizing flow is a computationally expensive task, so one
 
 
 
-
-  
-  
 
 
 
@@ -2791,7 +2838,7 @@ The training of the normalizing flow is a computationally expensive task, so one
       <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.instant","navigation.tabs","navigation.top","toc.follow","header.autohide"],"search":"../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"default":"stable","provider":"mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.dbc0afdc.min.js"></script>
+      <script src="../../assets/javascripts/bundle.6e5f0216.min.js"></script>
       
         <script src="../../javascripts/mathjax.js"></script>
       
