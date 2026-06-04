@@ -181,7 +181,7 @@ class RQSpline_HMC_Bundle(ResourceStrategyBundle):
 
         # Convert scalar condition matrix to 1D array if needed
         if isinstance(condition_matrix, (int, float)):
-            condition_matrix = jnp.full(n_dims, condition_matrix)
+            condition_matrix = jnp.full(n_dims, float(condition_matrix))
         # Create periodic mask and bounds arrays for HMC
         if periodic is None:
             periodic = {}
