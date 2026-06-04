@@ -103,8 +103,19 @@ class Sampler:
         if checkpoint_interval > 0:
             cache_dir = Path(outdir) / "jax_cache"
             cache_dir.mkdir(parents=True, exist_ok=True)
-            jax.config.update("jax_compilation_cache_dir", str(cache_dir))
-            jax.config.update("jax_persistent_cache_min_compile_time_secs", 0.0)
+            current_cache = getattr(jax.config, "jax_compilation_cache_dir", None)
+            if current_cache is None:
+                jax.config.update("jax_compilation_cache_dir", str(cache_dir))
+                jax.config.update("jax_persistent_cache_min_compile_time_secs", 0.0)
+            elif current_cache != str(cache_dir):
+                logger.warning(
+                    "JAX compilation cache is already set to '%s' (this Sampler "
+                    "would use '%s'). JAX cache is process-global; only one "
+                    "Sampler per process should configure it. "
+                    "The cache will not be reconfigured.",
+                    current_cache,
+                    cache_dir,
+                )
 
         if resources is not None and strategies is not None:
             logger.info(
@@ -241,7 +252,18 @@ class Sampler:
                         buf, self.resources[k]
                     )
                 else:
-                    logger.warning("Cannot restore resource '%s' — skipping.", k)
+                    payload_info = (
+                        len(payload)
+                        if isinstance(payload, (bytes, bytearray))
+                        else repr(type(payload))
+                    )
+                    logger.warning(
+                        "Cannot restore resource '%s' (method=%r, payload=%s) — removing from resources.",
+                        k,
+                        method,
+                        payload_info,
+                    )
+                    self.resources.pop(k, None)
             else:
                 self.resources[k] = entry  # type: ignore[assignment]
         for name, cursor in ckpt["stepper_cursors"].items():
@@ -299,7 +321,12 @@ class Sampler:
             try:
                 pickle.dumps(v, protocol=pickle.HIGHEST_PROTOCOL)
                 resources_to_save[k] = ("pkl", v)
-            except Exception:
+            except Exception as e:
+                logger.debug(
+                    "pickle.dumps failed for resource '%s' (%s); falling back to eqx serialisation.",
+                    k,
+                    e,
+                )
                 buf = io.BytesIO()
                 eqx.tree_serialise_leaves(buf, v)
                 resources_to_save[k] = ("eqx", buf.getvalue())
