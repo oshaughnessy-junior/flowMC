@@ -36,7 +36,7 @@ def enable_verbose_logging(
         >>> logger.debug("This will now be printed")
     """
     if format_string is None:
-        format_string = "%(name)s - %(levelname)s - %(message)s"
+        format_string = "%(levelname)s | %(name)s | %(message)s"
 
     # Set the logger's level
     logger.setLevel(level)
