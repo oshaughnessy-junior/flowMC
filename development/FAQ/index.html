@@ -2535,11 +2535,11 @@
 <p><strong>My local sampler is not accepting</strong></p>
 <p>This usually means you are setting the step size of the local sampler to be too big.
 Try reducing the step size in your local sampler.</p>
-<p>Alternative, this could also mean your sampler is proposing in region where the likelihood is ill-defined (i.e. NaN either in likelihood or its derivative if you are using a gradient-based local sampler).
-It is worth making sure your likelihood is well-defined within your range of prior.</p>
+<p>Alternative, this could also mean your sampler is proposing in a region where the target log-PDF is ill-defined (i.e. NaN either in <code>logpdf</code> or its derivative if you are using a gradient-based local sampler).
+It is worth making sure your <code>logpdf</code> is well-defined across the entire region you are sampling.</p>
 <p><strong>In order for my local sampler to accept, I have to choose a very small step size, which makes my chain very correlated.</strong></p>
 <p>This usually indicate some of your parameters are much better measured than others.
-Since taking a small step in those directions will already change your likelihood value by a lot, the exploration power of the local sampler in other parameters are limited by those which are well measured.
+Since taking a small step in those directions will already change your <code>logpdf</code> value by a lot, the exploration power of the local sampler in other parameters are limited by those which are well measured.
 Currently, we support different step size for different parameters, which you can tune to see whether that improves the situation or not.
 If you know the scale of each parameter ahead of time, reparameterizing them to maintain roughly equal scale across parameters also helps.</p>
 <p><strong>My global sample's loss is exploding/not decreasing</strong></p>
@@ -2549,12 +2549,17 @@ Try reducing the learning rate by a factor of ten.</p>
 This is a bit rarer since this means your data used to train the normalizing flow is just your prior, which the normalizing flow should still be able to learn.</p>
 <p><strong>The sampler is stuck a bit until it starts sampling</strong></p>
 <p>If you use the option <code>jit</code> in constructing the local sampler, the code will compile your code to speed up the execution.
-The sampler is not really stuck, but it is compiling the code. Depending on how you code up your likelihood function, the compilation can take a while.
+The sampler is not really stuck, but it is compiling the code. Depending on how you code up your <code>logpdf</code> function, the compilation can take a while.
 If you don't want to wait, you can set <code>Jit=False</code>, which would increase the sampling time.</p>
 <p><strong>The compilation is slow</strong></p>
-<p>If you have a likelihood with many lines, JAX will take a long time to compile the code.
+<p>If you have a <code>logpdf</code> with many lines, JAX will take a long time to compile the code.
 JAX is known to be slow in compilation, especially if your computational graph uses some sort of loop that call a function many times.
 While we cannot fundamentally get rid of the problem, <a href="https://docs.kidger.site/equinox/tricks/#low-overhead-training-loops">using a jax.lax.scan</a> is usually how we deal with it.</p>
+<p><strong>I am running out of GPU memory</strong></p>
+<p>flowMC has two independent memory bottlenecks, so there are two knobs to turn.</p>
+<p>The first — and usually the bottleneck — is the NF proposal step. During each global step the target log-PDF (<code>logpdf</code>) is evaluated at all <code>n_chains * n_global_steps</code> flow proposals at once. Reduce <code>n_NFproposal_batch_size</code> (default <code>10000</code>): when <code>n_global_steps</code> exceeds it, the proposals are evaluated in smaller <code>jax.lax.map</code> chunks rather than a single <code>vmap</code>, lowering peak memory. Try this first.</p>
+<p>The second matters when your <code>logpdf</code> is expensive to evaluate. Sometimes the problem is not the <code>n_chains * n_global_steps</code> proposals, but that even a single <code>logpdf</code> evaluation per chain across all <code>n_chains</code> chains will not fit. In that case also set <code>chain_batch_size</code> to a small positive integer (default <code>0</code> means all chains are vmapped at once; smaller values use less memory) so the local sampler processes chains in sequential sub-batches.</p>
+<p>Both are bundle arguments (e.g. to <code>RQSpline_MALA_Bundle</code>); see the <a href="../guides/hyperparameters/">hyperparameters guide</a> for details.</p>
 
 
 
