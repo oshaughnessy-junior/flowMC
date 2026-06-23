@@ -1,4 +1,11 @@
-# Citation
+# Citation & Origins
+
+## Origins
+
+flowMC was originally developed as [kazewong/flowMC](https://github.com/kazewong/flowMC) by [Kaze W. K. Wong](https://github.com/kazewong) and others.
+The original repository is no longer actively maintained; this fork is the active continuation of the project.
+
+## Citation
 
 If you use flowMC in your research, please cite the following papers:
 
