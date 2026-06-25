@@ -2550,7 +2550,7 @@ This is a bit rarer since this means your data used to train the normalizing flo
 <p><strong>The sampler is stuck a bit until it starts sampling</strong></p>
 <p>If you use the option <code>jit</code> in constructing the local sampler, the code will compile your code to speed up the execution.
 The sampler is not really stuck, but it is compiling the code. Depending on how you code up your <code>logpdf</code> function, the compilation can take a while.
-If you don't want to wait, you can set <code>Jit=False</code>, which would increase the sampling time.</p>
+If you don't want to wait, you can set <code>jit=False</code>, which would increase the sampling time.</p>
 <p><strong>The compilation is slow</strong></p>
 <p>If you have a <code>logpdf</code> with many lines, JAX will take a long time to compile the code.
 JAX is known to be slow in compilation, especially if your computational graph uses some sort of loop that call a function many times.
