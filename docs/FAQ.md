@@ -27,7 +27,7 @@ This is a bit rarer since this means your data used to train the normalizing flo
 
 If you use the option ``jit`` in constructing the local sampler, the code will compile your code to speed up the execution.
 The sampler is not really stuck, but it is compiling the code. Depending on how you code up your `logpdf` function, the compilation can take a while.
-If you don't want to wait, you can set ``Jit=False``, which would increase the sampling time.
+If you don't want to wait, you can set ``jit=False``, which would increase the sampling time.
 
 **The compilation is slow**
 
