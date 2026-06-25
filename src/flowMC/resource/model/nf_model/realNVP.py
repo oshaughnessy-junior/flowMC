@@ -5,6 +5,7 @@ import equinox as eqx
 import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float, Key
+from flowMC.typing import FloatScalar
 
 from flowMC.resource.model.nf_model.base import NFModel
 from flowMC.resource.model.common import (
@@ -34,7 +35,7 @@ class AffineCoupling(eqx.Module):
     _mask: Array
     scale_MLP: MLP
     translate_MLP: MLP
-    dt: Float = 1
+    dt: float = 1
 
     def __init__(
         self,
@@ -42,8 +43,8 @@ class AffineCoupling(eqx.Module):
         n_hidden: int,
         mask: Array,
         key: Key,
-        dt: Float = 1,
-        scale: Float = 1e-4,
+        dt: float = 1,
+        scale: float = 1e-4,
     ):
         self._mask = mask
         self.dt = dt
@@ -192,8 +193,8 @@ class RealNVP(NFModel):
         x: Float[Array, " n_dim"],
         key: Optional[Key] = None,
         condition: Optional[Float[Array, " n_condition"]] = None,
-    ) -> tuple[Float[Array, " n_dim"], Float]:
-        log_det = 0.0
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
+        log_det: FloatScalar = jnp.zeros(())
         dynamics, statics = eqx.partition(self.affine_coupling, eqx.is_array)
 
         def f(carry, data):
@@ -209,9 +210,9 @@ class RealNVP(NFModel):
         self,
         x: Float[Array, " n_dim"],
         condition: Optional[Float[Array, " n_condition"]] = None,
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
         """From latent space to data space."""
-        log_det = 0.0
+        log_det: FloatScalar = jnp.zeros(())
         dynamics, statics = eqx.partition(self.affine_coupling, eqx.is_array)
 
         def f(carry, data):
@@ -229,7 +230,7 @@ class RealNVP(NFModel):
         samples = samples * jnp.sqrt(jnp.diag(self.data_cov)) + self.data_mean
         return samples
 
-    def log_prob(self, x: Float[Array, " n_dim"]) -> Float:
+    def log_prob(self, x: Float[Array, " n_dim"]) -> FloatScalar:
         # TODO: Check whether taking away vmap hurts accuracy.
         x = (x - self.data_mean) / jnp.sqrt(jnp.diag(self.data_cov))
         y, log_det = self.__call__(x)

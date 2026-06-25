@@ -3,6 +3,7 @@ from typing import Callable, Optional
 import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float, Key
+from flowMC.typing import FloatScalar
 import equinox as eqx
 
 from flowMC.resource.base import Resource
@@ -47,14 +48,14 @@ class RQSpline_MALA_PT_Bundle(ResourceStrategyBundle):
         rng_key: Key,
         n_chains: int,
         n_dims: int,
-        logpdf: Callable[[Float[Array, " n_dim"], dict], Float],
+        logpdf: Callable[[Float[Array, " n_dim"], dict], FloatScalar],
         n_local_steps: int,
         n_global_steps: int,
         n_training_loops: int,
         n_production_loops: int,
         n_epochs: int,
         # --- Local sampler ---
-        mala_step_size: Float | Float[Array, " n_dim"] = 1e-1,
+        mala_step_size: float | Float[Array, " n_dim"] = 1e-1,
         adapt_step_size: bool = True,
         adapt_step_size_per_dim: bool = True,
         periodic: Optional[dict[int, tuple[float, float]]] = None,
@@ -76,7 +77,9 @@ class RQSpline_MALA_PT_Bundle(ResourceStrategyBundle):
         n_temperatures: int = 5,
         max_temperature: float = 5.0,
         n_tempered_steps: int = -1,
-        logprior: Callable[[Float[Array, " n_dim"], dict], Float] = lambda x, _: 0.0,
+        logprior: Callable[[Float[Array, " n_dim"], dict], FloatScalar] = lambda x, _: (
+            jnp.zeros(())
+        ),
         # --- Early stopping ---
         early_stopping: bool = False,
         early_stopping_tolerance: float = 0.05,

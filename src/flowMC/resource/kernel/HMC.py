@@ -26,14 +26,14 @@ class HMC(ProposalBase):
     """
 
     condition_matrix: Float[Array, " n_dim"]
-    step_size: Float
+    step_size: float
     leapfrog_coefs: Float[Array, "n_leapfrog n_dim"]
     periodic_mask: Bool[Array, " n_dim"]
     periodic_bounds: Float[Array, "n_dim 2"]
     ADAPTATION_RATE: float = 0.5
 
     @property
-    def n_leapfrog(self) -> Int:
+    def n_leapfrog(self) -> int:
         return self.leapfrog_coefs.shape[0] - 2
 
     def __repr__(self):
@@ -48,8 +48,8 @@ class HMC(ProposalBase):
     def __init__(
         self,
         condition_matrix: Float[Array, " n_dim"],
-        step_size: Float = 0.1,
-        n_leapfrog: Int = 10,
+        step_size: float = 0.1,
+        n_leapfrog: int = 10,
         periodic_mask: Optional[Bool[Array, " n_dim"]] = None,
         periodic_bounds: Optional[Float[Array, "n_dim 2"]] = None,
     ):
