@@ -32,7 +32,7 @@ class Solver(eqx.Module):
         """
 
         def model_wrapper(
-            t: Float, x: Float[Array, " n_dims"], args: PyTree
+            t: FloatScalar, x: Float[Array, " n_dims"], args: PyTree
         ) -> Float[Array, " n_dims"]:
             """Wrapper for the model to be used in the ODE solver."""
             t = jnp.expand_dims(t, axis=-1)
@@ -64,7 +64,7 @@ class Solver(eqx.Module):
         """
 
         def model_wrapper(
-            t: Float, x: Float[Array, " n_dims"], args: PyTree
+            t: FloatScalar, x: Float[Array, " n_dims"], args: PyTree
         ) -> list[Float[Array, "..."]]:
             """Wrapper for the model to be used in the ODE solver.
 
