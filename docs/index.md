@@ -16,3 +16,5 @@ flowMC is a JAX-based package for normalizing-flow-enhanced Markov chain Monte C
 - **[Tutorials](tutorials/index.md)** — Hands-on worked examples
 - **[Guides](guides/index.md)** — In-depth coverage of each module
 - **[FAQ](FAQ.md)** — Answers to common questions
+- **[Citing flowMC](citing.md)** — How to cite flowMC
+- **[Contributing to flowMC](contributing.md)** — How to contribute to flowMC

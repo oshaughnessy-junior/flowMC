@@ -25,7 +25,7 @@ def enable_verbose_logging(
         logger: The logger instance to configure.
         level: The logging level to set (default: logging.DEBUG).
         format_string: Custom format string for log messages. If None, uses
-            a default format: '%(name)s - %(levelname)s - %(message)s'
+            a default format: '%(levelname)s | %(name)s | %(message)s'
 
     Example:
         >>> import logging
@@ -36,7 +36,7 @@ def enable_verbose_logging(
         >>> logger.debug("This will now be printed")
     """
     if format_string is None:
-        format_string = "%(name)s - %(levelname)s - %(message)s"
+        format_string = "%(levelname)s | %(name)s | %(message)s"
 
     # Set the logger's level
     logger.setLevel(level)
