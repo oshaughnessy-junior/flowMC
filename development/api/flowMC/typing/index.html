@@ -12,36 +12,36 @@
         <meta name="author" content="GW JAX Team">
       
       
-        <link rel="canonical" href="https://gw-jax-team.github.io/flowMC/development/api/flowMC/resource/kernel/NF_proposal/">
+        <link rel="canonical" href="https://gw-jax-team.github.io/flowMC/development/api/flowMC/typing/">
       
       
-        <link rel="prev" href="../MALA/">
+        <link rel="prev" href="../strategy/update_state/">
       
       
-        <link rel="next" href="../../logPDF/">
+        <link rel="next" href="../utils/logging/">
       
       
         
       
       
-      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="zensical-0.0.46">
     
     
       
-        <title>NF proposal - flowMC</title>
+        <title>Typing - flowMC</title>
       
     
     
       
         
       
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/modern/main.19d3147f.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.19d3147f.min.css">
       
         
           
         
-        <link rel="stylesheet" href="../../../../../assets/stylesheets/modern/palette.dfe2e883.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.dfe2e883.min.css">
       
       
 
@@ -60,7 +60,7 @@
       
     
     
-    <script>__md_scope=new URL("../../../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    <script>__md_scope=new URL("../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
 
@@ -85,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#flowMC.resource.kernel.NF_proposal" class="md-skip">
+        <a href="#flowMC.typing" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +103,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../../.." title="flowMC" class="md-header__button md-logo" aria-label="flowMC" data-md-component="logo">
+    <a href="../../.." title="flowMC" class="md-header__button md-logo" aria-label="flowMC" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
@@ -123,7 +123,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              NF proposal
+              Typing
             
           </span>
         </div>
@@ -207,7 +207,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   Home
@@ -223,7 +223,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../installation/" class="md-tabs__link">
+      <a href="../../../installation/" class="md-tabs__link">
         
   
   Installation
@@ -239,7 +239,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../quickstart/" class="md-tabs__link">
+      <a href="../../../quickstart/" class="md-tabs__link">
         
   
   Quick Start
@@ -260,7 +260,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../tutorials/" class="md-tabs__link">
+        <a href="../../../tutorials/" class="md-tabs__link">
           
   
   Tutorials
@@ -282,7 +282,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../guides/" class="md-tabs__link">
+        <a href="../../../guides/" class="md-tabs__link">
           
   
   Guides
@@ -299,7 +299,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../FAQ/" class="md-tabs__link">
+      <a href="../../../FAQ/" class="md-tabs__link">
         
   
   FAQ
@@ -315,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../citing/" class="md-tabs__link">
+      <a href="../../../citing/" class="md-tabs__link">
         
   
   Citing flowMC
@@ -331,7 +331,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../contributing/" class="md-tabs__link">
+      <a href="../../../contributing/" class="md-tabs__link">
         
   
   Contributing
@@ -378,7 +378,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../base/" class="md-tabs__link">
+        <a href="../resource/base/" class="md-tabs__link">
           
   
   Reference
@@ -417,7 +417,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../../.." title="flowMC" class="md-nav__button md-logo" aria-label="flowMC" data-md-component="logo">
+    <a href="../../.." title="flowMC" class="md-nav__button md-logo" aria-label="flowMC" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
@@ -447,7 +447,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -473,7 +473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../installation/" class="md-nav__link">
+      <a href="../../../installation/" class="md-nav__link">
         
   
   
@@ -499,7 +499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../quickstart/" class="md-nav__link">
+      <a href="../../../quickstart/" class="md-nav__link">
         
   
   
@@ -573,7 +573,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../tutorials/" class="md-nav__link">
+      <a href="../../../tutorials/" class="md-nav__link">
         
   
   
@@ -600,7 +600,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../tutorials/dualmoon/" class="md-nav__link">
+      <a href="../../../tutorials/dualmoon/" class="md-nav__link">
         
   
   
@@ -627,7 +627,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../tutorials/parallel_tempering/" class="md-nav__link">
+      <a href="../../../tutorials/parallel_tempering/" class="md-nav__link">
         
   
   
@@ -654,7 +654,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../tutorials/custom_strategy/" class="md-nav__link">
+      <a href="../../../tutorials/custom_strategy/" class="md-nav__link">
         
   
   
@@ -681,7 +681,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../tutorials/train_normalizing_flow/" class="md-nav__link">
+      <a href="../../../tutorials/train_normalizing_flow/" class="md-nav__link">
         
   
   
@@ -708,7 +708,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../tutorials/train_flow_match/" class="md-nav__link">
+      <a href="../../../tutorials/train_flow_match/" class="md-nav__link">
         
   
   
@@ -790,7 +790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../guides/" class="md-nav__link">
+      <a href="../../../guides/" class="md-nav__link">
         
   
   
@@ -817,7 +817,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../guides/architecture/" class="md-nav__link">
+      <a href="../../../guides/architecture/" class="md-nav__link">
         
   
   
@@ -844,7 +844,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../guides/bundles/" class="md-nav__link">
+      <a href="../../../guides/bundles/" class="md-nav__link">
         
   
   
@@ -871,7 +871,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../guides/hyperparameters/" class="md-nav__link">
+      <a href="../../../guides/hyperparameters/" class="md-nav__link">
         
   
   
@@ -905,7 +905,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../FAQ/" class="md-nav__link">
+      <a href="../../../FAQ/" class="md-nav__link">
         
   
   
@@ -931,7 +931,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../citing/" class="md-nav__link">
+      <a href="../../../citing/" class="md-nav__link">
         
   
   
@@ -957,7 +957,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../contributing/" class="md-nav__link">
+      <a href="../../../contributing/" class="md-nav__link">
         
   
   
@@ -1083,8 +1083,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1095,11 +1093,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_1_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_1_1" >
         
           
           <label class="md-nav__link" for="__nav_9_1_1" id="__nav_9_1_1_label" tabindex="0">
@@ -1119,7 +1117,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_9_1_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_9_1_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_9_1_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1136,7 +1134,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../base/" class="md-nav__link">
+      <a href="../resource/base/" class="md-nav__link">
         
   
   
@@ -1163,7 +1161,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../buffers/" class="md-nav__link">
+      <a href="../resource/buffers/" class="md-nav__link">
         
   
   
@@ -1187,8 +1185,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1199,11 +1195,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_1_1_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_1_1_3" >
         
           
           <label class="md-nav__link" for="__nav_9_1_1_3" id="__nav_9_1_1_3_label" tabindex="0">
@@ -1223,7 +1219,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_9_1_1_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_9_1_1_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_9_1_1_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1240,7 +1236,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../base/" class="md-nav__link">
+      <a href="../resource/kernel/base/" class="md-nav__link">
         
   
   
@@ -1267,7 +1263,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Gaussian_random_walk/" class="md-nav__link">
+      <a href="../resource/kernel/Gaussian_random_walk/" class="md-nav__link">
         
   
   
@@ -1294,7 +1290,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../HMC/" class="md-nav__link">
+      <a href="../resource/kernel/HMC/" class="md-nav__link">
         
   
   
@@ -1321,7 +1317,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../MALA/" class="md-nav__link">
+      <a href="../resource/kernel/MALA/" class="md-nav__link">
         
   
   
@@ -1345,34 +1341,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NF_proposal
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../resource/kernel/NF_proposal/" class="md-nav__link">
         
   
   
@@ -1387,86 +1359,6 @@
   
 
       </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#flowMC.resource.kernel.NF_proposal" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        NF_proposal
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#flowMC.resource.kernel.NF_proposal.NFProposal" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        NFProposal
-      </span>
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="NFProposal">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#flowMC.resource.kernel.NF_proposal.NFProposal.__init__" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        __init__
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flowMC.resource.kernel.NF_proposal.NFProposal.kernel" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        kernel
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flowMC.resource.kernel.NF_proposal.NFProposal.sample_flow" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        sample_flow
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1487,7 +1379,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../logPDF/" class="md-nav__link">
+      <a href="../resource/logPDF/" class="md-nav__link">
         
   
   
@@ -1562,7 +1454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../model/common/" class="md-nav__link">
+      <a href="../resource/model/common/" class="md-nav__link">
         
   
   
@@ -1637,7 +1529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../model/flowmatching/base/" class="md-nav__link">
+      <a href="../resource/model/flowmatching/base/" class="md-nav__link">
         
   
   
@@ -1720,7 +1612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../model/nf_model/base/" class="md-nav__link">
+      <a href="../resource/model/nf_model/base/" class="md-nav__link">
         
   
   
@@ -1747,7 +1639,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../model/nf_model/realNVP/" class="md-nav__link">
+      <a href="../resource/model/nf_model/realNVP/" class="md-nav__link">
         
   
   
@@ -1774,7 +1666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../model/nf_model/rqSpline/" class="md-nav__link">
+      <a href="../resource/model/nf_model/rqSpline/" class="md-nav__link">
         
   
   
@@ -1817,7 +1709,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../optimizer/" class="md-nav__link">
+      <a href="../resource/optimizer/" class="md-nav__link">
         
   
   
@@ -1844,7 +1736,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../states/" class="md-nav__link">
+      <a href="../resource/states/" class="md-nav__link">
         
   
   
@@ -1927,7 +1819,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../resource_strategy_bundle/base/" class="md-nav__link">
+      <a href="../resource_strategy_bundle/base/" class="md-nav__link">
         
   
   
@@ -1954,7 +1846,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../resource_strategy_bundle/RQSpline_GRW/" class="md-nav__link">
+      <a href="../resource_strategy_bundle/RQSpline_GRW/" class="md-nav__link">
         
   
   
@@ -1981,7 +1873,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../resource_strategy_bundle/RQSpline_GRW_PT/" class="md-nav__link">
+      <a href="../resource_strategy_bundle/RQSpline_GRW_PT/" class="md-nav__link">
         
   
   
@@ -2008,7 +1900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../resource_strategy_bundle/RQSpline_HMC/" class="md-nav__link">
+      <a href="../resource_strategy_bundle/RQSpline_HMC/" class="md-nav__link">
         
   
   
@@ -2035,7 +1927,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../resource_strategy_bundle/RQSpline_HMC_PT/" class="md-nav__link">
+      <a href="../resource_strategy_bundle/RQSpline_HMC_PT/" class="md-nav__link">
         
   
   
@@ -2062,7 +1954,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../resource_strategy_bundle/RQSpline_MALA/" class="md-nav__link">
+      <a href="../resource_strategy_bundle/RQSpline_MALA/" class="md-nav__link">
         
   
   
@@ -2089,7 +1981,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../resource_strategy_bundle/RQSpline_MALA_PT/" class="md-nav__link">
+      <a href="../resource_strategy_bundle/RQSpline_MALA_PT/" class="md-nav__link">
         
   
   
@@ -2124,7 +2016,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Sampler/" class="md-nav__link">
+      <a href="../Sampler/" class="md-nav__link">
         
   
   
@@ -2199,7 +2091,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../strategy/adapt_step_size/" class="md-nav__link">
+      <a href="../strategy/adapt_step_size/" class="md-nav__link">
         
   
   
@@ -2226,7 +2118,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../strategy/base/" class="md-nav__link">
+      <a href="../strategy/base/" class="md-nav__link">
         
   
   
@@ -2253,7 +2145,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../strategy/check_early_stop/" class="md-nav__link">
+      <a href="../strategy/check_early_stop/" class="md-nav__link">
         
   
   
@@ -2280,7 +2172,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../strategy/importance_sampling/" class="md-nav__link">
+      <a href="../strategy/importance_sampling/" class="md-nav__link">
         
   
   
@@ -2307,7 +2199,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../strategy/lambda_function/" class="md-nav__link">
+      <a href="../strategy/lambda_function/" class="md-nav__link">
         
   
   
@@ -2334,7 +2226,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../strategy/optimization/" class="md-nav__link">
+      <a href="../strategy/optimization/" class="md-nav__link">
         
   
   
@@ -2361,7 +2253,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../strategy/parallel_tempering/" class="md-nav__link">
+      <a href="../strategy/parallel_tempering/" class="md-nav__link">
         
   
   
@@ -2388,7 +2280,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../strategy/sequential_monte_carlo/" class="md-nav__link">
+      <a href="../strategy/sequential_monte_carlo/" class="md-nav__link">
         
   
   
@@ -2415,7 +2307,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../strategy/take_steps/" class="md-nav__link">
+      <a href="../strategy/take_steps/" class="md-nav__link">
         
   
   
@@ -2442,7 +2334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../strategy/train_model/" class="md-nav__link">
+      <a href="../strategy/train_model/" class="md-nav__link">
         
   
   
@@ -2469,7 +2361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../strategy/update_state/" class="md-nav__link">
+      <a href="../strategy/update_state/" class="md-nav__link">
         
   
   
@@ -2501,10 +2393,34 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../typing/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  typing
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2519,6 +2435,36 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#flowMC.typing" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        typing
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2579,7 +2525,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../utils/logging/" class="md-nav__link">
+      <a href="../utils/logging/" class="md-nav__link">
         
   
   
@@ -2659,63 +2605,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#flowMC.resource.kernel.NF_proposal" class="md-nav__link">
+  <a href="#flowMC.typing" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        NF_proposal
+        typing
       </span>
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#flowMC.resource.kernel.NF_proposal.NFProposal" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        NFProposal
-      </span>
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="NFProposal">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#flowMC.resource.kernel.NF_proposal.NFProposal.__init__" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        __init__
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flowMC.resource.kernel.NF_proposal.NFProposal.kernel" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        kernel
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flowMC.resource.kernel.NF_proposal.NFProposal.sample_flow" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        sample_flow
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2737,139 +2633,22 @@
   
 
 
-  <h1 id="__skip">NF proposal</h1>
+  <h1 id="__skip">Typing</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<a id="flowMC.resource.kernel.NF_proposal"></a>
+<a id="flowMC.typing"></a>
     <div class="doc doc-contents first">
 
+        <p>Convenience type aliases for jaxtyping scalar annotations.</p>
 
 
 
 
 
 
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<h3 id="flowMC.resource.kernel.NF_proposal.NFProposal" class="doc doc-heading">
-            <code>NFProposal</code>
-
-
-<a href="#flowMC.resource.kernel.NF_proposal.NFProposal" class="headerlink" title="Permanent link">¤</a></h3>
-
-
-    <div class="doc doc-contents ">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" href="../base/#flowMC.resource.kernel.base.ProposalBase">ProposalBase</a></code></p>
-
-
-
-        <p>Normalizing-flow global proposal kernel.</p>
-<p>Proposes new positions by sampling from a trained normalizing flow and accepts
-or rejects via a corrected Metropolis-Hastings ratio that accounts for the
-flow density.  All <code>n_steps</code> proposals are drawn in one batched call, so
-this kernel is suited for use with <code>flowMC.strategy.take_steps.TakeGroupSteps</code>.</p>
-
-
-<p><span class="doc-section-title">Attributes:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td><code><span title="flowMC.resource.kernel.NF_proposal.NFProposal.model">model</span></code></td>
-            <td>
-                  <code><a class="autorefs autorefs-internal" href="../../model/nf_model/base/#flowMC.resource.model.nf_model.base.NFModel">NFModel</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Trained normalizing flow model used to propose samples.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="flowMC.resource.kernel.NF_proposal.NFProposal.n_batch_size">n_batch_size</span></code></td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Maximum number of proposals evaluated in a single
-<code>jax.lax.map</code> batch (trades memory for throughput).</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-
-
-
-
-
-
-
-<p><span class="doc-section-title">Methods:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-            <tr class="doc-section-item">
-              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;fm&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NFModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_NFproposal_batch_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;None&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.resource.kernel.NF_proposal.NFProposal.__init__">__init__</a></code></td>
-              <td>
-                <div class="doc-md-description">
-                  <p>Args:</p>
-                </div>
-              </td>
-            </tr>
-            <tr class="doc-section-item">
-              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;kernel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rng_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;log_prob&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logpdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogPDF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Callable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PyTree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PyTree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;n_step n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;n_step 1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;n_step 1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.resource.kernel.NF_proposal.NFProposal.kernel">kernel</a></code></td>
-              <td>
-                <div class="doc-md-description">
-                  <p>Generate and accept/reject <code>n_steps</code> flow proposals for a single chain.</p>
-                </div>
-              </td>
-            </tr>
-            <tr class="doc-section-item">
-              <td><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;highlight language-python&quot;&gt;&lt;span class=&quot;n&quot;&gt;sample_flow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rng_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_steps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;n_steps n_dim&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39; n_steps&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;" href="./#flowMC.resource.kernel.NF_proposal.NFProposal.sample_flow">sample_flow</a></code></td>
-              <td>
-                <div class="doc-md-description">
-                  <p>Sample positions and their flow log-densities.</p>
-                </div>
-              </td>
-            </tr>
-      </tbody>
-    </table>
 
 
 
@@ -2885,314 +2664,6 @@ this kernel is suited for use with <code>flowMC.strategy.take_steps.TakeGroupSte
 
 
 
-
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="flowMC.resource.kernel.NF_proposal.NFProposal.__init__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">NFModel</span><span class="p">,</span> <span class="n">n_NFproposal_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
-
-<a href="#flowMC.resource.kernel.NF_proposal.NFProposal.__init__" class="headerlink" title="Permanent link">¤</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>model</code>
-            </td>
-            <td>
-                  <code><a class="autorefs autorefs-internal" href="../../model/nf_model/base/#flowMC.resource.model.nf_model.base.NFModel">NFModel</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Normalizing flow model used to generate proposals.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>n_NFproposal_batch_size</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of log-prob evaluations per
-<code>jax.lax.map</code> batch. Defaults to 100.</p>
-              </div>
-            </td>
-            <td>
-                  <code>100</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="flowMC.resource.kernel.NF_proposal.NFProposal.kernel" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">kernel</span><span class="p">(</span><span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">log_prob</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">logpdf</span><span class="p">:</span> <span class="n">LogPDF</span> <span class="o">|</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_dim&#39;</span><span class="p">],</span> <span class="n">PyTree</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">data</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_step n_dim&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_step 1&#39;</span><span class="p">],</span> <span class="n">Int</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_step 1&#39;</span><span class="p">]]</span></code>
-
-<a href="#flowMC.resource.kernel.NF_proposal.NFProposal.kernel" class="headerlink" title="Permanent link">¤</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Generate and accept/reject <code>n_steps</code> flow proposals for a single chain.</p>
-<p>The number of steps is read from <code>data["n_steps"]</code>.  All proposals are
-sampled from the flow at once and then evaluated serially via
-<code>jax.lax.scan</code> for the MH accept/reject step.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>rng_key</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Key">Key</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>JAX PRNGKey.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>position</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, <span title="n_dim">n_dim</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Current chain position.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>log_prob</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, 1]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Current log-probability.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>logpdf</code>
-            </td>
-            <td>
-                  <code><a class="autorefs autorefs-internal" href="../../logPDF/#flowMC.resource.logPDF.LogPDF">LogPDF</a> | <span title="typing.Callable">Callable</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Target log-PDF.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>data</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.PyTree">PyTree</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Auxiliary data; must contain <code>"n_steps"</code> (int).</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-<th>Name</th>          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-<td><code>tuple</code></td>            <td>
-                  <code><span title="tuple">tuple</span>[<span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, &#39;n_step n_dim&#39;], <span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, &#39;n_step 1&#39;], <span title="jaxtyping.Int">Int</span>[<span title="jaxtyping.Array">Array</span>, &#39;n_step 1&#39;]]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <ul>
-<li>positions (Float[Array, "n_step n_dim"]): Chain positions after each step.</li>
-<li>log_probs (Float[Array, "n_step 1"]): Log-probs after each step.</li>
-<li>do_accepts (Int[Array, "n_step 1"]): Acceptance flags.</li>
-</ul>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="flowMC.resource.kernel.NF_proposal.NFProposal.sample_flow" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">sample_flow</span><span class="p">(</span><span class="n">rng_key</span><span class="p">:</span> <span class="n">Key</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39;n_steps n_dim&#39;</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s1">&#39; n_steps&#39;</span><span class="p">]]</span></code>
-
-<a href="#flowMC.resource.kernel.NF_proposal.NFProposal.sample_flow" class="headerlink" title="Permanent link">¤</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Sample positions and their flow log-densities.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>rng_key</code>
-            </td>
-            <td>
-                  <code><span title="jaxtyping.Key">Key</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>JAX PRNGKey.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>n_steps</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of samples to draw from the flow.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-<th>Name</th>          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-<td><code>tuple</code></td>            <td>
-                  <code><span title="tuple">tuple</span>[<span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, &#39;n_steps n_dim&#39;], <span title="jaxtyping.Float">Float</span>[<span title="jaxtyping.Array">Array</span>, &#39; n_steps&#39;]]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <ul>
-<li>proposal_position (Float[Array, "n_steps n_dim"]): Proposed positions.</li>
-<li>proposed_log_prob (Float[Array, "n_steps"]): Flow log-density at each proposal.</li>
-</ul>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
 
 
 
@@ -3259,12 +2730,12 @@ sampled from the flow at once and then evaluated serially via
     
       
       
-      <script id="__config" type="application/json">{"annotate":null,"base":"../../../../..","features":["content.code.copy","navigation.instant","navigation.tabs","navigation.top","toc.follow","header.autohide"],"search":"../../../../../assets/javascripts/workers/search.b6b7e04f.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"default":"stable","provider":"mike"}}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["content.code.copy","navigation.instant","navigation.tabs","navigation.top","toc.follow","header.autohide"],"search":"../../../assets/javascripts/workers/search.b6b7e04f.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"default":"stable","provider":"mike"}}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.ee611ef6.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.ee611ef6.min.js"></script>
       
-        <script src="../../../../../javascripts/mathjax.js"></script>
+        <script src="../../../javascripts/mathjax.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
       
