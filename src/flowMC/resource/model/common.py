@@ -1,4 +1,4 @@
-from typing import Callable, List, Tuple, Optional
+from typing import Callable, List, Optional
 
 import equinox as eqx
 import jax
@@ -226,7 +226,7 @@ class MLPAffine(Bijection):
 
     def __call__(
         self, x: Float[Array, " n_dim"], condition_x: Float[Array, " n_cond"]
-    ) -> Tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
         return self.forward(x, condition_x)
 
     def forward(
@@ -263,7 +263,7 @@ class ScalarAffine(Bijection):
 
     def __call__(
         self, x: Float[Array, " n_dim"], condition_x: Float[Array, " n_cond"]
-    ) -> Tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
         return self.forward(x, condition_x)
 
     def forward(
@@ -348,7 +348,9 @@ class Composable(Distribution):
 
     def log_prob(self, x: Float[Array, " n_dim"]) -> FloatScalar:
         log_prob: FloatScalar = jnp.zeros(())
-        for dist, (_, ranges) in zip(self.distributions, self.partitions.items()):
+        for dist, (_, ranges) in zip(
+            self.distributions, self.partitions.items(), strict=True
+        ):
             log_prob = log_prob + dist.log_prob(x[ranges[0] : ranges[1]])
         return log_prob
 
@@ -356,7 +358,9 @@ class Composable(Distribution):
         self, rng_key: Key, n_samples: int
     ) -> Float[Array, "n_samples n_features"]:
         samples = {}
-        for dist, (key, _) in zip(self.distributions, self.partitions.items()):
+        for dist, (key, _) in zip(
+            self.distributions, self.partitions.items(), strict=True
+        ):
             rng_key, sub_key = jax.random.split(rng_key)
             samples[key] = dist.sample(sub_key, n_samples=n_samples)
         return samples  # type: ignore

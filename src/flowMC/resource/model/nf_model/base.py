@@ -109,7 +109,7 @@ class NFModel(eqx.Module, Resource):
         x: Float[Array, "n_batch n_dim"],
         optim: optax.GradientTransformation,
         state: optax.OptState,
-    ) -> tuple[Float[Array, "1"], Self, optax.OptState]:
+    ) -> tuple[FloatScalar, Self, optax.OptState]:
         """Train for a single step.
 
         Args:

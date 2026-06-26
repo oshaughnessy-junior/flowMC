@@ -214,7 +214,7 @@ class FlowMatchingModel(eqx.Module, Resource):
         dx_t: Float[Array, "n_batch n_dim"],
         optim: optax.GradientTransformation,
         state: optax.OptState,
-    ) -> tuple[Float[Array, "1"], Self, optax.OptState]:
+    ) -> tuple[FloatScalar, Self, optax.OptState]:
         logger.debug("Compiling training step")
         loss, grads = model.loss_fn(x_t, t, dx_t)
         updates, state = optim.update(
