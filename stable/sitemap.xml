@@ -43,6 +43,9 @@
         <loc>https://gw-jax-team.github.io/flowMC/stable/FAQ/</loc>
       </url>
       <url>
+        <loc>https://gw-jax-team.github.io/flowMC/stable/citing/</loc>
+      </url>
+      <url>
         <loc>https://gw-jax-team.github.io/flowMC/stable/contributing/</loc>
       </url>
       <url>
@@ -146,6 +149,9 @@
       </url>
       <url>
         <loc>https://gw-jax-team.github.io/flowMC/stable/api/flowMC/strategy/update_state/</loc>
+      </url>
+      <url>
+        <loc>https://gw-jax-team.github.io/flowMC/stable/api/flowMC/typing/</loc>
       </url>
       <url>
         <loc>https://gw-jax-team.github.io/flowMC/stable/api/flowMC/utils/logging/</loc>
