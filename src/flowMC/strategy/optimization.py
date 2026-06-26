@@ -4,6 +4,7 @@ import jax
 import jax.numpy as jnp
 import optax
 from jaxtyping import Array, Float, Key
+from flowMC.typing import FloatScalar
 
 from flowMC.strategy.base import Strategy
 from flowMC.resource.base import Resource
@@ -27,7 +28,7 @@ class AdamOptimization(Strategy):
             ``(1, 2)`` (broadcast to all dimensions).
     """
 
-    logpdf: Callable[[Float[Array, " n_dim"], dict], Float]
+    logpdf: Callable[[Float[Array, " n_dim"], dict], FloatScalar]
     n_steps: int = 100
     learning_rate: float = 1e-2
     noise_level: float = 10
@@ -38,7 +39,7 @@ class AdamOptimization(Strategy):
 
     def __init__(
         self,
-        logpdf: Callable[[Float[Array, " n_dim"], dict], Float],
+        logpdf: Callable[[Float[Array, " n_dim"], dict], FloatScalar],
         n_steps: int = 100,
         learning_rate: float = 1e-2,
         noise_level: float = 10,
@@ -95,7 +96,7 @@ class AdamOptimization(Strategy):
             tuple: ``(rng_key, resources, optimized_positions)``.
         """
 
-        def loss_fn(params: Float[Array, " n_dim"], data: dict) -> Float:
+        def loss_fn(params: Float[Array, " n_dim"], data: dict) -> FloatScalar:
             return -self.logpdf(params, data)
 
         rng_key, optimized_positions, _ = self.optimize(

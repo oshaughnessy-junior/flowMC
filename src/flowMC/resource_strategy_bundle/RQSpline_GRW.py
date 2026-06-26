@@ -3,6 +3,7 @@ from typing import Callable, Optional
 import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float, Key
+from flowMC.typing import FloatScalar
 import equinox as eqx
 
 from flowMC.resource.base import Resource
@@ -40,14 +41,14 @@ class RQSpline_GRW_Bundle(ResourceStrategyBundle):
         rng_key: Key,
         n_chains: int,
         n_dims: int,
-        logpdf: Callable[[Float[Array, " n_dim"], dict], Float],
+        logpdf: Callable[[Float[Array, " n_dim"], dict], FloatScalar],
         n_local_steps: int,
         n_global_steps: int,
         n_training_loops: int,
         n_production_loops: int,
         n_epochs: int,
         # --- Local sampler ---
-        grw_step_size: Float | Float[Array, " n_dim"] = 1e-1,
+        grw_step_size: float | Float[Array, " n_dim"] = 1e-1,
         adapt_step_size: bool = True,
         adapt_step_size_per_dim: bool = True,
         periodic: Optional[dict[int, tuple[float, float]]] = None,

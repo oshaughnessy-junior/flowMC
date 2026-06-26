@@ -1,5 +1,6 @@
 import equinox as eqx
 from jaxtyping import Key, Float, Array, PyTree
+from flowMC.typing import FloatLike, FloatScalar
 import optax
 from flowMC.resource.base import Resource
 import logging
@@ -24,14 +25,14 @@ class Solver(eqx.Module):
         self.method = method
 
     def sample(
-        self, rng_key: Key, n_samples: int, dt: Float = 1e-1
+        self, rng_key: Key, n_samples: int, dt: float = 1e-1
     ) -> Float[Array, "n_samples n_dims"]:
         """Sample points from the solver.
         This sovles the ODE forward, i.e. from the prior to the posterior.
         """
 
         def model_wrapper(
-            t: Float, x: Float[Array, " n_dims"], args: PyTree
+            t: FloatLike, x: Float[Array, " n_dims"], args: PyTree
         ) -> Float[Array, " n_dims"]:
             """Wrapper for the model to be used in the ODE solver."""
             t = jnp.expand_dims(t, axis=-1)
@@ -39,10 +40,10 @@ class Solver(eqx.Module):
             return self.model(x)
 
         def solve_ode(
-            y0: Float[Array, " n_dims"], dt: Float = 1e-1
+            y0: Float[Array, " n_dims"], dt: float = 1e-1
         ) -> Float[Array, " n_dims"]:
             """Solve the ODE with initial condition y0."""
-            term = ODETerm(model_wrapper)
+            term = ODETerm(model_wrapper)  # type: ignore[arg-type]
             sol = diffeqsolve(
                 term,
                 self.method,
@@ -57,13 +58,13 @@ class Solver(eqx.Module):
         sols = eqx.filter_vmap(solve_ode, in_axes=(0, None))(x0, dt)
         return sols
 
-    def log_prob(self, x1: Float[Array, " n_dims"], dt: Float = 1e-1) -> Float:
+    def log_prob(self, x1: Float[Array, " n_dims"], dt: float = 1e-1) -> FloatScalar:
         """Compute the log probability of the initial condition x1.
         This solves the ODE backward, i.e. from the posterior to the prior.
         """
 
         def model_wrapper(
-            t: Float, x: Float[Array, " n_dims"], args: PyTree
+            t: FloatLike, x: Float[Array, " n_dims"], args: PyTree
         ) -> list[Float[Array, "..."]]:
             """Wrapper for the model to be used in the ODE solver.
 
@@ -75,9 +76,9 @@ class Solver(eqx.Module):
             div = jax.jacrev(self.model, argnums=0)(x)[:, :-1]
             return [y, jnp.trace(div)]
 
-        def solve_ode(y0: Float[Array, " n_dims"], dt: Float = 1e-1) -> PyTree:
+        def solve_ode(y0: Float[Array, " n_dims"], dt: float = 1e-1) -> PyTree:
             """Solve the ODE with initial condition y0."""
-            term = ODETerm(model_wrapper)
+            term = ODETerm(model_wrapper)  # type: ignore[arg-type]
             y_init = jax.tree.map(jnp.asarray, [y0, 0.0])
             sol = diffeqsolve(
                 term,
@@ -101,7 +102,7 @@ class Solver(eqx.Module):
 
 
 class Scheduler:
-    def __call__(self, t: Float) -> tuple[Float, Float, Float, Float]:
+    def __call__(self, t: FloatLike) -> tuple[FloatLike, float, FloatLike, float]:
         """Return the parameters of the scheduler at time t."""
         raise NotImplementedError
 
@@ -109,7 +110,7 @@ class Scheduler:
 class CondOTScheduler(Scheduler):
     """Conditional Optimal Transport Scheduler."""
 
-    def __call__(self, t: Float) -> tuple[Float, Float, Float, Float]:
+    def __call__(self, t: FloatLike) -> tuple[FloatLike, float, FloatLike, float]:
         """Return the parameters of the scheduler at time t."""
         # Implement the logic to compute alpha_t, d_alpha_t, sigma_t, d_sigma_t
         return t, 1.0, 1.0 - t, -1.0
@@ -121,7 +122,12 @@ class Path:
     def __init__(self, scheduler: Scheduler):
         self.scheduler = scheduler
 
-    def sample(self, x0: Float, x1: Float, t: Float) -> Float:
+    def sample(
+        self,
+        x0: Float[Array, "n_batch n_dim"],
+        x1: Float[Array, "n_batch n_dim"],
+        t: FloatLike,
+    ) -> tuple[Float[Array, "n_batch n_dim"], Float[Array, "n_batch n_dim"]]:
         """Sample a point along the path between x0 and x1 at time t."""
         alpha_t, d_alpha_t, sigma_t, d_sigma_t = self.scheduler(t)
         x_t = sigma_t * x0 + alpha_t * x1
@@ -168,7 +174,7 @@ class FlowMatchingModel(eqx.Module, Resource):
             self._data_cov = jnp.eye(n_features)
 
     def sample(
-        self, rng_key: Key, num_samples: int, dt: Float = 1e-1
+        self, rng_key: Key, num_samples: int, dt: float = 1e-1
     ) -> Float[Array, "n_samples n_dim"]:
         rng_key, subkey = jax.random.split(rng_key)
         samples = self.solver.sample(subkey, num_samples, dt=dt)
@@ -176,7 +182,7 @@ class FlowMatchingModel(eqx.Module, Resource):
         samples = samples * std + self.data_mean
         return samples
 
-    def log_prob(self, x: Float[Array, " n_dim"]) -> Float:
+    def log_prob(self, x: Float[Array, " n_dim"]) -> FloatScalar:
         std = jnp.sqrt(jnp.diag(self.data_cov))
         x_whitened = (x - self.data_mean) / std
         log_det = -jnp.sum(jnp.log(std))
@@ -194,7 +200,7 @@ class FlowMatchingModel(eqx.Module, Resource):
         x: Float[Array, "n_batch n_dim"],
         t: Float[Array, "n_batch 1"],
         dx_t: Float[Array, "n_batch n_dim"],
-    ) -> Float:
+    ) -> FloatScalar:
         x = jnp.concatenate([x, t], axis=-1)
         return jnp.mean(
             (eqx.filter_vmap(self.solver.model, in_axes=(0))(x) - dx_t) ** 2
@@ -208,7 +214,7 @@ class FlowMatchingModel(eqx.Module, Resource):
         dx_t: Float[Array, "n_batch n_dim"],
         optim: optax.GradientTransformation,
         state: optax.OptState,
-    ) -> tuple[Float[Array, "1"], Self, optax.OptState]:
+    ) -> tuple[FloatScalar, Self, optax.OptState]:
         logger.debug("Compiling training step")
         loss, grads = model.loss_fn(x_t, t, dx_t)
         updates, state = optim.update(
@@ -227,8 +233,8 @@ class FlowMatchingModel(eqx.Module, Resource):
             Float[Array, "n_example n_dim"],
             Float[Array, "n_example 1"],
         ],
-        batch_size: Float,
-    ) -> tuple[Float, Self, optax.OptState]:
+        batch_size: int,
+    ) -> tuple[FloatLike, Self, optax.OptState]:
         """Train for a single epoch."""
         value = 1e9
         model = self

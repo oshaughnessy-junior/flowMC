@@ -3,6 +3,7 @@ from typing import Callable, Optional
 import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float, Key
+from flowMC.typing import FloatScalar
 import equinox as eqx
 
 from flowMC.resource.base import Resource
@@ -47,7 +48,7 @@ class RQSpline_HMC_PT_Bundle(ResourceStrategyBundle):
         rng_key: Key,
         n_chains: int,
         n_dims: int,
-        logpdf: Callable[[Float[Array, " n_dim"], dict], Float],
+        logpdf: Callable[[Float[Array, " n_dim"], dict], FloatScalar],
         n_local_steps: int,
         n_global_steps: int,
         n_training_loops: int,
@@ -56,7 +57,7 @@ class RQSpline_HMC_PT_Bundle(ResourceStrategyBundle):
         # --- Local sampler ---
         hmc_step_size: float = 0.1,
         hmc_n_leapfrog: int = 10,
-        condition_matrix: Float | Float[Array, " n_dim"] = 1,
+        condition_matrix: float | Float[Array, " n_dim"] = 1,
         adapt_step_size: bool = True,
         adapt_step_size_per_dim: bool = True,
         periodic: Optional[dict[int, tuple[float, float]]] = None,
@@ -78,7 +79,9 @@ class RQSpline_HMC_PT_Bundle(ResourceStrategyBundle):
         n_temperatures: int = 5,
         max_temperature: float = 5.0,
         n_tempered_steps: int = -1,
-        logprior: Callable[[Float[Array, " n_dim"], dict], Float] = lambda x, _: 0.0,
+        logprior: Callable[[Float[Array, " n_dim"], dict], FloatScalar] = lambda x, _: (
+            jnp.zeros(())
+        ),
         # --- Early stopping ---
         early_stopping: bool = False,
         early_stopping_tolerance: float = 0.05,

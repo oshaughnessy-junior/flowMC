@@ -7,6 +7,7 @@ import jax
 import jax.numpy as jnp
 import optax
 from jaxtyping import Array, Float, Key
+from flowMC.typing import FloatLike, FloatScalar
 from tqdm import tqdm, trange
 from typing_extensions import Self
 from flowMC.resource.base import Resource
@@ -42,7 +43,7 @@ class NFModel(eqx.Module, Resource):
 
     def __call__(
         self, x: Float[Array, " n_dim"]
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
         """Forward pass of the model.
 
         Args:
@@ -55,7 +56,7 @@ class NFModel(eqx.Module, Resource):
         return self.forward(x)
 
     @abstractmethod
-    def log_prob(self, x: Float[Array, " n_dim"]) -> Float:
+    def log_prob(self, x: Float[Array, " n_dim"]) -> FloatScalar:
         raise NotImplementedError
 
     @abstractmethod
@@ -65,7 +66,7 @@ class NFModel(eqx.Module, Resource):
     @abstractmethod
     def forward(
         self, x: Float[Array, " n_dim"], key: Optional[Key] = None
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
         """Forward pass of the model.
 
         Args:
@@ -80,7 +81,7 @@ class NFModel(eqx.Module, Resource):
     @abstractmethod
     def inverse(
         self, x: Float[Array, " n_dim"]
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
         """Inverse pass of the model.
 
         Args:
@@ -99,7 +100,7 @@ class NFModel(eqx.Module, Resource):
         return eqx.tree_deserialise_leaves(path + ".eqx", self)
 
     @eqx.filter_value_and_grad
-    def loss_fn(self, x: Float[Array, "n_batch n_dim"]) -> Float:
+    def loss_fn(self, x: Float[Array, "n_batch n_dim"]) -> FloatScalar:
         return -jnp.mean(jax.vmap(self.log_prob)(x))
 
     @eqx.filter_jit
@@ -108,7 +109,7 @@ class NFModel(eqx.Module, Resource):
         x: Float[Array, "n_batch n_dim"],
         optim: optax.GradientTransformation,
         state: optax.OptState,
-    ) -> tuple[Float[Array, "1"], Self, optax.OptState]:
+    ) -> tuple[FloatScalar, Self, optax.OptState]:
         """Train for a single step.
 
         Args:
@@ -133,8 +134,8 @@ class NFModel(eqx.Module, Resource):
         optim: optax.GradientTransformation,
         state: optax.OptState,
         data: Float[Array, "n_example n_dim"],
-        batch_size: Float,
-    ) -> tuple[Float, Self, optax.OptState]:
+        batch_size: int,
+    ) -> tuple[FloatLike, Self, optax.OptState]:
         """Train for a single epoch."""
         value = 1e9
         model = self

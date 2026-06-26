@@ -6,6 +6,7 @@ import equinox as eqx
 import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float, Key
+from flowMC.typing import FloatLike, FloatScalar
 
 from flowMC.resource.model.nf_model.base import NFModel
 from flowMC.resource.model.common import (
@@ -32,7 +33,7 @@ def _normalize_bin_sizes(
 
 @partial(jax.vmap, in_axes=(0, None))
 def _normalize_knot_slopes(
-    unnormalized_knot_slopes: Array, min_knot_slope: Float
+    unnormalized_knot_slopes: Array, min_knot_slope: FloatLike
 ) -> Array:
     """Make knot slopes be no less than `min_knot_slope`."""
     # The offset is such that the normalized knot slope will be equal to 1
@@ -347,14 +348,14 @@ class RQSpline(Bijection):
         self,
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
         return self.forward(x, condition)
 
     def forward(
         self,
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
         x_pos, y_pos, knot_slopes = self.get_params(condition)
         return _rational_quadratic_spline_fwd(x, x_pos, y_pos, knot_slopes)
 
@@ -362,7 +363,7 @@ class RQSpline(Bijection):
         self,
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
         x_pos, y_pos, knot_slopes = self.get_params(condition)
         return _rational_quadratic_spline_inv(x, x_pos, y_pos, knot_slopes)
 
@@ -467,7 +468,7 @@ class MaskedCouplingRQSpline(NFModel):
 
     def __call__(
         self, x: Float[Array, " n_dim"]
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
         return self.forward(x)
 
     def forward(
@@ -475,8 +476,8 @@ class MaskedCouplingRQSpline(NFModel):
         x: Float[Array, " n_dim"],
         key: Optional[Key] = None,
         condition: Optional[Float[Array, " n_condition"]] = None,
-    ) -> tuple[Float[Array, " n_dim"], Float]:
-        log_det = 0.0
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
+        log_det: FloatScalar = jnp.zeros(())
         dynamics, statics = eqx.partition(self.layers, eqx.is_array)
 
         def f(carry, data):
@@ -494,9 +495,9 @@ class MaskedCouplingRQSpline(NFModel):
         self,
         x: Float[Array, " n_dim"],
         condition: Optional[Float[Array, " n_condition"]] = None,
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
         """From latent space to data space."""
-        log_det = 0.0
+        log_det: FloatScalar = jnp.zeros(())
         dynamics, statics = eqx.partition(self.layers, eqx.is_array)
 
         def f(carry, data):

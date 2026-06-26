@@ -1,9 +1,10 @@
-from typing import Callable, List, Tuple, Optional
+from typing import Callable, List, Optional
 
 import equinox as eqx
 import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float, Key
+from flowMC.typing import FloatLike, FloatScalar
 from abc import abstractmethod
 
 
@@ -24,7 +25,7 @@ class Bijection(eqx.Module):
         self,
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
         """Apply the forward transformation.
 
         Args:
@@ -32,7 +33,8 @@ class Bijection(eqx.Module):
             condition (Float[Array, "n_condition"]): Conditioning variables.
 
         Returns:
-            tuple[Float[Array, "n_dim"], Float]: Transformed output and log-det Jacobian.
+            tuple[Float[Array, "n_dim"], Float[Array, "n_dim"]]: Transformed output
+                and per-dimension log-det Jacobian.
         """
         return self.forward(x, condition)
 
@@ -41,7 +43,7 @@ class Bijection(eqx.Module):
         self,
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
         """Transform from input space to output space.
 
         Args:
@@ -49,7 +51,8 @@ class Bijection(eqx.Module):
             condition (Float[Array, "n_condition"]): Conditioning variables.
 
         Returns:
-            tuple[Float[Array, "n_dim"], Float]: Transformed output and log-det Jacobian.
+            tuple[Float[Array, "n_dim"], Float[Array, "n_dim"]]: Transformed output
+                and per-dimension log-det Jacobian.
         """
         raise NotImplementedError
 
@@ -58,7 +61,7 @@ class Bijection(eqx.Module):
         self,
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
         """Transform from output space back to input space.
 
         Args:
@@ -66,7 +69,8 @@ class Bijection(eqx.Module):
             condition (Float[Array, "n_condition"]): Conditioning variables.
 
         Returns:
-            tuple[Float[Array, "n_dim"], Float]: Inverse output and log-det Jacobian.
+            tuple[Float[Array, "n_dim"], Float[Array, "n_dim"]]: Inverse output
+                and per-dimension log-det Jacobian.
         """
         raise NotImplementedError
 
@@ -127,7 +131,7 @@ class MLP(eqx.Module):
         self,
         shape: List[int],
         key: Key,
-        scale: Float = 1e-4,
+        scale: float = 1e-4,
         activation: Callable = jax.nn.relu,
         use_bias: bool = True,
     ):
@@ -193,7 +197,7 @@ class MaskedCouplingLayer(Bijection):
         self,
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
         y, log_det = self.bijector(x, x * self.mask)  # type: ignore
         y = (1 - self.mask) * y + self.mask * x
         log_det = ((1 - self.mask) * log_det).sum()
@@ -203,7 +207,7 @@ class MaskedCouplingLayer(Bijection):
         self,
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
         y, log_det = self.bijector.inverse(x, x * self.mask)  # type: ignore
         y = (1 - self.mask) * y + self.mask * x
         log_det = ((1 - self.mask) * log_det).sum()
@@ -213,25 +217,24 @@ class MaskedCouplingLayer(Bijection):
 class MLPAffine(Bijection):
     scale_MLP: MLP
     shift_MLP: MLP
-    dt: Float = 1
+    dt: float = 1
 
-    def __init__(self, scale_MLP: MLP, shift_MLP: MLP, dt: Float = 1):
+    def __init__(self, scale_MLP: MLP, shift_MLP: MLP, dt: float = 1):
         self.scale_MLP = scale_MLP
         self.shift_MLP = shift_MLP
         self.dt = dt
 
     def __call__(
         self, x: Float[Array, " n_dim"], condition_x: Float[Array, " n_cond"]
-    ) -> Tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
         return self.forward(x, condition_x)
 
     def forward(
         self,
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
-    ) -> tuple[Float[Array, " n_dim"], Float]:
-        # Note that this note output log_det as an array instead of a number.
-        # This is because we need to sum over the log_det in the masked coupling layer.
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
+        # Returns per-dimension log-det so MaskedCouplingLayer can mask and sum.
         scale = jnp.tanh(self.scale_MLP(condition)) * self.dt
         shift = self.shift_MLP(condition) * self.dt
         log_det = scale
@@ -242,7 +245,7 @@ class MLPAffine(Bijection):
         self,
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
         scale = jnp.tanh(self.scale_MLP(condition)) * self.dt
         shift = self.shift_MLP(condition) * self.dt
         log_det = -scale
@@ -254,31 +257,31 @@ class ScalarAffine(Bijection):
     scale: Array
     shift: Array
 
-    def __init__(self, scale: Float, shift: Float):
+    def __init__(self, scale: FloatLike, shift: FloatLike):
         self.scale = jnp.array(scale)
         self.shift = jnp.array(shift)
 
     def __call__(
         self, x: Float[Array, " n_dim"], condition_x: Float[Array, " n_cond"]
-    ) -> Tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
         return self.forward(x, condition_x)
 
     def forward(
         self,
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
         y = (x + self.shift) * jnp.exp(self.scale)
-        log_det = self.scale
+        log_det = jnp.broadcast_to(self.scale, x.shape)
         return y, log_det
 
     def inverse(
         self,
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
-    ) -> tuple[Float[Array, " n_dim"], Float]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
         y = x * jnp.exp(-self.scale) - self.shift
-        log_det = -self.scale
+        log_det = jnp.broadcast_to(-self.scale, x.shape)
         return y, log_det
 
 
@@ -324,8 +327,8 @@ class Gaussian(Distribution):
         self._cov = cov
         self.learnable = learnable
 
-    def log_prob(self, x: Float[Array, " n_dim"]) -> Float:
-        return jax.scipy.stats.multivariate_normal.logpdf(x, self.mean, self.cov)
+    def log_prob(self, x: Float[Array, " n_dim"]) -> FloatScalar:
+        return jax.scipy.stats.multivariate_normal.logpdf(x, self.mean, self.cov)  # type: ignore[return-value]
 
     def sample(
         self, rng_key: Key, n_samples: int
@@ -343,17 +346,19 @@ class Composable(Distribution):
         self.distributions = distributions
         self.partitions = partitions
 
-    def log_prob(self, x: Float[Array, " n_dim"]) -> Float:
-        log_prob = 0
-        for dist, (_, ranges) in zip(self.distributions, self.partitions.items()):
-            log_prob += dist.log_prob(x[ranges[0] : ranges[1]])
+    def log_prob(self, x: Float[Array, " n_dim"]) -> FloatScalar:
+        log_prob: FloatScalar = jnp.zeros(())
+        for dist, (_, ranges) in zip(
+            self.distributions, self.partitions.items(), strict=True
+        ):
+            log_prob = log_prob + dist.log_prob(x[ranges[0] : ranges[1]])
         return log_prob
 
     def sample(
         self, rng_key: Key, n_samples: int
     ) -> Float[Array, "n_samples n_features"]:
-        samples = {}
-        for dist, (key, _) in zip(self.distributions, self.partitions.items()):
+        samples = []
+        for dist in self.distributions:
             rng_key, sub_key = jax.random.split(rng_key)
-            samples[key] = dist.sample(sub_key, n_samples=n_samples)
-        return samples  # type: ignore
+            samples.append(dist.sample(sub_key, n_samples=n_samples))
+        return jnp.concatenate(samples, axis=-1)
