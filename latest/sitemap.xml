@@ -151,6 +151,9 @@
         <loc>https://gw-jax-team.github.io/flowMC/latest/api/flowMC/strategy/update_state/</loc>
       </url>
       <url>
+        <loc>https://gw-jax-team.github.io/flowMC/latest/api/flowMC/typing/</loc>
+      </url>
+      <url>
         <loc>https://gw-jax-team.github.io/flowMC/latest/api/flowMC/utils/logging/</loc>
       </url>
 </urlset>
