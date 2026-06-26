@@ -357,10 +357,8 @@ class Composable(Distribution):
     def sample(
         self, rng_key: Key, n_samples: int
     ) -> Float[Array, "n_samples n_features"]:
-        samples = {}
-        for dist, (key, _) in zip(
-            self.distributions, self.partitions.items(), strict=True
-        ):
+        samples = []
+        for dist in self.distributions:
             rng_key, sub_key = jax.random.split(rng_key)
-            samples[key] = dist.sample(sub_key, n_samples=n_samples)
-        return samples  # type: ignore
+            samples.append(dist.sample(sub_key, n_samples=n_samples))
+        return jnp.concatenate(samples, axis=-1)
