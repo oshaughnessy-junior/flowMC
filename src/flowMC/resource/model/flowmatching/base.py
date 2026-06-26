@@ -102,7 +102,7 @@ class Solver(eqx.Module):
 
 
 class Scheduler:
-    def __call__(self, t: FloatScalar) -> tuple[FloatLike, float, FloatLike, float]:
+    def __call__(self, t: FloatLike) -> tuple[FloatLike, float, FloatLike, float]:
         """Return the parameters of the scheduler at time t."""
         raise NotImplementedError
 
@@ -110,7 +110,7 @@ class Scheduler:
 class CondOTScheduler(Scheduler):
     """Conditional Optimal Transport Scheduler."""
 
-    def __call__(self, t: FloatScalar) -> tuple[FloatLike, float, FloatLike, float]:
+    def __call__(self, t: FloatLike) -> tuple[FloatLike, float, FloatLike, float]:
         """Return the parameters of the scheduler at time t."""
         # Implement the logic to compute alpha_t, d_alpha_t, sigma_t, d_sigma_t
         return t, 1.0, 1.0 - t, -1.0
@@ -124,10 +124,10 @@ class Path:
 
     def sample(
         self,
-        x0: Float[Array, " n_dim"],
-        x1: Float[Array, " n_dim"],
-        t: FloatScalar,
-    ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
+        x0: Float[Array, "n_batch n_dim"],
+        x1: Float[Array, "n_batch n_dim"],
+        t: FloatLike,
+    ) -> tuple[Float[Array, "n_batch n_dim"], Float[Array, "n_batch n_dim"]]:
         """Sample a point along the path between x0 and x1 at time t."""
         alpha_t, d_alpha_t, sigma_t, d_sigma_t = self.scheduler(t)
         x_t = sigma_t * x0 + alpha_t * x1
