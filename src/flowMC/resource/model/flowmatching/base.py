@@ -32,7 +32,7 @@ class Solver(eqx.Module):
         """
 
         def model_wrapper(
-            t: FloatScalar, x: Float[Array, " n_dims"], args: PyTree
+            t: FloatLike, x: Float[Array, " n_dims"], args: PyTree
         ) -> Float[Array, " n_dims"]:
             """Wrapper for the model to be used in the ODE solver."""
             t = jnp.expand_dims(t, axis=-1)
@@ -43,7 +43,7 @@ class Solver(eqx.Module):
             y0: Float[Array, " n_dims"], dt: float = 1e-1
         ) -> Float[Array, " n_dims"]:
             """Solve the ODE with initial condition y0."""
-            term = ODETerm(model_wrapper)
+            term = ODETerm(model_wrapper)  # type: ignore[arg-type]
             sol = diffeqsolve(
                 term,
                 self.method,
@@ -64,7 +64,7 @@ class Solver(eqx.Module):
         """
 
         def model_wrapper(
-            t: FloatScalar, x: Float[Array, " n_dims"], args: PyTree
+            t: FloatLike, x: Float[Array, " n_dims"], args: PyTree
         ) -> list[Float[Array, "..."]]:
             """Wrapper for the model to be used in the ODE solver.
 
@@ -78,7 +78,7 @@ class Solver(eqx.Module):
 
         def solve_ode(y0: Float[Array, " n_dims"], dt: float = 1e-1) -> PyTree:
             """Solve the ODE with initial condition y0."""
-            term = ODETerm(model_wrapper)
+            term = ODETerm(model_wrapper)  # type: ignore[arg-type]
             y_init = jax.tree.map(jnp.asarray, [y0, 0.0])
             sol = diffeqsolve(
                 term,
