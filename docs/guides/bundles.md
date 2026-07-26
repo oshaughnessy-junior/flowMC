@@ -59,7 +59,8 @@ The local step size targets an acceptance rate of ~57% and is adapted automatica
 
 ## RQSpline_MALA_PT_Bundle
 
-Extends `RQSpline_MALA_Bundle` with **parallel tempering**. Additional replicas of the chains are run at elevated temperatures, exploring the prior more freely.
+Extends `RQSpline_MALA_Bundle` with **parallel tempering**.
+Additional replicas of the chains are run at elevated temperatures, exploring the prior more freely.
 Periodic swap proposals between adjacent temperature levels allow the target chains to escape local modes.
 
 ```python

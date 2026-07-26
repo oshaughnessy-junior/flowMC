@@ -26,7 +26,8 @@ This is a bit rarer since this means your data used to train the normalizing flo
 **The sampler is stuck a bit until it starts sampling**
 
 If you use the option ``jit`` in constructing the local sampler, the code will compile your code to speed up the execution.
-The sampler is not really stuck, but it is compiling the code. Depending on how you code up your `logpdf` function, the compilation can take a while.
+The sampler is not really stuck, but it is compiling the code.
+Depending on how you code up your `logpdf` function, the compilation can take a while.
 If you don't want to wait, you can set ``jit=False``, which would increase the sampling time.
 
 **The compilation is slow**
@@ -39,8 +40,13 @@ While we cannot fundamentally get rid of the problem, [using a jax.lax.scan](htt
 
 flowMC has two independent memory bottlenecks, so there are two knobs to turn.
 
-The first — and usually the bottleneck — is the NF proposal step. During each global step the target log-PDF (`logpdf`) is evaluated at all `n_chains * n_global_steps` flow proposals at once. Reduce `n_NFproposal_batch_size` (default `10000`): when `n_global_steps` exceeds it, the proposals are evaluated in smaller `jax.lax.map` chunks rather than a single `vmap`, lowering peak memory. Try this first.
+The first — and usually the bottleneck — is the NF proposal step.
+During each global step the target log-PDF (`logpdf`) is evaluated at all `n_chains * n_global_steps` flow proposals at once.
+Reduce `n_NFproposal_batch_size` (default `10000`): when `n_global_steps` exceeds it, the proposals are evaluated in smaller `jax.lax.map` chunks rather than a single `vmap`, lowering peak memory.
+Try this first.
 
-The second matters when your `logpdf` is expensive to evaluate. Sometimes the problem is not the `n_chains * n_global_steps` proposals, but that even a single `logpdf` evaluation per chain across all `n_chains` chains will not fit. In that case also set `chain_batch_size` to a small positive integer (default `0` means all chains are vmapped at once; smaller values use less memory) so the local sampler processes chains in sequential sub-batches.
+The second matters when your `logpdf` is expensive to evaluate.
+Sometimes the problem is not the `n_chains * n_global_steps` proposals, but that even a single `logpdf` evaluation per chain across all `n_chains` chains will not fit.
+In that case also set `chain_batch_size` to a small positive integer (default `0` means all chains are vmapped at once; smaller values use less memory) so the local sampler processes chains in sequential sub-batches.
 
 Both are bundle arguments (e.g. to `RQSpline_MALA_Bundle`); see the [hyperparameters guide](guides/hyperparameters.md) for details.
