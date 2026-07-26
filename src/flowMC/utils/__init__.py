@@ -1,5 +1,5 @@
 """Utility modules for flowMC."""
 
-from flowMC.utils.logging import enable_verbose_logging, disable_verbose_logging
+from flowMC.utils.logging import disable_verbose_logging, enable_verbose_logging
 
-__all__ = ["enable_verbose_logging", "disable_verbose_logging"]
+__all__ = ["disable_verbose_logging", "enable_verbose_logging"]

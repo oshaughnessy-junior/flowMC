@@ -1,9 +1,12 @@
 from abc import abstractmethod
+from collections.abc import Callable
+from typing import Self
+
 import equinox as eqx
 from jaxtyping import Array, Float, Int, Key, PyTree
+
 from flowMC.resource.base import Resource
 from flowMC.resource.logPDF import LogPDF
-from typing import Callable, Self
 
 
 class ProposalBase(eqx.Module, Resource):

@@ -2,13 +2,13 @@ import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float, PyTree
 
+from flowMC.resource.buffers import Buffer
 from flowMC.resource.kernel.Gaussian_random_walk import GaussianRandomWalk
 from flowMC.resource.kernel.HMC import HMC
 from flowMC.resource.kernel.MALA import MALA
+from flowMC.resource.logPDF import LogPDF
 from flowMC.resource.states import State
 from flowMC.strategy.take_steps import TakeSerialSteps
-from flowMC.resource.buffers import Buffer
-from flowMC.resource.logPDF import LogPDF
 
 
 def log_posterior(x, data=None):
@@ -81,7 +81,7 @@ class TestHMC:
             initial_position, None
         )
         rng_key, subkey = jax.random.split(rng_key)
-        key1, key2 = jax.random.split(subkey)
+        key1, _key2 = jax.random.split(subkey)
 
         def potential(x: Float[Array, " n_dims"], data: PyTree) -> Float[Array, "1"]:
             return -log_posterior(x, data)
@@ -106,7 +106,7 @@ class TestHMC:
             None,
             jnp.ones(n_dims),
         )
-        rev_position, rev_momentum = HMC_obj.leapfrog_step(
+        rev_position, _rev_momentum = HMC_obj.leapfrog_step(
             leapfrog_kernel, new_position, -new_momentum, None, jnp.ones(n_dims)
         )
 
@@ -514,7 +514,7 @@ class TestMALA:
         def run_chain(rng_key, init_pos, init_lp):
             def step(carry, key):
                 pos, lp = carry
-                new_pos, new_lp, acc = periodic_mala.kernel(
+                new_pos, new_lp, _acc = periodic_mala.kernel(
                     key, pos, lp, periodic_logpdf, {}
                 )
                 return (new_pos, new_lp), new_pos
@@ -785,7 +785,7 @@ class TestGRW:
         def run_chain(rng_key, init_pos, init_lp):
             def step(carry, key):
                 pos, lp = carry
-                new_pos, new_lp, acc = periodic_grw.kernel(
+                new_pos, new_lp, _acc = periodic_grw.kernel(
                     key, pos, lp, periodic_logpdf, {}
                 )
                 return (new_pos, new_lp), new_pos

@@ -1,6 +1,7 @@
-from flowMC.resource.base import Resource
-import optax
 import equinox as eqx
+import optax
+
+from flowMC.resource.base import Resource
 
 
 class Optimizer(Resource):

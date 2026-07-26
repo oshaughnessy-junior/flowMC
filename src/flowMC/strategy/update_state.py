@@ -1,7 +1,8 @@
+from jaxtyping import Array, Float, Key
+
+from flowMC.resource.base import Resource
 from flowMC.resource.states import State
 from flowMC.strategy.base import Strategy
-from flowMC.resource.base import Resource
-from jaxtyping import Array, Float, Key
 
 
 class UpdateState(Strategy):
@@ -39,7 +40,8 @@ class UpdateState(Strategy):
         Float[Array, "n_chains n_dim"],
     ]:
         """Update the state resource in place."""
-        assert isinstance(state := resources[self.state_name], State), (
+        state = resources[self.state_name]
+        assert isinstance(state, State), (
             f"Resource {self.state_name} is not a State resource."
         )
 

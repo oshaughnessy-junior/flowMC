@@ -1,11 +1,11 @@
-from flowMC.resource.base import Resource
-from typing import TypeVar
-import numpy as np
 import logging
+from typing import Self
+
+import numpy as np
+
+from flowMC.resource.base import Resource
 
 logger = logging.getLogger(__name__)
-
-TState = TypeVar("TState", bound="State")
 
 
 class State(Resource):
@@ -59,10 +59,21 @@ class State(Resource):
         np.savez(
             path + self.name,
             name=self.name,
-            data=self.data,  # type: ignore
+            data=np.asarray(self.data, dtype=object),
         )
 
-    def load_resource(self: TState, path: str) -> TState:
-        data = np.load(path)
-        result = State(data["name"], data["data"])
-        return result  # type: ignore
+    def load_resource(self, path: str) -> Self:
+        with np.load(path, allow_pickle=True) as loaded:
+            name = str(loaded["name"])
+            raw_data = loaded["data"].item()
+
+        if not isinstance(raw_data, dict):
+            raise TypeError("Saved state data must be a dictionary")
+
+        state_data: dict[str, int | bool | str] = {}
+        for key, value in raw_data.items():
+            if not isinstance(key, str) or not isinstance(value, (int, bool, str)):
+                raise TypeError("Saved state data contains an unsupported key or value")
+            state_data[key] = value
+
+        return type(self)(state_data, name=name)

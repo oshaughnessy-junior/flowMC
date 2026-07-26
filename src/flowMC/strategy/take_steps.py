@@ -1,16 +1,18 @@
-from flowMC.resource.base import Resource
-from flowMC.resource.kernel.base import ProposalBase
-from flowMC.resource.buffers import Buffer
-from flowMC.resource.states import State
-from flowMC.resource.logPDF import LogPDF
-from flowMC.strategy.base import Strategy
-from flowMC.utils.logging import enable_verbose_logging
-from jaxtyping import Array, Float, Key
 import logging
+from abc import abstractmethod
+
+import equinox as eqx
 import jax
 import jax.numpy as jnp
-import equinox as eqx
-from abc import abstractmethod
+from jaxtyping import Array, Float, Key
+
+from flowMC.resource.base import Resource
+from flowMC.resource.buffers import Buffer
+from flowMC.resource.kernel.base import ProposalBase
+from flowMC.resource.logPDF import LogPDF
+from flowMC.resource.states import State
+from flowMC.strategy.base import Strategy
+from flowMC.utils.logging import enable_verbose_logging
 
 logger = logging.getLogger(__name__)
 
@@ -142,31 +144,36 @@ class TakeSteps(Strategy):
         rng_key, subkey = jax.random.split(rng_key)
         subkey = jax.random.split(subkey, initial_position.shape[0])
 
-        assert isinstance(state_resource := resources[self.state_name], State), (
-            "State resource must be a State"
+        state_resource = resources[self.state_name]
+        assert isinstance(state_resource, State), "State resource must be a State"
+
+        position_buffer_name = state_resource.data[self.buffer_names[0]]
+        assert isinstance(position_buffer_name, str), (
+            "Position buffer resource name must be a string"
         )
 
-        assert isinstance(
-            position_buffer_name := state_resource.data[self.buffer_names[0]], str
-        ), "Position buffer resource name must be a string"
+        log_prob_buffer_name = state_resource.data[self.buffer_names[1]]
+        assert isinstance(log_prob_buffer_name, str), (
+            "Log probability buffer resource name must be a string"
+        )
 
-        assert isinstance(
-            log_prob_buffer_name := state_resource.data[self.buffer_names[1]], str
-        ), "Log probability buffer resource name must be a string"
+        acceptance_buffer_name = state_resource.data[self.buffer_names[2]]
+        assert isinstance(acceptance_buffer_name, str), (
+            "Acceptance buffer resource name must be a string"
+        )
 
-        assert isinstance(
-            acceptance_buffer_name := state_resource.data[self.buffer_names[2]], str
-        ), "Acceptance buffer resource name must be a string"
-
-        assert isinstance(position_buffer := resources[position_buffer_name], Buffer), (
+        position_buffer = resources[position_buffer_name]
+        assert isinstance(position_buffer, Buffer), (
             "Position buffer resource must be a Buffer"
         )
-        assert isinstance(log_prob_buffer := resources[log_prob_buffer_name], Buffer), (
+        log_prob_buffer = resources[log_prob_buffer_name]
+        assert isinstance(log_prob_buffer, Buffer), (
             "Log probability buffer resource must be a Buffer"
         )
-        assert isinstance(
-            acceptance_buffer := resources[acceptance_buffer_name], Buffer
-        ), "Acceptance buffer resource must be a Buffer"
+        acceptance_buffer = resources[acceptance_buffer_name]
+        assert isinstance(acceptance_buffer, Buffer), (
+            "Acceptance buffer resource must be a Buffer"
+        )
 
         kernel = resources[self.kernel_name]
         logpdf = resources[self.logpdf_name]
@@ -285,7 +292,7 @@ class TakeSerialSteps(TakeSteps):
             tuple: ``(positions, log_probs, do_accepts)`` each of length ``n_steps``.
         """
         (
-            (last_key, last_position, last_log_prob, logpdf, data),
+            (_last_key, _last_position, _last_log_prob, logpdf, data),
             (positions, log_probs, do_accepts),
         ) = jax.lax.scan(
             jax.tree_util.Partial(self.body, kernel),

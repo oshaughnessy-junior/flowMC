@@ -1,20 +1,20 @@
-from typing import List, Optional, Tuple
 import logging
+from typing import Optional
 
 import equinox as eqx
 import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float, Key
-from flowMC.typing import FloatScalar
 
-from flowMC.resource.model.nf_model.base import NFModel
 from flowMC.resource.model.common import (
-    Distribution,
     MLP,
+    Distribution,
     Gaussian,
     MaskedCouplingLayer,
     MLPAffine,
 )
+from flowMC.resource.model.nf_model.base import NFModel
+from flowMC.typing import FloatScalar
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +64,7 @@ class AffineCoupling(eqx.Module):
     def __call__(self, x: Array):
         return self.forward(x)
 
-    def forward(self, x: Array) -> Tuple[Array, Array]:
+    def forward(self, x: Array) -> tuple[Array, Array]:
         """From latent space to data space.
 
         Args:
@@ -85,7 +85,7 @@ class AffineCoupling(eqx.Module):
         outputs = (x + t) * jnp.exp(s)
         return outputs, log_det
 
-    def inverse(self, x: Array) -> Tuple[Array, Array]:
+    def inverse(self, x: Array) -> tuple[Array, Array]:
         """From data space to latent space.
 
         Args:
@@ -119,7 +119,7 @@ class RealNVP(NFModel):
     """
 
     base_dist: Distribution
-    affine_coupling: List[MaskedCouplingLayer]
+    affine_coupling: list[MaskedCouplingLayer]
     _n_features: int
     _data_mean: Float[Array, " n_dim"]
     _data_cov: Float[Array, "n_dim n_dim"]
@@ -153,8 +153,11 @@ class RealNVP(NFModel):
                 - ``data_cov`` (Array): Initial data covariance for whitening.
                   Updated during training.
         """
-        if kwargs.get("base_dist") is not None:
-            self.base_dist = kwargs.get("base_dist")  # type: ignore
+        base_dist = kwargs.get("base_dist")
+        if base_dist is not None:
+            if not isinstance(base_dist, Distribution):
+                raise TypeError("base_dist must be a Distribution")
+            self.base_dist = base_dist
         else:
             self.base_dist = Gaussian(
                 jnp.zeros(n_features), jnp.eye(n_features), learnable=False

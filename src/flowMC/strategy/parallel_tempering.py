@@ -1,15 +1,17 @@
-from flowMC.resource.base import Resource
-from flowMC.resource.kernel.base import ProposalBase
-from flowMC.resource.buffers import Buffer
-from flowMC.resource.states import State
-from flowMC.resource.logPDF import TemperedPDF
-from flowMC.strategy.base import Strategy
-from flowMC.utils.logging import enable_verbose_logging
-from jaxtyping import Array, Float, Key, Int, Bool
 import logging
+
+import equinox as eqx
 import jax
 import jax.numpy as jnp
-import equinox as eqx
+from jaxtyping import Array, Bool, Float, Int, Key
+
+from flowMC.resource.base import Resource
+from flowMC.resource.buffers import Buffer
+from flowMC.resource.kernel.base import ProposalBase
+from flowMC.resource.logPDF import TemperedPDF
+from flowMC.resource.states import State
+from flowMC.strategy.base import Strategy
+from flowMC.utils.logging import enable_verbose_logging
 
 logger = logging.getLogger(__name__)
 
@@ -87,18 +89,19 @@ class ParallelTempering(Strategy):
         """
 
         rng_key, subkey = jax.random.split(rng_key)
-        assert isinstance(kernel := resources[self.kernel_name], ProposalBase)
+        kernel = resources[self.kernel_name]
+        assert isinstance(kernel, ProposalBase)
+        tempered_logpdf = resources[self.tempered_logpdf_name]
+        assert isinstance(tempered_logpdf, TemperedPDF)
+        tempered_positions = resources[self.tempered_buffer_names[0]]
         assert isinstance(
-            tempered_logpdf := resources[self.tempered_logpdf_name], TemperedPDF
-        )
-        assert isinstance(
-            tempered_positions := resources[self.tempered_buffer_names[0]], Buffer
+            tempered_positions, Buffer
         )  # Shape (n_chains, n_temps, n_dims)
 
-        assert isinstance(
-            temperatures := resources[self.tempered_buffer_names[1]], Buffer
-        )
-        assert isinstance(state := resources[self.state_name], State)
+        temperatures = resources[self.tempered_buffer_names[1]]
+        assert isinstance(temperatures, Buffer)
+        state = resources[self.state_name]
+        assert isinstance(state, State)
 
         initial_position = jnp.concatenate(
             [initial_position[:, None, :], tempered_positions.data],
@@ -109,7 +112,7 @@ class ParallelTempering(Strategy):
 
         rng_key, subkey = jax.random.split(rng_key)
         subkey = jax.random.split(subkey, initial_position.shape[0])
-        positions, log_probs, do_accepts = eqx.filter_jit(
+        positions, _log_probs, do_accepts = eqx.filter_jit(
             eqx.filter_vmap(
                 jax.tree_util.Partial(self._ensemble_step, kernel),
                 in_axes=(0, 0, None, None, None),
@@ -125,7 +128,7 @@ class ParallelTempering(Strategy):
 
         rng_key, subkey = jax.random.split(rng_key)
         subkey = jax.random.split(subkey, initial_position.shape[0])
-        positions, log_probs, do_accepts = eqx.filter_jit(
+        positions, _log_probs, do_accepts = eqx.filter_jit(
             eqx.filter_vmap(self._exchange, in_axes=(0, 0, None, None, None))
         )(subkey, positions, tempered_logpdf, temperatures.data, data)
 
@@ -249,7 +252,7 @@ class ParallelTempering(Strategy):
         )
 
         (
-            (key, position, log_prob, logpdf, temperatures, data),
+            (_key, position, log_prob, logpdf, temperatures, data),
             (
                 positions,
                 log_probs,
@@ -333,7 +336,7 @@ class ParallelTempering(Strategy):
             log_probs[idx] - log_probs[idx + 1]
         )
         log_uniform = jnp.log(jax.random.uniform(subkey))
-        do_accept: Bool[Array, "1"] = log_uniform < ratio
+        do_accept: Bool[Array, 1] = log_uniform < ratio
         swapped = jnp.flip(
             jax.lax.dynamic_slice_in_dim(positions, idx, 2, axis=0), axis=0
         )
@@ -400,7 +403,7 @@ class ParallelTempering(Strategy):
         logger.debug("Exchanging walkers between temperatures")
 
         log_probs = jax.vmap(logpdf, in_axes=(0, None))(positions, data)
-        (key, positions, log_probs, idx, logpdf, temperatures, data), do_accept = (
+        (key, positions, log_probs, _idx, logpdf, temperatures, data), do_accept = (
             jax.lax.scan(
                 self._exchange_step_body,
                 (key, positions, log_probs, 0, logpdf, temperatures, data),

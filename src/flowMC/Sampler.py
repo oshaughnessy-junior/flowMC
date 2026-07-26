@@ -4,12 +4,12 @@ import pickle
 import shutil
 import time
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Protocol, runtime_checkable
 
 import equinox as eqx
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Float, Key
+from jaxtyping import Array, Float, Key, PyTree
 
 from flowMC.resource.base import Resource
 from flowMC.resource.states import State
@@ -17,6 +17,22 @@ from flowMC.resource_strategy_bundle.base import ResourceStrategyBundle
 from flowMC.strategy.base import Strategy
 
 logger = logging.getLogger(__name__)
+
+
+@runtime_checkable
+class _CursorStrategy(Protocol):
+    """The checkpointable cursor interface implemented by step strategies."""
+
+    current_position: int
+
+    def set_current_position(self, current_position: int) -> None: ...
+
+
+@runtime_checkable
+class _LogPDFResource(Protocol):
+    """The minimal interface needed to fingerprint a log-PDF checkpoint."""
+
+    def log_pdf(self, x: Float[Array, " n_dim"], data: PyTree) -> Float[Array, "1"]: ...
 
 
 class Sampler:
@@ -226,12 +242,10 @@ class Sampler:
         if (
             ckpt_fp is not None
             and logpdf_resource is not None
-            and hasattr(logpdf_resource, "log_pdf")
+            and isinstance(logpdf_resource, _LogPDFResource)
         ):
             current_fp = float(
-                logpdf_resource.log_pdf(  # type: ignore[union-attr]
-                    jnp.asarray(ckpt["last_step"][0]), data
-                )
+                logpdf_resource.log_pdf(jnp.asarray(ckpt["last_step"][0]), data)
             )
             if abs(current_fp - ckpt_fp) > 1e-6:
                 raise ValueError(
@@ -264,13 +278,18 @@ class Sampler:
                         payload_info,
                     )
                     self.resources.pop(k, None)
+            elif isinstance(entry, Resource):
+                self.resources[k] = entry
             else:
-                self.resources[k] = entry  # type: ignore[assignment]
+                logger.warning(
+                    "Cannot restore resource '%s' with unsupported checkpoint entry %r.",
+                    k,
+                    type(entry),
+                )
         for name, cursor in ckpt["stepper_cursors"].items():
-            if name in self.strategies and hasattr(
-                self.strategies[name], "set_current_position"
-            ):
-                self.strategies[name].set_current_position(cursor)  # type: ignore[union-attr]
+            strategy = self.strategies.get(name)
+            if isinstance(strategy, _CursorStrategy) and isinstance(cursor, int):
+                strategy.set_current_position(cursor)
         for name, attrs in ckpt["strategy_states"].items():
             if name in self.strategies:
                 for attr, val in attrs.items():
@@ -321,20 +340,22 @@ class Sampler:
             try:
                 pickle.dumps(v, protocol=pickle.HIGHEST_PROTOCOL)
                 resources_to_save[k] = ("pkl", v)
-            except Exception as e:
+            # Pickling may execute arbitrary user-defined code; every failure must
+            # use the equivalent Equinox serialisation fallback.
+            except Exception as exc:  # noqa: BLE001
                 logger.debug(
                     "pickle.dumps failed for resource '%s' (%s); falling back to eqx serialisation.",
                     k,
-                    e,
+                    exc,
                 )
                 buf = io.BytesIO()
                 eqx.tree_serialise_leaves(buf, v)
                 resources_to_save[k] = ("eqx", buf.getvalue())
 
         stepper_cursors = {
-            name: s.current_position  # type: ignore[union-attr]
-            for name, s in self.strategies.items()
-            if hasattr(s, "current_position")
+            name: strategy.current_position
+            for name, strategy in self.strategies.items()
+            if isinstance(strategy, _CursorStrategy)
         }
 
         state_attrs = (
@@ -351,8 +372,8 @@ class Sampler:
 
         logpdf_resource = self.resources.get("logpdf")
         logpdf_fp = (
-            float(logpdf_resource.log_pdf(jnp.asarray(last_step[0]), data))  # type: ignore[union-attr]
-            if logpdf_resource is not None and hasattr(logpdf_resource, "log_pdf")
+            float(logpdf_resource.log_pdf(jnp.asarray(last_step[0]), data))
+            if isinstance(logpdf_resource, _LogPDFResource)
             else None
         )
 
@@ -404,7 +425,7 @@ class Sampler:
                 consistent with any checkpoint on disk; changes are detected via
                 the logpdf fingerprint when available.
         """
-        initial_position = jnp.atleast_2d(initial_position)  # type: ignore
+        initial_position = jnp.atleast_2d(initial_position)
         assert isinstance(self.strategy_order, list)
 
         rng_key = self.rng_key

@@ -27,7 +27,7 @@ def test_realnvp():
     n_layers = 2
     x = jnp.array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
 
-    rng_key, rng_subkey = jax.random.split(jax.random.key(0), 2)
+    rng_key, _rng_subkey = jax.random.split(jax.random.key(0), 2)
     model = RealNVP(n_features, n_layers, n_hidden, rng_key)
 
     assert model.n_features == n_features
@@ -60,7 +60,7 @@ def test_rqspline():
     n_layers = 2
     n_bins = 8
 
-    rng_key, rng_subkey = jax.random.split(jax.random.key(0), 2)
+    rng_key, _rng_subkey = jax.random.split(jax.random.key(0), 2)
     model = MaskedCouplingRQSpline(
         n_features, n_layers, hidden_layes, n_bins, jax.random.key(10)
     )

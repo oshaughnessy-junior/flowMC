@@ -1,10 +1,11 @@
+import logging
+from collections.abc import Callable
+from typing import Optional, Self
+
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Bool, Float, Int, Key, PyTree
-from typing import Callable, Optional
-from typing_extensions import Self
-import logging
 from equinox import tree_at
+from jaxtyping import Array, Bool, Float, Int, Key, PyTree
 
 from flowMC.resource.kernel.base import ProposalBase
 from flowMC.resource.logPDF import LogPDF

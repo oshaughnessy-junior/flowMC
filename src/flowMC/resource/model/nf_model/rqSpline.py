@@ -1,22 +1,23 @@
+import logging
+from collections.abc import Sequence
 from functools import partial
 from typing import Optional
-import logging
 
 import equinox as eqx
 import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float, Key
-from flowMC.typing import FloatLike, FloatScalar
 
-from flowMC.resource.model.nf_model.base import NFModel
 from flowMC.resource.model.common import (
-    Distribution,
-    Bijection,
     MLP,
+    Bijection,
+    Distribution,
     Gaussian,
     MaskedCouplingLayer,
     ScalarAffine,
 )
+from flowMC.resource.model.nf_model.base import NFModel
+from flowMC.typing import FloatLike, FloatScalar
 
 logger = logging.getLogger(__name__)
 
@@ -126,7 +127,7 @@ def _rational_quadratic_spline_fwd(
     y = jnp.where(
         above_range,
         (x - x_pos[-1]) * knot_slopes[-1] + y_pos[-1],
-        y,  # type: ignore
+        y,
     )
     logdet = jnp.where(below_range, jnp.log(knot_slopes[0]), logdet)
     logdet = jnp.where(above_range, jnp.log(knot_slopes[-1]), logdet)
@@ -239,7 +240,7 @@ def _rational_quadratic_spline_inv(
     x = jnp.where(
         above_range,
         (y - y_pos[-1]) / knot_slopes[-1] + x_pos[-1],
-        x,  # type: ignore
+        x,
     )
     logdet = jnp.where(below_range, -jnp.log(knot_slopes[0]), logdet)
     logdet = jnp.where(above_range, -jnp.log(knot_slopes[-1]), logdet)
@@ -374,7 +375,7 @@ class MaskedCouplingRQSpline(NFModel):
     Args:
         n_features (int): Number of features in the data.
         n_layers (int): Number of layers in the conditioner.
-        hidden_size (list[int]): Hidden size of the conditioner.
+        hidden_size (Sequence[int]): Hidden size of the conditioner.
         num_bins (int): Number of bins in the spline.
         key (Key): Random key for initialization.
         spline_range (tuple[float, float]): Range of the spline. Defaults to (-10.0, 10.0).
@@ -400,7 +401,7 @@ class MaskedCouplingRQSpline(NFModel):
         self,
         n_features: int,
         n_layers: int,
-        hidden_size: list[int],
+        hidden_size: Sequence[int],
         num_bins: int,
         key: Key,
         spline_range: tuple[float, float] = (-10.0, 10.0),
@@ -410,7 +411,7 @@ class MaskedCouplingRQSpline(NFModel):
         Args:
             n_features (int): Dimensionality of the data.
             n_layers (int): Number of masked coupling layers.
-            hidden_size (list[int]): Hidden layer widths for the conditioner MLP.
+            hidden_size (Sequence[int]): Hidden layer widths for the conditioner MLP.
             num_bins (int): Number of rational-quadratic spline bins.
             key (Key): JAX PRNGKey for parameter initialisation.
             spline_range (tuple[float, float]): ``(min, max)`` range of the spline.
@@ -450,7 +451,7 @@ class MaskedCouplingRQSpline(NFModel):
 
         def make_layer(i: int, key: Key):
             mlp = MLP(
-                [n_features] + hidden_size + [n_features * (num_bins * 3 + 1)],
+                [n_features, *hidden_size, n_features * (num_bins * 3 + 1)],
                 key,
                 scale=1e-2,
                 activation=jax.nn.tanh,
@@ -461,7 +462,7 @@ class MaskedCouplingRQSpline(NFModel):
             layer2 = MaskedCouplingLayer(
                 RQSpline(mlp, spline_range[0], spline_range[1]), mask
             )
-            return eqx.nn.Sequential([layer1, layer2])  # type: ignore
+            return eqx.nn.Sequential([layer1, layer2])
 
         keys = jax.random.split(key, n_layers)
         self.layers = eqx.filter_vmap(make_layer)(jnp.arange(n_layers), keys)

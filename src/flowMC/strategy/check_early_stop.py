@@ -121,19 +121,18 @@ class CheckEarlyStop(Strategy):
         """
         self._call_count += 1
 
-        assert isinstance(state := resources[self.state_name], State), (
-            f"Resource {self.state_name} must be a State"
-        )
+        state = resources[self.state_name]
+        assert isinstance(state, State), f"Resource {self.state_name} must be a State"
 
         # Read the global acceptance buffer
-        assert isinstance(
-            buffer_name := state.data.get(self.acceptance_buffer_key), str
-        ), (
+        buffer_name = state.data.get(self.acceptance_buffer_key)
+        assert isinstance(buffer_name, str), (
             f"State key {self.acceptance_buffer_key} must point to a string "
             f"(buffer name)"
         )
 
-        assert isinstance(acceptance_buffer := resources[buffer_name], Buffer), (
+        acceptance_buffer = resources[buffer_name]
+        assert isinstance(acceptance_buffer, Buffer), (
             f"Resource {buffer_name} must be a Buffer"
         )
 

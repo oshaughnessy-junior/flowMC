@@ -1,14 +1,15 @@
+import logging
+from collections.abc import Callable
+
+import equinox as eqx
 import jax
 import jax.numpy as jnp
 from jax import random
 from jaxtyping import Array, Float, Int, Key, PyTree
-from typing import Callable
-import equinox as eqx
 
-from flowMC.resource.model.nf_model.base import NFModel
 from flowMC.resource.kernel.base import ProposalBase
 from flowMC.resource.logPDF import LogPDF
-import logging
+from flowMC.resource.model.nf_model.base import NFModel
 
 logger = logging.getLogger(__name__)
 

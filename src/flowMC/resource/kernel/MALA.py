@@ -1,14 +1,15 @@
+import logging
+from collections.abc import Callable
+from typing import Optional, Self
+
 import jax
 import jax.numpy as jnp
+from equinox import tree_at
 from jax.scipy.stats import multivariate_normal
 from jaxtyping import Array, Bool, Float, Int, Key, PyTree
-from typing import Callable, Optional
-from typing_extensions import Self
-import logging
-from equinox import tree_at
 
-from flowMC.resource.logPDF import LogPDF
 from flowMC.resource.kernel.base import ProposalBase
+from flowMC.resource.logPDF import LogPDF
 
 logger = logging.getLogger(__name__)
 
