@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.50">
+      <meta name="generator" content="zensical-0.0.51">
     
     
       
@@ -2794,7 +2794,14 @@
 <h1 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">¤</a></h1>
 <p>This guide describes the internal architecture of flowMC — how its components are designed, how they interact, and how to extend them for your own use case.</p>
 <h2 id="anatomy-of-flowmc">Anatomy of flowMC<a class="headerlink" href="#anatomy-of-flowmc" title="Permanent link">¤</a></h2>
-<p>Prior to version 0.4.0, <code>flowMC</code> was a package that was designed to execute the algorithm detailed in <a href="https://arxiv.org/pdf/2105.12603">this paper</a>. Since then the community has tried applying <code>flowMC</code> to different problems. While there were some successes, there are also limiting factors in terms of performance. One of the biggest issues <code>flowMC</code> faced is the fact that the global-local sampling algorithm was baked into the top level <code>Sampler</code> API, which means <code>flowMC</code> can only use the exact algorithm described in the paper. What if the users want to use a different model? Or run some optimisation steps during the sampling stage? Or apply annealing? These are either impossible or not very intuitive in <code>flowMC</code> prior to version 0.4.0.</p>
+<p>Prior to version 0.4.0, <code>flowMC</code> was a package that was designed to execute the algorithm detailed in <a href="https://arxiv.org/pdf/2105.12603">this paper</a>.
+Since then the community has tried applying <code>flowMC</code> to different problems.
+While there were some successes, there are also limiting factors in terms of performance.
+One of the biggest issues <code>flowMC</code> faced is the fact that the global-local sampling algorithm was baked into the top level <code>Sampler</code> API, which means <code>flowMC</code> can only use the exact algorithm described in the paper.
+What if the users want to use a different model?
+Or run some optimisation steps during the sampling stage?
+Or apply annealing?
+These are either impossible or not very intuitive in <code>flowMC</code> prior to version 0.4.0.</p>
 <p>Seeing this limitation, we redesigned the middle level API of <code>flowMC</code> while keeping the top level API as similar as possible.</p>
 <h3 id="target-distribution">Target distribution<a class="headerlink" href="#target-distribution" title="Permanent link">¤</a></h3>
 <p>The target distribution should be defined as a log-probability density function, which follows the following function signature:</p>
@@ -2802,10 +2809,12 @@
     <span class="o">...</span>
     <span class="k">return</span> <span class="n">log_prob</span>
 </code></pre></div>
-<p>The <code>target_log_prob_fn</code> should take in a 1-D array <code>x</code> of length <code>n_dim</code> and a dictionary <code>data</code> that contains any additional data that the target distribution depends on. The function should return a scalar that is the log-probability density of the target distribution at <code>x</code>.</p>
+<p>The <code>target_log_prob_fn</code> should take in a 1-D array <code>x</code> of length <code>n_dim</code> and a dictionary <code>data</code> that contains any additional data that the target distribution depends on.
+The function should return a scalar that is the log-probability density of the target distribution at <code>x</code>.</p>
 <p>To ensure the target distribution is well-defined and performant, you should also check whether the function is behaving as expected when <code>jax.jit</code> and <code>jax.grad</code> are applied to it.</p>
 <h3 id="sampler">Sampler<a class="headerlink" href="#sampler" title="Permanent link">¤</a></h3>
-<p>On the top level, the <code>Sampler</code> class is a thin wrapper on top of the resource-strategy pair (defined below) that provides a couple of extra functionality. The <code>Sampler</code> class manages the resources and strategies, as well as run-related parameters such as where would the resources be stored if the user decides to serialise the resources.</p>
+<p>On the top level, the <code>Sampler</code> class is a thin wrapper on top of the resource-strategy pair (defined below) that provides a couple of extra functionality.
+The <code>Sampler</code> class manages the resources and strategies, as well as run-related parameters such as where would the resources be stored if the user decides to serialise the resources.</p>
 <div class="highlight"><pre><span></span><code><span class="n">nf_sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span>
     <span class="n">n_dim</span><span class="o">=</span><span class="n">n_dim</span><span class="p">,</span>
     <span class="n">n_chains</span><span class="o">=</span><span class="n">n_chains</span><span class="p">,</span>
@@ -2819,10 +2828,15 @@
     <span class="n">resource_strategy_bundles</span><span class="o">=</span><span class="n">bundle</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
-<p>The main loop of <code>Sampler</code> is straightforward after initialisation: given the available resources, it iterates through the list of strategies, each of which takes the resources, performs some actions (such as taking local steps or training a normalising flow), and returns the updated resources. The <code>Sampler</code> supports early stopping: if a <code>State</code> resource sets an <code>early_stopped</code> flag during training, the main loop skips the remaining training strategies and jumps directly to the production phase.</p>
+<p>The main loop of <code>Sampler</code> is straightforward after initialisation: given the available resources, it iterates through the list of strategies, each of which takes the resources, performs some actions (such as taking local steps or training a normalising flow), and returns the updated resources.
+The <code>Sampler</code> supports early stopping: if a <code>State</code> resource sets an <code>early_stopped</code> flag during training, the main loop skips the remaining training strategies and jumps directly to the production phase.</p>
 <h3 id="resource-and-strategy">Resource and Strategy<a class="headerlink" href="#resource-and-strategy" title="Permanent link">¤</a></h3>
-<p>At the core of the flowMC API are the resource and strategy interfaces. Broadly speaking, resources are similar to data classes and strategies are similar to functions.</p>
-<p><strong>Resources</strong> store some attribute and can be manipulated, but should not have too many methods associated with them. For example, a buffer that stores the sampling results is a resource, a MALA kernel is a resource, and a normalising flow model is a resource. <strong>Strategies</strong> are functions that take in resources and return updated resources. For example, taking a local step requires two kinds of resources: a proposal distribution and the buffer where the samples are stored.</p>
+<p>At the core of the flowMC API are the resource and strategy interfaces.
+Broadly speaking, resources are similar to data classes and strategies are similar to functions.</p>
+<p><strong>Resources</strong> store some attribute and can be manipulated, but should not have too many methods associated with them.
+For example, a buffer that stores the sampling results is a resource, a MALA kernel is a resource, and a normalising flow model is a resource.
+<strong>Strategies</strong> are functions that take in resources and return updated resources.
+For example, taking a local step requires two kinds of resources: a proposal distribution and the buffer where the samples are stored.</p>
 <p>If you are initialising the resources and strategies directly, you can do something like:</p>
 <div class="highlight"><pre><span></span><code><span class="n">resources</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;buffer&quot;</span><span class="p">:</span> <span class="n">Buffer</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">n_chains</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">n_dims</span><span class="p">),</span>
@@ -2837,9 +2851,14 @@
 
 <span class="n">strategy_order</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Strategy 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Strategy 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Strategy 1&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </code></pre></div>
-<p>This separation allows users to compose different strategies together. For example, a strategy can take in both a MALA kernel and a normalising flow model, and update the MALA step size using information from the flow — without that logic being hard-coded into either component.</p>
-<p>A good rule of thumb for deciding whether something should be a resource or a strategy: ask whether the new data structure/functionality is something that should be updated by other strategies. If yes, it should be a resource; if no, it should be a strategy.</p>
-<p>One extra criterion is JAX compatibility. Resources should be compatible with <code>jit</code>; strategies are not required to be. For example, a training loop that iterates over epochs and logs metadata does not need to be jitted — it should be a strategy. A neural network that runs on GPU during both sampling and training should be a resource.</p>
+<p>This separation allows users to compose different strategies together.
+For example, a strategy can take in both a MALA kernel and a normalising flow model, and update the MALA step size using information from the flow — without that logic being hard-coded into either component.</p>
+<p>A good rule of thumb for deciding whether something should be a resource or a strategy: ask whether the new data structure/functionality is something that should be updated by other strategies.
+If yes, it should be a resource; if no, it should be a strategy.</p>
+<p>One extra criterion is JAX compatibility.
+Resources should be compatible with <code>jit</code>; strategies are not required to be.
+For example, a training loop that iterates over epochs and logs metadata does not need to be jitted — it should be a strategy.
+A neural network that runs on GPU during both sampling and training should be a resource.</p>
 <p>You can find the hyperparameters of a resource, a strategy, or a resource-strategy bundle in the <a href="../../api/flowMC/Sampler/">API docs</a>.</p>
 <h2 id="guiding-principles">Guiding principles<a class="headerlink" href="#guiding-principles" title="Permanent link">¤</a></h2>
 <h3 id="write-the-likelihood-function-in-jax">Write the likelihood function in JAX<a class="headerlink" href="#write-the-likelihood-function-in-jax" title="Permanent link">¤</a></h3>
@@ -2848,9 +2867,11 @@
 <li>JAX allows you to access the gradient of the likelihood function through automatic differentiation. This enables gradient-based local samplers such as MALA and HMC, which handle high-dimensional problems more efficiently than gradient-free alternatives like Metropolis-Hastings.</li>
 <li>JAX uses <a href="https://www.tensorflow.org/xla">XLA</a> to compile and optimise code for GPUs and TPUs. Multiple MCMC chains help speed up normalising flow training, and accelerators scale this further.</li>
 </ol>
-<p>Since version 0.4.0, flowMC requires likelihood functions to be compatible with JAX transformations. flowMC is designed to leverage GPU acceleration and machine learning methods, and rewriting a likelihood in JAX is often worthwhile on its own for the speedup alone.</p>
+<p>Since version 0.4.0, flowMC requires likelihood functions to be compatible with JAX transformations.
+flowMC is designed to leverage GPU acceleration and machine learning methods, and rewriting a likelihood in JAX is often worthwhile on its own for the speedup alone.</p>
 <h3 id="parallelise-whenever-you-can">Parallelise whenever you can<a class="headerlink" href="#parallelise-whenever-you-can" title="Permanent link">¤</a></h3>
-<p>Resource and strategy design should centre on leveraging parallelisation. This is reflected by <code>n_chains</code> being a required parameter for the <code>Sampler</code> class — flowMC is designed to solve problems with complex geometry using adaptive sampling methods that benefit tremendously from multiple chains running in parallel.</p>
+<p>Resource and strategy design should centre on leveraging parallelisation.
+This is reflected by <code>n_chains</code> being a required parameter for the <code>Sampler</code> class — flowMC is designed to solve problems with complex geometry using adaptive sampling methods that benefit tremendously from multiple chains running in parallel.</p>
 
 
 
