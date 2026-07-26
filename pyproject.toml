@@ -88,10 +88,7 @@ pythonpath = ["."]
 ignore = ["F722"]
 
 [tool.pyright]
-include = [
-    "src",
-    "tests",
-]
+include = ["src"]
 
 [tool.coverage.report]
 exclude_also = [
