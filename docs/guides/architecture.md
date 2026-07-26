@@ -97,7 +97,7 @@ You can find the hyperparameters of a resource, a strategy, or a resource-strate
 
 ### Write the likelihood function in JAX
 
-If your likelihood is fully defined in [JAX](https://github.com/google/jax), there are a couple of benefits that compound with each other:
+If your likelihood is fully defined in [JAX](https://github.com/jax-ml/jax), there are a couple of benefits that compound with each other:
 
 1. JAX allows you to access the gradient of the likelihood function through automatic differentiation. This enables gradient-based local samplers such as MALA and HMC, which handle high-dimensional problems more efficiently than gradient-free alternatives like Metropolis-Hastings.
 2. JAX uses [XLA](https://www.tensorflow.org/xla) to compile and optimise code for GPUs and TPUs. Multiple MCMC chains help speed up normalising flow training, and accelerators scale this further.
