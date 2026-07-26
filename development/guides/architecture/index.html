@@ -2862,7 +2862,7 @@ A neural network that runs on GPU during both sampling and training should be a 
 <p>You can find the hyperparameters of a resource, a strategy, or a resource-strategy bundle in the <a href="../../api/flowMC/Sampler/">API docs</a>.</p>
 <h2 id="guiding-principles">Guiding principles<a class="headerlink" href="#guiding-principles" title="Permanent link">¤</a></h2>
 <h3 id="write-the-likelihood-function-in-jax">Write the likelihood function in JAX<a class="headerlink" href="#write-the-likelihood-function-in-jax" title="Permanent link">¤</a></h3>
-<p>If your likelihood is fully defined in <a href="https://github.com/google/jax">JAX</a>, there are a couple of benefits that compound with each other:</p>
+<p>If your likelihood is fully defined in <a href="https://github.com/jax-ml/jax">JAX</a>, there are a couple of benefits that compound with each other:</p>
 <ol>
 <li>JAX allows you to access the gradient of the likelihood function through automatic differentiation. This enables gradient-based local samplers such as MALA and HMC, which handle high-dimensional problems more efficiently than gradient-free alternatives like Metropolis-Hastings.</li>
 <li>JAX uses <a href="https://www.tensorflow.org/xla">XLA</a> to compile and optimise code for GPUs and TPUs. Multiple MCMC chains help speed up normalising flow training, and accelerators scale this further.</li>
