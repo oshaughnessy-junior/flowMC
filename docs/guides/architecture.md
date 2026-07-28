@@ -99,8 +99,10 @@ You can find the hyperparameters of a resource, a strategy, or a resource-strate
 
 If your likelihood is fully defined in [JAX](https://github.com/jax-ml/jax), there are a couple of benefits that compound with each other:
 
-1. JAX allows you to access the gradient of the likelihood function through automatic differentiation. This enables gradient-based local samplers such as MALA and HMC, which handle high-dimensional problems more efficiently than gradient-free alternatives like Metropolis-Hastings.
-2. JAX uses [XLA](https://www.tensorflow.org/xla) to compile and optimise code for GPUs and TPUs. Multiple MCMC chains help speed up normalising flow training, and accelerators scale this further.
+1. JAX allows you to access the gradient of the likelihood function through automatic differentiation.
+   This enables gradient-based local samplers such as MALA and HMC, which handle high-dimensional problems more efficiently than gradient-free alternatives like Metropolis-Hastings.
+2. JAX uses [XLA](https://www.tensorflow.org/xla) to compile and optimise code for GPUs and TPUs.
+   Multiple MCMC chains help speed up normalising flow training, and accelerators scale this further.
 
 Since version 0.4.0, flowMC requires likelihood functions to be compatible with JAX transformations.
 flowMC is designed to leverage GPU acceleration and machine learning methods, and rewriting a likelihood in JAX is often worthwhile on its own for the speedup alone.

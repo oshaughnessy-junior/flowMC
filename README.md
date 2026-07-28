@@ -55,7 +55,7 @@ If you use flowMC in your research, please cite the following papers:
 
 ```bibtex
 @article{Wong:2022xvh,
-    author = "Wong, Kaze W. k. and Gabri\'e, Marylou and Foreman-Mackey, Daniel",
+    author = "Wong, Kaze W. K. and Gabri\'e, Marylou and Foreman-Mackey, Daniel",
     title = "{flowMC: Normalizing flow enhanced sampling package for probabilistic inference in JAX}",
     eprint = "2211.06397",
     archivePrefix = "arXiv",
