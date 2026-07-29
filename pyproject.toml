@@ -102,8 +102,15 @@ reportUnnecessaryTypeIgnoreComment = "error"
 include = ["src"]
 
 [tool.ty.analysis]
-# ty does not yet understand jaxtyping's Annotated aliases (for example, Key).
-# Treat them as opaque while retaining checks over flowMC's own control flow.
+# jaxtyping's dtype/shape markers (Float, Bool, Int, Key, PyTree, Shaped, ...) are
+# generated via __class_getitem__ into Annotated[...] forms that ty cannot yet
+# resolve (each usage raises invalid-type-form). That covers effectively every
+# public symbol we import from the package -- only jaxtyping.Array (a re-export of
+# jax.Array) is unaffected, and it's never used outside those markers here.
+# replace-imports-with-any matches import paths, not individual symbols, so there
+# is no way to opt out of just the problematic aliases; verified narrowing this to
+# e.g. ["jaxtyping.Key"] does not work and reintroduces the same errors for the
+# other markers. Revisit once ty supports Annotated-based generics.
 replace-imports-with-any = ["jaxtyping.**"]
 
 [tool.coverage.report]

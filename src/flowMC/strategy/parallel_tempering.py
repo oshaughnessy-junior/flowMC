@@ -415,14 +415,15 @@ class ParallelTempering(Strategy):
     def _adapt_temperature(
         self,
         temperatures: Float[Array, " n_temps"],
-        do_accept: Bool[Array, "n_chains n_temps 1"],
+        do_accept: Bool[Array, "n_chains n_exchanges"],
     ) -> Float[Array, " n_temps"]:
         """
         Adapt the temperatures based on the acceptance rates.
 
         Args:
             temperatures (Float[Array, "n_temps"]): Current temperatures.
-            do_accept (Bool[Array, "n_chains n_temps 1"]): Acceptance flags for each chain and temperature.
+            do_accept (Bool[Array, "n_chains n_exchanges"]): Acceptance flags for each
+                chain and exchange step, where n_exchanges = n_temps - 1.
 
         Returns:
             Float[Array, "n_temps"]: Updated temperatures.
