@@ -1,6 +1,7 @@
 import jax
 import jax.numpy as jnp
 
+from flowMC.resource.model.common import Gaussian
 from flowMC.resource.model.nf_model.realNVP import AffineCoupling, RealNVP
 from flowMC.resource.model.nf_model.rqSpline import MaskedCouplingRQSpline
 
@@ -27,7 +28,7 @@ def test_realnvp():
     n_layers = 2
     x = jnp.array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
 
-    rng_key, rng_subkey = jax.random.split(jax.random.key(0), 2)
+    rng_key, _rng_subkey = jax.random.split(jax.random.key(0), 2)
     model = RealNVP(n_features, n_layers, n_hidden, rng_key)
 
     assert model.n_features == n_features
@@ -54,13 +55,39 @@ def test_realnvp():
     assert log_prob.shape == (2,)
 
 
+def test_realnvp_log_prob_custom_base_dist():
+    n_features = 3
+    n_hidden = 4
+    n_layers = 2
+    x = jnp.array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
+
+    rng_key, _rng_subkey = jax.random.split(jax.random.key(0), 2)
+    base_dist = Gaussian(
+        jnp.array([1.0, -2.0, 0.5]),
+        jnp.diag(jnp.array([2.0, 0.5, 1.5])),
+        learnable=False,
+    )
+    model = RealNVP(n_features, n_layers, n_hidden, rng_key, base_dist=base_dist)
+
+    y, log_det = jax.vmap(model)(x)
+    expected_log_prob = jax.vmap(base_dist.log_prob)(y) + log_det
+    actual_log_prob = jax.vmap(model.log_prob)(x)
+
+    assert jnp.allclose(actual_log_prob, expected_log_prob)
+    # Sanity check: a non-standard base_dist should disagree with a standard normal.
+    standard_normal_log_prob = jax.scipy.stats.multivariate_normal.logpdf(
+        y, jnp.zeros(n_features), jnp.eye(n_features)
+    )
+    assert not jnp.allclose(actual_log_prob, standard_normal_log_prob + log_det)
+
+
 def test_rqspline():
     n_features = 3
     hidden_layes = [16, 16]
     n_layers = 2
     n_bins = 8
 
-    rng_key, rng_subkey = jax.random.split(jax.random.key(0), 2)
+    rng_key, _rng_subkey = jax.random.split(jax.random.key(0), 2)
     model = MaskedCouplingRQSpline(
         n_features, n_layers, hidden_layes, n_bins, jax.random.key(10)
     )

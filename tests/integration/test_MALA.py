@@ -1,17 +1,19 @@
+from __future__ import annotations
+
 import jax
 import jax.numpy as jnp
 from jax.scipy.special import logsumexp
 from jaxtyping import Array, Float
 
-from flowMC.resource.kernel.MALA import MALA
-from flowMC.strategy.take_steps import TakeSerialSteps
 from flowMC.resource.buffers import Buffer
-from flowMC.resource.states import State
+from flowMC.resource.kernel.MALA import MALA
 from flowMC.resource.logPDF import LogPDF
+from flowMC.resource.states import State
 from flowMC.Sampler import Sampler
+from flowMC.strategy.take_steps import TakeSerialSteps
 
 
-def dual_moon_pe(x: Float[Array, "n_dims"], data: dict):
+def dual_moon_pe(x: Float[Array, "n_dims"], data: dict):  # noqa: F821, UP037
     """
     Term 2 and 3 separate the distribution
     and smear it along the first and second dimension

@@ -1,5 +1,6 @@
-from flowMC.resource.base import Resource
 from jaxtyping import Array, Float, Key
+
+from flowMC.resource.base import Resource
 
 
 class SequentialMonteCarlo(Resource):

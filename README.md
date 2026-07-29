@@ -6,12 +6,15 @@
 
 ![flowMC_logo](https://raw.githubusercontent.com/GW-JAX-Team/flowMC/main/docs/logo.png)
 
-flowMC is a JAX-based package for normalizing-flow-enhanced Markov chain Monte Carlo (MCMC) sampling. By using normalizing flows as a global proposal, flowMC accelerates convergence for multi-modal and high-dimensional posteriors while running natively on GPU with minimal hyperparameter tuning.
+flowMC is a JAX-based package for normalizing-flow-enhanced Markov chain Monte Carlo (MCMC) sampling.
+By using normalizing flows as a global proposal, flowMC accelerates convergence for multi-modal and high-dimensional posteriors while running natively on GPU with minimal hyperparameter tuning.
 
 For a quick introduction, see the [Quick Start guide](https://gw-jax-team.github.io/flowMC/stable/quickstart/).
 
 > [!WARNING]
-> flowMC has not yet reached v1.0.0 and the API may change. Use at your own risk. Consider pinning to a specific version if you need API stability.
+> flowMC has not yet reached v1.0.0 and the API may change.
+> Use at your own risk.
+> Consider pinning to a specific version if you need API stability.
 
 ## Installation
 
@@ -22,7 +25,7 @@ pip install flowMC
 ```
 
 This will install the latest stable release and its dependencies.
-flowMC is built on [JAX](https://github.com/google/jax).
+flowMC is built on [JAX](https://github.com/jax-ml/jax).
 By default, this installs the CPU version of JAX.
 If you have an NVIDIA GPU, install the CUDA-enabled version:
 
@@ -38,7 +41,8 @@ cd flowMC
 pip install -e .
 ```
 
-We recommend using [uv](https://docs.astral.sh/uv/) to manage your Python environment. After cloning the repository, run `uv sync` to create a virtual environment with all dependencies installed.
+We recommend using [uv](https://docs.astral.sh/uv/) to manage your Python environment.
+After cloning the repository, run `uv sync` to create a virtual environment with all dependencies installed.
 
 ## Origins
 
@@ -51,7 +55,7 @@ If you use flowMC in your research, please cite the following papers:
 
 ```bibtex
 @article{Wong:2022xvh,
-    author = "Wong, Kaze W. k. and Gabri\'e, Marylou and Foreman-Mackey, Daniel",
+    author = "Wong, Kaze W. K. and Gabri\'e, Marylou and Foreman-Mackey, Daniel",
     title = "{flowMC: Normalizing flow enhanced sampling package for probabilistic inference in JAX}",
     eprint = "2211.06397",
     archivePrefix = "arXiv",

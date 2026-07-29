@@ -1,16 +1,16 @@
-from abc import abstractmethod
-from typing import Optional
 import logging
+from abc import abstractmethod
+from typing import Optional, Self
 
 import equinox as eqx
 import jax
 import jax.numpy as jnp
 import optax
 from jaxtyping import Array, Float, Key
-from flowMC.typing import FloatLike, FloatScalar
 from tqdm import tqdm, trange
-from typing_extensions import Self
+
 from flowMC.resource.base import Resource
+from flowMC.typing import FloatLike, FloatScalar
 
 logger = logging.getLogger(__name__)
 

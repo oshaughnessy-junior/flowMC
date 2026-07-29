@@ -1,9 +1,12 @@
 from abc import abstractmethod
+from collections.abc import Callable
+from typing import Self
+
 import equinox as eqx
-from jaxtyping import Array, Float, Int, Key, PyTree
+from jaxtyping import Array, Bool, Float, Key, PyTree
+
 from flowMC.resource.base import Resource
 from flowMC.resource.logPDF import LogPDF
-from typing import Callable, Self
 
 
 class ProposalBase(eqx.Module, Resource):
@@ -22,7 +25,7 @@ class ProposalBase(eqx.Module, Resource):
         logpdf: LogPDF | Callable[[Float[Array, " n_dim"], PyTree], Float[Array, "1"]],
         data: PyTree,
     ) -> tuple[
-        Float[Array, "nstep n_dim"], Float[Array, "nstep 1"], Int[Array, "n_step 1"]
+        Float[Array, "nstep n_dim"], Float[Array, "nstep 1"], Bool[Array, "n_step 1"]
     ]:
         """Kernel for one step in the proposal cycle."""
 

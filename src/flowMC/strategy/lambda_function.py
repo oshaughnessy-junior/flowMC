@@ -1,7 +1,9 @@
-from flowMC.strategy.base import Strategy
-from flowMC.resource.base import Resource
+from collections.abc import Callable
+
 from jaxtyping import Array, Float, Key
-from typing import Callable
+
+from flowMC.resource.base import Resource
+from flowMC.strategy.base import Strategy
 
 
 class Lambda(Strategy):

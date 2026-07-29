@@ -1,26 +1,29 @@
-import equinox as eqx
-from jaxtyping import Key, Float, Array, PyTree
-from flowMC.typing import FloatLike, FloatScalar
-import optax
-from flowMC.resource.base import Resource
 import logging
-from flowMC.resource.model.common import MLP
-from typing_extensions import Self
-from typing import Optional
-import jax.numpy as jnp
+from typing import Optional, Self
+
+import equinox as eqx
 import jax
+import jax.numpy as jnp
+import optax
+from diffrax import AbstractSolver, Dopri5, ODETerm, diffeqsolve
 from jax.scipy.stats.multivariate_normal import logpdf
-from diffrax import diffeqsolve, ODETerm, Dopri5, AbstractSolver
-from tqdm import trange, tqdm
+from jaxtyping import Array, Float, Key, PyTree
+from tqdm import tqdm, trange
+
+from flowMC.resource.base import Resource
+from flowMC.resource.model.common import MLP
+from flowMC.typing import FloatLike, FloatScalar, RealScalarLike
 
 logger = logging.getLogger(__name__)
+
+_DEFAULT_SOLVER: AbstractSolver = Dopri5()
 
 
 class Solver(eqx.Module):
     model: MLP  # Shape should be [input_dim + t_dim, hiddens, output_dim]
     method: AbstractSolver
 
-    def __init__(self, model: MLP, method: AbstractSolver = Dopri5()):
+    def __init__(self, model: MLP, method: AbstractSolver = _DEFAULT_SOLVER):
         self.model = model
         self.method = method
 
@@ -32,7 +35,7 @@ class Solver(eqx.Module):
         """
 
         def model_wrapper(
-            t: FloatLike, x: Float[Array, " n_dims"], args: PyTree
+            t: RealScalarLike, x: Float[Array, " n_dims"], args: None
         ) -> Float[Array, " n_dims"]:
             """Wrapper for the model to be used in the ODE solver."""
             t = jnp.expand_dims(t, axis=-1)
@@ -43,7 +46,7 @@ class Solver(eqx.Module):
             y0: Float[Array, " n_dims"], dt: float = 1e-1
         ) -> Float[Array, " n_dims"]:
             """Solve the ODE with initial condition y0."""
-            term = ODETerm(model_wrapper)  # type: ignore[arg-type]
+            term = ODETerm(model_wrapper)
             sol = diffeqsolve(
                 term,
                 self.method,
@@ -52,7 +55,9 @@ class Solver(eqx.Module):
                 dt0=dt,
                 y0=y0,
             )
-            return sol.ys[-1]  # type: ignore
+            if sol.ys is None:
+                raise RuntimeError("Diffrax did not save any solution values")
+            return sol.ys[-1]
 
         x0 = jax.random.normal(rng_key, (n_samples, self.model.n_input - 1))
         sols = eqx.filter_vmap(solve_ode, in_axes=(0, None))(x0, dt)
@@ -64,7 +69,7 @@ class Solver(eqx.Module):
         """
 
         def model_wrapper(
-            t: FloatLike, x: Float[Array, " n_dims"], args: PyTree
+            t: RealScalarLike, x: Float[Array, " n_dims"], args: None
         ) -> list[Float[Array, "..."]]:
             """Wrapper for the model to be used in the ODE solver.
 
@@ -78,7 +83,7 @@ class Solver(eqx.Module):
 
         def solve_ode(y0: Float[Array, " n_dims"], dt: float = 1e-1) -> PyTree:
             """Solve the ODE with initial condition y0."""
-            term = ODETerm(model_wrapper)  # type: ignore[arg-type]
+            term = ODETerm(model_wrapper)
             y_init = jax.tree.map(jnp.asarray, [y0, 0.0])
             sol = diffeqsolve(
                 term,
@@ -88,9 +93,11 @@ class Solver(eqx.Module):
                 dt0=-dt,
                 y0=y_init,
             )
+            if sol.ys is None:
+                raise RuntimeError("Diffrax did not save any solution values")
             return sol.ys
 
-        x0, log_p = solve_ode(x1, dt)
+        _x0, log_p = solve_ode(x1, dt)
         return (
             logpdf(
                 x1,

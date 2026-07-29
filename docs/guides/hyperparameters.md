@@ -1,6 +1,7 @@
 # Hyperparameter Reference
 
-Quick-reference index by category. Click any parameter name to jump to its description.
+Quick-reference index by category.
+Click any parameter name to jump to its description.
 
 ## Required
 
@@ -106,7 +107,8 @@ More chains give a better picture of the global landscape, which helps train the
 
 ### n_dims
 
-Dimensionality of the parameter space. Must match the input dimension of `logpdf`.
+Dimensionality of the parameter space.
+Must match the input dimension of `logpdf`.
 
 ### logpdf
 
@@ -159,7 +161,8 @@ The optimal HMC acceptance rate is ~65%.
 
 ### hmc_n_leapfrog
 
-*HMC bundles only.* Number of leapfrog steps per HMC proposal. Default `10`.
+*HMC bundles only.* Number of leapfrog steps per HMC proposal.
+Default `10`.
 More steps produce proposals further along the trajectory but increase cost per step.
 
 ### condition_matrix
@@ -237,7 +240,8 @@ When `n_global_steps` exceeds this value, the flow samples are computed in chunk
 
 ### learning_rate
 
-Learning rate for the AdamW optimizer used to train the normalizing flow. Default `1e-3`.
+Learning rate for the AdamW optimizer used to train the normalizing flow.
+Default `1e-3`.
 
 ### batch_size
 
@@ -294,7 +298,8 @@ Thinning skips over these repeated positions while still executing all `n_global
 
 ### verbose
 
-Print training loss and acceptance rates during sampling. Default `False`.
+Print training loss and acceptance rates during sampling.
+Default `False`.
 
 ---
 
@@ -332,7 +337,8 @@ Set to `0` to disable this trigger and rely solely on the stability check.
 
 ### logprior
 
-Log-prior function with signature `logprior(x, data) -> float`. Default is a flat prior that always returns `0`.
+Log-prior function with signature `logprior(x, data) -> float`.
+Default is a flat prior that always returns `0`.
 The tempered log-density is
 
 $$\log \tilde{p}_T(x) = \frac{1}{T} \log \mathcal{L}(x) + \log \pi(x)$$
@@ -341,7 +347,8 @@ so the prior is preserved at all temperatures.
 
 ### n_temperatures
 
-Number of temperature levels, including the target (temperature = 1). Default `5`.
+Number of temperature levels, including the target (temperature = 1).
+Default `5`.
 Chains at higher temperatures explore the prior more freely and occasionally swap positions with the target chains, helping escape local modes.
 
 ### max_temperature

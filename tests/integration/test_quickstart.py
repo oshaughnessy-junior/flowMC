@@ -1,7 +1,8 @@
 import jax
 import jax.numpy as jnp
-from flowMC.Sampler import Sampler
+
 from flowMC.resource_strategy_bundle.RQSpline_MALA import RQSpline_MALA_Bundle
+from flowMC.Sampler import Sampler
 
 # Defining the log posterior
 

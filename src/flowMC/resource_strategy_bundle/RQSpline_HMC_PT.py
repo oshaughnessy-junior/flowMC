@@ -1,29 +1,29 @@
-from typing import Callable, Optional
+import logging
+from collections.abc import Callable, Sequence
+from typing import Optional
 
+import equinox as eqx
 import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float, Key
-from flowMC.typing import FloatScalar
-import equinox as eqx
 
 from flowMC.resource.base import Resource
 from flowMC.resource.buffers import Buffer
-from flowMC.resource.states import State
-from flowMC.resource.logPDF import LogPDF, TemperedPDF
 from flowMC.resource.kernel.HMC import HMC
 from flowMC.resource.kernel.NF_proposal import NFProposal
+from flowMC.resource.logPDF import LogPDF, TemperedPDF
 from flowMC.resource.model.nf_model.rqSpline import MaskedCouplingRQSpline
 from flowMC.resource.optimizer import Optimizer
-from flowMC.strategy.lambda_function import Lambda
-from flowMC.strategy.take_steps import TakeSerialSteps, TakeGroupSteps
-from flowMC.strategy.train_model import TrainModel
-from flowMC.strategy.update_state import UpdateState
-from flowMC.strategy.parallel_tempering import ParallelTempering
+from flowMC.resource.states import State
+from flowMC.resource_strategy_bundle.base import ResourceStrategyBundle
 from flowMC.strategy.adapt_step_size import AdaptStepSize, AdaptStepSizePerDim
 from flowMC.strategy.check_early_stop import CheckEarlyStop
-
-from flowMC.resource_strategy_bundle.base import ResourceStrategyBundle
-import logging
+from flowMC.strategy.lambda_function import Lambda
+from flowMC.strategy.parallel_tempering import ParallelTempering
+from flowMC.strategy.take_steps import TakeGroupSteps, TakeSerialSteps
+from flowMC.strategy.train_model import TrainModel
+from flowMC.strategy.update_state import UpdateState
+from flowMC.typing import FloatScalar
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +62,7 @@ class RQSpline_HMC_PT_Bundle(ResourceStrategyBundle):
         adapt_step_size_per_dim: bool = True,
         periodic: Optional[dict[int, tuple[float, float]]] = None,
         # --- Normalizing flow model ---
-        rq_spline_hidden_units: list[int] = [32, 32],
+        rq_spline_hidden_units: Sequence[int] = (32, 32),
         rq_spline_n_bins: int = 8,
         rq_spline_n_layers: int = 4,
         n_NFproposal_batch_size: int = 10000,
@@ -116,8 +116,8 @@ class RQSpline_HMC_PT_Bundle(ResourceStrategyBundle):
             periodic (dict[int, tuple[float, float]] | None): Periodic boundary
                 conditions as ``{dim_index: (lower, upper)}``. Defaults to None.
 
-            rq_spline_hidden_units (list[int]): Hidden units per conditioner MLP layer.
-                Defaults to ``[32, 32]``.
+            rq_spline_hidden_units (Sequence[int]): Hidden units per conditioner MLP layer.
+                Defaults to ``(32, 32)``.
             rq_spline_n_bins (int): Number of RQ-spline bins. Defaults to 8.
             rq_spline_n_layers (int): Number of masked coupling layers. Defaults to 4.
             n_NFproposal_batch_size (int): NF log-prob evaluation batch size.

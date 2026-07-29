@@ -1,11 +1,11 @@
-from flowMC.resource.base import Resource
-from typing import TypeVar
-import numpy as np
 import logging
+from typing import Self
+
+import numpy as np
+
+from flowMC.resource.base import Resource
 
 logger = logging.getLogger(__name__)
-
-TState = TypeVar("TState", bound="State")
 
 
 class State(Resource):
@@ -56,13 +56,36 @@ class State(Resource):
         )
 
     def save_resource(self, path: str):
+        keys = list(self.data.keys())
+        types = [type(value).__name__ for value in self.data.values()]
+        values = [str(value) for value in self.data.values()]
         np.savez(
             path + self.name,
             name=self.name,
-            data=self.data,  # type: ignore
+            keys=np.array(keys, dtype=str),
+            types=np.array(types, dtype=str),
+            values=np.array(values, dtype=str),
         )
 
-    def load_resource(self: TState, path: str) -> TState:
-        data = np.load(path)
-        result = State(data["name"], data["data"])
-        return result  # type: ignore
+    def load_resource(self, path: str) -> Self:
+        parsers = {
+            "bool": lambda value: value == "True",
+            "int": int,
+            "str": str,
+        }
+
+        with np.load(path) as loaded:
+            name = str(loaded["name"])
+            keys = loaded["keys"]
+            types = loaded["types"]
+            values = loaded["values"]
+
+        state_data: dict[str, int | bool | str] = {}
+        for key, type_name, value in zip(keys, types, values, strict=True):
+            if type_name not in parsers:
+                raise TypeError(
+                    f"Saved state data contains an unsupported type '{type_name}'"
+                )
+            state_data[str(key)] = parsers[type_name](str(value))
+
+        return type(self)(state_data, name=name)

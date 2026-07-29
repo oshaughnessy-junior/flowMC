@@ -28,7 +28,8 @@ Please follow these principles:
 
 1. New features should be able to take advantage of `jax.jit` wherever possible.
 2. Lightweight and modular implementation is preferred.
-3. The core package only does sampling. If you have a concrete example involving a complete analysis (plotting, models, etc.), see the tutorial contribution guide below.
+3. The core package only does sampling.
+   If you have a concrete example involving a complete analysis (plotting, models, etc.), see the tutorial contribution guide below.
 
 If you are unsure whether a feature fits, open an issue first to discuss it with the maintainers.
 

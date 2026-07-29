@@ -1,13 +1,15 @@
-from flowMC.strategy.base import Strategy
-from flowMC.resource.base import Resource
 import logging
+
+import jax
+import jax.numpy as jnp
+from jaxtyping import Array, Float, Key
+
+from flowMC.resource.base import Resource
 from flowMC.resource.buffers import Buffer
 from flowMC.resource.model.nf_model.base import NFModel
 from flowMC.resource.optimizer import Optimizer
+from flowMC.strategy.base import Strategy
 from flowMC.utils.logging import enable_verbose_logging
-from jaxtyping import Array, Float, Key
-import jax
-import jax.numpy as jnp
 
 logger = logging.getLogger(__name__)
 

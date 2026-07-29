@@ -1,17 +1,17 @@
+import equinox as eqx
 import jax
 import jax.numpy as jnp
-import pytest
-
-from flowMC.resource.model.flowmatching.base import (
-    FlowMatchingModel,
-    Solver,
-    Path,
-    CondOTScheduler,
-)
-from flowMC.resource.model.common import MLP
-from diffrax import Dopri5
-import equinox as eqx
 import optax
+import pytest
+from diffrax import Dopri5
+
+from flowMC.resource.model.common import MLP
+from flowMC.resource.model.flowmatching.base import (
+    CondOTScheduler,
+    FlowMatchingModel,
+    Path,
+    Solver,
+)
 
 
 def get_simple_mlp(n_input, n_hidden, n_output, key):
@@ -136,7 +136,7 @@ class TestFlowMatchingModel:
         assert jnp.isfinite(logp).all()
 
     def test_log_prob_edge_cases(self, model):
-        model, key, n_dim = model
+        model, _key, n_dim = model
         for arr in [jnp.zeros(n_dim), 1e6 * jnp.ones(n_dim), -1e6 * jnp.ones(n_dim)]:
             logp = model.log_prob(arr)
             logp_arr = jnp.asarray(logp)
@@ -156,7 +156,7 @@ class TestFlowMatchingModel:
         )
 
     def test_properties(self, model):
-        model, key, n_dim = model
+        model, _key, n_dim = model
         mean = jnp.arange(n_dim)
         cov = jnp.eye(n_dim) * 2
         model2 = FlowMatchingModel(
@@ -167,7 +167,7 @@ class TestFlowMatchingModel:
         assert jnp.allclose(model2.data_cov, cov)
 
     def test_print_parameters_notimplemented(self, model):
-        model, key, n_dim = model
+        model, _key, _n_dim = model
         with pytest.raises(NotImplementedError):
             model.print_parameters()
 
@@ -182,11 +182,11 @@ class TestFlowMatchingModel:
         std = jnp.sqrt(jnp.diag(model.data_cov))
         x1_whitened = (x1 - model.data_mean) / std
         x_t, dx_t = model.path.sample(x0, x1_whitened, t)
-        loss, model2, state2 = model.train_step(x_t, t, dx_t, optim, state)
+        loss, model2, _state2 = model.train_step(x_t, t, dx_t, optim, state)
         assert jnp.isfinite(loss)
         assert isinstance(model2, FlowMatchingModel)
         data = (x0, x1, t)
-        loss_epoch, model3, state3 = model.train_epoch(
+        loss_epoch, model3, _state3 = model.train_epoch(
             key, optim, state, data, batch_size=n_batch
         )
         assert jnp.isfinite(loss_epoch)

@@ -9,16 +9,16 @@ import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float
 
-from flowMC.resource.kernel.MALA import MALA
-from flowMC.resource.kernel.HMC import HMC
-from flowMC.resource.kernel.Gaussian_random_walk import GaussianRandomWalk
-from flowMC.resource.buffers import Buffer
-from flowMC.resource.states import State
-from flowMC.resource.logPDF import LogPDF
 from flowMC.resource.base import Resource
-from flowMC.strategy.take_steps import TakeSerialSteps
+from flowMC.resource.buffers import Buffer
+from flowMC.resource.kernel.Gaussian_random_walk import GaussianRandomWalk
+from flowMC.resource.kernel.HMC import HMC
+from flowMC.resource.kernel.MALA import MALA
+from flowMC.resource.logPDF import LogPDF
+from flowMC.resource.states import State
 from flowMC.resource_strategy_bundle.RQSpline_MALA import RQSpline_MALA_Bundle
 from flowMC.Sampler import Sampler
+from flowMC.strategy.take_steps import TakeSerialSteps
 
 # ---------------------------------------------------------------------------
 # Target distribution

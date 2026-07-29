@@ -1,16 +1,18 @@
-from typing import Callable
+import logging
+from collections.abc import Callable
 
 import jax
 import jax.numpy as jnp
 import optax
 from jaxtyping import Array, Float, Key
+
+from flowMC.resource.base import Resource
+from flowMC.strategy.base import Strategy
 from flowMC.typing import FloatScalar
 
-from flowMC.strategy.base import Strategy
-from flowMC.resource.base import Resource
-import logging
-
 logger = logging.getLogger(__name__)
+
+_UNBOUNDED_BOUNDS: Float[Array, "1 2"] = jnp.array([[-jnp.inf, jnp.inf]])
 
 
 class AdamOptimization(Strategy):
@@ -32,7 +34,7 @@ class AdamOptimization(Strategy):
     n_steps: int = 100
     learning_rate: float = 1e-2
     noise_level: float = 10
-    bounds: Float[Array, "n_dim 2"] = jnp.array([[-jnp.inf, jnp.inf]])
+    bounds: Float[Array, "n_dim 2"]
 
     def __repr__(self):
         return "AdamOptimization"
@@ -43,7 +45,7 @@ class AdamOptimization(Strategy):
         n_steps: int = 100,
         learning_rate: float = 1e-2,
         noise_level: float = 10,
-        bounds: Float[Array, "n_dim 2"] = jnp.array([[-jnp.inf, jnp.inf]]),
+        bounds: Float[Array, "n_dim 2"] = _UNBOUNDED_BOUNDS,
     ) -> None:
         """
         Args:
@@ -163,7 +165,7 @@ class AdamOptimization(Strategy):
                 jnp.arange(self.n_steps),
             )
 
-            return params  # type: ignore
+            return params
 
         logger.info("Using Adam optimization")
         rng_key, subkey = jax.random.split(rng_key)

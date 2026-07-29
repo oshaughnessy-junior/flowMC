@@ -1,4 +1,5 @@
 import logging
+from typing import Protocol, runtime_checkable
 
 import jax
 import jax.numpy as jnp
@@ -12,6 +13,15 @@ from flowMC.strategy.base import Strategy
 from flowMC.utils.logging import enable_verbose_logging
 
 logger = logging.getLogger(__name__)
+
+
+@runtime_checkable
+class _PerDimensionAdaptableProposal(Protocol):
+    """Structural interface required by ``AdaptStepSizePerDimension``."""
+
+    def get_effective_dim_profile(self) -> Float[Array, " n_dim"]: ...
+
+    def apply_per_dim_scaling(self, ratios: Float[Array, " n_dim"]) -> ProposalBase: ...
 
 
 class AdaptStepSize(Strategy):
@@ -100,19 +110,18 @@ class AdaptStepSize(Strategy):
 
         self._call_count += 1
 
-        assert isinstance(state := resources[self.state_name], State), (
-            f"Resource {self.state_name} must be a State"
-        )
+        state = resources[self.state_name]
+        assert isinstance(state, State), f"Resource {self.state_name} must be a State"
 
         # Get the acceptance buffer name from state
-        assert isinstance(
-            buffer_name := state.data.get(self.acceptance_buffer_key), str
-        ), (
+        buffer_name = state.data.get(self.acceptance_buffer_key)
+        assert isinstance(buffer_name, str), (
             f"State key {self.acceptance_buffer_key} must point to a string "
             f"(buffer name)"
         )
 
-        assert isinstance(acceptance_buffer := resources[buffer_name], Buffer), (
+        acceptance_buffer = resources[buffer_name]
+        assert isinstance(acceptance_buffer, Buffer), (
             f"Resource {buffer_name} must be a Buffer"
         )
 
@@ -247,15 +256,16 @@ class AdaptStepSizePerDim(Strategy):
         """
         self._call_count += 1
 
-        assert isinstance(state := resources[self.state_name], State), (
-            f"Resource {self.state_name} must be a State"
+        state = resources[self.state_name]
+        assert isinstance(state, State), f"Resource {self.state_name} must be a State"
+
+        buffer_name = state.data.get(self.positions_buffer_key)
+        assert isinstance(buffer_name, str), (
+            f"State key {self.positions_buffer_key} must point to a string (buffer name)"
         )
 
-        assert isinstance(
-            buffer_name := state.data.get(self.positions_buffer_key), str
-        ), f"State key {self.positions_buffer_key} must point to a string (buffer name)"
-
-        assert isinstance(positions_buffer := resources[buffer_name], Buffer), (
+        positions_buffer = resources[buffer_name]
+        assert isinstance(positions_buffer, Buffer), (
             f"Resource {buffer_name} must be a Buffer"
         )
 
@@ -286,15 +296,13 @@ class AdaptStepSizePerDim(Strategy):
         assert isinstance(kernel, ProposalBase), (
             f"Resource '{self.kernel_name}' must be a ProposalBase, got {type(kernel)}"
         )
-        assert hasattr(kernel, "get_effective_dim_profile") and hasattr(
-            kernel, "apply_per_dim_scaling"
-        ), (
+        assert isinstance(kernel, _PerDimensionAdaptableProposal), (
             f"Kernel '{self.kernel_name}' must implement get_effective_dim_profile() "
             f"and apply_per_dim_scaling(). Got {type(kernel)}."
         )
 
         # Current per-dim profile from the kernel (geomean=1, kernel-specific)
-        current_profile = getattr(kernel, "get_effective_dim_profile")()
+        current_profile = kernel.get_effective_dim_profile()
         safe_current = jnp.maximum(
             current_profile, jnp.finfo(current_profile.dtype).eps
         )
@@ -306,6 +314,6 @@ class AdaptStepSizePerDim(Strategy):
         logger.debug(f"  Estimated sigma: {sigma}")
         logger.debug(f"  Applied ratios: {ratios}")
 
-        resources[self.kernel_name] = getattr(kernel, "apply_per_dim_scaling")(ratios)
+        resources[self.kernel_name] = kernel.apply_per_dim_scaling(ratios)
 
         return rng_key, resources, initial_position

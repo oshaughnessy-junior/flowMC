@@ -1,11 +1,13 @@
-from typing import Callable, List, Optional
+from abc import abstractmethod
+from collections.abc import Callable
+from typing import Optional
 
 import equinox as eqx
 import jax
 import jax.numpy as jnp
 from jaxtyping import Array, Float, Key
+
 from flowMC.typing import FloatLike, FloatScalar
-from abc import abstractmethod
 
 
 class Bijection(eqx.Module):
@@ -125,11 +127,11 @@ class MLP(eqx.Module):
         use_bias (bool): Whether to use bias.
     """
 
-    layers: List
+    layers: list
 
     def __init__(
         self,
-        shape: List[int],
+        shape: list[int],
         key: Key,
         scale: float = 1e-4,
         activation: Callable = jax.nn.relu,
@@ -198,7 +200,7 @@ class MaskedCouplingLayer(Bijection):
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
     ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
-        y, log_det = self.bijector(x, x * self.mask)  # type: ignore
+        y, log_det = self.bijector(x, x * self.mask)
         y = (1 - self.mask) * y + self.mask * x
         log_det = ((1 - self.mask) * log_det).sum()
         return y, log_det
@@ -208,7 +210,7 @@ class MaskedCouplingLayer(Bijection):
         x: Float[Array, " n_dim"],
         condition: Float[Array, " n_condition"],
     ) -> tuple[Float[Array, " n_dim"], FloatScalar]:
-        y, log_det = self.bijector.inverse(x, x * self.mask)  # type: ignore
+        y, log_det = self.bijector.inverse(x, x * self.mask)
         y = (1 - self.mask) * y + self.mask * x
         log_det = ((1 - self.mask) * log_det).sum()
         return y, log_det
@@ -225,9 +227,9 @@ class MLPAffine(Bijection):
         self.dt = dt
 
     def __call__(
-        self, x: Float[Array, " n_dim"], condition_x: Float[Array, " n_cond"]
+        self, x: Float[Array, " n_dim"], condition: Float[Array, " n_cond"]
     ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
-        return self.forward(x, condition_x)
+        return self.forward(x, condition)
 
     def forward(
         self,
@@ -262,9 +264,9 @@ class ScalarAffine(Bijection):
         self.shift = jnp.array(shift)
 
     def __call__(
-        self, x: Float[Array, " n_dim"], condition_x: Float[Array, " n_cond"]
+        self, x: Float[Array, " n_dim"], condition: Float[Array, " n_cond"]
     ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
-        return self.forward(x, condition_x)
+        return self.forward(x, condition)
 
     def forward(
         self,
@@ -328,7 +330,9 @@ class Gaussian(Distribution):
         self.learnable = learnable
 
     def log_prob(self, x: Float[Array, " n_dim"]) -> FloatScalar:
-        return jax.scipy.stats.multivariate_normal.logpdf(x, self.mean, self.cov)  # type: ignore[return-value]
+        return jnp.asarray(
+            jax.scipy.stats.multivariate_normal.logpdf(x, self.mean, self.cov)
+        )
 
     def sample(
         self, rng_key: Key, n_samples: int

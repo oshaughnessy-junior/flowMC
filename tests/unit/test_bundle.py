@@ -1,15 +1,16 @@
 import jax
 import jax.numpy as jnp
 import pytest
-from flowMC.resource_strategy_bundle.RQSpline_MALA import RQSpline_MALA_Bundle
-from flowMC.resource_strategy_bundle.RQSpline_MALA_PT import RQSpline_MALA_PT_Bundle
-from flowMC.resource_strategy_bundle.RQSpline_HMC import RQSpline_HMC_Bundle
-from flowMC.resource_strategy_bundle.RQSpline_HMC_PT import RQSpline_HMC_PT_Bundle
-from flowMC.resource_strategy_bundle.RQSpline_GRW import RQSpline_GRW_Bundle
-from flowMC.resource_strategy_bundle.RQSpline_GRW_PT import RQSpline_GRW_PT_Bundle
-from flowMC.resource.kernel.MALA import MALA
+
 from flowMC.resource.kernel.Gaussian_random_walk import GaussianRandomWalk
 from flowMC.resource.kernel.HMC import HMC
+from flowMC.resource.kernel.MALA import MALA
+from flowMC.resource_strategy_bundle.RQSpline_GRW import RQSpline_GRW_Bundle
+from flowMC.resource_strategy_bundle.RQSpline_GRW_PT import RQSpline_GRW_PT_Bundle
+from flowMC.resource_strategy_bundle.RQSpline_HMC import RQSpline_HMC_Bundle
+from flowMC.resource_strategy_bundle.RQSpline_HMC_PT import RQSpline_HMC_PT_Bundle
+from flowMC.resource_strategy_bundle.RQSpline_MALA import RQSpline_MALA_Bundle
+from flowMC.resource_strategy_bundle.RQSpline_MALA_PT import RQSpline_MALA_PT_Bundle
 
 
 def logpdf(x, _):

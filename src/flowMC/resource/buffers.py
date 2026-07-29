@@ -1,14 +1,14 @@
-from flowMC.resource.base import Resource
-from typing import TypeVar
+import logging
+from typing import Self
+
+import jax
+import jax.numpy as jnp
 import numpy as np
 from jaxtyping import Array, Float
-import jax.numpy as jnp
-import jax
-import logging
+
+from flowMC.resource.base import Resource
 
 logger = logging.getLogger(__name__)
-
-TBuffer = TypeVar("TBuffer", bound="Buffer")
 
 
 class Buffer(Resource):
@@ -87,9 +87,10 @@ class Buffer(Resource):
             data=self.data,
         )
 
-    def load_resource(self: TBuffer, path: str) -> TBuffer:
-        data = np.load(path)
-        buffer: Float[Array, "..."] = data["data"]
-        result = Buffer(data["name"], buffer.shape)
+    def load_resource(self, path: str) -> Self:
+        with np.load(path) as data:
+            name = str(data["name"])
+            buffer = jnp.asarray(data["data"])
+        result = type(self)(name, buffer.shape, self.cursor_dim)
         result.data = buffer
-        return result  # type: ignore
+        return result

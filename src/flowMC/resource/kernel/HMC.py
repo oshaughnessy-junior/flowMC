@@ -1,11 +1,11 @@
-from typing import Callable, Optional
-from typing_extensions import Self
 import logging
+from collections.abc import Callable
+from typing import Optional, Self
 
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Bool, Float, Int, Key, PyTree
 from equinox import tree_at
+from jaxtyping import Array, Bool, Float, Key, PyTree
 
 from flowMC.resource.kernel.base import ProposalBase
 from flowMC.resource.logPDF import LogPDF
@@ -130,7 +130,7 @@ class HMC(ProposalBase):
         metric: Float[Array, " n_dim"],
     ) -> tuple[Float[Array, " n_dim"], Float[Array, " n_dim"]]:
         logger.debug("Compiling leapfrog step")
-        (position, momentum, data, metric, index), _ = jax.lax.scan(
+        (position, momentum, data, metric, _index), _ = jax.lax.scan(
             leapfrog_kernel,
             (position, momentum, data, metric, 0),
             jnp.arange(self.n_leapfrog + 2),
@@ -144,7 +144,7 @@ class HMC(ProposalBase):
         log_prob: Float[Array, "1"],
         logpdf: LogPDF | Callable[[Float[Array, " n_dim"], PyTree], Float[Array, "1"]],
         data: PyTree,
-    ) -> tuple[Float[Array, " n_dim"], Float[Array, "1"], Int[Array, "1"]]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, "1"], Bool[Array, "1"]]:
         """Note that since the potential function is the negative log likelihood,
         hamiltonian is going down, but the likelihood value should go up.
 
@@ -190,8 +190,8 @@ class HMC(ProposalBase):
 
         do_accept = log_uniform < log_acc
 
-        position = jnp.where(do_accept, proposed_position, position)  # type: ignore
-        log_prob = jnp.where(do_accept, -proposed_PE, log_prob)  # type: ignore
+        position = jnp.where(do_accept, proposed_position, position)
+        log_prob = jnp.where(do_accept, -proposed_PE, log_prob)
 
         return position, log_prob, do_accept
 

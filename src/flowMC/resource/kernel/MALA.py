@@ -1,14 +1,15 @@
+import logging
+from collections.abc import Callable
+from typing import Optional, Self
+
 import jax
 import jax.numpy as jnp
-from jax.scipy.stats import multivariate_normal
-from jaxtyping import Array, Bool, Float, Int, Key, PyTree
-from typing import Callable, Optional
-from typing_extensions import Self
-import logging
 from equinox import tree_at
+from jax.scipy.stats import multivariate_normal
+from jaxtyping import Array, Bool, Float, Key, PyTree
 
-from flowMC.resource.logPDF import LogPDF
 from flowMC.resource.kernel.base import ProposalBase
+from flowMC.resource.logPDF import LogPDF
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +61,7 @@ class MALA(ProposalBase):
         log_prob: Float[Array, "1"],
         logpdf: LogPDF | Callable[[Float[Array, " n_dim"], PyTree], Float[Array, "1"]],
         data: PyTree,
-    ) -> tuple[Float[Array, " n_dim"], Float[Array, "1"], Int[Array, "1"]]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, "1"], Bool[Array, "1"]]:
         """Metropolis-adjusted Langevin algorithm kernel for a single chain.
 
         Args:

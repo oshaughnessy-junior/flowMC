@@ -1,9 +1,12 @@
-from dataclasses import dataclass
-from typing import Callable, Optional
 import logging
-from flowMC.resource.base import Resource
-from jaxtyping import Array, Float, PyTree
+from collections.abc import Callable
+from dataclasses import dataclass
+from typing import Optional
+
 import jax
+from jaxtyping import Array, Float, PyTree
+
+from flowMC.resource.base import Resource
 
 logger = logging.getLogger(__name__)
 
@@ -74,7 +77,7 @@ class LogPDF(Resource):
     def load_resource(self, path):
         raise NotImplementedError
 
-    def tree_flatten(self):
+    def tree_flatten(self) -> tuple[tuple[()], tuple[object, ...]]:
         children = ()
         aux_data = (self.log_pdf, self.variables)
         return (children, aux_data)
@@ -133,7 +136,7 @@ class TemperedPDF(LogPDF):
         base_pdf = super().__call__(x, data)
         return (1.0 / temperatures) * base_pdf + self.log_prior(x, data)
 
-    def tree_flatten(self):  # type: ignore
+    def tree_flatten(self) -> tuple[tuple[()], tuple[object, ...]]:
         children = ()
         aux_data = (self.log_pdf, self.log_prior, self.variables)
         return (children, aux_data)

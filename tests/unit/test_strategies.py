@@ -1,26 +1,31 @@
+from typing import ClassVar, Optional
+
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Float
 import pytest
+from jaxtyping import Array, Float
 
-from flowMC.resource.model.nf_model.rqSpline import MaskedCouplingRQSpline
-from flowMC.resource.optimizer import Optimizer
-from flowMC.resource.kernel.NF_proposal import NFProposal
-from flowMC.resource.kernel.MALA import MALA
+from flowMC.resource.base import Resource
+from flowMC.resource.buffers import Buffer
 from flowMC.resource.kernel.Gaussian_random_walk import GaussianRandomWalk
 from flowMC.resource.kernel.HMC import HMC
-from flowMC.resource.buffers import Buffer
-from flowMC.resource.states import State
+from flowMC.resource.kernel.MALA import MALA
+from flowMC.resource.kernel.NF_proposal import NFProposal
 from flowMC.resource.logPDF import LogPDF, TemperedPDF
-
-# from flowMC.strategy.optimization import optimization_Adam
-from flowMC.strategy.take_steps import TakeSerialSteps, TakeGroupSteps
+from flowMC.resource.model.nf_model.rqSpline import MaskedCouplingRQSpline
+from flowMC.resource.optimizer import Optimizer
+from flowMC.resource.states import State
 from flowMC.strategy.optimization import AdamOptimization
-from flowMC.strategy.train_model import TrainModel
 from flowMC.strategy.parallel_tempering import ParallelTempering
 
+# from flowMC.strategy.optimization import optimization_Adam
+from flowMC.strategy.take_steps import TakeGroupSteps, TakeSerialSteps
+from flowMC.strategy.train_model import TrainModel
 
-def log_posterior(x, data={}):
+
+def log_posterior(x, data=None):
+    if data is None:
+        data = {}
     return -0.5 * jnp.sum((x - data["data"]) ** 2)
 
 
@@ -62,7 +67,11 @@ class TestOptimizationStrategies:
             jax.random.normal(subkey, shape=(self.n_chains, self.n_dim)) * 1 + 10
         )
 
-        def loss_fn(params: Float[Array, " n_dim"], data: dict = {}) -> Float:
+        def loss_fn(
+            params: Float[Array, " n_dim"], data: Optional[dict] = None
+        ) -> Float:
+            if data is None:
+                data = {}
             return -log_posterior(params, {"data": jnp.arange(self.n_dim)})
 
         _, optimized_position, final_log_prob = self.strategy.optimize(
@@ -125,14 +134,14 @@ class TestLocalStep:
         key = jax.random.key(42)
         positions = self.test_position.data[:, 0]
         for _ in range(self.n_batch):
-            key, subkey1, subkey2 = jax.random.split(key, 3)
+            key, subkey1, _subkey2 = jax.random.split(key, 3)
             _, self.resources, positions = strategy(
                 rng_key=subkey1,
                 resources=self.resources,
                 initial_position=positions,
                 data={"data": jnp.arange(self.n_dims)},
             )
-        key, subkey1, subkey2 = jax.random.split(key, 3)
+        key, subkey1, _subkey2 = jax.random.split(key, 3)
         strategy.set_current_position(0)
         _, self.resources, positions = strategy(
             rng_key=subkey1,
@@ -140,7 +149,7 @@ class TestLocalStep:
             initial_position=positions,
             data={"data": jnp.arange(self.n_dims)},
         )
-        key, subkey1, subkey2 = jax.random.split(key, 3)
+        key, subkey1, _subkey2 = jax.random.split(key, 3)
         strategy.kernel_name = "GRW"
         strategy.set_current_position(0)
         _, self.resources, positions = strategy(
@@ -191,7 +200,7 @@ class TestNFStrategies:
     n_batch = 5
 
     n_features = n_dims
-    hidden_layes = [16, 16]
+    hidden_layes: ClassVar[list[int]] = [16, 16]
     n_layers = 3
     n_bins = 8
 
@@ -223,7 +232,7 @@ class TestNFStrategies:
 
     def test_training(self):
         # TODO: Need to check for accuracy still
-        rng_key, resources = self.initialize()
+        _rng_key, resources = self.initialize()
 
         strategy = TrainModel(
             "model",
@@ -239,7 +248,7 @@ class TestNFStrategies:
         key = jax.random.key(42)
 
         print(resources["model"].data_mean, resources["model"].data_cov)
-        key, resources, positions = strategy(
+        key, resources, _positions = strategy(
             key,
             resources,
             jax.random.normal(key, shape=(self.n_chains, self.n_dims)),
@@ -265,7 +274,9 @@ class TestNFStrategies:
 
         proposal = NFProposal(model, n_NFproposal_batch_size=5)
 
-        def test_target(x, data={}):
+        def test_target(x, data=None):
+            if data is None:
+                data = {}
             return model.log_prob(x)
 
         sampler_state = State(
@@ -396,12 +407,12 @@ class TestTemperingStrategies:
         key, resources, parallel_tempering_strat, initial_position = self.initialize()
         mala = resources["MALA"]
         logpdf = resources["logpdf"]
-        key, subkey = jax.random.split(key)
+        key, _subkey = jax.random.split(key)
         position = initial_position[0]
         data = {"data": jnp.arange(self.n_dims)}
 
         log_prob = logpdf(position, data)
-        carry, extras = parallel_tempering_strat._individual_step_body(
+        carry, _extras = parallel_tempering_strat._individual_step_body(
             mala, (key, position, log_prob, logpdf, jnp.array(1.0), data), None
         )
 
@@ -418,7 +429,7 @@ class TestTemperingStrategies:
             axis=1,
         )
 
-        positions, log_probs, do_accept = parallel_tempering_strat._individal_step(
+        positions, _log_probs, _do_accept = parallel_tempering_strat._individal_step(
             mala,
             key,
             initial_position[0, 0],
@@ -439,7 +450,7 @@ class TestTemperingStrategies:
             axis=1,
         )
         key, subkey = jax.random.split(key)
-        positions, log_probs, do_accept = parallel_tempering_strat._ensemble_step(
+        _positions, _log_probs, _do_accept = parallel_tempering_strat._ensemble_step(
             mala,
             subkey,
             initial_position[0],
@@ -453,7 +464,7 @@ class TestTemperingStrategies:
         # TODO: Add assertions
 
         keys = jax.random.split(key, self.n_chains)
-        positions, log_probs, do_accept = jax.vmap(
+        _positions, _log_probs, _do_accept = jax.vmap(
             parallel_tempering_strat._ensemble_step,
             in_axes=(None, 0, 0, None, None, None),
         )(
@@ -474,7 +485,7 @@ class TestTemperingStrategies:
         logpdf = resources["logpdf"]
         temperatures = jnp.arange(self.n_temps) * 0.3 + 1
         data = {"data": jnp.arange(self.n_dims)}
-        log_probs = jax.vmap(logpdf.tempered_log_pdf, in_axes=(None, 0, None))(
+        jax.vmap(logpdf.tempered_log_pdf, in_axes=(None, 0, None))(
             temperatures,
             initial_position,
             data,
@@ -484,7 +495,7 @@ class TestTemperingStrategies:
             [initial_position[:, None, :], resources["tempered_positions"].data],
             axis=1,
         )
-        positions, log_probs, do_accept = jax.jit(
+        _positions, _log_probs, _do_accept = jax.jit(
             jax.vmap(parallel_tempering_strat._exchange, in_axes=(0, 0, 0, None, None))
         )(
             key,
@@ -495,7 +506,9 @@ class TestTemperingStrategies:
         )
 
     def test_adapt_temperatures(self):
-        key, resources, parallel_tempering_strat, initial_position = self.initialize()
+        _key, _resources, parallel_tempering_strat, _initial_position = (
+            self.initialize()
+        )
         temperatures = jnp.arange(self.n_temps) * 0.3 + 1
         parallel_tempering_strat._adapt_temperature(
             temperatures,
@@ -505,8 +518,8 @@ class TestTemperingStrategies:
 
     def test_parallel_tempering(self):
         key, resources, parallel_tempering_strat, initial_position = self.initialize()
-        key, subkey = jax.random.split(key)
-        rng_key, resources, positions = parallel_tempering_strat(
+        key, _subkey = jax.random.split(key)
+        _rng_key, resources, positions = parallel_tempering_strat(
             key,
             resources,
             initial_position,
@@ -1106,7 +1119,9 @@ class TestAdaptStepSizePerDim:
         assert new_step[0] > new_step[1] > new_step[2]
 
 
-def _make_early_stop_resources(n_chains=10, n_steps=100, global_acc_value=None):
+def _make_early_stop_resources(
+    n_chains=10, n_steps=100, global_acc_value=None
+) -> dict[str, Resource]:
     state = State(
         {
             "target_global_accs": "global_accs_training",
@@ -1119,6 +1134,18 @@ def _make_early_stop_resources(n_chains=10, n_steps=100, global_acc_value=None):
     if global_acc_value is not None:
         buffer.data = jnp.full((n_chains, n_steps), global_acc_value)
     return {"sampler_state": state, "global_accs_training": buffer}
+
+
+def _early_stop_state(resources: dict[str, Resource]) -> State:
+    resource = resources["sampler_state"]
+    assert isinstance(resource, State)
+    return resource
+
+
+def _early_stop_buffer(resources: dict[str, Resource]) -> Buffer:
+    resource = resources["global_accs_training"]
+    assert isinstance(resource, Buffer)
+    return resource
 
 
 class TestCheckEarlyStop:
@@ -1141,11 +1168,11 @@ class TestCheckEarlyStop:
 
         # Warmup loop
         key, resources, pos = strategy(key, resources, pos, {})
-        assert resources["sampler_state"].data["early_stopped"] is False  # type: ignore[index]
+        assert _early_stop_state(resources).data["early_stopped"] is False
 
         # Second loop — identical data, relative change = 0 → triggers
         key, resources, pos = strategy(key, resources, pos, {})
-        assert resources["sampler_state"].data["early_stopped"] is True  # type: ignore[index]
+        assert _early_stop_state(resources).data["early_stopped"] is True
 
     def test_no_trigger_when_acceptance_changing(self):
         """Early stop does not fire when the mean acceptance shifts significantly."""
@@ -1164,12 +1191,12 @@ class TestCheckEarlyStop:
         pos = jnp.zeros((10, 2))
 
         key, resources, pos = strategy(key, resources, pos, {})
-        assert resources["sampler_state"].data["early_stopped"] is False  # type: ignore[index]
+        assert _early_stop_state(resources).data["early_stopped"] is False
 
         # Big jump → no trigger
-        resources["global_accs_training"].data = jnp.full((10, 100), 0.6)  # type: ignore[union-attr]
+        _early_stop_buffer(resources).data = jnp.full((10, 100), 0.6)
         key, resources, pos = strategy(key, resources, pos, {})
-        assert resources["sampler_state"].data["early_stopped"] is False  # type: ignore[index]
+        assert _early_stop_state(resources).data["early_stopped"] is False
 
     def test_no_trigger_when_cov_changing_but_mean_stable(self):
         """Early stop does not fire when mean is stable but CoV changes.
@@ -1195,11 +1222,11 @@ class TestCheckEarlyStop:
 
         key, resources, pos = strategy(key, resources, pos, {})
 
-        resources["global_accs_training"].data = jnp.concatenate(  # type: ignore[union-attr]
+        _early_stop_buffer(resources).data = jnp.concatenate(
             [jnp.full((5, 100), 0.3), jnp.full((5, 100), 0.7)], axis=0
         )
         key, resources, pos = strategy(key, resources, pos, {})
-        assert resources["sampler_state"].data["early_stopped"] is False  # type: ignore[index]
+        assert _early_stop_state(resources).data["early_stopped"] is False
 
     def test_reset_steppers_does_not_re_trigger_skip(self):
         """Production strategies must run after reset_steppers even when early stopped.

@@ -2,15 +2,15 @@
 
 import pickle
 from pathlib import Path
+from typing import ClassVar
 
 import jax
 import jax.numpy as jnp
 import pytest
 
-from flowMC.Sampler import Sampler
 from flowMC.resource.states import State
+from flowMC.Sampler import Sampler
 from flowMC.strategy.base import Strategy
-
 
 # ── helpers ───────────────────────────────────────────────────────────────────
 
@@ -22,7 +22,7 @@ class _PassthroughStrategy(Strategy):
         self.name = name
         self.n_calls = 0
 
-    def __call__(self, rng_key, resources, initial_position, data):  # noqa: ARG002
+    def __call__(self, rng_key, resources, initial_position, data):
         self.n_calls += 1
         return rng_key, resources, initial_position
 
@@ -31,7 +31,7 @@ class _ResetSteppers(Strategy):
     def __init__(self) -> None:
         pass
 
-    def __call__(self, rng_key, resources, initial_position, data):  # noqa: ARG002
+    def __call__(self, rng_key, resources, initial_position, data):
         return rng_key, resources, initial_position
 
 
@@ -209,7 +209,7 @@ class TestCheckpointWrite:
 class TestCheckpointResume:
     """Verify that a resumed run skips already-completed strategies."""
 
-    _order = ["step_a", "step_b", "reset_steppers", "step_prod"]
+    _order: ClassVar[list[str]] = ["step_a", "step_b", "reset_steppers", "step_prod"]
 
     def _first_run(self, tmp_path, monkeypatch):
         """Run to completion while preserving the checkpoint (simulates a crash)."""
@@ -274,7 +274,7 @@ class TestCheckpointResume:
             def __init__(self):
                 pass
 
-            def __call__(self, rng_key, resources, position, data):  # noqa: ARG002
+            def __call__(self, rng_key, resources, position, data):
                 rng_key_after_training["val"] = rng_key
                 return rng_key, resources, position
 
@@ -305,7 +305,7 @@ class TestCheckpointResume:
             def __init__(self):
                 pass
 
-            def __call__(self, rng_key, resources, position, data):  # noqa: ARG002
+            def __call__(self, rng_key, resources, position, data):
                 rng_key_at_prod["val"] = rng_key
                 return rng_key, resources, position
 

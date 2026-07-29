@@ -3,12 +3,12 @@ import jax.numpy as jnp
 from jax.scipy.special import logsumexp
 from jaxtyping import Array, Float
 
-from flowMC.resource.kernel.Gaussian_random_walk import GaussianRandomWalk
-from flowMC.strategy.take_steps import TakeSerialSteps
 from flowMC.resource.buffers import Buffer
-from flowMC.resource.states import State
+from flowMC.resource.kernel.Gaussian_random_walk import GaussianRandomWalk
 from flowMC.resource.logPDF import LogPDF
+from flowMC.resource.states import State
 from flowMC.Sampler import Sampler
+from flowMC.strategy.take_steps import TakeSerialSteps
 
 
 def dual_moon_pe(x: Float[Array, " n_dims"], data: dict):
@@ -28,7 +28,6 @@ def test_grw_end_to_end():
     n_dims = 5
     n_chains = 2
     n_local_steps = 3
-    n_global_steps = 3
     step_size = jnp.full(n_dims, 0.01)
 
     data = {"data": jnp.arange(5)}
