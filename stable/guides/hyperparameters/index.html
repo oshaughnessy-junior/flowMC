@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.46">
+      <meta name="generator" content="zensical-0.0.51">
     
     
       
@@ -36,7 +36,7 @@
       
         
       
-      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.19d3147f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.62c9b9cc.min.css">
       
         
           
@@ -3864,7 +3864,8 @@
 
 
 <h1 id="hyperparameter-reference">Hyperparameter Reference<a class="headerlink" href="#hyperparameter-reference" title="Permanent link">¤</a></h1>
-<p>Quick-reference index by category. Click any parameter name to jump to its description.</p>
+<p>Quick-reference index by category.
+Click any parameter name to jump to its description.</p>
 <h2 id="required">Required<a class="headerlink" href="#required" title="Permanent link">¤</a></h2>
 <table>
 <thead>
@@ -4187,7 +4188,8 @@
 The algorithm parallelises all chains simultaneously via <code>vmap</code>, so the performance benefit saturates once the chains fill the available hardware threads.
 More chains give a better picture of the global landscape, which helps train the normalizing flow faster and reduces the chance of mode collapse.</p>
 <h3 id="n_dims">n_dims<a class="headerlink" href="#n_dims" title="Permanent link">¤</a></h3>
-<p>Dimensionality of the parameter space. Must match the input dimension of <code>logpdf</code>.</p>
+<p>Dimensionality of the parameter space.
+Must match the input dimension of <code>logpdf</code>.</p>
 <h3 id="logpdf">logpdf<a class="headerlink" href="#logpdf" title="Permanent link">¤</a></h3>
 <p>A callable with signature <code>logpdf(x, data) -&gt; float</code> where <code>x</code> is a 1-D array of length <code>n_dims</code> and <code>data</code> is the auxiliary data passed to <code>Sampler.sample</code>.
 The function must be JAX-differentiable if you use MALA or HMC.</p>
@@ -4220,7 +4222,8 @@ The optimal MALA acceptance rate is ~57%, and <code>adapt_step_size</code> will 
 Default <code>0.1</code>.
 The optimal HMC acceptance rate is ~65%.</p>
 <h3 id="hmc_n_leapfrog">hmc_n_leapfrog<a class="headerlink" href="#hmc_n_leapfrog" title="Permanent link">¤</a></h3>
-<p><em>HMC bundles only.</em> Number of leapfrog steps per HMC proposal. Default <code>10</code>.
+<p><em>HMC bundles only.</em> Number of leapfrog steps per HMC proposal.
+Default <code>10</code>.
 More steps produce proposals further along the trajectory but increase cost per step.</p>
 <h3 id="condition_matrix">condition_matrix<a class="headerlink" href="#condition_matrix" title="Permanent link">¤</a></h3>
 <p><em>HMC bundles only.</em> Diagonal of the inverse mass matrix (preconditioning matrix).
@@ -4272,7 +4275,8 @@ When <code>n_global_steps</code> exceeds this value, the flow samples are comput
 <hr />
 <h2 id="training-parameters">Training parameters<a class="headerlink" href="#training-parameters" title="Permanent link">¤</a></h2>
 <h3 id="learning_rate">learning_rate<a class="headerlink" href="#learning_rate" title="Permanent link">¤</a></h3>
-<p>Learning rate for the AdamW optimizer used to train the normalizing flow. Default <code>1e-3</code>.</p>
+<p>Learning rate for the AdamW optimizer used to train the normalizing flow.
+Default <code>1e-3</code>.</p>
 <h3 id="batch_size">batch_size<a class="headerlink" href="#batch_size" title="Permanent link">¤</a></h3>
 <p>Mini-batch size for each gradient step during flow training.
 Default <code>10000</code>.
@@ -4312,7 +4316,8 @@ This affects memory, the acceptance-rate values seen by early stopping, and the 
 When many consecutive proposals are rejected, the chain stays at the same position, and storing every step fills the buffer with duplicate points that contribute nothing to the posterior estimate or NF training.
 Thinning skips over these repeated positions while still executing all <code>n_global_steps</code>, preserving the full opportunity to make large jumps whenever a proposal is accepted.</p>
 <h3 id="verbose">verbose<a class="headerlink" href="#verbose" title="Permanent link">¤</a></h3>
-<p>Print training loss and acceptance rates during sampling. Default <code>False</code>.</p>
+<p>Print training loss and acceptance rates during sampling.
+Default <code>False</code>.</p>
 <hr />
 <h2 id="early-stopping-parameters">Early stopping parameters<a class="headerlink" href="#early-stopping-parameters" title="Permanent link">¤</a></h2>
 <h3 id="early_stopping">early_stopping<a class="headerlink" href="#early_stopping" title="Permanent link">¤</a></h3>
@@ -4335,12 +4340,14 @@ Set to <code>0</code> to disable this trigger and rely solely on the stability c
 <h2 id="parallel-tempering-parameters">Parallel tempering parameters<a class="headerlink" href="#parallel-tempering-parameters" title="Permanent link">¤</a></h2>
 <p><em>These parameters are only available in the PT bundles: <code>RQSpline_MALA_PT_Bundle</code>, <code>RQSpline_HMC_PT_Bundle</code>, <code>RQSpline_GRW_PT_Bundle</code>.</em></p>
 <h3 id="logprior">logprior<a class="headerlink" href="#logprior" title="Permanent link">¤</a></h3>
-<p>Log-prior function with signature <code>logprior(x, data) -&gt; float</code>. Default is a flat prior that always returns <code>0</code>.
+<p>Log-prior function with signature <code>logprior(x, data) -&gt; float</code>.
+Default is a flat prior that always returns <code>0</code>.
 The tempered log-density is</p>
 <div class="arithmatex">\[\log \tilde{p}_T(x) = \frac{1}{T} \log \mathcal{L}(x) + \log \pi(x)\]</div>
 <p>so the prior is preserved at all temperatures.</p>
 <h3 id="n_temperatures">n_temperatures<a class="headerlink" href="#n_temperatures" title="Permanent link">¤</a></h3>
-<p>Number of temperature levels, including the target (temperature = 1). Default <code>5</code>.
+<p>Number of temperature levels, including the target (temperature = 1).
+Default <code>5</code>.
 Chains at higher temperatures explore the prior more freely and occasionally swap positions with the target chains, helping escape local modes.</p>
 <h3 id="max_temperature">max_temperature<a class="headerlink" href="#max_temperature" title="Permanent link">¤</a></h3>
 <p>Highest temperature in the ladder.
@@ -4411,7 +4418,7 @@ Reduce this to save computation if swap acceptance is low.</p>
       <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["content.code.copy","navigation.instant","navigation.tabs","navigation.top","toc.follow","header.autohide"],"search":"../../assets/javascripts/workers/search.b6b7e04f.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"default":"stable","provider":"mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.ee611ef6.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7f30b55.min.js"></script>
       
         <script src="../../javascripts/mathjax.js"></script>
       
