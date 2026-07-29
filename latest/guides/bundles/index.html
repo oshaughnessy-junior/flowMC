@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.50">
+      <meta name="generator" content="zensical-0.0.51">
     
     
       
@@ -2867,7 +2867,8 @@ MALA uses the gradient of the log-density to bias proposals toward regions of hi
 <p>The local step size targets an acceptance rate of ~57% and is adapted automatically during the training phase when <code>adapt_step_size=True</code> (the default).</p>
 <hr />
 <h2 id="rqspline_mala_pt_bundle">RQSpline_MALA_PT_Bundle<a class="headerlink" href="#rqspline_mala_pt_bundle" title="Permanent link">¤</a></h2>
-<p>Extends <code>RQSpline_MALA_Bundle</code> with <strong>parallel tempering</strong>. Additional replicas of the chains are run at elevated temperatures, exploring the prior more freely.
+<p>Extends <code>RQSpline_MALA_Bundle</code> with <strong>parallel tempering</strong>.
+Additional replicas of the chains are run at elevated temperatures, exploring the prior more freely.
 Periodic swap proposals between adjacent temperature levels allow the target chains to escape local modes.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.resource_strategy_bundle.RQSpline_MALA_PT</span><span class="w"> </span><span class="kn">import</span> <span class="n">RQSpline_MALA_PT_Bundle</span>
 
