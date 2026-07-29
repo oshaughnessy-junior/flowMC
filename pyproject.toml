@@ -90,22 +90,8 @@ ignore = [
     # Preserve the project's preferred spelling for optional and multi-member unions.
     "UP007",
     "UP045",
+    "N999",
 ]
-
-# These established public module names use casing that Ruff flags; renaming
-# them would unnecessarily break downstream users.
-[tool.ruff.lint.per-file-ignores]
-"src/flowMC/__init__.py" = ["N999"]
-"src/flowMC/**/__init__.py" = ["N999"]
-"src/flowMC/Sampler.py" = ["N999"]
-"src/flowMC/resource/kernel/Gaussian_random_walk.py" = ["N999"]
-"src/flowMC/resource/kernel/HMC.py" = ["N999"]
-"src/flowMC/resource/kernel/MALA.py" = ["N999"]
-"src/flowMC/resource/kernel/NF_proposal.py" = ["N999"]
-"src/flowMC/resource/logPDF.py" = ["N999"]
-"src/flowMC/resource/model/nf_model/realNVP.py" = ["N999"]
-"src/flowMC/resource/model/nf_model/rqSpline.py" = ["N999"]
-"src/flowMC/resource_strategy_bundle/RQSpline_*.py" = ["N999"]
 
 [tool.pyright]
 include = ["src"]

@@ -5,7 +5,7 @@ from typing import Optional, Self
 import jax
 import jax.numpy as jnp
 from equinox import tree_at
-from jaxtyping import Array, Bool, Float, Int, Key, PyTree
+from jaxtyping import Array, Bool, Float, Key, PyTree
 
 from flowMC.resource.kernel.base import ProposalBase
 from flowMC.resource.logPDF import LogPDF
@@ -60,7 +60,7 @@ class GaussianRandomWalk(ProposalBase):
         log_prob: Float[Array, "1"],
         logpdf: LogPDF | Callable[[Float[Array, " n_dim"], PyTree], Float[Array, "1"]],
         data: PyTree,
-    ) -> tuple[Float[Array, " n_dim"], Float[Array, "1"], Int[Array, "1"]]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, "1"], Bool[Array, "1"]]:
         """Random walk gaussian kernel. This is a kernel that only evolve a single
         chain.
 
@@ -73,7 +73,7 @@ class GaussianRandomWalk(ProposalBase):
         Returns:
             position (Float[Array, "n_dim"]): new position of the chain
             log_prob (Float[Array, "1"]): new log-probability of the chain
-            do_accept (Int[Array, "1"]): whether the new position is accepted
+            do_accept (Bool[Array, "1"]): whether the new position is accepted
         """
 
         key1, key2 = jax.random.split(rng_key)

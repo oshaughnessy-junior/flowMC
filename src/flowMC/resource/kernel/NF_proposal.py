@@ -5,7 +5,7 @@ import equinox as eqx
 import jax
 import jax.numpy as jnp
 from jax import random
-from jaxtyping import Array, Float, Int, Key, PyTree
+from jaxtyping import Array, Bool, Float, Key, PyTree
 
 from flowMC.resource.kernel.base import ProposalBase
 from flowMC.resource.logPDF import LogPDF
@@ -53,7 +53,7 @@ class NFProposal(ProposalBase):
         logpdf: LogPDF | Callable[[Float[Array, " n_dim"], PyTree], Float[Array, "1"]],
         data: PyTree,
     ) -> tuple[
-        Float[Array, "n_step n_dim"], Float[Array, "n_step 1"], Int[Array, "n_step 1"]
+        Float[Array, "n_step n_dim"], Float[Array, "n_step 1"], Bool[Array, "n_step 1"]
     ]:
         """Generate and accept/reject ``n_steps`` flow proposals for a single chain.
 
@@ -72,7 +72,7 @@ class NFProposal(ProposalBase):
             tuple:
                 - positions (Float[Array, "n_step n_dim"]): Chain positions after each step.
                 - log_probs (Float[Array, "n_step 1"]): Log-probs after each step.
-                - do_accepts (Int[Array, "n_step 1"]): Acceptance flags.
+                - do_accepts (Bool[Array, "n_step 1"]): Acceptance flags.
         """
         logger.debug("Compiling NF proposal kernel")
         n_steps = data["n_steps"]

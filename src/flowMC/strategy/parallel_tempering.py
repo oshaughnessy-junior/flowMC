@@ -3,7 +3,7 @@ import logging
 import equinox as eqx
 import jax
 import jax.numpy as jnp
-from jaxtyping import Array, Bool, Float, Int, Key
+from jaxtyping import Array, Bool, Float, Key
 
 from flowMC.resource.base import Resource
 from flowMC.resource.buffers import Buffer
@@ -171,7 +171,7 @@ class ParallelTempering(Strategy):
         tuple[
             Float[Array, " n_dims"],
             Float[Array, "1"],
-            Int[Array, "1"],
+            Bool[Array, "1"],
         ],
     ]:
         """Take a step using the kernel and the tempered logpdf.
@@ -200,7 +200,7 @@ class ParallelTempering(Strategy):
                 - result (tuple): Result of the kernel step.
                     - position (Float[Array, "n_dims"]): New position of the chain.
                     - log_prob (Float[Array, "1"]): New log probability of the chain.
-                    - do_accept (Int[Array, "1"]): Whether the new position is accepted.
+                    - do_accept (Bool[Array, "1"]): Whether the new position is accepted.
         """
         key, position, log_prob, logpdf, temperatures, data = carry
         key, subkey = jax.random.split(key)
@@ -228,7 +228,7 @@ class ParallelTempering(Strategy):
     ) -> tuple[
         Float[Array, " n_dims"],
         Float[Array, "1"],
-        Int[Array, "1"],
+        Bool[Array, "1"],
     ]:
         """
         Perform a series of individual steps for a single chain using the kernel.
@@ -245,7 +245,7 @@ class ParallelTempering(Strategy):
             tuple:
                 - positions (Float[Array, "n_dims"]): Updated positions of the chain.
                 - log_probs (Float[Array, "1"]): Log probabilities of the chain.
-                - do_accept (Int[Array, "1"]): Acceptance flag for the new position.
+                - do_accept (Bool[Array, "1"]): Acceptance flag for the new position.
         """
         log_probs = jax.tree_util.Partial(logpdf.tempered_log_pdf, temperatures)(
             positions, data
@@ -276,7 +276,7 @@ class ParallelTempering(Strategy):
     ) -> tuple[
         Float[Array, "n_temps n_dims"],
         Float[Array, " n_temps"],
-        Int[Array, " n_temps"],
+        Bool[Array, " n_temps"],
     ]:
         """
         Perform ensemble steps for all chains and temperatures.
@@ -293,7 +293,7 @@ class ParallelTempering(Strategy):
             tuple:
                 - positions (Float[Array, "n_temps n_dims"]): Updated positions for all temperatures.
                 - log_probs (Float[Array, "n_temps"]): Log probabilities for all temperatures.
-                - do_accept (Int[Array, "n_temps"]): Acceptance flags for each temperature.
+                - do_accept (Bool[Array, "n_temps"]): Acceptance flags for each temperature.
         """
 
         logger.debug("Taking individual steps in parallel tempering")
@@ -327,7 +327,7 @@ class ParallelTempering(Strategy):
             Float[Array, " n_temps"],
             dict,
         ],
-        Int[Array, "1"],
+        Bool[Array, ""],
     ]:
         key, positions, log_probs, idx, logpdf, temperatures, data = carry
 
@@ -336,7 +336,7 @@ class ParallelTempering(Strategy):
             log_probs[idx] - log_probs[idx + 1]
         )
         log_uniform = jnp.log(jax.random.uniform(subkey))
-        do_accept: Bool[Array, 1] = log_uniform < ratio
+        do_accept: Bool[Array, ""] = log_uniform < ratio
         swapped = jnp.flip(
             jax.lax.dynamic_slice_in_dim(positions, idx, 2, axis=0), axis=0
         )
@@ -381,7 +381,7 @@ class ParallelTempering(Strategy):
     ) -> tuple[
         Float[Array, "n_temps n_dims"],
         Float[Array, " n_temps"],
-        Int[Array, " n_temps - 1"],
+        Bool[Array, " n_temps - 1"],
     ]:
         """
         Perform exchange steps between adjacent temperatures.
@@ -397,7 +397,7 @@ class ParallelTempering(Strategy):
             tuple:
                 - positions (Float[Array, "n_temps n_dims"]): Updated positions for all temperatures.
                 - log_probs (Float[Array, "n_temps"]): Log probabilities for all temperatures.
-                - do_accept (Int[Array, "n_temps - 1"]): Acceptance flags for each temperature.
+                - do_accept (Bool[Array, "n_temps - 1"]): Acceptance flags for each temperature.
         """
 
         logger.debug("Exchanging walkers between temperatures")
@@ -415,14 +415,14 @@ class ParallelTempering(Strategy):
     def _adapt_temperature(
         self,
         temperatures: Float[Array, " n_temps"],
-        do_accept: Int[Array, "n_chains n_temps 1"],
+        do_accept: Bool[Array, "n_chains n_temps 1"],
     ) -> Float[Array, " n_temps"]:
         """
         Adapt the temperatures based on the acceptance rates.
 
         Args:
             temperatures (Float[Array, "n_temps"]): Current temperatures.
-            do_accept (Int[Array, "n_chains n_temps 1"]): Acceptance flags for each chain and temperature.
+            do_accept (Bool[Array, "n_chains n_temps 1"]): Acceptance flags for each chain and temperature.
 
         Returns:
             Float[Array, "n_temps"]: Updated temperatures.

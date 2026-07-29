@@ -237,9 +237,7 @@ class RealNVP(NFModel):
         # TODO: Check whether taking away vmap hurts accuracy.
         x = (x - self.data_mean) / jnp.sqrt(jnp.diag(self.data_cov))
         y, log_det = self.__call__(x)
-        log_det = log_det + jax.scipy.stats.multivariate_normal.logpdf(
-            y, jnp.zeros(self.n_features), jnp.eye(self.n_features)
-        )
+        log_det = log_det + self.base_dist.log_prob(y)
         return log_det
 
     def print_parameters(self):

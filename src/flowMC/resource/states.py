@@ -56,24 +56,36 @@ class State(Resource):
         )
 
     def save_resource(self, path: str):
+        keys = list(self.data.keys())
+        types = [type(value).__name__ for value in self.data.values()]
+        values = [str(value) for value in self.data.values()]
         np.savez(
             path + self.name,
             name=self.name,
-            data=np.asarray(self.data, dtype=object),
+            keys=np.array(keys, dtype=str),
+            types=np.array(types, dtype=str),
+            values=np.array(values, dtype=str),
         )
 
     def load_resource(self, path: str) -> Self:
-        with np.load(path, allow_pickle=True) as loaded:
-            name = str(loaded["name"])
-            raw_data = loaded["data"].item()
+        parsers = {
+            "bool": lambda value: value == "True",
+            "int": int,
+            "str": str,
+        }
 
-        if not isinstance(raw_data, dict):
-            raise TypeError("Saved state data must be a dictionary")
+        with np.load(path) as loaded:
+            name = str(loaded["name"])
+            keys = loaded["keys"]
+            types = loaded["types"]
+            values = loaded["values"]
 
         state_data: dict[str, int | bool | str] = {}
-        for key, value in raw_data.items():
-            if not isinstance(key, str) or not isinstance(value, (int, bool, str)):
-                raise TypeError("Saved state data contains an unsupported key or value")
-            state_data[key] = value
+        for key, type_name, value in zip(keys, types, values, strict=True):
+            if type_name not in parsers:
+                raise TypeError(
+                    f"Saved state data contains an unsupported type '{type_name}'"
+                )
+            state_data[str(key)] = parsers[type_name](str(value))
 
         return type(self)(state_data, name=name)

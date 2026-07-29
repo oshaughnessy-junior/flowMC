@@ -5,7 +5,7 @@ from typing import Optional, Self
 import jax
 import jax.numpy as jnp
 from equinox import tree_at
-from jaxtyping import Array, Bool, Float, Int, Key, PyTree
+from jaxtyping import Array, Bool, Float, Key, PyTree
 
 from flowMC.resource.kernel.base import ProposalBase
 from flowMC.resource.logPDF import LogPDF
@@ -144,7 +144,7 @@ class HMC(ProposalBase):
         log_prob: Float[Array, "1"],
         logpdf: LogPDF | Callable[[Float[Array, " n_dim"], PyTree], Float[Array, "1"]],
         data: PyTree,
-    ) -> tuple[Float[Array, " n_dim"], Float[Array, "1"], Int[Array, "1"]]:
+    ) -> tuple[Float[Array, " n_dim"], Float[Array, "1"], Bool[Array, "1"]]:
         """Note that since the potential function is the negative log likelihood,
         hamiltonian is going down, but the likelihood value should go up.
 
