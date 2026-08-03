@@ -1,9 +1,9 @@
 name: CI
 
 on:
-  push:
-    branches: [main, flowMC-dev]
   pull_request:
+    branches: [main, flowMC-dev]
+  push:
     branches: [main, flowMC-dev]
   release:
     types: [published]
@@ -13,6 +13,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -20,8 +23,8 @@ jobs:
       matrix:
         python-version: ["3.11", "3.12", "3.13"]
     steps:
-      - uses: actions/checkout@v6
-      - uses: astral-sh/setup-uv@v7
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v9.0.0
         with:
           enable-cache: true
       - name: Set up Python ${{ matrix.python-version }}
@@ -45,8 +48,8 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: astral-sh/setup-uv@v7
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v9.0.0
         with:
           enable-cache: true
       - name: Install dependencies
@@ -62,10 +65,10 @@ jobs:
       name: pypi
       url: https://pypi.org/project/flowMC/
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v9.0.0
       - name: Build package
         run: uv build
       - name: Publish to PyPI
@@ -76,11 +79,12 @@ jobs:
   merge-main-to-dev:
     needs: [publish]
     runs-on: ubuntu-latest
+    if: github.event_name == 'release'
     permissions:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: flowMC-dev
           fetch-depth: 0
@@ -116,11 +120,11 @@ jobs:
       name: testpypi
       url: https://test.pypi.org/project/flowmc/
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v9.0.0
       - name: Build package
         run: uv build
       - name: Publish to TestPyPI
