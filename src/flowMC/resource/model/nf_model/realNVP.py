@@ -233,12 +233,32 @@ class RealNVP(NFModel):
         samples = samples * jnp.sqrt(jnp.diag(self.data_cov)) + self.data_mean
         return samples
 
-    def log_prob(self, x: Float[Array, " n_dim"]) -> FloatScalar:
-        # TODO: Check whether taking away vmap hurts accuracy.
-        x = (x - self.data_mean) / jnp.sqrt(jnp.diag(self.data_cov))
-        y, log_det = self.__call__(x)
+    def _log_prob_single(self, x: Float[Array, " n_dim"]) -> FloatScalar:
+        scale = jnp.sqrt(jnp.diag(self.data_cov))
+        y, log_det = self.__call__((x - self.data_mean) / scale)
         log_det = log_det + self.base_dist.log_prob(y)
-        return log_det
+        return log_det - jnp.sum(jnp.log(scale))
+
+    def log_prob(self, x: Array) -> Array:
+        """Log density of the flow, evaluated in DATA space.
+
+        Accepts a single sample ``(n_dim,)`` -> scalar, or a batch
+        ``(n_sample, n_dim)`` -> ``(n_sample,)``.
+
+        The model standardizes ``x`` by ``sqrt(diag(data_cov))`` before the
+        bijection, while :meth:`sample` applies the inverse scaling on the way
+        out.  The log-Jacobian of that standardization must therefore be
+        subtracted here, or ``exp(log_prob)`` integrates to
+        ``prod(sqrt(diag(data_cov)))`` rather than 1 and the result is NOT a
+        density in the space ``sample()`` returns.  It is a CONSTANT, so it
+        cancels in the NF-proposal Metropolis ratio (a difference of flow
+        log-probs) and shifts ``loss_fn`` by a constant without changing its
+        gradients: internal flowMC behaviour is unchanged.  It matters for any
+        external use of the flow as an importance-sampling density.
+        """
+        if x.ndim == 2:
+            return jax.vmap(self._log_prob_single)(x)
+        return self._log_prob_single(x)
 
     def print_parameters(self):
         logger.debug("RealNVP parameters:")
