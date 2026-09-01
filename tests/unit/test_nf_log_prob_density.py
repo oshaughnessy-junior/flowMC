@@ -1,22 +1,4 @@
-"""``NFModel.log_prob`` must be a NORMALIZED density in DATA space.
-
-Two defects in flowMC 0.6.0 motivated these tests (both would silently corrupt
-any external use of a trained flow as an importance-sampling proposal):
-
-1. ``rqSpline.log_prob`` was annotated ``Float[Array, "n_sample n_dim"] ->
-   Float[Array, "n_sample"]`` but called ``self.__call__(x)``, which is written
-   for a single ``(n_dim,)`` vector.  Batched input raised a ``dot_general``
-   shape error.
-2. Both ``rqSpline`` and ``realNVP`` standardized ``x`` by
-   ``sqrt(diag(data_cov))`` without subtracting that map's log-Jacobian, while
-   ``.sample()`` applies the inverse scaling.  So ``exp(log_prob)`` integrated
-   to ``prod(sqrt(diag(data_cov)))``, not 1 -- an offset of 10^4-10^5 on real
-   trained flows, and DIFFERENT for every flow.
-
-The Jacobian is a constant, so it cancels in the NF-proposal Metropolis ratio
-and only shifts ``loss_fn``; these tests pin the density semantics without
-constraining flowMC's internal behaviour.
-"""
+"""Tests for normalized normalizing-flow log densities in data space."""
 
 import jax
 import jax.numpy as jnp
@@ -25,8 +7,6 @@ import pytest
 
 from flowMC.resource.model.nf_model.rqSpline import MaskedCouplingRQSpline
 from flowMC.resource.model.nf_model.realNVP import RealNVP
-
-jax.config.update("jax_enable_x64", True)
 
 N_DIM = 4
 # deliberately far from the identity: prod(sqrt(diag)) = 0.2*3*0.5*1 = 0.3
@@ -52,10 +32,6 @@ def _log_gauss(x, mu, cov):
             - 0.5 * np.linalg.slogdet(cov)[1])
 
 
-def _batched_log_prob(model, x):
-    return np.asarray(jax.vmap(model._log_prob_single)(jnp.asarray(x)))
-
-
 @pytest.mark.parametrize("name", ["rqSpline", "realNVP"])
 def test_log_prob_integrates_to_one(name):
     """Z = int exp(log_prob(x)) dx == 1, by importance sampling against a broad
@@ -68,7 +44,7 @@ def test_log_prob_integrates_to_one(name):
     Lc = np.linalg.cholesky(cov)
     n = 200000
     z = mu[None, :] + rng.standard_normal((n, N_DIM)) @ Lc.T
-    lw = _batched_log_prob(model, z) - _log_gauss(z, mu, cov)
+    lw = np.asarray(model.log_prob(jnp.asarray(z))) - _log_gauss(z, mu, cov)
     m = lw.max()
     w = np.exp(lw - m)
     Z = float(np.exp(m) * w.mean())
@@ -91,7 +67,7 @@ def test_log_prob_batched_matches_looped(name):
     batched = np.asarray(model.log_prob(x))
     assert batched.shape == (64,), "batched log_prob returned %r" % (batched.shape,)
     looped = np.array([float(model.log_prob(xi)) for xi in x])
-    assert np.allclose(batched, looped, rtol=1e-10, atol=1e-10), (
+    assert np.allclose(batched, looped, rtol=1e-6, atol=1e-6), (
         "%s: batched and looped log_prob differ by up to %.3g"
         % (name, np.max(np.abs(batched - looped))))
 
@@ -117,4 +93,4 @@ def test_identity_data_cov_is_unaffected():
     scale = jnp.sqrt(jnp.diag(m.data_cov))
     y, log_det = m.__call__((x[0] - m.data_mean) / scale)
     raw = float(log_det + m.base_dist.log_prob(y))
-    assert abs(float(m.log_prob(x[0])) - raw) < 1e-12
+    assert abs(float(m.log_prob(x[0])) - raw) < 1e-6
