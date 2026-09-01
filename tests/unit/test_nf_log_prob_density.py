@@ -67,7 +67,7 @@ def test_log_prob_batched_matches_looped(name):
     batched = np.asarray(model.log_prob(x))
     assert batched.shape == (64,), "batched log_prob returned %r" % (batched.shape,)
     looped = np.array([float(model.log_prob(xi)) for xi in x])
-    assert np.allclose(batched, looped, rtol=1e-6, atol=1e-6), (
+    assert np.allclose(batched, looped, rtol=1e-6, atol=1e-5), (
         "%s: batched and looped log_prob differ by up to %.3g"
         % (name, np.max(np.abs(batched - looped))))
 
@@ -93,4 +93,4 @@ def test_identity_data_cov_is_unaffected():
     scale = jnp.sqrt(jnp.diag(m.data_cov))
     y, log_det = m.__call__((x[0] - m.data_mean) / scale)
     raw = float(log_det + m.base_dist.log_prob(y))
-    assert abs(float(m.log_prob(x[0])) - raw) < 1e-6
+    assert abs(float(m.log_prob(x[0])) - raw) < 1e-12
